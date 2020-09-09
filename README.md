@@ -1,6 +1,6 @@
 # SummaryEval
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.0.
+Web toolkit for the evaluation of L2 Summaries.
 
 ## Development server
 
