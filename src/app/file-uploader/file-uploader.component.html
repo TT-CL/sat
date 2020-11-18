@@ -1,0 +1,19 @@
+<mat-card class="file-selector-card">
+  <mat-card-header>
+    <mat-card-title *ngIf='mode=="source"'>Upload a Source file</mat-card-title>
+    <mat-card-title *ngIf='mode=="summary"'>Upload a Summary file</mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content class="uploader-buttons horizontal-center vertical-center">
+    <mat-form-field appearance="standard" class="uploader-form">
+          <mat-label>Select a document</mat-label>
+          <mat-hint>Acceptable filetypes: .json</mat-hint>
+          <ngx-mat-file-input formControlName="outline" placeholder="Select a document" [accept]="'.json'" #file_form></ngx-mat-file-input>
+
+          <button mat-icon-button matSuffix *ngIf="!file_form.empty" (click)="file_form.clear($event)">
+            <mat-icon>clear</mat-icon>
+          </button>
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="onUpload(file_form)">Upload</button>
+  </mat-card-content>
+</mat-card>

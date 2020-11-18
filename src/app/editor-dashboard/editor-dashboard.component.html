@@ -1,0 +1,33 @@
+<div class="dash-grid horizontal-center">
+    <!--<div *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{card.title}}
+            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item>Expand</button>
+              <button mat-menu-item>Remove</button>
+            </mat-menu>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+    -->
+  <div class="grid-cell horizontal-center vertical-center">
+    <app-file-uploader *ngIf="!showSummary" [mode]='"summary"' (fileUpload)='summary_file=$event; raiseFlags("summary")'></app-file-uploader>
+    <document-viewer *ngIf="showSummary" [text]="summary_file" [selectedView]="selectedView"></document-viewer>
+  </div>
+  <div class="grid-cell">
+    <app-dash-toolbar (toolbarClick)="selectedView=$event" *ngIf="showToolbar"></app-dash-toolbar>
+  </div>
+  <div class="grid-cell horizontal-center vertical-center">
+    <app-file-uploader *ngIf="!showSource" [mode]='"source"' (fileUpload)='source_file=$event; raiseFlags("source")'></app-file-uploader>
+    <document-viewer *ngIf="showSource" [text]="source_file" [selectedView]="selectedView"></document-viewer>
+  </div>
+</div>

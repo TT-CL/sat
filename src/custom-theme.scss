@@ -1,0 +1,80 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$summary-eval-primary: mat-palette($mat-indigo);
+//$summary-eval-accent: mat-palette($mat-pink, A200, A100, A400);
+$summary-eval-accent: mat-palette($mat-amber);
+
+// The warn palette is optional (defaults to red).
+$summary-eval-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$summary-eval-theme: mat-light-theme((
+  color: (
+    primary: $summary-eval-primary,
+    accent: $summary-eval-accent,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($summary-eval-theme);
+
+$iu-bubbles-primary: mat-palette($mat-light-blue);
+$iu-bubbles-accent: mat-palette($mat-yellow);
+$iu-bubbles-theme: mat-light-theme((
+  color:(
+    primary: $iu-bubbles-primary,
+    accent: $iu-bubbles-accent,
+  )
+));
+
+$word-bubbles-primary: mat-palette($mat-grey, 300);
+$word-bubbles-accent: mat-palette($mat-teal, A400);
+$word-bubbles-warn: mat-palette($mat-deep-orange);
+$word-bubbles-theme: mat-light-theme((
+  color:(
+    primary: $word-bubbles-primary,
+    accent: $word-bubbles-accent,
+    warn: $word-bubbles-warn,
+  )
+));
+
+$save-primary: mat-palette($mat-green, 600);
+$save-accent: mat-palette($mat-red, 600);
+$save-warn: mat-palette($mat-orange, 500);
+$save-theme: mat-light-theme((
+  color:(
+    primary: $save-primary,
+    accent: $save-accent,
+    warn: $save-warn,
+  )
+));
+
+
+.iu-bubbles{
+  @include angular-material-color($iu-bubbles-theme)
+}
+.word-bubbles{
+  @include angular-material-color($word-bubbles-theme)
+}
+
+.save-theme{
+  @include angular-material-color($save-theme)
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
