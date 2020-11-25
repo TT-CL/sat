@@ -101,9 +101,9 @@
       </div>
       <!-- Edit text View -->
       <div *ngSwitchCase="'editTextView'" class="card-content-with-toolbar">
-        <div>
+        <div class="vertical-center horizontal-center">
         <mat-form-field appearance="outline" class="input-field">
-          <textarea matInput class="edit-text-field">{{doc.getText()}}</textarea>
+          <textarea cols="260" matInput class="edit-text-field">{{doc.getText()}}</textarea>
         </mat-form-field>
         </div>
         <div>

@@ -14,15 +14,15 @@ export class EditorDashboardComponent implements OnInit{
   summary_file: Object = null;
   source_file: Object = null;
   //Default
-  //selectedView: String = "textView";
-  selectedView: String = "iuView";
+  selectedView: String = "textView";
+  //selectedView: String = "iuView";
 
   showToolbar: boolean = false;
   showSource: boolean = false;
   showSummary: boolean = false;
 
   // flick this on to automatically select the source files
-  dev_mode: boolean = true;
+  dev_mode: boolean = false;
 
 
   constructor(private textService : TextService) {}
