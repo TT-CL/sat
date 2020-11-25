@@ -75,10 +75,9 @@ export class DocumentViewerComponent implements OnInit {
 
     if(this.selected_iu == null){
       this.allowIuEdit = false;
-      this.allowIuCreation = false;
+      let sel_iu = this.doc.ius.get(this.selected_iu);
     }else {
       this.allowIuEdit = true;
-      this.allowIuCreation = false;
     }
   }
 
@@ -152,17 +151,15 @@ export class DocumentViewerComponent implements OnInit {
 
   iuEditSave(): void{
     //save the edits
-
+    for (var removeWord of this.removeWordSet){
+      removeWord.remove();
+    }
+    let iu = this.doc.ius.get(this.selected_iu);
+    for (var word of this.addWordSet){
+      iu.addWord(word);
+    }
     //return to IU mode
     this.iuEditCancel();
-  }
-
-  //this function checks edited segments and updates their information
-  segmentCleanup(seg): void{
-
-  }
-  iuCleanup(): void{
-
   }
 
   iuEditCancel(): void{
@@ -178,8 +175,10 @@ export class DocumentViewerComponent implements OnInit {
     this.addWordSet = [];
 
     //deselect the IU
-    for (var seg of this.doc.ius.get(this.selected_iu).childSegs){
-    seg['selected'] = false;
+    if (this.doc.ius.has(this.selected_iu)){
+      for (var seg of this.doc.ius.get(this.selected_iu).childSegs){
+        seg['selected'] = false;
+      }
     }
     this.selected_iu = null;
     this.allowIuEdit = false;

@@ -42,7 +42,7 @@ $iu-bubbles-theme: mat-light-theme((
   )
 ));
 
-$word-bubbles-primary: mat-palette($mat-grey, 50);
+$word-bubbles-primary: mat-palette($mat-grey, 300);
 $word-bubbles-accent: mat-palette($mat-teal, A400);
 $word-bubbles-warn: mat-palette($mat-deep-orange);
 $word-bubbles-theme: mat-light-theme((
@@ -82,4 +82,22 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mat-lime-bubble{
   color: #000 !important;
   background-color: #c6ff00 !important;
+}
+
+.disc-iu{
+  border: 2px !important;
+  border-style: dashed !important;
+  border-color: #64b5f6 !important;
+}
+
+.mat-ghost-bubble{
+  color: #e53935 !important;
+  background-color: #fafafa !important;
+  border: 2px !important;
+  border-style: dashed !important;
+  border-color: #e53935 !important;
+}
+
+.mat-ghost-bubble::after{
+  background-color: #e53935 !important;
 }

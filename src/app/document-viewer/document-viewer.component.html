@@ -18,14 +18,53 @@
         <div class="scrollable-content" *ngIf="bubbleMode=='iu'">
           <mat-chip-list
             aria-label="sentence chips" class="iu-bubbles">
-            <mat-chip
-              *ngFor="let seg of doc.segs" color="primary" (click)="bubbleClick(seg)" [selected]="seg.selected">
-              {{seg.getText(true)}}
-            </mat-chip>
+            <ng-template ngFor let-seg [ngForOf]="doc.segs">
+              <ng-template [ngIf]="seg.type=='ghost'" [ngIfElse]="ghostElse">
+                <mat-chip color="ghost-bubble" (click)="bubbleClick(seg)" [selected]="seg.selected">
+                  {{seg.getText(true)}}
+                </mat-chip>
+              </ng-template>
+              <ng-template #ghostElse>
+                <mat-chip color="primary" (click)="bubbleClick(seg)" [selected]="seg.selected" [ngClass]="{
+                  'disc-iu' : seg.iu.disc
+                }">
+                  {{seg.getText(true)}}
+                </mat-chip>
+              </ng-template>
+            </ng-template>
           </mat-chip-list>
         </div>
         <!-- WORD MODE -->
         <div class="scrollable-content" *ngIf="bubbleMode=='word'">
+          <mat-chip-list
+            aria-label="sentence chips" class="word-bubbles">
+            <ng-template ngFor let-seg [ngForOf]="doc.segs">
+
+                <ng-template [ngIf]="seg.iu.label==selected_iu" [ngIfElse]="notSelected">
+
+                    <mat-chip
+                      *ngFor="let word of seg.words" [color]="word.color" [selected]="word.selected" (click)="wordClick(word)">
+                      {{word.text}}
+                    </mat-chip>
+                </ng-template>
+                <ng-template #notSelected>
+
+                  <ng-template [ngIf]="seg.type=='ghost'" [ngIfElse]="ghostEditElse">
+                    <mat-chip color="ghost-bubble" selected="true">
+                      <div *ngFor="let word of seg.words" (click)="wordClick(word)" [ngStyle]="{'color':(addWordSet.includes(word)?'red':'black')}">{{word.text}}&nbsp;</div>
+                    </mat-chip>
+                  </ng-template>
+                  <ng-template #ghostEditElse>
+                    <mat-chip color="primary" selected="true" [ngClass]="{
+                      'disc-iu' : seg.iu.disc
+                    }">
+                      <div *ngFor="let word of seg.words" (click)="wordClick(word)" [ngStyle]="{'color':(addWordSet.includes(word)?'red':'black')}">{{word.text}}&nbsp;</div>
+                    </mat-chip>
+                  </ng-template>
+                </ng-template>
+            </ng-template>
+          </mat-chip-list>
+          <!--
           <mat-chip-list
             aria-label="sentence chips" class="word-bubbles">
             <mat-chip
@@ -33,6 +72,7 @@
               {{word.text}}
             </mat-chip>
           </mat-chip-list>
+          -->
         </div>
         <div>
           <mat-divider></mat-divider>
@@ -41,9 +81,11 @@
             [disabled]="!allowIuEdit" (click)="engageEditIuMode()">
               Edit IU  <mat-icon>create</mat-icon>
             </button>
-            <button mat-flat-button color="primary" [disabled]="!allowIuCreation">
+            <!--
+            <button mat-flat-button color="primary" [disabled]="!allowIuEdit">
               Create IU  <mat-icon>add_comment</mat-icon>
             </button>
+            -->
           </div>
           <div class="card-toolbar vertical-center save-theme" *ngIf="bubbleMode=='word'">
             <div class="expanding">
