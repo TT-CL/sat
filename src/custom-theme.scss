@@ -42,7 +42,7 @@ $iu-bubbles-theme: mat-light-theme((
   )
 ));
 
-$word-bubbles-primary: mat-palette($mat-grey, 300);
+$word-bubbles-primary: mat-palette($mat-grey, 50);
 $word-bubbles-accent: mat-palette($mat-teal, A400);
 $word-bubbles-warn: mat-palette($mat-deep-orange);
 $word-bubbles-theme: mat-light-theme((
@@ -78,3 +78,8 @@ $save-theme: mat-light-theme((
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-lime-bubble{
+  color: #000 !important;
+  background-color: #c6ff00 !important;
+}

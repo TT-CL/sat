@@ -8,8 +8,8 @@
     <div class="mat-card-dynamic-content" [ngSwitch]="selectedView">
       <!-- Text View -->
       <div *ngSwitchCase="'textView'" class="scrollable-content">
-        <p *ngFor="let sent of sents">
-          {{getSentText(sent)}}
+        <p *ngFor="let sent of doc.sents">
+          {{sent.getText()}}
         </p>
       </div>
       <!-- IU View -->
@@ -19,8 +19,8 @@
           <mat-chip-list
             aria-label="sentence chips" class="iu-bubbles">
             <mat-chip
-              *ngFor="let seg of segs" color="primary" (click)="bubbleClick(seg)" [selected]="seg.selected">
-              {{getSegText(seg, true)}}
+              *ngFor="let seg of doc.segs" color="primary" (click)="bubbleClick(seg)" [selected]="seg.selected">
+              {{seg.getText(true)}}
             </mat-chip>
           </mat-chip-list>
         </div>
@@ -29,7 +29,7 @@
           <mat-chip-list
             aria-label="sentence chips" class="word-bubbles">
             <mat-chip
-              *ngFor="let word of words" [color]="word.color" [selected]="word.selected" (click)="wordClick(word)">
+              *ngFor="let word of doc.words" [color]="word.color" [selected]="word.selected" (click)="wordClick(word)">
               {{word.text}}
             </mat-chip>
           </mat-chip-list>
@@ -61,7 +61,7 @@
       <div *ngSwitchCase="'editTextView'" class="card-content-with-toolbar">
         <div>
         <mat-form-field appearance="outline" class="input-field">
-          <textarea matInput class="edit-text-field">{{getDocText()}}</textarea>
+          <textarea matInput class="edit-text-field">{{doc.getText()}}</textarea>
         </mat-form-field>
         </div>
         <div>
