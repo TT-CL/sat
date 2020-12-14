@@ -18,6 +18,7 @@ export class DashToolbarComponent implements OnInit {
   tv_color = "accent";
   iv_color = "primary";
   etv_color = "primary";
+  liv_color = "primary";
 
   clickToolbar(view : string){
     this.selectedView = view;
@@ -26,21 +27,31 @@ export class DashToolbarComponent implements OnInit {
         this.tv_color = "accent";
         this.iv_color = "primary";
         this.etv_color = "primary";
+        this.liv_color = "primary";
         break;
       case "iuView":
         this.tv_color = "primary";
         this.iv_color = "accent";
         this.etv_color = "primary";
+        this.liv_color = "primary";
         break;
       case "editTextView":
         this.tv_color = "primary";
         this.iv_color = "primary";
         this.etv_color = "accent";
+        this.liv_color = "primary";
+        break;
+      case "linkIuView":
+        this.tv_color = "primary";
+        this.iv_color = "primary";
+        this.etv_color = "primary";
+        this.liv_color = "accent";
         break;
       default:
         this.tv_color = "accent";
         this.iv_color = "primary";
         this.etv_color = "primary";
+        this.liv_color = "primary";
 
         this.selectedView = "textView";
         break;

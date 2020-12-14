@@ -2,6 +2,8 @@ import {
   Component,
   OnInit,
   Input,
+  Output,
+  EventEmitter,
   SimpleChanges,
   AfterViewInit,
   TemplateRef,
@@ -22,9 +24,15 @@ import { TextService } from '../text.service';
 export class DocumentViewerComponent implements OnInit {
 
   @Input() text = {};
-  selected_iu : string = null;
+  selected_iu : IdeaUnit = null;
   bubbleMode : string = "iu";
   doc : IUCollection = new IUCollection();
+
+  //alignment data
+  @Input() iuLinkInput : IdeaUnit;
+  @Output() iuLinkOutput = new EventEmitter<IdeaUnit> ();
+  suggested_ius : IdeaUnit[] = [];
+
   //max_auto_iu_index : Number = 0;
   //max_man_iu_index : Number = 0;
 
@@ -54,6 +62,24 @@ export class DocumentViewerComponent implements OnInit {
       if (propName == "text"){
         this.doc.readDocument(this.text);
       }
+      if (propName == "selectedView"){
+        // clear the selections every time I change a view
+        this.toggleIuSelect();
+      }
+      if (propName == "iuLinkInput"){
+        if(this.iuLinkInput){
+          console.log("received IU: " + this.iuLinkInput.getText());
+          console.log("linked IUs: ");
+          console.log(this.iuLinkInput.linkedIus.length);
+        }
+        if(this.doc.doc_type == "Source text"){
+          console.log("highlighting random ius");
+          this.highlightIUs(this.iuLinkInput);
+          this.toggleIuSelect();
+        }else if (this.iuLinkInput){
+          this.selected_iu.toggleIuLink(this.iuLinkInput);
+        }
+      }
     }
   }
 
@@ -70,38 +96,62 @@ export class DocumentViewerComponent implements OnInit {
   allowIuCreation : boolean = false;
 
   bubbleClick(seg) : void {
-    console.log(seg);
-    this.toggleIuSelect(seg.iu.label);
+    //console.log(seg);
+    this.toggleIuSelect(seg.iu);
 
-    if(this.selected_iu == null){
-      this.allowIuEdit = false;
-      let sel_iu = this.doc.ius.get(this.selected_iu);
-    }else {
+    if(this.selected_iu){
       this.allowIuEdit = true;
+    }else {
+      this.allowIuEdit = false;
     }
   }
 
-  toggleIuSelect(iu_label) : void {
-    if (this.selected_iu != null){
-      if (this.selected_iu != iu_label){
-        for (var seg of this.doc.ius.get(this.selected_iu).childSegs){
-          seg['selected'] = false;
-        }
-        for (var seg of this.doc.ius.get(iu_label).childSegs){
-          seg['selected'] = true;
-        }
-        this.selected_iu = iu_label;
-      }else{
-        for (var seg of this.doc.ius.get(iu_label).childSegs){
+  linkClick(seg) : void {
+    this.toggleIuSelect(seg.iu);
+    if (this.doc.doc_type == "Summary text" && this.selected_iu){
+      console.log("this is a summary");
+      this.iuLinkOutput.emit(seg.iu);
+    }else if (this.doc.doc_type == "Source text" && this.selected_iu){
+      console.log("this is a source text");
+      this.iuLinkOutput.emit(seg.iu);
+      //if I have an input link
+      if (this.iuLinkInput){
+        seg.iu.toggleIuLink(this.iuLinkInput);
+      }
+    }
+  }
+
+  toggleIuSelect(tog_iu: IdeaUnit = null) : void {
+    if(tog_iu == null){
+      //default case: deselect the IUS
+      if (this.selected_iu){
+        for (var seg of this.selected_iu.childSegs){
           seg['selected'] = false;
         }
         this.selected_iu = null;
       }
     }else{
-      for (var seg of this.doc.ius.get(iu_label).childSegs){
-        seg['selected'] = true;
+      if (this.selected_iu){
+        if (this.selected_iu.label != tog_iu.label){
+          for (var seg of this.selected_iu.childSegs){
+            seg['selected'] = false;
+          }
+          for (var seg of tog_iu.childSegs){
+            seg['selected'] = true;
+          }
+          this.selected_iu = tog_iu;
+        }else{
+          for (var seg of tog_iu.childSegs){
+            seg['selected'] = false;
+          }
+          this.selected_iu = null;
+        }
+      }else{
+        for (var seg of tog_iu.childSegs){
+          seg['selected'] = true;
+        }
+        this.selected_iu = tog_iu;
       }
-      this.selected_iu = iu_label;
     }
   }
 
@@ -110,9 +160,9 @@ export class DocumentViewerComponent implements OnInit {
   addWordSet : Word[] = [];
 
   engageEditIuMode() : void {
-    console.log("Trying to edit Segment "+ this.selected_iu);
+    console.log("Trying to edit Segment "+ this.selected_iu.label);
     this.bubbleMode = "word";
-    for (let seg of this.doc.ius.get(this.selected_iu).childSegs){
+    for (let seg of this.selected_iu.childSegs){
       for (let word of seg['words']){
         word['color'] = 'accent';
         this.originalWordSet.push(word);
@@ -154,7 +204,7 @@ export class DocumentViewerComponent implements OnInit {
     for (var removeWord of this.removeWordSet){
       removeWord.remove();
     }
-    let iu = this.doc.ius.get(this.selected_iu);
+    let iu = this.selected_iu;
     for (var word of this.addWordSet){
       iu.addWord(word);
     }
@@ -175,8 +225,8 @@ export class DocumentViewerComponent implements OnInit {
     this.addWordSet = [];
 
     //deselect the IU
-    if (this.doc.ius.has(this.selected_iu)){
-      for (var seg of this.doc.ius.get(this.selected_iu).childSegs){
+    if (this.selected_iu){
+      for (var seg of this.selected_iu.childSegs){
         seg['selected'] = false;
       }
     }
@@ -185,5 +235,30 @@ export class DocumentViewerComponent implements OnInit {
 
     //enter IU mode
     this.bubbleMode = 'iu';
+  }
+
+  // this function highlights the similar IUS in the source text once a segment
+  // is clicked in the summary card
+  highlightIUs(summaryIU : IdeaUnit) : void{
+    //only highlight segments in the source text card
+    if(this.doc.doc_type == "Source text" && summaryIU){
+      // disable previous highlights
+      for (let iu of this.suggested_ius){
+        iu.suggested = false;
+      }
+      this.suggested_ius = [];
+
+      //select a random IU
+      console.log(this.doc.ius.size);
+      let random_idx = Math.floor(Math.random() * this.doc.ius.size);
+      let random_iu = Array.from(this.doc.ius)[random_idx];
+      console.log(random_iu[1].getText());
+      this.suggested_ius.push(random_iu[1]);
+
+      //highlight the suggestions
+      for (let iu of this.suggested_ius){
+        iu.suggested = true;
+      }
+    }
   }
 }

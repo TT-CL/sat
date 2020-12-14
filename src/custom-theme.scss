@@ -64,6 +64,15 @@ $save-theme: mat-light-theme((
   )
 ));
 
+$link-primary: mat-palette($mat-yellow, 500);
+$link-accent: mat-palette($mat-light-green, A700);
+$link-theme: mat-light-theme((
+  color:(
+    primary: $link-primary,
+    accent: $link-accent,
+  )
+));
+
 
 .iu-bubbles{
   @include angular-material-color($iu-bubbles-theme)
@@ -74,6 +83,10 @@ $save-theme: mat-light-theme((
 
 .save-theme{
   @include angular-material-color($save-theme)
+}
+
+.link-theme{
+  @include angular-material-color($link-theme)
 }
 
 html, body { height: 100%; }
@@ -100,4 +113,31 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .mat-ghost-bubble::after{
   background-color: #e53935 !important;
+}
+
+.mat-suggested-link{
+  color: #ff7043 !important;
+  background-color: #fbe9e7 !important;
+  border: 2px !important;
+  border-style: solid !important;
+  border-color: #ff7043 !important;
+}
+
+.mat-suggested-link::after{
+  background-color: #e53935 !important;
+}
+
+.mat-selected-link{
+  color: #000 !important;
+  background-color: #ffee58 !important;
+}
+
+.mat-linked-link{
+  color: #000 !important;
+  background-color: #64dd17 !important;
+}
+
+.mat-linked-link-selected{
+  color: #000 !important;
+  background-color: #76ff03 !important;
 }

@@ -128,12 +128,26 @@ export class IdeaUnit {
   childSegs : Set<Segment>; //set of child segments
 
   doc : IUCollection;       //reference to document container
+  linkedIus : IdeaUnit[];
+  suggested : boolean;
+  //color : string;
 
   constructor(doc : IUCollection, label: string, disc : boolean){
     this.label = label;
     this.childSegs = new Set();
     this.disc = disc;
     this.doc = doc;
+    this.linkedIus = [];
+    this.suggested = false;
+    //this.color = "Primary";
+  }
+
+  getText(): string{
+    let res = "";
+    for (let child of this.childSegs){
+      res = res + " " + child.getText();
+    }
+    return res.trim();
   }
 
   detachSegment(delSeg){
@@ -240,6 +254,14 @@ export class IdeaUnit {
     //remove the ghost structures from memory
 
     this.doc.removeIU(ghostIU)
+  }
+
+  toggleIuLink(toLink : IdeaUnit) : void {
+    if(this.linkedIus.includes(toLink)){
+      this.linkedIus.splice(this.linkedIus.indexOf(toLink),1);
+    }else{
+      this.linkedIus.push(toLink);
+    }
   }
 }
 

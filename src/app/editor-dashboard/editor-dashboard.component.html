@@ -21,13 +21,13 @@
     -->
   <div class="grid-cell horizontal-center vertical-center">
     <app-file-uploader *ngIf="!showSummary" [mode]='"summary"' (fileUpload)='summary_file=$event; raiseFlags("summary")'></app-file-uploader>
-    <document-viewer *ngIf="showSummary" [text]="summary_file" [selectedView]="selectedView"></document-viewer>
+    <document-viewer *ngIf="showSummary" [text]="summary_file" [selectedView]="selectedView" [iuLinkInput]="summaryLinkInput" (iuLinkOutput)="sourceLinkInput = $event"></document-viewer>
   </div>
   <div class="grid-cell">
     <app-dash-toolbar (toolbarClick)="selectedView=$event" *ngIf="showToolbar"></app-dash-toolbar>
   </div>
   <div class="grid-cell horizontal-center vertical-center">
     <app-file-uploader *ngIf="!showSource" [mode]='"source"' (fileUpload)='source_file=$event; raiseFlags("source")'></app-file-uploader>
-    <document-viewer *ngIf="showSource" [text]="source_file" [selectedView]="selectedView"></document-viewer>
+    <document-viewer *ngIf="showSource" [text]="source_file" [selectedView]="selectedView" [iuLinkInput]="sourceLinkInput" (iuLinkOutput)="summaryLinkInput = $event"></document-viewer>
   </div>
 </div>

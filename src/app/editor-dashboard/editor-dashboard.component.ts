@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 //import { map } from 'rxjs/operators';
 //import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
+import { Word, Sent, Segment, IdeaUnit, IUCollection } from '../data-objects';
 
 import { TextService } from '../text.service';
 
@@ -23,6 +24,13 @@ export class EditorDashboardComponent implements OnInit{
 
   // flick this on to automatically select the source files
   dev_mode: boolean = false;
+
+  // link data objects
+  // these objects are given in input to the two document-viewer modules
+  // summaryLinkInput will contain an IU that was selected in a
+  // source document-viewer and vice versa.
+  summaryLinkInput: IdeaUnit;
+  sourceLinkInput: IdeaUnit;
 
 
   constructor(private textService : TextService) {}
