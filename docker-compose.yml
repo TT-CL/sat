@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  web:
+    build: ./front-end/
+    ports:
+      - "5000:4201"
+    volumes:
+      - ./front-end:/opt/ng
+
+  computation:
+    build: ./computation/
+    volumes:
+      - ./computation/app:/app
+    ports:
+      - "8080:80"
