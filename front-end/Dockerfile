@@ -2,7 +2,7 @@
 FROM node:15.4.0-alpine3.10 as front-end
 WORKDIR /opt/ng
 COPY package.json ./
-RUN npm install -g @angular/cli@11.0.1
+RUN npm install -g @angular/cli@10.1.7
 RUN npm install --force
 
 ENV PATH="./node_modules/.bin:$PATH"
