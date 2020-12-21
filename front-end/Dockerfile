@@ -3,14 +3,14 @@ FROM node:15.4.0-alpine3.10 as front-end
 WORKDIR /opt/ng
 COPY package.json ./
 RUN npm install -g @angular/cli@10.1.7
-RUN npm install --force
+RUN npm install
 
 ENV PATH="./node_modules/.bin:$PATH"
 
 COPY . ./
 
 ## DEVELOPMENT
-RUN ng build
+##RUN ng build
 
 EXPOSE 4201
 CMD ["npm", "start"]

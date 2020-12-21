@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,7 +24,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { FileUploaderComponent } from './file-uploader/file-uploader.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MaterialFileInputModule } from 'ngx-material-file-input';
 import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import { DashToolbarComponent } from './dash-toolbar/dash-toolbar.component';
@@ -48,6 +48,7 @@ import { DashToolbarComponent } from './dash-toolbar/dash-toolbar.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatCardModule,
@@ -62,7 +63,6 @@ import { DashToolbarComponent } from './dash-toolbar/dash-toolbar.component';
     MatSidenavModule,
     MatListModule,
     MatFormFieldModule,
-    MaterialFileInputModule,
     MatInputModule
   ],
   providers: [],
