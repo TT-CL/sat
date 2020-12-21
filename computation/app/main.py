@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -35,3 +35,10 @@ def read_root():
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: str = None):
     return {"item_id": item_id, "q": q}
+
+@app.post("/raw/")
+async def label_raw_text(doc_type: str, file: UploadFile = File(...)):
+    parsedFile = import_file(file.file)['spacy']
+    label_ius(parsedFile)
+    json_data =prepare_json(parsedFile,file.filename, doc_type)
+    return json_data

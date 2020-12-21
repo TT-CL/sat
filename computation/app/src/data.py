@@ -56,6 +56,23 @@ def read_file(filename):
     sents = sent_tokenize(joined_lines)
     return sents
 
+##Simple buffer reader. Output is a list of sentences
+def read_buffer(fileBuffer):
+    # read file from disk
+    lines = []
+    byteString = fileBuffer.read()
+    decodedString = byteString.decode('utf-8')
+    #Tokenize sentences
+    for row in decodedString.splitlines():
+        #Skip empty lines and start lines
+        cleaned_row = clean_str(row)
+        if cleaned_row != "" and cleaned_row != "start":
+            lines.append(cleaned_row)
+    fileBuffer.close()
+    joined_lines = " ".join(lines)
+    sents = sent_tokenize(joined_lines)
+    return sents
+
 ## Simple reader for files containing filters
 def read_filter(filename):
     # read file from disk
@@ -99,8 +116,12 @@ def parse_file(sents, input_models=["spacy"]):
 # It will read from disk, perform cleanup and parse
 # The @models argument accepts a list containing the parse models that the user
 #   wishes to adopt
-def import_file(filename, models=None):
-    raws = read_file(filename)
+def import_file(f, models=["spacy"]):
+    raws = None;
+    if isinstance(f, str):
+        raws = read_file(f)
+    else:
+        raws = read_buffer(f)
     file = parse_file(raws, models)
     return file
 
@@ -187,12 +208,10 @@ def export_labeled_ius(text, filename):
         file.write(raw)
     return None
 
-def export_labeled_json(text, filename, doc_name):
+def prepare_json(text, doc_name, doc_type):
     data = {}
     data['doc_name'] = doc_name
-    data['doc_type'] = "Source text"
-    if doc_name != "source":
-        data['doc_type'] = "Summary text"
+    data['doc_type'] = doc_type
     data['sents']=[]
     disc_labels = [] #list of discontinuous labels
     idx_list = {}
@@ -230,5 +249,12 @@ def export_labeled_json(text, filename, doc_name):
         for word in sent["words"]:
             if word['iu_label'] in disc_labels:
                 word['disc'] = True
+    return data
+
+def export_labeled_json(text, filename, doc_name):
+    doc_type = "Source text"
+    if doc_name != "source":
+        data['doc_type'] = "Summary text"
+    data = prepare_json(text,doc_name,doc_type)
     with open(filename, 'w') as outputfile:
         json.dump(data,outputfile)
