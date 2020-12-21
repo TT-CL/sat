@@ -42,7 +42,7 @@ def label_ius(file):
         color_ius(sentence, to_process, s_idx)
 
         inline_fixes(sentence)
-        print(iu_pprint(sentence))
+        #print(iu_pprint(sentence))
         #print()
         s_idx +=1
     return None
@@ -87,7 +87,7 @@ def order_nodes_bfs_dict(nodelist):
         iu_text = " ".join(t.text for t in node.subtree)
         #if the iu.lowercase is in the filtered list:
         if iu_text.lower() in filtered_ius:
-            print("Filtering IU: {}".format(iu_text))
+            #print("Filtering IU: {}".format(iu_text))
             order.remove(node_arr)
     order.reverse() # the extraction order needs to be reversed
     return order
@@ -226,7 +226,8 @@ def tag_parens(sentence):
                 if is_isolated(slice):
                     slice_head = find_seq_head(slice)
                     if citation_check(slice_head):
-                        print("R3parens - filtered due to citation")
+                        #print("R3parens - filtered due to citation")
+                        pass
                     else:
                         tag_list.append([slice_head,"R3.1"])
         word_idx +=1
@@ -247,7 +248,8 @@ def tag_hyphens(sentence):
                 if is_isolated(slice):
                     slice_head = find_seq_head(slice)
                     if citation_check(slice_head):
-                        print("R3hypen - filtered due to citation")
+                        #print("R3hypen - filtered due to citation")
+                        pass
                     else:
                         tag_list.append([slice_head,"R3.1"])
                 else:
@@ -283,8 +285,9 @@ def tag_commas(sentence):
                 slice_head = find_seq_head(slice)
                 ## RULE 3 EXCEPTIONS
                 if citation_check(slice_head):
-                    print("R3comma - filtered due to citation")
-                    print("--- {} ---".format(slice))
+                    #print("R3comma - filtered due to citation")
+                    #print("--- {} ---".format(slice))
+                    pass
                 elif stopword_check(slice_head):
                     #print("R3B - filtered due to stopword_check")
                     #print("--- {} ---".format(slice))
@@ -319,7 +322,8 @@ def is_appos(word):
         # check if the apposition is a citation:
         if citation_check(word):
             #Citation!
-            print("R3.2 - filtered due to citation")
+            #print("R3.2 - filtered due to citation")
+            pass
         else:
             res = True
     return res
@@ -329,8 +333,8 @@ def is_infinitive_verbal(word):
     res = False
     #a verb is infinitive
     if word.pos_ is "VERB" and word.dep_ is "xcomp" and word.tag_ == "VB":
-        print("VERBAL!")
-        print("word: {}, head: {}, head.pos: {}".format(word, word.head, word.head.pos_))
+        #print("VERBAL!")
+        #print("word: {}, head: {}, head.pos: {}".format(word, word.head, word.head.pos_))
         #Check if we have the auxiliar TO
         for child in word.children:
             if child.tag_ == "TO":
