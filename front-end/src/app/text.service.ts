@@ -1,27 +1,50 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
+
+import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 
 import SampleSummary from './samples/2.json';
 import SampleSource from './samples/source.json';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type':  'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class TextService {
 
-  file: Object = null;
-
-  setFile(file): void {
-    this.file = file
+  constructor( private http: HttpClient ) {
   }
 
-  constructor() { }
+  private handleError(){
+    console.log("Server Error");
+  }
 
-  getSummary(): Observable<object> {
+  getLabelledText(mode: string, text : File): Observable<HttpEvent<any>> {
+    let url = "/computation/raw/"
+    let formData = new FormData();
+    formData.append('file', text);
+    formData.append('doc_type', mode);
+
+    const options = {
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('POST', url, formData, options);
+
+    return this.http.request(req);
+  }
+
+  getSampleSummary(): Observable<object> {
     return of(SampleSummary);
   }
 
-  getSource(): Observable<object> {
+  getSampleSource(): Observable<object> {
     return of(SampleSource);
   }
 }

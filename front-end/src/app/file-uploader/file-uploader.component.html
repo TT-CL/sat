@@ -5,16 +5,33 @@
   </mat-card-header>
   <mat-divider></mat-divider>
   <mat-card-content class="uploader-buttons horizontal-center vertical-center">
-    <input type="file" style="display: none" #fileInput accept=".json" (change)="onChangeFileInput()" />
-    <button mat-raised-button color="primary" class="file-select-button" (click)="onClickFileInputButton()">
-      <!--<mat-icon>attach_file</mat-icon>-->
-      Select a file
-    </button>
+    <!-- Upload raw text file -->
+    <div>
+      <input type="file" style="display: none" #fileInput accept=".txt" (change)="onChangeFileInput()" />
+      <button mat-raised-button color="primary" class="file-select-button" (click)="onClickFileInputButton()">
+        <!--<mat-icon>attach_file</mat-icon>-->
+        Select a new file
+      </button>
 
-    <p class="file-name" *ngIf="!file; else fileName">No file was selected</p>
-    <ng-template #fileName>
-      <p class="file-name">{{ file?.name }}</p>
-    </ng-template>
-    <button mat-flat-button color="primary" (click)="this.loadJson()">Upload</button>
+      <p class="file-name" *ngIf="!file; else rawFileName">No file was selected</p>
+      <ng-template #rawFileName>
+        <p class="file-name">{{ file?.name }}</p>
+      </ng-template>
+      <button mat-flat-button color="primary" (click)="this.loadTxt()">Upload file</button>
+    </div>
+    <!-- Load from disk backup -->
+    <div>
+      <input type="file" style="display: none" #backupFileInput accept=".json" (change)="onChangeBackupFileInput()" />
+      <button mat-raised-button color="primary" class="file-select-button" (click)="onClickBackupFileInputButton()">
+        <!--<mat-icon>attach_file</mat-icon>-->
+        Select a backup file
+      </button>
+
+      <p class="file-name" *ngIf="!backupFile; else backupFileName">No file was selected</p>
+      <ng-template #backupFileName>
+        <p class="file-name">{{ backupFile?.name }}</p>
+      </ng-template>
+      <button mat-flat-button color="primary" (click)="this.loadJson()">Load from disk</button>
+    </div>
   </mat-card-content>
 </mat-card>

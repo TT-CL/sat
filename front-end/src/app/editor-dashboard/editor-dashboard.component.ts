@@ -56,9 +56,9 @@ export class EditorDashboardComponent implements OnInit{
 
   ngOnInit() : void {
       if(this.dev_mode){
-        this.textService.getSource()
+        this.textService.getSampleSource()
           .subscribe(source => this.source_file = source);
-        this.textService.getSummary()
+        this.textService.getSampleSummary()
           .subscribe(summary => this.summary_file = summary);
 
         this.raiseFlags("source");
