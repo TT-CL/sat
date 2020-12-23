@@ -72,7 +72,7 @@ export class DocumentViewerComponent implements OnInit {
           console.log("linked IUs: ");
           console.log(this.iuLinkInput.linkedIus.length);
         }
-        if(this.doc.doc_type == "Source text"){
+        if(this.doc.doc_type == "source"){
           console.log("highlighting random ius");
           this.highlightIUs(this.iuLinkInput);
           this.toggleIuSelect();
@@ -108,10 +108,10 @@ export class DocumentViewerComponent implements OnInit {
 
   linkClick(seg) : void {
     this.toggleIuSelect(seg.iu);
-    if (this.doc.doc_type == "Summary text" && this.selected_iu){
+    if (this.doc.doc_type == "summary" && this.selected_iu){
       console.log("this is a summary");
       this.iuLinkOutput.emit(seg.iu);
-    }else if (this.doc.doc_type == "Source text" && this.selected_iu){
+    }else if (this.doc.doc_type == "source" && this.selected_iu){
       console.log("this is a source text");
       this.iuLinkOutput.emit(seg.iu);
       //if I have an input link
@@ -241,7 +241,7 @@ export class DocumentViewerComponent implements OnInit {
   // is clicked in the summary card
   highlightIUs(summaryIU : IdeaUnit) : void{
     //only highlight segments in the source text card
-    if(this.doc.doc_type == "Source text" && summaryIU){
+    if(this.doc.doc_type == "source" && summaryIU){
       // disable previous highlights
       for (let iu of this.suggested_ius){
         iu.suggested = false;

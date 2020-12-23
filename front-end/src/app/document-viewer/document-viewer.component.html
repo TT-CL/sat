@@ -123,7 +123,7 @@
             <ng-template ngFor let-seg [ngForOf]="doc.segs">
               <!-- the IU is linked to something else -->
               <div [ngSwitch]="seg.doc.doc_type">
-                <div *ngSwitchCase="'Summary text'">
+                <div *ngSwitchCase="'summary'">
                   <!-- If a summary IU has ANY links color it green -->
                   <ng-template [ngIf]="seg.iu.linkedIus.length > 0" [ngIfElse]="notLinked">
                     <ng-template [ngIf]="seg.selected" [ngIfElse]="summaryLinkNotSelected">
@@ -139,7 +139,7 @@
                   </ng-template>
                 </div>
 
-                <div *ngSwitchCase="'Source text'">
+                <div *ngSwitchCase="'source'">
                   <!-- if the input iu is inside the links of a source IU color it green -->
                   <ng-template [ngIf]="seg.iu.linkedIus.includes(this.iuLinkInput)" [ngIfElse]="notLinked">
                     <ng-template [ngIf]="seg.selected" [ngIfElse]="sourceLinkNotSelected">
