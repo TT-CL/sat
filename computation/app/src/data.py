@@ -10,7 +10,7 @@
 #import nltk
 import csv, json
 from nltk.tokenize import sent_tokenize#, word_tokenize
-from nltk.parse.corenlp import *
+#from nltk.parse.corenlp import *
 import spacy
 from spacy.tokens import Token
 import re
@@ -22,8 +22,8 @@ Token.set_extension("iu_index", default=-1, force=True)
 
 #from pathlib import Path
 nlp = spacy.load("en_core_web_sm")
-dep_parser = CoreNLPDependencyParser(url="http://localhost:9000")
-gen_parser = CoreNLPParser(url="http://localhost:9000")
+#dep_parser = CoreNLPDependencyParser(url="http://localhost:9000")
+#gen_parser = CoreNLPParser(url="http://localhost:9000")
 acceptable_models = ["spacy","corenlp_dep","corenlp_ps"]
 # %%codecell
 # functions
