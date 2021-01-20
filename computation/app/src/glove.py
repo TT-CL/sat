@@ -1,6 +1,11 @@
 from gensim.models.keyedvectors import KeyedVectors
 from autocorrect import Speller
 from json_tricks import dumps
+import spacy
+
+from numpy import mean as np_mean
+
+nlp = spacy.load("en_core_web_sm")
 
 model_location = "./models/glove.6B.50d.txt"
 spell = Speller()
@@ -44,3 +49,19 @@ class GloveDic():
 
     def resetMisses(self):
         self.misses = []
+
+    def sentLookup(self, sent, http=False):
+        ##tokenize the sentence
+        tokens = nlp(sent)
+        ##using list comprehension to obtain the vectors for each word
+        vectors = [self.lookup(token.text,autocorrect=True,http=False) for token in tokens]
+        ##replacing nones with 0s
+        vectors = [vect if vect is not None else 0 for vect in vectors]
+        ##averaging the vectors
+        res = np_mean(vectors, axis=0)
+        if http is True:
+            ##json preparation for HTTP protocol
+            temp = {'sent': sent,
+                    'vector': res}
+            res = dumps(temp)
+        return res

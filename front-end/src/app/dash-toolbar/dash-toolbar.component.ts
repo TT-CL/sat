@@ -1,4 +1,6 @@
-import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges} from '@angular/core';
+
+import { Word, Sent, Segment, IdeaUnit, IUCollection } from '../data-objects';
 
 @Component({
   selector: 'app-dash-toolbar',
@@ -11,6 +13,9 @@ export class DashToolbarComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+
+  @Input() link_disabled_flag: boolean = true;
 
   @Output() toolbarClick = new EventEmitter<string> ();
 
@@ -57,6 +62,6 @@ export class DashToolbarComponent implements OnInit {
         break;
     }
     this.toolbarClick.emit(view);
-    console.log("click");
+    //console.log("click");
   }
 }

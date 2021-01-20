@@ -23,10 +23,10 @@ import { TextService } from '../text.service';
 })
 export class DocumentViewerComponent implements OnInit {
 
-  @Input() text = {};
   selected_iu : IdeaUnit = null;
   bubbleMode : string = "iu";
-  doc : IUCollection = new IUCollection();
+  @Input() doc : IUCollection = new IUCollection();;
+  @Input() other_doc : IUCollection = new IUCollection();;
 
   //alignment data
   @Input() iuLinkInput : IdeaUnit;
@@ -59,9 +59,11 @@ export class DocumentViewerComponent implements OnInit {
       console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
       console.log("b");
       */
+      /*
       if (propName == "text"){
         this.doc.readDocument(this.text);
       }
+      */
       if (propName == "selectedView"){
         // clear the selections every time I change a view
         this.toggleIuSelect();

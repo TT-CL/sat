@@ -6,6 +6,8 @@ from src.data import *
 from src.glove import GloveDic
 from src.extract import label_ius
 
+from json_tricks import loads
+
 
 app = FastAPI()
 
@@ -40,4 +42,20 @@ async def label_raw_text(doc_type: str = Form(...), file: UploadFile = File(...)
 @app.post("/lookup/word/")
 async def lookup_word(word: str = Form(...), autocorrect: bool = Form(...)):
     result=model.lookup(word,autocorrect,http=True)
+    return result
+
+@app.post("/lookup/sent/")
+async def lookup_word(sent: str = Form(...)):
+    result=model.sentLookup(sent,http=True)
+    return result
+
+@app.post("/compute/similarities/")
+async def lookup_word(
+        source_file: str = Form(...),
+        summary_file: str =Form(...)):
+    source = loads(source_file)
+    summary = loads(summary_file)
+    print(source)
+    print(summary)
+    result = summary
     return result

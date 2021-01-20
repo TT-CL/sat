@@ -289,6 +289,10 @@ export class IUCollection {
     this.manual_iu_count = 0;
   }
 
+  empty(): boolean{
+    return this.words.length == 0;
+  }
+
   private parseFile(text: object){
     console.log(text);
     this.doc_name = text["doc_name"];

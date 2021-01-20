@@ -40,6 +40,21 @@ export class TextService {
     return this.http.request(req);
   }
 
+  getSimPredictions(source : Object, summary: Object): Observable<HttpEvent<any>> {
+    let url = "/compute/similarities/"
+    let formData = new FormData();
+    formData.append('source_file', source);
+    formData.append('summary_file', summary);
+
+    const options = {
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('POST', url, formData, options);
+
+    return this.http.request(req);
+  }
+
   getSampleSummary(): Observable<object> {
     return of(SampleSummary);
   }

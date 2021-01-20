@@ -12,10 +12,11 @@ import { TextService } from '../text.service';
 })
 export class EditorDashboardComponent implements OnInit{
 
-  summary_file: Object = null;
-  source_file: Object = null;
+  summary_file: IUCollection = new IUCollection();;
+  source_file: IUCollection = new IUCollection();;
   //Default
   selectedView: String = "textView";
+  link_disabled_flag : boolean = true;
   //selectedView: String = "iuView";
 
   showToolbar: boolean = false;
@@ -66,4 +67,21 @@ export class EditorDashboardComponent implements OnInit{
       }
     }
 
+    parseSummary(body) : void {
+      this.summary_file.readDocument(body);
+      this.raiseFlags("summary");
+      if(! this.source_file.empty()){
+        console.log("both files uploaded");
+        this.link_disabled_flag = false;
+      }
+    }
+
+    parseSource(body) : void {
+      this.source_file.readDocument(body);
+      this.raiseFlags("source");
+      if(! this.summary_file.empty()){
+        console.log("both files uploaded");
+        this.link_disabled_flag = false;
+      }
+    }
 }
