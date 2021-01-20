@@ -49,13 +49,11 @@ async def lookup_word(sent: str = Form(...)):
     result=model.sentLookup(sent,http=True)
     return result
 
-@app.post("/compute/similarities/")
+@app.post("/similarities/")
 async def lookup_word(
         source_file: str = Form(...),
         summary_file: str =Form(...)):
     source = loads(source_file)
     summary = loads(summary_file)
-    print(source)
-    print(summary)
     result = summary
     return result

@@ -15,6 +15,8 @@ import { ComponentPortal, Portal, TemplatePortal } from '@angular/cdk/portal';
 import { Word, Sent, Segment, IdeaUnit, IUCollection } from '../data-objects';
 import { TextService } from '../text.service';
 
+import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
+
 
 @Component({
   selector: 'document-viewer',
@@ -23,10 +25,14 @@ import { TextService } from '../text.service';
 })
 export class DocumentViewerComponent implements OnInit {
 
+  constructor( private textService : TextService ){  }
+
   selected_iu : IdeaUnit = null;
   bubbleMode : string = "iu";
-  @Input() doc : IUCollection = new IUCollection();;
-  @Input() other_doc : IUCollection = new IUCollection();;
+  @Input() doc : IUCollection = new IUCollection();
+  @Input() other_doc : IUCollection = new IUCollection();
+  similarities : Object = null;
+
 
   //alignment data
   @Input() iuLinkInput : IdeaUnit;
@@ -39,9 +45,6 @@ export class DocumentViewerComponent implements OnInit {
   //viewSelector
   @Input() selectedView: string = "textView";
 
-  constructor() {}
-
-
   ngOnInit(){
     //this.getText();
   }
@@ -52,21 +55,29 @@ export class DocumentViewerComponent implements OnInit {
   //procced when the file changes (file upload)
   ngOnChanges(changes: SimpleChanges) {
     for (const propName in changes) {
-      /*
-      const chng = changes[propName];
-      const cur  = JSON.stringify(chng.currentValue);
-      const prev = JSON.stringify(chng.previousValue);
-      console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
-      console.log("b");
-      */
-      /*
-      if (propName == "text"){
-        this.doc.readDocument(this.text);
-      }
-      */
       if (propName == "selectedView"){
         // clear the selections every time I change a view
         this.toggleIuSelect();
+        if (this.selectedView == "linkIuView" && this.doc.doc_type == "source"){
+          // entering IU link mode
+          // fetch suggested links
+          this.textService.getSimPredictions(this.doc, this.other_doc).subscribe(
+          event => {
+            if (event.type == HttpEventType.UploadProgress) {
+              const percentDone = Math.round(100 * event.loaded / event.total);
+              console.log(`Gathering similarities: ${percentDone}% done.`);
+            } else if (event instanceof HttpResponse) {
+              console.log('Similarities are ready!');
+              this.similarities = event.body;
+              console.log(this.similarities);
+            }
+          },
+          (err) => {
+            console.log("Similarities Error:", err);
+          }, () => {
+            console.log("Similarities calculated successfully");
+          });
+        }
       }
       if (propName == "iuLinkInput"){
         if(this.iuLinkInput){

@@ -12,8 +12,8 @@ import { TextService } from '../text.service';
 })
 export class EditorDashboardComponent implements OnInit{
 
-  summary_file: IUCollection = new IUCollection();;
-  source_file: IUCollection = new IUCollection();;
+  summary_file: IUCollection = new IUCollection();
+  source_file: IUCollection = new IUCollection();
   //Default
   selectedView: String = "textView";
   link_disabled_flag : boolean = true;
@@ -58,12 +58,13 @@ export class EditorDashboardComponent implements OnInit{
   ngOnInit() : void {
       if(this.dev_mode){
         this.textService.getSampleSource()
-          .subscribe(source => this.source_file = source);
+          .subscribe(source => this.source_file.readDocument(source));
         this.textService.getSampleSummary()
-          .subscribe(summary => this.summary_file = summary);
+          .subscribe(summary => this.summary_file.readDocument(summary));
 
         this.raiseFlags("source");
         this.raiseFlags("summary");
+        this.link_disabled_flag = false;
       }
     }
 
