@@ -55,5 +55,7 @@ async def lookup_word(
         summary_file: str =Form(...)):
     source = loads(source_file)
     summary = loads(summary_file)
-    result = summary
+    #print("source")
+    #print(source)
+    result = model.calcSims(source, summary)
     return result

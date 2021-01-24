@@ -58,6 +58,8 @@ export class DocumentViewerComponent implements OnInit {
       if (propName == "selectedView"){
         // clear the selections every time I change a view
         this.toggleIuSelect();
+        // clear similarities predictions when changing views
+        this.similarities = null;
         if (this.selectedView == "linkIuView" && this.doc.doc_type == "source"){
           // entering IU link mode
           // fetch suggested links
@@ -86,7 +88,6 @@ export class DocumentViewerComponent implements OnInit {
           console.log(this.iuLinkInput.linkedIus.length);
         }
         if(this.doc.doc_type == "source"){
-          console.log("highlighting random ius");
           this.highlightIUs(this.iuLinkInput);
           this.toggleIuSelect();
         }else if (this.iuLinkInput){
@@ -254,19 +255,19 @@ export class DocumentViewerComponent implements OnInit {
   // is clicked in the summary card
   highlightIUs(summaryIU : IdeaUnit) : void{
     //only highlight segments in the source text card
-    if(this.doc.doc_type == "source" && summaryIU){
+    if(this.doc.doc_type == "source" && summaryIU && this.similarities != null){
       // disable previous highlights
       for (let iu of this.suggested_ius){
         iu.suggested = false;
       }
       this.suggested_ius = [];
 
-      //select a random IU
-      console.log(this.doc.ius.size);
-      let random_idx = Math.floor(Math.random() * this.doc.ius.size);
-      let random_iu = Array.from(this.doc.ius)[random_idx];
-      console.log(random_iu[1].getText());
-      this.suggested_ius.push(random_iu[1]);
+      let local_sims = this.similarities[summaryIU.label];
+      for (var i=0; i<5; i++){
+        let label = local_sims[i][1];
+        let suggested = this.doc.ius.get(label);
+        this.suggested_ius.push(suggested);
+      }
 
       //highlight the suggestions
       for (let iu of this.suggested_ius){
