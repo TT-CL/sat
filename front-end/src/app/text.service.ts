@@ -43,8 +43,8 @@ export class TextService {
   getSimPredictions(source : any, summary: any): Observable<HttpEvent<any>> {
     let url = "/computation/similarities/"
     let formData = new FormData();
-    formData.append('source_file', JSON.stringify(source));
-    formData.append('summary_file', JSON.stringify(summary));
+    formData.append('source_file', source.jsonSerialize());
+    formData.append('summary_file', summary.jsonSerialize());
 
     const options = {
       reportProgress: true,

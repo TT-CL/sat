@@ -411,4 +411,28 @@ export class IUCollection {
     }
     this.ius.delete(iu.label);
   }
+
+  //this function prepares a new JSON object and serializes it
+  //necessary due to the circular references in my data structure
+  jsonSerialize() : string {
+    var json = {"doc_name" : this.doc_name,
+                "doc_type" : this.doc_type };
+    let tempIus = {};
+    this.ius.forEach(function(iu, index) {
+      //temp structure for array of words
+      let tempSeg = []
+      //explore the child segments
+      for (var s of iu.childSegs){
+        //extract the words from each segment
+        for (var w of s.words){
+          tempSeg.push(w.text);
+        }
+      }
+      // associate the array of words to the iu index
+      tempIus[index]=tempSeg;
+    });
+
+    json["ius"] = tempIus;
+    return JSON.stringify(json);
+  }
 }
