@@ -14,6 +14,9 @@ import {
 import { ComponentPortal, Portal, TemplatePortal } from '@angular/cdk/portal';
 import { Word, Sent, Segment, IdeaUnit, IUCollection } from '../data-objects';
 import { TextService } from '../text.service';
+import { ProgressSpinnerService } from '../progress-spinner.service';
+import { Overlay, PositionStrategy, OverlayRef } from '@angular/cdk/overlay';
+import {LoadOverlayComponent} from '../load-overlay/load-overlay.component';
 
 import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 
@@ -25,14 +28,14 @@ import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 })
 export class DocumentViewerComponent implements OnInit {
 
-  constructor( private textService : TextService ){  }
+  constructor( private textService : TextService, private overlay: Overlay, private spinnerService : ProgressSpinnerService){  }
+
 
   selected_iu : IdeaUnit = null;
   bubbleMode : string = "iu";
   @Input() doc : IUCollection = new IUCollection();
   @Input() other_doc : IUCollection = new IUCollection();
   similarities : Object = null;
-
 
   //alignment data
   @Input() iuLinkInput : IdeaUnit;
@@ -44,6 +47,7 @@ export class DocumentViewerComponent implements OnInit {
 
   //viewSelector
   @Input() selectedView: string = "textView";
+
 
   ngOnInit(){
     //this.getText();
@@ -60,9 +64,12 @@ export class DocumentViewerComponent implements OnInit {
         this.toggleIuSelect();
         // clear similarities predictions when changing views
         this.similarities = null;
+        // hide loading spinner if shown
+        this.hideSpinner();
         if (this.selectedView == "linkIuView" && this.doc.doc_type == "source"){
           // entering IU link mode
           // fetch suggested links
+          this.showSpinner();
           this.textService.getSimPredictions(this.doc, this.other_doc).subscribe(
           event => {
             if (event.type == HttpEventType.UploadProgress) {
@@ -72,12 +79,15 @@ export class DocumentViewerComponent implements OnInit {
               console.log('Similarities are ready!');
               this.similarities = event.body;
               console.log(this.similarities);
+              this.hideSpinner();
             }
           },
           (err) => {
             console.log("Similarities Error:", err);
+            this.hideSpinner();
           }, () => {
             console.log("Similarities calculated successfully");
+            this.hideSpinner();
           });
         }
       }
@@ -90,11 +100,21 @@ export class DocumentViewerComponent implements OnInit {
         if(this.doc.doc_type == "source"){
           this.highlightIUs(this.iuLinkInput);
           this.toggleIuSelect();
-        }else if (this.iuLinkInput){
+        }else if(this.iuLinkInput && this.selected_iu){
           this.selected_iu.toggleIuLink(this.iuLinkInput);
         }
       }
     }
+  }
+
+  // linking mode spinner
+  @ViewChild("spinnerOrigin") spinnerOrigin: ElementRef;
+  spinnerRef = null;
+  showSpinner(){
+    this.spinnerRef = this.spinnerService.showProgress(this.spinnerOrigin);
+  }
+  hideSpinner(){
+    this.spinnerService.detach(this.spinnerRef);
   }
 
   /**

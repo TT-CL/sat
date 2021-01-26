@@ -27,9 +27,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import { DashToolbarComponent } from './dash-toolbar/dash-toolbar.component';
-
-
-
+import { LoadOverlayComponent } from './load-overlay/load-overlay.component';
+import { ProgressSpinnerService } from './progress-spinner.service';
+import { DynamicOverlay } from './load-overlay/dynamic-overlay.service';
+import { DynamicOverlayContainer } from './load-overlay/dynamic-overlay-container.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {OverlayModule} from '@angular/cdk/overlay';
 
 
 
@@ -44,7 +47,8 @@ import { DashToolbarComponent } from './dash-toolbar/dash-toolbar.component';
     EditorDashboardComponent,
     NavigationComponent,
     FileUploaderComponent,
-    DashToolbarComponent
+    DashToolbarComponent,
+    LoadOverlayComponent
   ],
   imports: [
     BrowserModule,
@@ -63,9 +67,11 @@ import { DashToolbarComponent } from './dash-toolbar/dash-toolbar.component';
     MatSidenavModule,
     MatListModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    OverlayModule,
+    MatProgressSpinnerModule
   ],
-  providers: [],
+  providers: [ProgressSpinnerService, DynamicOverlay, DynamicOverlayContainer],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

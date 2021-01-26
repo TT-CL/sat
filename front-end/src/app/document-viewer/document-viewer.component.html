@@ -1,3 +1,4 @@
+<div #spinnerOrigin>
 <mat-card class="document-card" *ngIf="doc">
   <mat-card-header>
     <mat-card-title>{{doc.doc_name}}</mat-card-title>
@@ -206,4 +207,15 @@
     </mat-tab-group>
     -->
   </mat-card-content>
+  <!--
+  <ng-template
+    cdkConnectedOverlay
+    [cdkConnectedOverlayOrigin]="spinnerOrigin"
+    [cdkConnectedOverlayOpen]="showSpinner"
+    [cdkConnectedOverlayPositionStrategy]="PositionStrategy"
+  >
+    <app-load-overlay></app-load-overlay>
+  </ng-template>
+  -->
 </mat-card>
+</div>
