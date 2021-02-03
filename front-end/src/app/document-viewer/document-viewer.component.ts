@@ -96,12 +96,21 @@ export class DocumentViewerComponent implements OnInit {
           console.log("received IU: " + this.iuLinkInput.getText());
           console.log("linked IUs: ");
           console.log(this.iuLinkInput.linkedIus.length);
+          console.log(this.iuLinkInput.linkedIus);
         }
+        console.log("this.doc.doc_type");
+        console.log(this.doc.doc_type);
         if(this.doc.doc_type == "source"){
           this.highlightIUs(this.iuLinkInput);
           this.toggleIuSelect();
-        }else if(this.iuLinkInput && this.selected_iu){
-          this.selected_iu.toggleIuLink(this.iuLinkInput);
+        }else{
+          console.log("linkinput and selectediu");
+          console.log(this.iuLinkInput);
+          console.log(this.selected_iu);
+          if(this.iuLinkInput && this.selected_iu){
+            console.log("unlinking");
+            this.selected_iu.toggleIuLink(this.iuLinkInput);
+          }
         }
       }
     }
@@ -141,17 +150,20 @@ export class DocumentViewerComponent implements OnInit {
   }
 
   linkClick(seg) : void {
-    this.toggleIuSelect(seg.iu);
-    if (this.doc.doc_type == "summary" && this.selected_iu){
-      console.log("this is a summary");
+    console.log("click");
+    this.toggleIuSelect(seg.iu)
+    if (this.doc.doc_type == "summary"){
+      console.log("emitting iu from summary");
+      this.iuLinkOutput.emit(new IdeaUnit());
       this.iuLinkOutput.emit(seg.iu);
-    }else if (this.doc.doc_type == "source" && this.selected_iu){
-      console.log("this is a source text");
-      this.iuLinkOutput.emit(seg.iu);
+    }else if (this.doc.doc_type == "source"){
+      this.iuLinkOutput.emit(new IdeaUnit());
       //if I have an input link
       if (this.iuLinkInput){
         seg.iu.toggleIuLink(this.iuLinkInput);
       }
+      console.log("emitting iu from source");
+      this.iuLinkOutput.emit(seg.iu);
     }
   }
 
@@ -166,6 +178,7 @@ export class DocumentViewerComponent implements OnInit {
       }
     }else{
       if (this.selected_iu){
+        console.log("we have a pre selected iu");
         if (this.selected_iu.label != tog_iu.label){
           for (var seg of this.selected_iu.childSegs){
             seg['selected'] = false;
@@ -181,6 +194,7 @@ export class DocumentViewerComponent implements OnInit {
           this.selected_iu = null;
         }
       }else{
+        console.log("no pre selected iu");
         for (var seg of tog_iu.childSegs){
           seg['selected'] = true;
         }

@@ -132,14 +132,18 @@ export class IdeaUnit {
   suggested : boolean;
   //color : string;
 
-  constructor(doc : IUCollection, label: string, disc : boolean){
-    this.label = label;
+  constructor(doc ?: IUCollection, label?: string, disc? : boolean){
+    this.label = label || null;
     this.childSegs = new Set();
-    this.disc = disc;
-    this.doc = doc;
+    this.disc = disc || null;
+    this.doc = doc || null;
     this.linkedIus = [];
     this.suggested = false;
     //this.color = "Primary";
+  }
+
+  empty(): boolean {
+    return this.label == null;
   }
 
   getText(): string{

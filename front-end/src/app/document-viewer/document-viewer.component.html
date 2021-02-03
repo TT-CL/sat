@@ -41,7 +41,7 @@
             aria-label="sentence chips" class="word-bubbles">
             <ng-template ngFor let-seg [ngForOf]="doc.segs">
 
-                <ng-template [ngIf]="seg.iu.label==selected_iu" [ngIfElse]="notSelected">
+                <ng-template [ngIf]="seg.iu==selected_iu" [ngIfElse]="notSelected">
 
                     <mat-chip
                       *ngFor="let word of seg.words" [color]="word.color" [selected]="word.selected" (click)="wordClick(word)">
@@ -187,7 +187,7 @@
           <div class="card-toolbar vertical-center" *ngIf="bubbleMode=='iu'">
             <button mat-flat-button color="accent"
             [disabled]="!allowIuEdit" (click)="false">
-              Button  <mat-icon>create</mat-icon>
+              Save  <mat-icon>save</mat-icon>
             </button>
           </div>
         </div>
