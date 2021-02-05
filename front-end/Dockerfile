@@ -4,7 +4,7 @@ WORKDIR /opt/ng
 COPY package.json ./
 RUN npm update -g
 RUN npm install -g npm@6
-RUN npm install -g @angular/cli@11.0.5
+RUN npm install -g @angular/cli
 RUN npm install
 
 ENV PATH="./node_modules/.bin:$PATH"
