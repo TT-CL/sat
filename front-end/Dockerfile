@@ -2,9 +2,8 @@
 FROM node:15.8.0-alpine3.11 as front-end
 WORKDIR /opt/ng
 COPY package.json ./
-RUN npm update -g
 RUN npm install --global npm@6
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli@11.1.4
 RUN npm install
 
 ENV PATH="./node_modules/.bin:$PATH"
