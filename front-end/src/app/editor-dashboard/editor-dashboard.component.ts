@@ -56,6 +56,7 @@ export class EditorDashboardComponent implements OnInit{
   }
 
   ngOnInit() : void {
+    /*
       if(this.dev_mode){
         this.textService.getSampleSource()
           .subscribe(source => this.source_file.readDocument(source));
@@ -66,6 +67,7 @@ export class EditorDashboardComponent implements OnInit{
         this.raiseFlags("summary");
         this.link_disabled_flag = false;
       }
+    */
     }
 
     parseSummary(body) : void {

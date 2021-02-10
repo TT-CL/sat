@@ -4,14 +4,14 @@ import { catchError, retry } from 'rxjs/operators';
 
 import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
 
-import SampleSummary from './samples/2.json';
-import SampleSource from './samples/source.json';
-
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
   })
 };
+
+const sampleSummaryURI: string = './samples/2.json';
+const sampleSourceURI: string = './samples/source.json';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +55,7 @@ export class TextService {
     return this.http.request(req);
   }
 
+  /*
   getSampleSummary(): Observable<object> {
     return of(SampleSummary);
   }
@@ -62,4 +63,5 @@ export class TextService {
   getSampleSource(): Observable<object> {
     return of(SampleSource);
   }
+  */
 }
