@@ -22,7 +22,7 @@ export class Word {
 }
 
 export class Segment {
-  words: Word[];      //array of child words
+  words: number[];      //array of child word indexes
   iu : string;      //the parent iu
   selected: boolean;  //html selected property
   index: number;
@@ -41,7 +41,7 @@ export class Segment {
   getText(refDoc : IUCollection, printIuLabel = false) : string {
     let res : string = ""
 
-    for (let word of this.words){
+    for (let word of this.getWords(refDoc)){
       let spacer: string = " ";
       if (punctuation.includes(word.text)){
         spacer = "";
@@ -58,7 +58,8 @@ export class Segment {
 
   detachWord(delWord: Word, refDoc: IUCollection){
     delWord.seg = null;
-    let word_idx = this.words.indexOf(delWord);
+    // index of the word INSIDE the segment, not in the document
+    let word_idx = this.words.indexOf(delWord.index);
     if (this.words.length == 1){
       // this is the last word of the segment
       refDoc.ius.get(this.iu).detachSegment(this, refDoc);
@@ -80,7 +81,7 @@ export class Segment {
       new_seg.words = this.words.slice(word_idx+1,this.words.length);
       new_seg.iu = this.iu;
       refDoc.ius.get(this.iu).childSegs.add(new_seg);
-      for (let new_word of new_seg.words){
+      for (let new_word of new_seg.getWords(refDoc)){
         new_word.seg = new_seg.index;
       }
       //add the new segment
@@ -94,6 +95,14 @@ export class Segment {
       //handle the single word
       refDoc.addGhostWord(delWord,this,"after");
     }
+  }
+
+  getWords(refDoc: IUCollection) : Word[]{
+    let wordArray : Word[] = [];
+    for (let w_idx of this.words){
+      wordArray.push(refDoc.words[w_idx]);
+    }
+    return wordArray;
   }
 }
 
@@ -158,7 +167,7 @@ export class IdeaUnit {
 
     let adjWords : Word[] = [];
     for (var seg of this.childSegs){
-      for (var w of seg.words){
+      for (var w of seg.getWords(refDoc)){
         if (Math.abs(w.index-word.index)==1){
           //I found an adjacent word
           adjWords.push(w);
@@ -174,10 +183,10 @@ export class IdeaUnit {
         let adjSeg = refDoc.findSegment(adjWords[0].seg);
         if (word.index > adjWords[0].index){
           //append word at the end of a segment
-          adjSeg.words.push(word);
+          adjSeg.words.push(word.index);
         }else{
           //append word at the start of a segment
-          adjSeg.words.unshift(word);
+          adjSeg.words.unshift(word.index);
         }
 
         break;
@@ -197,11 +206,11 @@ export class IdeaUnit {
         //handle the single word
         word.iu = this.label;
         word.seg = master_seg.index;
-        master_seg.words.push(word);
+        master_seg.words.push(word.index);
         //join the two segments
-        for (w of del_seg.words){
+        for (w of del_seg.getWords(refDoc)){
           w.seg = master_seg.index;
-          master_seg.words.push(w);
+          master_seg.words.push(w.index);
         }
         refDoc.ius.get(del_seg.iu).detachSegment(del_seg,refDoc);
         refDoc.removeSeg(del_seg);
@@ -219,7 +228,7 @@ export class IdeaUnit {
         }
         //create the new segment for the words far a way
         let new_seg : Segment = new Segment(refDoc);
-        new_seg.words.push(word);
+        new_seg.words.push(word.index);
         new_seg.iu = this.label;
         word.seg = new_seg.index;
         word.iu = this.label;
@@ -302,7 +311,7 @@ export class IUCollection {
         //the current segment is always the last
         let cur_seg = this.segs[this.segs.length-1];
         //add word to the segment
-        cur_seg.words.push(temp_word);
+        cur_seg.words.push(temp_word.index);
         //link the segment to the word
         temp_word.seg = cur_seg.index;
 
@@ -364,7 +373,7 @@ export class IUCollection {
     word.seg = ghostSeg.index;
     word.iu = ghostIU.label;
     ghostIU.childSegs.add(ghostSeg);
-    ghostSeg.words.push(word);
+    ghostSeg.words.push(word.index);
     ghostSeg.iu = ghostIU.label;
 
     //add structures to memory
@@ -403,14 +412,15 @@ export class IUCollection {
     var json = {"doc_name" : this.doc_name,
                 "doc_type" : this.doc_type };
     let tempIus = {};
+    var refDoc = this;
     this.ius.forEach(function(iu, index) {
       //temp structure for array of words
       let tempSeg = []
       //explore the child segments
       for (var s of iu.childSegs){
         //extract the words from each segment
-        for (var w of s.words){
-          tempSeg.push(w.text);
+        for (var w_idx of s.words){
+          tempSeg.push(refDoc.words[w_idx].text);
         }
       }
       // associate the array of words to the iu index

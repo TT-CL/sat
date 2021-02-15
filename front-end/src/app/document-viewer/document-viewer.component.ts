@@ -93,7 +93,7 @@ export class DocumentViewerComponent implements OnInit {
       }
       if (propName == "iuLinkInput"){
         if(this.iuLinkInput){
-          console.log("received IU: " + this.iuLinkInput.getText(this.doc));
+          console.log("received IU: " + this.iuLinkInput.getText(this.other_doc));
           console.log("linked IUs: ");
           console.log(this.iuLinkInput.linkedIus.length);
           console.log(this.iuLinkInput.linkedIus);
@@ -211,7 +211,8 @@ export class DocumentViewerComponent implements OnInit {
     console.log("Trying to edit Segment "+ this.selected_iu.label);
     this.bubbleMode = "word";
     for (let seg of this.selected_iu.childSegs){
-      for (let word of seg['words']){
+      for (let word_idx of seg['words']){
+        let word = this.doc.words[word_idx];
         word['color'] = 'accent';
         this.originalWordSet.push(word);
       }
