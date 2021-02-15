@@ -250,11 +250,11 @@ export class DocumentViewerComponent implements OnInit {
   iuEditSave(): void{
     //save the edits
     for (var removeWord of this.removeWordSet){
-      removeWord.remove();
+      removeWord.remove(this.doc);
     }
     let iu = this.selected_iu;
     for (var word of this.addWordSet){
-      iu.addWord(word);
+      iu.addWord(word, this.doc);
     }
     //return to IU mode
     this.iuEditCancel();

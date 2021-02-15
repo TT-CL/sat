@@ -8,15 +8,15 @@ export class Word {
   selected : boolean; //html selected property
   index : number;  //the word index (for ordering)
 
-  constructor(doc:IUCollection, text: string, index : number){
+  constructor(text: string, index : number){
     this.text = text;
     this.index = index;
     this.color = "primary";
     this.selected = true;  }
 
-  remove(){
+  remove(refDoc: IUCollection){
     //let old_seg = this.seg;
-    this.seg.detachWord(this);
+    this.seg.detachWord(this, refDoc);
   }
 }
 
@@ -26,13 +26,10 @@ export class Segment {
   selected: boolean;  //html selected property
 
   type : string;
-  doc : IUCollection;       //reference to document container
-
-  constructor(doc : IUCollection, type: string = "default"){
+  constructor(type: string = "default"){
     this.words = [];
     this.iu = null;
     this.selected = false;
-    this.doc = doc;
     this.type = type;
   }
 
@@ -54,26 +51,26 @@ export class Segment {
     return res.trim();
   }
 
-  detachWord(delWord){
+  detachWord(delWord: Word, refDoc: IUCollection){
     delWord.seg = null;
     let word_idx = this.words.indexOf(delWord);
     if (this.words.length == 1){
       // this is the last word of the segment
-      this.iu.detachSegment(this);
-      this.doc.addGhostWord(delWord,this,"before");
-      this.doc.removeSeg(this);
+      this.iu.detachSegment(this, refDoc);
+      refDoc.addGhostWord(delWord,this,"before");
+      refDoc.removeSeg(this);
     }else if (word_idx == 0){
       //detaching the word at the beginning of the segment, no disc IU variation
       this.words.splice(word_idx,1);
-      this.doc.addGhostWord(delWord,this,"before");
+      refDoc.addGhostWord(delWord,this,"before");
     }else if(word_idx == this.words.length-1){
       //detaching word is at the end of a segment, no disc IU variation
       this.words.splice(word_idx,1);
-      this.doc.addGhostWord(delWord,this,"after");
+      refDoc.addGhostWord(delWord,this,"after");
     }else{
       // the word is in the middle of a segment, the segment becomes discontinuous
       //initialize a new segment for the discontinuous part
-      let new_seg = new Segment(this.doc);
+      let new_seg = new Segment();
 
       new_seg.words = this.words.slice(word_idx+1,this.words.length);
       new_seg.iu = this.iu;
@@ -82,7 +79,7 @@ export class Segment {
         new_word.seg = new_seg;
       }
       //add the new segment
-      this.doc.segs.splice(this.doc.segs.indexOf(this)+1,0,new_seg);
+      refDoc.segs.splice(refDoc.segs.indexOf(this)+1,0,new_seg);
 
       //set the disc flag
       this.iu.disc = true;
@@ -90,7 +87,7 @@ export class Segment {
       this.words = this.words.slice(0,word_idx);
 
       //handle the single word
-      this.doc.addGhostWord(delWord,this,"after");
+      refDoc.addGhostWord(delWord,this,"after");
     }
   }
 }
@@ -100,16 +97,15 @@ export class IdeaUnit {
   disc : boolean;           //discontinuous flag
   childSegs : Set<Segment>; //set of child segments
 
-  doc : IUCollection;       //reference to document container
+  //reference to document container
   linkedIus : IdeaUnit[];
   suggested : boolean;
   //color : string;
 
-  constructor(doc ?: IUCollection, label?: string, disc? : boolean){
+  constructor(label?: string, disc? : boolean){
     this.label = label || null;
     this.childSegs = new Set();
     this.disc = disc || null;
-    this.doc = doc || null;
     this.linkedIus = [];
     this.suggested = false;
     //this.color = "Primary";
@@ -127,12 +123,12 @@ export class IdeaUnit {
     return res.trim();
   }
 
-  detachSegment(delSeg){
+  detachSegment(delSeg: Segment, refDoc: IUCollection){
     delSeg.iu = null;
     switch (this.childSegs.size){
       case 1:{
         // the iu needs to be removed
-        this.doc.removeIU(this);
+        refDoc.removeIU(this);
         break;
       }
       case 2:{
@@ -149,8 +145,8 @@ export class IdeaUnit {
     }
   }
 
-  addWord(word){
-    word.remove();
+  addWord(word:Word, refDoc: IUCollection){
+    word.remove(refDoc);
     //bookmark for the ghost structures
     let ghostIU = word.iu;
     let ghostSeg = word.seg;
@@ -201,8 +197,8 @@ export class IdeaUnit {
           w.seg = master_seg;
           master_seg.words.push(w);
         }
-        del_seg.iu.detachSegment(del_seg);
-        this.doc.removeSeg(del_seg);
+        del_seg.iu.detachSegment(del_seg,refDoc);
+        refDoc.removeSeg(del_seg);
         if (this.childSegs.size == 1){
           this.disc = false;
         }
@@ -216,21 +212,21 @@ export class IdeaUnit {
           s.type = "default";
         }
         //create the new segment for the words far a way
-        let new_seg : Segment = new Segment(this.doc);
+        let new_seg : Segment = new Segment();
         new_seg.words.push(word);
         new_seg.iu = this;
         word.seg = new_seg;
         word.iu = this;
         this.disc = true;
         this.childSegs.add(new_seg);
-        this.doc.segs.splice(this.doc.segs.indexOf(ghostSeg)+1,0,new_seg);
+        refDoc.segs.splice(refDoc.segs.indexOf(ghostSeg)+1,0,new_seg);
         break;
       }
     }
 
     //remove the ghost structures from memory
 
-    this.doc.removeIU(ghostIU)
+    refDoc.removeIU(ghostIU)
   }
 
   toggleIuLink(toLink : IdeaUnit) : void {
@@ -283,7 +279,7 @@ export class IUCollection {
 
       for (var read_word of read_sent["words"]){
         //initializing Word object
-        let temp_word : Word = new Word(this,read_word["text"], read_word["word_index"]);
+        let temp_word : Word = new Word(read_word["text"], read_word["word_index"]);
 
         //automatically generated IUs are prefixed with the "a" letter
         let iu_label = "a" + read_word["iu_index"];
@@ -292,8 +288,7 @@ export class IUCollection {
           //console.log("boundary");
           prev_label = iu_label;
           //creating an empty segment
-          let temp_seg = new Segment(this);
-          temp_seg.doc = this;
+          let temp_seg = new Segment();
           this.segs.push(temp_seg);
         }
         //the current segment is always the last
@@ -306,8 +301,7 @@ export class IUCollection {
         if (!this.ius.has(iu_label)){
           //console.log("iu not in memory");
           //creating an empty segment
-          let temp_IU = new IdeaUnit(this,iu_label,read_word["disc"]);
-          temp_IU.doc = this;
+          let temp_IU = new IdeaUnit(iu_label,read_word["disc"]);
           this.ius.set(iu_label,temp_IU);
         }
         //adding segment to IU structure
@@ -355,9 +349,9 @@ export class IUCollection {
 
   addGhostWord(word : Word, segment: Segment, mode: string){
     //create the new structures
-    let ghostSeg = new Segment(this, "ghost");
+    let ghostSeg = new Segment("ghost");
     let ghostLabel = "m"+this.ghost_seg_count;
-    let ghostIU = new IdeaUnit(this,ghostLabel,false);
+    let ghostIU = new IdeaUnit(ghostLabel,false);
     this.ghost_seg_count = this.ghost_seg_count + 1;
     word.seg = ghostSeg;
     word.iu = ghostIU;
