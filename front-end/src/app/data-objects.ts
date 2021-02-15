@@ -80,7 +80,7 @@ export class Segment {
 
       new_seg.words = this.words.slice(word_idx+1,this.words.length);
       new_seg.iu = this.iu;
-      refDoc.ius.get(this.iu).childSegs.add(new_seg);
+      refDoc.ius.get(this.iu).childSegs.add(new_seg.index);
       for (let new_word of new_seg.getWords(refDoc)){
         new_word.seg = new_seg.index;
       }
@@ -109,7 +109,7 @@ export class Segment {
 export class IdeaUnit {
   label : string;           //IU label
   disc : boolean;           //discontinuous flag
-  childSegs : Set<Segment>; //set of child segments
+  childSegs : Set<number>; //set of child segment indexes
 
   //reference to document container
   linkedIus : string[];
@@ -131,7 +131,8 @@ export class IdeaUnit {
 
   getText(refDoc: IUCollection): string{
     let res = "";
-    for (let child of this.childSegs){
+    for (let child_idx of this.childSegs){
+      let child = refDoc.findSegment(child_idx);
       res = res + " " + child.getText(refDoc);
     }
     return res.trim();
@@ -148,12 +149,12 @@ export class IdeaUnit {
       case 2:{
         // the iu only has 2 segments.
         // by removing 1 it will stop being discontinuous
-        this.childSegs.delete(delSeg);
+        this.childSegs.delete(delSeg.index);
         this.disc = false;
         break;
       }
       default:{
-        this.childSegs.delete(delSeg);
+        this.childSegs.delete(delSeg.index);
         break;
       }
     }
@@ -166,7 +167,8 @@ export class IdeaUnit {
     let ghostSeg = refDoc.findSegment(word.seg);
 
     let adjWords : Word[] = [];
-    for (var seg of this.childSegs){
+    for (var seg_idx of this.childSegs){
+      let seg = refDoc.findSegment(seg_idx);
       for (var w of seg.getWords(refDoc)){
         if (Math.abs(w.index-word.index)==1){
           //I found an adjacent word
@@ -223,7 +225,8 @@ export class IdeaUnit {
       default:{
         // the word is far away from the segments
         // ensure that the existing segments won't be ghosts any longer
-        for (var s of this.childSegs){
+        for (var s_idx of this.childSegs){
+          let s = refDoc.findSegment(s_idx);
           s.type = "default";
         }
         //create the new segment for the words far a way
@@ -233,7 +236,7 @@ export class IdeaUnit {
         word.seg = new_seg.index;
         word.iu = this.label;
         this.disc = true;
-        this.childSegs.add(new_seg);
+        this.childSegs.add(new_seg.index);
         refDoc.segs.splice(refDoc.segs.indexOf(ghostSeg)+1,0,new_seg);
         break;
       }
@@ -250,6 +253,14 @@ export class IdeaUnit {
     }else{
       this.linkedIus.push(toLink.label);
     }
+  }
+
+  getChildren(refDoc: IUCollection) : Segment[]{
+    let segArray : Segment[] = [];
+    for (let s_idx of this.childSegs){
+      segArray.push(refDoc.findSegment(s_idx));
+    }
+    return segArray;
   }
 }
 
@@ -323,7 +334,7 @@ export class IUCollection {
         }
         //adding segment to IU structure
         let cur_IU = this.ius.get(iu_label);
-        cur_IU["childSegs"].add(cur_seg);
+        cur_IU["childSegs"].add(cur_seg.index);
 
         //adding IU references to a word and segment structure
         cur_seg.iu = cur_IU.label;
@@ -372,7 +383,7 @@ export class IUCollection {
     this.ghost_seg_count = this.ghost_seg_count + 1;
     word.seg = ghostSeg.index;
     word.iu = ghostIU.label;
-    ghostIU.childSegs.add(ghostSeg);
+    ghostIU.childSegs.add(ghostSeg.index);
     ghostSeg.words.push(word.index);
     ghostSeg.iu = ghostIU.label;
 
@@ -401,7 +412,7 @@ export class IUCollection {
     console.log("Removing iu "+ iuLabel);
     let iu = this.ius.get(iuLabel);
     for (var seg of iu.childSegs){
-      this.removeSeg(seg);
+      this.removeSeg(this.findSegment(seg));
     }
     this.ius.delete(iu.label);
   }
@@ -417,7 +428,7 @@ export class IUCollection {
       //temp structure for array of words
       let tempSeg = []
       //explore the child segments
-      for (var s of iu.childSegs){
+      for (var s of iu.getChildren(refDoc)){
         //extract the words from each segment
         for (var w_idx of s.words){
           tempSeg.push(refDoc.words[w_idx].text);

@@ -171,7 +171,7 @@ export class DocumentViewerComponent implements OnInit {
     if(tog_iu == null){
       //default case: deselect the IUS
       if (this.selected_iu){
-        for (var seg of this.selected_iu.childSegs){
+        for (var seg of this.selected_iu.getChildren(this.doc)){
           seg['selected'] = false;
         }
         this.selected_iu = null;
@@ -180,22 +180,22 @@ export class DocumentViewerComponent implements OnInit {
       if (this.selected_iu){
         console.log("we have a pre selected iu");
         if (this.selected_iu.label != tog_iu.label){
-          for (var seg of this.selected_iu.childSegs){
+          for (var seg of this.selected_iu.getChildren(this.doc)){
             seg['selected'] = false;
           }
-          for (var seg of tog_iu.childSegs){
+          for (var seg of tog_iu.getChildren(this.doc)){
             seg['selected'] = true;
           }
           this.selected_iu = tog_iu;
         }else{
-          for (var seg of tog_iu.childSegs){
+          for (var seg of tog_iu.getChildren(this.doc)){
             seg['selected'] = false;
           }
           this.selected_iu = null;
         }
       }else{
         console.log("no pre selected iu");
-        for (var seg of tog_iu.childSegs){
+        for (var seg of tog_iu.getChildren(this.doc)){
           seg['selected'] = true;
         }
         this.selected_iu = tog_iu;
@@ -210,7 +210,7 @@ export class DocumentViewerComponent implements OnInit {
   engageEditIuMode() : void {
     console.log("Trying to edit Segment "+ this.selected_iu.label);
     this.bubbleMode = "word";
-    for (let seg of this.selected_iu.childSegs){
+    for (let seg of this.selected_iu.getChildren(this.doc)){
       for (let word_idx of seg['words']){
         let word = this.doc.words[word_idx];
         word['color'] = 'accent';
@@ -275,7 +275,7 @@ export class DocumentViewerComponent implements OnInit {
 
     //deselect the IU
     if (this.selected_iu){
-      for (var seg of this.selected_iu.childSegs){
+      for (var seg of this.selected_iu.getChildren(this.doc)){
         seg['selected'] = false;
       }
     }
