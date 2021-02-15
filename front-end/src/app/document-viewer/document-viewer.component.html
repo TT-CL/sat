@@ -10,7 +10,7 @@
       <!-- Text View -->
       <div *ngSwitchCase="'textView'" class="scrollable-content">
         <p *ngFor="let sent of doc.sents">
-          {{sent.getText()}}
+          {{sent}}
         </p>
       </div>
       <!-- IU View -->

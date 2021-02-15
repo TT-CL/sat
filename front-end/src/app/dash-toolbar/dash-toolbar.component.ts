@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges} from '@angular/core';
 
-import { Word, Sent, Segment, IdeaUnit, IUCollection } from '../data-objects';
+import { Word, Segment, IdeaUnit, IUCollection } from '../data-objects';
 
 @Component({
   selector: 'app-dash-toolbar',

@@ -12,7 +12,7 @@ import {
   ElementRef
 } from '@angular/core';
 import { ComponentPortal, Portal, TemplatePortal } from '@angular/cdk/portal';
-import { Word, Sent, Segment, IdeaUnit, IUCollection } from '../data-objects';
+import { Word, Segment, IdeaUnit, IUCollection } from '../data-objects';
 import { TextService } from '../text.service';
 import { ProgressSpinnerService } from '../progress-spinner.service';
 import { Overlay, PositionStrategy, OverlayRef } from '@angular/cdk/overlay';

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 //import { map } from 'rxjs/operators';
 //import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { Word, Sent, Segment, IdeaUnit, IUCollection } from '../data-objects';
+import { Word, Segment, IdeaUnit, IUCollection } from '../data-objects';
 
 import { TextService } from '../text.service';
 

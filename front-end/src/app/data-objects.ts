@@ -8,42 +8,15 @@ export class Word {
   selected : boolean; //html selected property
   index : number;  //the word index (for ordering)
 
-  doc : IUCollection;       //reference to document container
-
   constructor(doc:IUCollection, text: string, index : number){
     this.text = text;
     this.index = index;
     this.color = "primary";
-    this.selected = true;
-    this.doc = doc;
-  }
+    this.selected = true;  }
 
   remove(){
-    let old_seg = this.seg;
+    //let old_seg = this.seg;
     this.seg.detachWord(this);
-  }
-}
-
-export class Sent {
-  words : Word[];
-  doc : IUCollection;       //reference to document container
-
-  constructor(doc:IUCollection){
-    this.words = [];
-    this.doc = doc;
-  }
-
-  getText() : string {
-    let res : string = ""
-
-    for (let word of this.words){
-      let spacer: string = " ";
-      if (punctuation.includes(word.text)){
-        spacer = "";
-      }
-      res = res + spacer + word.text;
-    }
-    return res.trim();
   }
 }
 
@@ -270,12 +243,12 @@ export class IdeaUnit {
 }
 
 export class IUCollection {
-  ius: Map<string, IdeaUnit>;
-  segs: Segment[];
-  sents: Sent[];
-  words: Word[];
   doc_name: string;
   doc_type: string;
+  words: Word[];
+  ius: Map<string, IdeaUnit>;
+  segs: Segment[];
+  sents: string[];
 
   ghost_seg_count : number;
   manual_iu_count : number;
@@ -305,8 +278,8 @@ export class IUCollection {
     //seg boundary spy
     let prev_label : string = "";
     for (var read_sent of text["sents"]){
-      //initializing Sent object
-      let temp_sent : Sent = new Sent(this);
+      // temporary sentence string
+      let temp_sent : string = "";
 
       for (var read_word of read_sent["words"]){
         //initializing Word object
@@ -345,12 +318,17 @@ export class IUCollection {
         cur_seg.iu = cur_IU;
         temp_word.iu = cur_IU;
 
+        //Rebuilding sentences
+        let spacer = " ";
+        if (punctuation.includes(read_word["text"])){
+          spacer = "";
+        }
+        temp_sent = temp_sent + spacer + read_word["text"];
         //adding Word object to memory
-        temp_sent.words.push(temp_word);
         this.words.push(temp_word);
       }
       //adding Sent object to memory
-      this.sents.push(temp_sent);
+      this.sents.push(temp_sent.trim());
     }
 
 
@@ -365,7 +343,7 @@ export class IUCollection {
   getText(): string {
     let resText : string  = "";
     for (let sent of this.sents){
-      resText = resText + "\n" + sent.getText();
+      resText = resText + "\n" + sent;
     }
     return resText.trim();
   }

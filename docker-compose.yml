@@ -3,7 +3,7 @@ services:
   web:
     build:
       context: ./front-end/
-      target: prod
+      target: dev
     ports:
       - "5000:4201"
     volumes:
