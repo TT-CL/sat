@@ -4,7 +4,7 @@ export class Word {
   text : string;
   color : string;     //mat-color property
   iu : string;      //parent iu
-  seg : Segment;      //parent segment
+  seg : number;      //parent segment
   selected : boolean; //html selected property
   index : number;  //the word index (for ordering)
 
@@ -16,7 +16,8 @@ export class Word {
 
   remove(refDoc: IUCollection){
     //let old_seg = this.seg;
-    this.seg.detachWord(this, refDoc);
+    let old_seg = refDoc.findSegment(this.seg);
+    old_seg.detachWord(this, refDoc);
   }
 }
 
@@ -80,7 +81,7 @@ export class Segment {
       new_seg.iu = this.iu;
       this.iu.childSegs.add(new_seg);
       for (let new_word of new_seg.words){
-        new_word.seg = new_seg;
+        new_word.seg = new_seg.index;
       }
       //add the new segment
       refDoc.segs.splice(refDoc.segs.indexOf(this)+1,0,new_seg);
@@ -153,7 +154,7 @@ export class IdeaUnit {
     word.remove(refDoc);
     //bookmark for the ghost structures
     let ghostIU = word.iu;
-    let ghostSeg = word.seg;
+    let ghostSeg = refDoc.findSegment(word.seg);
 
     let adjWords : Word[] = [];
     for (var seg of this.childSegs){
@@ -170,12 +171,13 @@ export class IdeaUnit {
         //the word is close to an existing segment
         word.iu = this.label;
         word.seg = adjWords[0].seg;
+        let adjSeg = refDoc.findSegment(adjWords[0].seg);
         if (word.index > adjWords[0].index){
           //append word at the end of a segment
-          adjWords[0].seg.words.push(word);
+          adjSeg.words.push(word);
         }else{
           //append word at the start of a segment
-          adjWords[0].seg.words.unshift(word);
+          adjSeg.words.unshift(word);
         }
 
         break;
@@ -186,19 +188,19 @@ export class IdeaUnit {
         let master_seg : Segment;
         let del_seg : Segment;
         if (word.index > adjWords[0].index){
-          master_seg = adjWords[0].seg;
-          del_seg = adjWords[1].seg;
+          master_seg = refDoc.findSegment(adjWords[0].seg);
+          del_seg = refDoc.findSegment(adjWords[1].seg);
         }else{
-          master_seg = adjWords[1].seg;
-          del_seg = adjWords[0].seg;
+          master_seg = refDoc.findSegment(adjWords[1].seg);
+          del_seg = refDoc.findSegment(adjWords[0].seg);
         }
         //handle the single word
         word.iu = this.label;
-        word.seg = master_seg;
+        word.seg = master_seg.index;
         master_seg.words.push(word);
         //join the two segments
         for (w of del_seg.words){
-          w.seg = master_seg;
+          w.seg = master_seg.index;
           master_seg.words.push(w);
         }
         del_seg.iu.detachSegment(del_seg,refDoc);
@@ -219,7 +221,7 @@ export class IdeaUnit {
         let new_seg : Segment = new Segment(refDoc);
         new_seg.words.push(word);
         new_seg.iu = this;
-        word.seg = new_seg;
+        word.seg = new_seg.index;
         word.iu = this.label;
         this.disc = true;
         this.childSegs.add(new_seg);
@@ -302,7 +304,7 @@ export class IUCollection {
         //add word to the segment
         cur_seg.words.push(temp_word);
         //link the segment to the word
-        temp_word.seg = cur_seg;
+        temp_word.seg = cur_seg.index;
 
         if (!this.ius.has(iu_label)){
           //console.log("iu not in memory");
@@ -359,7 +361,7 @@ export class IUCollection {
     let ghostLabel = "m"+this.ghost_seg_count;
     let ghostIU = new IdeaUnit(ghostLabel,false);
     this.ghost_seg_count = this.ghost_seg_count + 1;
-    word.seg = ghostSeg;
+    word.seg = ghostSeg.index;
     word.iu = ghostIU.label;
     ghostIU.childSegs.add(ghostSeg);
     ghostSeg.words.push(word);
