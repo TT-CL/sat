@@ -123,7 +123,7 @@
             aria-label="sentence chips" class="link-theme">
             <ng-template ngFor let-seg [ngForOf]="doc.segs">
               <!-- the IU is linked to something else -->
-              <div [ngSwitch]="seg.doc.doc_type">
+              <div [ngSwitch]="doc.doc_type">
                 <div *ngSwitchCase="'summary'">
                   <!-- If a summary IU has ANY links color it green -->
                   <ng-template [ngIf]="seg.iu.linkedIus.length > 0" [ngIfElse]="notLinked">
@@ -142,11 +142,13 @@
 
                 <div *ngSwitchCase="'source'">
                   <!-- if the input iu is inside the links of a source IU color it green -->
-                  <ng-template [ngIf]="seg.iu.linkedIus.includes(this.iuLinkInput)" [ngIfElse]="notLinked">
-                    <ng-template [ngIf]="seg.selected" [ngIfElse]="sourceLinkNotSelected">
-                      <mat-chip color="linked-link" (click)="linkClick(seg)" selected="true">
-                        {{seg.getText(true)}}
-                      </mat-chip>
+                  <ng-template [ngIf]="this.iuLinkInput" [ngIfElse]="notLinked">
+                    <ng-template [ngIf]="seg.iu.linkedIus.includes(this.iuLinkInput.label)" [ngIfElse]="notLinked">
+                      <ng-template [ngIf]="seg.selected" [ngIfElse]="sourceLinkNotSelected">
+                        <mat-chip color="linked-link" (click)="linkClick(seg)" selected="true">
+                          {{seg.getText(true)}}
+                        </mat-chip>
+                      </ng-template>
                     </ng-template>
                     <ng-template #sourceLinkNotSelected>
                       <mat-chip color="linked-link-selected" (click)="linkClick(seg)" selected="true">

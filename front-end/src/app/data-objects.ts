@@ -98,7 +98,7 @@ export class IdeaUnit {
   childSegs : Set<Segment>; //set of child segments
 
   //reference to document container
-  linkedIus : IdeaUnit[];
+  linkedIus : string[];
   suggested : boolean;
   //color : string;
 
@@ -230,10 +230,10 @@ export class IdeaUnit {
   }
 
   toggleIuLink(toLink : IdeaUnit) : void {
-    if(this.linkedIus.includes(toLink)){
-      this.linkedIus.splice(this.linkedIus.indexOf(toLink),1);
+    if(this.linkedIus.includes(toLink.label)){
+      this.linkedIus.splice(this.linkedIus.indexOf(toLink.label),1);
     }else{
-      this.linkedIus.push(toLink);
+      this.linkedIus.push(toLink.label);
     }
   }
 }
