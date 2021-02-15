@@ -3,7 +3,7 @@ const punctuation : string = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
 export class Word {
   text : string;
   color : string;     //mat-color property
-  iu : IdeaUnit;      //parent iu
+  iu : string;      //parent iu
   seg : Segment;      //parent segment
   selected : boolean; //html selected property
   index : number;  //the word index (for ordering)
@@ -24,13 +24,17 @@ export class Segment {
   words: Word[];      //array of child words
   iu : IdeaUnit;      //the parent iu
   selected: boolean;  //html selected property
+  index: number;
 
   type : string;
-  constructor(type: string = "default"){
+  constructor(doc: IUCollection, type: string = "default"){
     this.words = [];
     this.iu = null;
     this.selected = false;
     this.type = type;
+    //increasing unique segmend indexes
+    doc.max_seg_count = doc.max_seg_count + 1;
+    this.index = doc.max_seg_count;
   }
 
   getText(printIuLabel = false) : string {
@@ -70,7 +74,7 @@ export class Segment {
     }else{
       // the word is in the middle of a segment, the segment becomes discontinuous
       //initialize a new segment for the discontinuous part
-      let new_seg = new Segment();
+      let new_seg = new Segment(refDoc);
 
       new_seg.words = this.words.slice(word_idx+1,this.words.length);
       new_seg.iu = this.iu;
@@ -128,7 +132,7 @@ export class IdeaUnit {
     switch (this.childSegs.size){
       case 1:{
         // the iu needs to be removed
-        refDoc.removeIU(this);
+        refDoc.removeIU(this.label);
         break;
       }
       case 2:{
@@ -164,7 +168,7 @@ export class IdeaUnit {
     switch(adjWords.length){
       case 1:{
         //the word is close to an existing segment
-        word.iu = this;
+        word.iu = this.label;
         word.seg = adjWords[0].seg;
         if (word.index > adjWords[0].index){
           //append word at the end of a segment
@@ -189,7 +193,7 @@ export class IdeaUnit {
           del_seg = adjWords[0].seg;
         }
         //handle the single word
-        word.iu = this;
+        word.iu = this.label;
         word.seg = master_seg;
         master_seg.words.push(word);
         //join the two segments
@@ -212,11 +216,11 @@ export class IdeaUnit {
           s.type = "default";
         }
         //create the new segment for the words far a way
-        let new_seg : Segment = new Segment();
+        let new_seg : Segment = new Segment(refDoc);
         new_seg.words.push(word);
         new_seg.iu = this;
         word.seg = new_seg;
-        word.iu = this;
+        word.iu = this.label;
         this.disc = true;
         this.childSegs.add(new_seg);
         refDoc.segs.splice(refDoc.segs.indexOf(ghostSeg)+1,0,new_seg);
@@ -246,6 +250,7 @@ export class IUCollection {
   segs: Segment[];
   sents: string[];
 
+  max_seg_count : number;
   ghost_seg_count : number;
   manual_iu_count : number;
 
@@ -258,6 +263,7 @@ export class IUCollection {
     this.segs = [];
     this.sents = [];
     this.words = [];
+    this.max_seg_count = 0;
     this.ghost_seg_count = 0;
     this.manual_iu_count = 0;
   }
@@ -270,7 +276,6 @@ export class IUCollection {
     console.log(text);
     this.doc_name = text["doc_name"];
     this.doc_type = text["doc_type"];
-
     //seg boundary spy
     let prev_label : string = "";
     for (var read_sent of text["sents"]){
@@ -288,7 +293,8 @@ export class IUCollection {
           //console.log("boundary");
           prev_label = iu_label;
           //creating an empty segment
-          let temp_seg = new Segment();
+          //increase the segment index
+          let temp_seg = new Segment(this);
           this.segs.push(temp_seg);
         }
         //the current segment is always the last
@@ -310,7 +316,7 @@ export class IUCollection {
 
         //adding IU references to a word and segment structure
         cur_seg.iu = cur_IU;
-        temp_word.iu = cur_IU;
+        temp_word.iu = cur_IU.label;
 
         //Rebuilding sentences
         let spacer = " ";
@@ -349,12 +355,12 @@ export class IUCollection {
 
   addGhostWord(word : Word, segment: Segment, mode: string){
     //create the new structures
-    let ghostSeg = new Segment("ghost");
+    let ghostSeg = new Segment(this, "ghost");
     let ghostLabel = "m"+this.ghost_seg_count;
     let ghostIU = new IdeaUnit(ghostLabel,false);
     this.ghost_seg_count = this.ghost_seg_count + 1;
     word.seg = ghostSeg;
-    word.iu = ghostIU;
+    word.iu = ghostIU.label;
     ghostIU.childSegs.add(ghostSeg);
     ghostSeg.words.push(word);
     ghostSeg.iu = ghostIU;
@@ -380,8 +386,9 @@ export class IUCollection {
     }
   }
 
-  removeIU(iu : IdeaUnit): void {
-    console.log(iu);
+  removeIU(iuLabel : string): void {
+    console.log("Removing iu "+ iuLabel);
+    let iu = this.ius.get(iuLabel);
     for (var seg of iu.childSegs){
       this.removeSeg(seg);
     }
@@ -410,5 +417,9 @@ export class IUCollection {
 
     json["ius"] = tempIus;
     return JSON.stringify(json);
+  }
+
+  findSegment(segIndex : number): Segment{
+    return this.segs.find(seg => seg.index == segIndex);
   }
 }
