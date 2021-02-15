@@ -23,7 +23,7 @@ export class Word {
 
 export class Segment {
   words: Word[];      //array of child words
-  iu : IdeaUnit;      //the parent iu
+  iu : string;      //the parent iu
   selected: boolean;  //html selected property
   index: number;
 
@@ -38,7 +38,7 @@ export class Segment {
     this.index = doc.max_seg_count;
   }
 
-  getText(printIuLabel = false) : string {
+  getText(refDoc : IUCollection, printIuLabel = false) : string {
     let res : string = ""
 
     for (let word of this.words){
@@ -49,8 +49,8 @@ export class Segment {
       res = res + spacer + word.text;
     }
     if (printIuLabel && this.iu){
-      if (this.iu.disc){
-        res = this.iu.label + "|" + res;
+      if (refDoc.ius.get(this.iu).disc){
+        res = this.iu + "|" + res;
       }
     }
     return res.trim();
@@ -61,7 +61,7 @@ export class Segment {
     let word_idx = this.words.indexOf(delWord);
     if (this.words.length == 1){
       // this is the last word of the segment
-      this.iu.detachSegment(this, refDoc);
+      refDoc.ius.get(this.iu).detachSegment(this, refDoc);
       refDoc.addGhostWord(delWord,this,"before");
       refDoc.removeSeg(this);
     }else if (word_idx == 0){
@@ -79,7 +79,7 @@ export class Segment {
 
       new_seg.words = this.words.slice(word_idx+1,this.words.length);
       new_seg.iu = this.iu;
-      this.iu.childSegs.add(new_seg);
+      refDoc.ius.get(this.iu).childSegs.add(new_seg);
       for (let new_word of new_seg.words){
         new_word.seg = new_seg.index;
       }
@@ -87,7 +87,7 @@ export class Segment {
       refDoc.segs.splice(refDoc.segs.indexOf(this)+1,0,new_seg);
 
       //set the disc flag
-      this.iu.disc = true;
+      refDoc.ius.get(this.iu).disc = true;
       // remove the unnecessary words
       this.words = this.words.slice(0,word_idx);
 
@@ -120,10 +120,10 @@ export class IdeaUnit {
     return this.label == null;
   }
 
-  getText(): string{
+  getText(refDoc: IUCollection): string{
     let res = "";
     for (let child of this.childSegs){
-      res = res + " " + child.getText();
+      res = res + " " + child.getText(refDoc);
     }
     return res.trim();
   }
@@ -203,7 +203,7 @@ export class IdeaUnit {
           w.seg = master_seg.index;
           master_seg.words.push(w);
         }
-        del_seg.iu.detachSegment(del_seg,refDoc);
+        refDoc.ius.get(del_seg.iu).detachSegment(del_seg,refDoc);
         refDoc.removeSeg(del_seg);
         if (this.childSegs.size == 1){
           this.disc = false;
@@ -220,7 +220,7 @@ export class IdeaUnit {
         //create the new segment for the words far a way
         let new_seg : Segment = new Segment(refDoc);
         new_seg.words.push(word);
-        new_seg.iu = this;
+        new_seg.iu = this.label;
         word.seg = new_seg.index;
         word.iu = this.label;
         this.disc = true;
@@ -317,7 +317,7 @@ export class IUCollection {
         cur_IU["childSegs"].add(cur_seg);
 
         //adding IU references to a word and segment structure
-        cur_seg.iu = cur_IU;
+        cur_seg.iu = cur_IU.label;
         temp_word.iu = cur_IU.label;
 
         //Rebuilding sentences
@@ -365,7 +365,7 @@ export class IUCollection {
     word.iu = ghostIU.label;
     ghostIU.childSegs.add(ghostSeg);
     ghostSeg.words.push(word);
-    ghostSeg.iu = ghostIU;
+    ghostSeg.iu = ghostIU.label;
 
     //add structures to memory
     this.ius.set(ghostLabel,ghostIU);

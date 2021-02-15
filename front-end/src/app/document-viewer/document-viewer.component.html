@@ -27,7 +27,7 @@
               </ng-template>
               <ng-template #ghostElse>
                 <mat-chip color="primary" (click)="bubbleClick(seg)" [selected]="seg.selected" [ngClass]="{
-                  'disc-iu' : seg.iu.disc
+                  'disc-iu' : doc.ius.get(seg.iu).disc
                 }">
                   {{seg.getText(true)}}
                 </mat-chip>
@@ -41,7 +41,7 @@
             aria-label="sentence chips" class="word-bubbles">
             <ng-template ngFor let-seg [ngForOf]="doc.segs">
 
-                <ng-template [ngIf]="seg.iu==selected_iu" [ngIfElse]="notSelected">
+                <ng-template [ngIf]="doc.ius.get(seg.iu)==selected_iu" [ngIfElse]="notSelected">
 
                     <mat-chip
                       *ngFor="let word of seg.words" [color]="word.color" [selected]="word.selected" (click)="wordClick(word)">
@@ -126,7 +126,7 @@
               <div [ngSwitch]="doc.doc_type">
                 <div *ngSwitchCase="'summary'">
                   <!-- If a summary IU has ANY links color it green -->
-                  <ng-template [ngIf]="seg.iu.linkedIus.length > 0" [ngIfElse]="notLinked">
+                  <ng-template [ngIf]="doc.ius.get(seg.iu).linkedIus.length > 0" [ngIfElse]="notLinked">
                     <ng-template [ngIf]="seg.selected" [ngIfElse]="summaryLinkNotSelected">
                       <mat-chip color="linked-link" (click)="linkClick(seg)" selected="true">
                         {{seg.getText(true)}}
@@ -143,7 +143,7 @@
                 <div *ngSwitchCase="'source'">
                   <!-- if the input iu is inside the links of a source IU color it green -->
                   <ng-template [ngIf]="this.iuLinkInput" [ngIfElse]="notLinked">
-                    <ng-template [ngIf]="seg.iu.linkedIus.includes(this.iuLinkInput.label)" [ngIfElse]="notLinked">
+                    <ng-template [ngIf]="doc.ius.get(seg.iu).linkedIus.includes(this.iuLinkInput.label)" [ngIfElse]="notLinked">
                       <ng-template [ngIf]="seg.selected" [ngIfElse]="sourceLinkNotSelected">
                         <mat-chip color="linked-link" (click)="linkClick(seg)" selected="true">
                           {{seg.getText(true)}}
@@ -161,7 +161,7 @@
               <!-- CASCADING ELSES
               (these won't be printed if the prev bloc is true) -->
               <ng-template #notLinked>
-                <ng-template [ngIf]="seg.iu.suggested" [ngIfElse]="notSuggested">
+                <ng-template [ngIf]="doc.ius.get(seg.iu).suggested" [ngIfElse]="notSuggested">
                   <mat-chip color="suggested-link" (click)="linkClick(seg)" [selected]="seg.selected">
                     {{seg.getText(true)}}
                   </mat-chip>
@@ -174,7 +174,7 @@
                   </ng-template>
                   <ng-template #ghostElse>
                     <mat-chip color="primary" (click)="linkClick(seg)" [selected]="seg.selected" [ngClass]="{
-                      'disc-iu' : seg.iu.disc
+                      'disc-iu' : doc.ius.get(seg.iu).disc
                     }">
                       {{seg.getText(true)}}
                     </mat-chip>

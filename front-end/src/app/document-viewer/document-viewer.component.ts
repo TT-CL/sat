@@ -93,7 +93,7 @@ export class DocumentViewerComponent implements OnInit {
       }
       if (propName == "iuLinkInput"){
         if(this.iuLinkInput){
-          console.log("received IU: " + this.iuLinkInput.getText());
+          console.log("received IU: " + this.iuLinkInput.getText(this.doc));
           console.log("linked IUs: ");
           console.log(this.iuLinkInput.linkedIus.length);
           console.log(this.iuLinkInput.linkedIus);
@@ -140,7 +140,7 @@ export class DocumentViewerComponent implements OnInit {
 
   bubbleClick(seg) : void {
     //console.log(seg);
-    this.toggleIuSelect(seg.iu);
+    this.toggleIuSelect(this.doc.ius.get(seg.iu));
 
     if(this.selected_iu){
       this.allowIuEdit = true;
@@ -151,19 +151,19 @@ export class DocumentViewerComponent implements OnInit {
 
   linkClick(seg) : void {
     console.log("click");
-    this.toggleIuSelect(seg.iu)
+    this.toggleIuSelect(this.doc.ius.get(seg.iu))
     if (this.doc.doc_type == "summary"){
       console.log("emitting iu from summary");
       this.iuLinkOutput.emit(new IdeaUnit());
-      this.iuLinkOutput.emit(seg.iu);
+      this.iuLinkOutput.emit(this.doc.ius.get(seg.iu));
     }else if (this.doc.doc_type == "source"){
       this.iuLinkOutput.emit(new IdeaUnit());
       //if I have an input link
       if (this.iuLinkInput){
-        seg.iu.toggleIuLink(this.iuLinkInput);
+        this.doc.ius.get(seg.iu).toggleIuLink(this.iuLinkInput);
       }
       console.log("emitting iu from source");
-      this.iuLinkOutput.emit(seg.iu);
+      this.iuLinkOutput.emit(this.doc.ius.get(seg.iu));
     }
   }
 
