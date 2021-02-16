@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DocumentViewerComponent } from './editor/document-viewer/document-viewer.component';
+import { ProjectDashComponent } from './user-area/project-dash/project-dash.component'
 
 const routes: Routes = [
-  { path: 'reader', component: DocumentViewerComponent}
+  { path: 'projects', component: ProjectDashComponent},
+  { path: '', redirectTo: '/projects', pathMatch: 'full' }
 ];
 
 @NgModule({

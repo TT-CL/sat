@@ -35,10 +35,12 @@ $summary-eval-theme: mat-light-theme((
 
 $iu-bubbles-primary: mat-palette($mat-light-blue);
 $iu-bubbles-accent: mat-palette($mat-yellow);
+$iu-bubbles-warn: mat-palette($mat-grey, 300);
 $iu-bubbles-theme: mat-light-theme((
   color:(
     primary: $iu-bubbles-primary,
     accent: $iu-bubbles-accent,
+    warn: $iu-bubbles-warn,
   )
 ));
 

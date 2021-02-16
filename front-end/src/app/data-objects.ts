@@ -446,3 +446,17 @@ export class IUCollection {
     return this.segs.find(seg => seg.index == segIndex);
   }
 }
+
+export class Project {
+  name : string;
+  last_edit : Date;
+  sourceDoc : IUCollection;
+  summaryDoc : IUCollection;
+
+  constructor(name: string, source: IUCollection, summary: IUCollection){
+    this.name = name;
+    this.last_edit = new Date();
+    this.sourceDoc = source;
+    this.summaryDoc = summary;
+  }
+}

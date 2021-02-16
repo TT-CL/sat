@@ -1,0 +1,28 @@
+<div class="dash-grid horizontal-center">
+  <div class="grid-cell horizontal-center vertical-center">
+    <mat-card class="mat-card">
+      <mat-card-header>
+        <mat-card-title>Welcome USERNAME</mat-card-title>
+        <mat-card-subtitle>Please select a project</mat-card-subtitle>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <div class="content horizontal-center">
+          <div class="scrollable-content">
+            <app-project-item class="project-item"></app-project-item>
+            <div class="new-project-area iu-bubbles">
+              <button mat-flat-button color="accent">
+                <mat-icon>note_add</mat-icon>
+                Start a new project
+              </button>
+              <button mat-flat-button color="warn">
+                <mat-icon>settings_backup_restore</mat-icon>
+                Restore from backup
+              </button>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -33,6 +33,8 @@ import { DynamicOverlay } from './load-overlay/dynamic-overlay.service';
 import { DynamicOverlayContainer } from './load-overlay/dynamic-overlay-container.service';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {OverlayModule} from '@angular/cdk/overlay';
+import { ProjectDashComponent } from './user-area/project-dash/project-dash.component';
+import { ProjectItemComponent } from './user-area/project-item/project-item.component';
 
 
 
@@ -48,7 +50,9 @@ import {OverlayModule} from '@angular/cdk/overlay';
     NavigationComponent,
     FileUploaderComponent,
     DashToolbarComponent,
-    LoadOverlayComponent
+    LoadOverlayComponent,
+    ProjectDashComponent,
+    ProjectItemComponent
   ],
   imports: [
     BrowserModule,
