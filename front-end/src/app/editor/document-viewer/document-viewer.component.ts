@@ -12,11 +12,14 @@ import {
   ElementRef
 } from '@angular/core';
 import { ComponentPortal, Portal, TemplatePortal } from '@angular/cdk/portal';
-import { Word, Segment, IdeaUnit, IUCollection } from '../data-objects';
-import { TextService } from '../text.service';
-import { ProgressSpinnerService } from '../progress-spinner.service';
+import { Word, Segment, IdeaUnit, IUCollection } from '../../data-objects';
+
+import { TextService } from '../../text.service';
+import { StorageService } from '../../storage.service';
+
+import { ProgressSpinnerService } from '../../progress-spinner.service';
 import { Overlay, PositionStrategy, OverlayRef } from '@angular/cdk/overlay';
-import {LoadOverlayComponent} from '../load-overlay/load-overlay.component';
+import { LoadOverlayComponent } from '../../load-overlay/load-overlay.component';
 
 import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 
@@ -28,7 +31,11 @@ import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 })
 export class DocumentViewerComponent implements OnInit {
 
-  constructor( private textService : TextService, private overlay: Overlay, private spinnerService : ProgressSpinnerService){  }
+  constructor(
+    private textService : TextService,
+    private overlay: Overlay,
+    private spinnerService : ProgressSpinnerService,
+    private storage: StorageService){  }
 
 
   selected_iu : IdeaUnit = null;

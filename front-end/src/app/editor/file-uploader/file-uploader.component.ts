@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 
-import { TextService } from '../text.service';
+import { TextService } from '../../text.service';
+import { StorageService } from '../../storage.service';
 
 import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 
@@ -12,7 +13,9 @@ import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 
 export class FileUploaderComponent implements OnInit {
 
-  constructor( private textService : TextService ) { }
+  constructor(
+    private textService : TextService,
+    private storage: StorageService) { }
   @Input() mode : string = "source";
 
   ngOnInit(): void {
@@ -63,7 +66,13 @@ export class FileUploaderComponent implements OnInit {
         const fileReader = new FileReader();
         fileReader.readAsText(this.backupFile, "UTF-8");
         fileReader.onload = () => {
-          this.fileUpload.emit(JSON.parse(fileReader.result as string));
+          let f = JSON.parse(fileReader.result as string);
+          if(this.mode == "source"){
+            this.storage.setSource(f);
+          }else if(this.mode =="summary"){
+            this.storage.setSummary(f);
+          }
+          this.fileUpload.emit(f);
         }
         fileReader.onerror = (error) => {
           console.log(error);
@@ -82,6 +91,11 @@ export class FileUploaderComponent implements OnInit {
             console.log(`File is ${percentDone}% loaded.`);
           } else if (event instanceof HttpResponse) {
             console.log('File is completely loaded!');
+            if(this.mode == "source"){
+              this.storage.setSource(event.body);
+            }else if(this.mode =="summary"){
+              this.storage.setSummary(event.body);
+            }
             this.fileUpload.emit(event.body);
           }
         },
