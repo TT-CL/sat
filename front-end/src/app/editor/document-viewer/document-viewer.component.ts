@@ -17,9 +17,9 @@ import { Word, Segment, IdeaUnit, IUCollection } from '../../data-objects';
 import { TextService } from '../../text.service';
 import { StorageService } from '../../storage.service';
 
-import { ProgressSpinnerService } from '../../progress-spinner.service';
+import { OverlayService } from '../../overlay.service';
 import { Overlay, PositionStrategy, OverlayRef } from '@angular/cdk/overlay';
-import { LoadOverlayComponent } from '../../load-overlay/load-overlay.component';
+import { SpinnerOverlayComponent } from '../spinner-overlay/spinner-overlay.component';
 
 import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 
@@ -34,7 +34,7 @@ export class DocumentViewerComponent implements OnInit {
   constructor(
     private textService : TextService,
     private overlay: Overlay,
-    private spinnerService : ProgressSpinnerService,
+    private overlayService : OverlayService,
     private storage: StorageService){  }
 
 
@@ -127,10 +127,10 @@ export class DocumentViewerComponent implements OnInit {
   @ViewChild("spinnerOrigin") spinnerOrigin: ElementRef;
   spinnerRef = null;
   showSpinner(){
-    this.spinnerRef = this.spinnerService.showProgress(this.spinnerOrigin);
+    this.spinnerRef = this.overlayService.showOverlay(this.spinnerOrigin, SpinnerOverlayComponent);
   }
   hideSpinner(){
-    this.spinnerService.detach(this.spinnerRef);
+    this.overlayService.detach(this.spinnerRef);
   }
 
   /**

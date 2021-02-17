@@ -1,18 +1,17 @@
-import { ElementRef, Injectable } from '@angular/core';
+import { ElementRef, Injectable, Component } from '@angular/core';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { timer, Subscription } from 'rxjs';
-import { LoadOverlayComponent } from './load-overlay/load-overlay.component';
-import { DynamicOverlay } from './load-overlay/dynamic-overlay.service';
+import { DynamicOverlay } from './dynamic-overlay/dynamic-overlay.service';
 import { OverlayRef } from '@angular/cdk/overlay';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProgressSpinnerService {
+export class OverlayService {
 
   constructor(private dynamicOverlay: DynamicOverlay) { }
 
-  public showProgress(elRef: ElementRef) {
+  public showOverlay(elRef: ElementRef, overlayComponent: any ) {
     if (elRef) {
       const result: ProgressRef = { subscription: null, overlayRef: null };
       result.subscription = timer(500)
@@ -23,7 +22,7 @@ export class ProgressSpinnerService {
             positionStrategy: positionStrategy,
             hasBackdrop: true
           });
-          result.overlayRef.attach(new ComponentPortal(LoadOverlayComponent));
+          result.overlayRef.attach(new ComponentPortal(overlayComponent));
         });
       return result;
     } else {

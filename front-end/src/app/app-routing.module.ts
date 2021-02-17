@@ -3,11 +3,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { DocumentViewerComponent } from './editor/document-viewer/document-viewer.component';
 import { ProjectDashComponent } from './user-area/project-dash/project-dash.component';
 import { NewProjectComponent } from './user-area/new-project/new-project.component';
+import { EditorDashboardComponent } from './editor/editor-dashboard/editor-dashboard.component';
 
 const routes: Routes = [
   { path: 'projects/new-project', component: NewProjectComponent},
   { path: 'projects', component: ProjectDashComponent},
-  { path: '', redirectTo: '/projects', pathMatch: 'full' }
+  { path: '', component: EditorDashboardComponent}
+  //{ path: '', redirectTo: '/projects', pathMatch: 'full' }
 ];
 
 @NgModule({

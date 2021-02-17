@@ -29,10 +29,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
 import { DashToolbarComponent } from './editor/dash-toolbar/dash-toolbar.component';
-import { LoadOverlayComponent } from './load-overlay/load-overlay.component';
-import { ProgressSpinnerService } from './progress-spinner.service';
-import { DynamicOverlay } from './load-overlay/dynamic-overlay.service';
-import { DynamicOverlayContainer } from './load-overlay/dynamic-overlay-container.service';
+import { SpinnerOverlayComponent } from './editor/spinner-overlay/spinner-overlay.component';
+import { OverlayService } from './overlay.service';
+import { DynamicOverlay } from './dynamic-overlay/dynamic-overlay.service';
+import { DynamicOverlayContainer } from './dynamic-overlay/dynamic-overlay-container.service';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { ProjectDashComponent } from './user-area/project-dash/project-dash.component';
@@ -54,7 +54,7 @@ import { SummaryMinicardComponent } from './user-area/summary-minicard/summary-m
     NavigationComponent,
     FileUploaderComponent,
     DashToolbarComponent,
-    LoadOverlayComponent,
+    SpinnerOverlayComponent,
     ProjectDashComponent,
     ProjectItemComponent,
     NewProjectComponent,
@@ -83,7 +83,7 @@ import { SummaryMinicardComponent } from './user-area/summary-minicard/summary-m
     OverlayModule,
     MatProgressSpinnerModule
   ],
-  providers: [ProgressSpinnerService, DynamicOverlay, DynamicOverlayContainer],
+  providers: [OverlayService, DynamicOverlay, DynamicOverlayContainer],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
