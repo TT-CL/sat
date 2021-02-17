@@ -1,0 +1,75 @@
+<div class="dash-grid horizontal-center">
+  <div class="title-container">
+    <h1 class="mat-display-1 h1-title">NEW PROJECT</h1>
+  </div>
+  <div class="grid-cell horizontal-center vertical-center">
+    <mat-card class="mat-card">
+      <!-- formGroup binds the formGroup and validators created inside the .ts
+           ngSubmit overrides the submit function with a custom one -->
+      <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+        <mat-card-content class="card-content-with-toolbar">
+          <div>
+            <label class="mat-caption hint"> Fields marked with an asterisk are required </label>
+            <mat-form-field class="form-field">
+              <mat-label for="">Project title</mat-label>
+              <input matInput type="text" placeholder="Ex. Apollo 11" required autocomplete="off" id="title" name="title" formControlName="title" >
+              <mat-error *ngIf="projectForm.controls.title.hasError('required')">
+                A project title is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+              <mat-label>Description</mat-label>
+              <input matInput type="text" placeholder="Ex. A news article about the moon landing" autocomplete="off" id="description" name="description" formControlName="description">
+            </mat-form-field>
+
+            <!-- Form control name is required here to record changes on the file selector -->
+            <input type="file" style="display: none" #sourceInput accept=".txt" (change)="onChangeSourceInput()" id="source" name="source" formControlName="source" />
+
+            <mat-form-field class="form-field" [ngClass]="sourceFormFieldClass">
+              <mat-label>Source text</mat-label>
+              <!-- Form control name is required here to allow mat-error to appear according to changes to the visible input -->
+              <input matInput placeholder="source.txt" readonly required (click)="onClickSourceForm()" #summaryForm autocomplete="off" [value]="sourceFormValue" formControlName="source">
+              <button mat-button *ngIf="sourceFile" matSuffix mat-icon-button aria-label="Clear" (click)="removesourceFile()">
+                <mat-icon>close</mat-icon>
+              </button>
+              <mat-hint>Filetypes allowed: .txt</mat-hint>
+              <mat-error *ngIf="projectForm.controls.source.hasError('required')">
+                A source document is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+
+            <input type="file" style="display: none" #summaryInput accept=".txt" (change)="onChangeSummaryInput()" multiple/>
+
+            <div class="mat-body-1 summary-title"> Summaries </div>
+            <div class="summary-area scrollable-content">
+              <div class="summary-flex">
+                <!-- Print one minicard for each summary selected -->
+                <app-summary-minicard *ngFor="let summary of summaryFiles" [file]="summary" (close)="removeSummary($event)"></app-summary-minicard>
+                <!-- Default minicard that allows to update new files -->
+                <div class="plus-container" (click)="newSummary()">
+                  <div class="plus-card-inner">
+                    <mat-icon class="plus-icon">note_add</mat-icon>
+                    <div>NEW</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <mat-divider></mat-divider>
+            <div class="card-toolbar vertical-center save-theme">
+              <button type="submit" mat-flat-button color="primary" [disabled]="!projectForm.valid">
+                Save  <mat-icon>save</mat-icon>
+              </button>
+
+              <button mat-flat-button color="accent" [routerLink]="['../../']">
+                Cancel  <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-card-content>
+      </form>
+    </mat-card>
+  </div>
+</div>

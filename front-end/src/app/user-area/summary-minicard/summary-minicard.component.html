@@ -1,0 +1,11 @@
+<div class="flex-card">
+  <div class="remove-button" (click)="close.emit(file)">
+    <mat-icon class="cancel-icon">cancel</mat-icon>
+  </div>
+  <div class="card-inner">
+    <mat-icon class="doc-icon">description</mat-icon>
+    <div class="filename-area" *ngIf="file">
+      {{file.name}}
+    </div>
+  </div>
+</div>

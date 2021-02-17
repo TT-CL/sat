@@ -1,4 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -35,6 +37,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {OverlayModule} from '@angular/cdk/overlay';
 import { ProjectDashComponent } from './user-area/project-dash/project-dash.component';
 import { ProjectItemComponent } from './user-area/project-item/project-item.component';
+import { NewProjectComponent } from './user-area/new-project/new-project.component';
+import { SummaryMinicardComponent } from './user-area/summary-minicard/summary-minicard.component';
 
 
 
@@ -52,10 +56,14 @@ import { ProjectItemComponent } from './user-area/project-item/project-item.comp
     DashToolbarComponent,
     LoadOverlayComponent,
     ProjectDashComponent,
-    ProjectItemComponent
+    ProjectItemComponent,
+    NewProjectComponent,
+    SummaryMinicardComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,

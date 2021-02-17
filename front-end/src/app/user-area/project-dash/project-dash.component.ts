@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
+
+import { Project } from '../../data-objects'
+import { StorageService } from '../../storage.service';
 
 @Component({
   selector: 'app-project-dash',
@@ -7,8 +10,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectDashComponent implements OnInit {
 
-  constructor() { }
+  constructor(public storage : StorageService) { }
 
+  @Input() project : Project;
   ngOnInit(): void {
   }
 

@@ -9,13 +9,13 @@
       <mat-card-content>
         <div class="content horizontal-center">
           <div class="scrollable-content">
-            <app-project-item class="project-item"></app-project-item>
-            <div class="new-project-area iu-bubbles">
-              <button mat-flat-button color="accent">
+            <app-project-item *ngFor="let proj of storage.projects" class="project-item" [project]="proj"></app-project-item>
+            <div class="new-project-area def-button">
+              <button mat-flat-button color="accent" [routerLink]="['./new-project']">
                 <mat-icon>note_add</mat-icon>
                 Start a new project
               </button>
-              <button mat-flat-button color="warn">
+              <button mat-flat-button color="primary">
                 <mat-icon>settings_backup_restore</mat-icon>
                 Restore from backup
               </button>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IUCollection } from './data-objects';
+import { IUCollection, Project } from './data-objects';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +8,7 @@ export class StorageService {
 
   sourceDoc : IUCollection;
   summaryDoc : IUCollection;
+  projects : Project[] = [];
 
   setSource(source: IUCollection){
     this.sourceDoc = source;
@@ -17,5 +18,7 @@ export class StorageService {
     this.summaryDoc = summary;
   }
 
-  constructor() { }
+  addProject(project: Project){
+    this.projects.push(project);
+  }
 }
