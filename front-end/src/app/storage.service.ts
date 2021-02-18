@@ -17,6 +17,7 @@ export class StorageService {
   //support structure for the Behaviour Subject array
   projects_support : Project[] = [];
   projects : BehaviorSubject<Project []>;
+  user : BehaviorSubject<gapi.auth2.GoogleUser>
 
   constructor(private session: SessionStorageService){
     console.log("Loading projects from session...");
@@ -44,6 +45,7 @@ export class StorageService {
     // initialize the Subject for the observers
     this.projects = new BehaviorSubject<Project []>(this.projects_support);
 
+    this.user = new BehaviorSubject<gapi.auth2.GoogleUser>(null);
     //console.log(`oauth: ${environment.googleOAuthSecret}`);
   }
 
@@ -77,5 +79,13 @@ export class StorageService {
 
   getProjects(): Observable<Project []> {
     return this.projects.asObservable();
+  }
+
+  setUser(user: gapi.auth2.GoogleUser){
+    this.user.next(user);
+  }
+
+  getUser(): Observable<gapi.auth2.GoogleUser> {
+    return this.user.asObservable();
   }
 }

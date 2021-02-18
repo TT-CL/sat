@@ -14,9 +14,18 @@ import { Observable, of } from 'rxjs';
 })
 export class ProjectDashComponent implements OnInit {
 
+  userObserver = {
+    next: user => {
+      if(user){
+        this.userName = user.getBasicProfile().getGivenName();
+      }
+    },
+    error: err => console.error('User observer got an error: ' + err),
+    complete: () => console.log('User observer got a complete notification'),
+  };
+
   constructor(public storage : StorageService) {
-    this.projectsObservable = storage.getProjects();
-    this.projectsObservable.subscribe(
+    storage.getProjects().subscribe(
       projs => {
         this.projects = projs;
       },(err)=>{
@@ -24,12 +33,14 @@ export class ProjectDashComponent implements OnInit {
       },()=>{
         //default
       });
+
+    storage.getUser().subscribe(this.userObserver);
   }
 
   ngOnInit(): void {
   }
 
-  projectsObservable : Observable<Project[]>;
+  userName: string = "";
   projects : Project[] = [];
 
 }

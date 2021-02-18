@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone} from '@angular/core';
 
 import { environment } from 'src/environments/environment';
+
+import { StorageService } from '../../storage.service';
 
 import { Router } from '@angular/router';
 
@@ -11,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class LandingPageComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private storage: StorageService, private zone: NgZone) { }
 
   public gapiSetup: boolean = false; // marks if the gapi library has been loaded
   public authInstance: gapi.auth2.GoogleAuth;
@@ -46,6 +48,10 @@ export class LandingPageComponent implements OnInit {
     });
   }
 
+  redirectToProjects(){
+    this.zone.run(() => this.router.navigate(['projects']));
+  }
+
   async authenticate(): Promise<gapi.auth2.GoogleUser> {
     // Initialize gapi if not done yet
     if (!this.gapiSetup) {
@@ -57,8 +63,8 @@ export class LandingPageComponent implements OnInit {
       await this.authInstance.signIn().then(
         user => {
           this.user = user;
-          console.log("logged in, user");
-          console.log("user");
+          this.storage.setUser(user);
+          this.redirectToProjects();
         },
         error => this.error = error);
     });

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TopbarComponent } from './topbar.component';
+import { NavAuthWidgetComponent } from './nav-auth-widget.component';
 
-describe('TopbarComponent', () => {
-  let component: TopbarComponent;
-  let fixture: ComponentFixture<TopbarComponent>;
+describe('NavAuthWidgetComponent', () => {
+  let component: NavAuthWidgetComponent;
+  let fixture: ComponentFixture<NavAuthWidgetComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TopbarComponent ]
+      declarations: [ NavAuthWidgetComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TopbarComponent);
+    fixture = TestBed.createComponent(NavAuthWidgetComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

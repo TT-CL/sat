@@ -9,7 +9,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IuDisplayComponent } from './editor/iu-display/iu-display.component';
 import { DocumentViewerComponent } from './editor/document-viewer/document-viewer.component';
-import { TopbarComponent } from './topbar/topbar.component';
 
 import { MatCardModule } from '@angular/material/card';
 import { EditorDashboardComponent } from './editor/editor-dashboard/editor-dashboard.component';
@@ -43,6 +42,7 @@ import { UploadOverlayComponent } from './user-area/upload-overlay/upload-overla
 
 import {NgxWebstorageModule} from 'ngx-webstorage';
 import { LandingPageComponent } from './user-area/landing-page/landing-page.component';
+import { NavAuthWidgetComponent } from './user-area/nav-auth-widget/nav-auth-widget.component';
 
 
 
@@ -52,7 +52,6 @@ import { LandingPageComponent } from './user-area/landing-page/landing-page.comp
     AppComponent,
     IuDisplayComponent,
     DocumentViewerComponent,
-    TopbarComponent,
     EditorDashboardComponent,
     NavigationComponent,
     FileUploaderComponent,
@@ -63,7 +62,8 @@ import { LandingPageComponent } from './user-area/landing-page/landing-page.comp
     NewProjectComponent,
     SummaryMinicardComponent,
     UploadOverlayComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    NavAuthWidgetComponent
   ],
   imports: [
     BrowserModule,

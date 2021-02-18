@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'projects', component: ProjectDashComponent},
   { path: 'editor/:project_index', component: EditorDashboardComponent},
   { path: '', component: LandingPageComponent},
+  { path: 'log-in', component: LandingPageComponent},
   //{ path: '', redirectTo: '/projects', pathMatch: 'full' },
 ];
 
