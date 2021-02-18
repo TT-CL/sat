@@ -44,7 +44,7 @@ export class StorageService {
     // initialize the Subject for the observers
     this.projects = new BehaviorSubject<Project []>(this.projects_support);
 
-    console.log(`oauth: ${environment.googleOAuthSecret}`);
+    //console.log(`oauth: ${environment.googleOAuthSecret}`);
   }
 
   saveProjects() {
