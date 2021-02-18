@@ -5,11 +5,14 @@ import { ProjectDashComponent } from './user-area/project-dash/project-dash.comp
 import { NewProjectComponent } from './user-area/new-project/new-project.component';
 import { EditorDashboardComponent } from './editor/editor-dashboard/editor-dashboard.component';
 
+import { LandingPageComponent } from './user-area/landing-page/landing-page.component';
+
 const routes: Routes = [
   { path: 'projects/new-project', component: NewProjectComponent},
   { path: 'projects', component: ProjectDashComponent},
   { path: 'editor/:project_index', component: EditorDashboardComponent},
-  { path: '', redirectTo: '/projects', pathMatch: 'full' },
+  { path: '', component: LandingPageComponent},
+  //{ path: '', redirectTo: '/projects', pathMatch: 'full' },
 ];
 
 @NgModule({

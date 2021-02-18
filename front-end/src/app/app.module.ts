@@ -42,6 +42,7 @@ import { SummaryMinicardComponent } from './user-area/summary-minicard/summary-m
 import { UploadOverlayComponent } from './user-area/upload-overlay/upload-overlay.component';
 
 import {NgxWebstorageModule} from 'ngx-webstorage';
+import { LandingPageComponent } from './user-area/landing-page/landing-page.component';
 
 
 
@@ -61,7 +62,8 @@ import {NgxWebstorageModule} from 'ngx-webstorage';
     ProjectItemComponent,
     NewProjectComponent,
     SummaryMinicardComponent,
-    UploadOverlayComponent
+    UploadOverlayComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,
