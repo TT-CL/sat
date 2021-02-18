@@ -3,6 +3,7 @@
 # user defined
 deployment.md
 /front-end/src/app/samples/
+/front-end/.env
 /test.py
 
 # Pretrained Glove W2V folder

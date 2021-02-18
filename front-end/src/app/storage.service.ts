@@ -5,6 +5,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
 
 import {SessionStorageService} from 'ngx-webstorage';
 
+import { environment } from 'src/environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,6 +43,8 @@ export class StorageService {
     console.log(this.projects_support);
     // initialize the Subject for the observers
     this.projects = new BehaviorSubject<Project []>(this.projects_support);
+
+    console.log(`oauth: ${environment.googleOAuthSecret}`);
   }
 
   saveProjects() {
