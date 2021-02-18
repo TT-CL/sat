@@ -8,8 +8,8 @@ import { EditorDashboardComponent } from './editor/editor-dashboard/editor-dashb
 const routes: Routes = [
   { path: 'projects/new-project', component: NewProjectComponent},
   { path: 'projects', component: ProjectDashComponent},
-  { path: '', component: EditorDashboardComponent}
-  //{ path: '', redirectTo: '/projects', pathMatch: 'full' }
+  { path: 'editor/:project_index', component: EditorDashboardComponent},
+  { path: '', redirectTo: '/projects', pathMatch: 'full' },
 ];
 
 @NgModule({

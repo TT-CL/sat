@@ -9,7 +9,7 @@
       <mat-card-content>
         <div class="content horizontal-center">
           <div class="scrollable-content">
-            <app-project-item *ngFor="let proj of storage.projects" class="project-item" [project]="proj"></app-project-item>
+            <app-project-item *ngFor="let i of storage.projects.keys()" class="project-item" [project]="storage.projects[i]" [index]="i"></app-project-item>
             <div class="new-project-area def-button">
               <button mat-flat-button color="accent" [routerLink]="['./new-project']">
                 <mat-icon>note_add</mat-icon>

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
 
-import { Project } from '../../data-objects'
 import { StorageService } from '../../storage.service';
 
 @Component({
@@ -12,7 +11,6 @@ export class ProjectDashComponent implements OnInit {
 
   constructor(public storage : StorageService) { }
 
-  @Input() project : Project;
   ngOnInit(): void {
   }
 

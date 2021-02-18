@@ -154,6 +154,10 @@ $link-theme: mat-light-theme((
 html, body { height: 100%; }
 body { margin: 0; }
 
+.cdk-overlay-backdrop{
+  border-radius: inherit;
+}
+
 // typography
 $custom-typography: mat-typography-config(
   $font-family: 'Roboto, "Helvetica Neue", sans-serif',

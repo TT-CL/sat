@@ -39,6 +39,7 @@ import { ProjectDashComponent } from './user-area/project-dash/project-dash.comp
 import { ProjectItemComponent } from './user-area/project-item/project-item.component';
 import { NewProjectComponent } from './user-area/new-project/new-project.component';
 import { SummaryMinicardComponent } from './user-area/summary-minicard/summary-minicard.component';
+import { UploadOverlayComponent } from './user-area/upload-overlay/upload-overlay.component';
 
 
 
@@ -58,7 +59,8 @@ import { SummaryMinicardComponent } from './user-area/summary-minicard/summary-m
     ProjectDashComponent,
     ProjectItemComponent,
     NewProjectComponent,
-    SummaryMinicardComponent
+    SummaryMinicardComponent,
+    UploadOverlayComponent
   ],
   imports: [
     BrowserModule,

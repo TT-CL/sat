@@ -450,9 +450,10 @@ export class IUCollection {
 export class Project {
   name : string;
   description: string;
+  creation_time: Date;
   last_edit : Date;
   sourceDoc : IUCollection;
-  summaryDoc : IUCollection;
+  summaryDocs : IUCollection[];
 
   constructor(name: string, source: IUCollection){
     this.name = name;

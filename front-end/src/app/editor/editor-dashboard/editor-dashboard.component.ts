@@ -4,6 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import { Word, Segment, IdeaUnit, IUCollection } from '../../data-objects';
 
 import { TextService } from '../../text.service';
+import { StorageService } from '../../storage.service';
+
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-editor-dashboard',
@@ -11,6 +14,20 @@ import { TextService } from '../../text.service';
   styleUrls: ['./editor-dashboard.component.css']
 })
 export class EditorDashboardComponent implements OnInit{
+
+  constructor(
+    private textService : TextService,
+    private storage: StorageService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit() : void {
+    console.log("Loaded project:");
+    this.project_index = Number(this.route.snapshot.params.project_index)
+    console.log(this.storage.projects[this.project_index]);
+  }
+
+  project_index : number;
 
   summary_file: IUCollection = new IUCollection();
   source_file: IUCollection = new IUCollection();
@@ -33,9 +50,6 @@ export class EditorDashboardComponent implements OnInit{
   summaryLinkInput: IdeaUnit;
   sourceLinkInput: IdeaUnit;
 
-
-  constructor(private textService : TextService) {}
-
   raiseFlags(mode : string){
     switch(mode){
       case "source":
@@ -55,36 +69,21 @@ export class EditorDashboardComponent implements OnInit{
     }
   }
 
-  ngOnInit() : void {
-    /*
-      if(this.dev_mode){
-        this.textService.getSampleSource()
-          .subscribe(source => this.source_file.readDocument(source));
-        this.textService.getSampleSummary()
-          .subscribe(summary => this.summary_file.readDocument(summary));
-
-        this.raiseFlags("source");
-        this.raiseFlags("summary");
-        this.link_disabled_flag = false;
-      }
-    */
+  parseSummary(body) : void {
+    this.summary_file.readDocument(body);
+    this.raiseFlags("summary");
+    if(! this.source_file.empty()){
+      console.log("both files uploaded");
+      this.link_disabled_flag = false;
     }
+  }
 
-    parseSummary(body) : void {
-      this.summary_file.readDocument(body);
-      this.raiseFlags("summary");
-      if(! this.source_file.empty()){
-        console.log("both files uploaded");
-        this.link_disabled_flag = false;
-      }
+  parseSource(body) : void {
+    this.source_file.readDocument(body);
+    this.raiseFlags("source");
+    if(! this.summary_file.empty()){
+      console.log("both files uploaded");
+      this.link_disabled_flag = false;
     }
-
-    parseSource(body) : void {
-      this.source_file.readDocument(body);
-      this.raiseFlags("source");
-      if(! this.summary_file.empty()){
-        console.log("both files uploaded");
-        this.link_disabled_flag = false;
-      }
-    }
+  }
 }

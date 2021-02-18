@@ -1,11 +1,14 @@
-<div class="project-item">
+<div class="project-item" *ngIf="project">
   <mat-icon class="project-header-icon"> description </mat-icon>
   <div class="project-header">
-    <span class="project-title">Project name</span>
-    <span class="project-subtitle">Project time</span>
+    <span class="project-title">{{project.name}}</span>
+    <span class="project-subtitle">{{numSummaries}} summaries.</span>
+    <!--
+      <span class="project-time">Last edited: {{lastEdit}}</span>
+    -->
   </div>
   <div class="project-buttons">
-    <button mat-flat-button color="primary">
+    <button mat-flat-button color="primary" [routerLink]="route">
       <mat-icon>subject</mat-icon>
       Go to editor
     </button>
