@@ -24,7 +24,8 @@ export class ProjectItemComponent implements OnInit {
     this.lastEdit = this.project.last_edit.toUTCString();
     this.route.push("../editor");
     this.route.push(this.index);
-    console.log("index: "+this.index);
+    console.log(this.project.last_edit);
+    //console.log("index: "+this.index);
   }
 
 }

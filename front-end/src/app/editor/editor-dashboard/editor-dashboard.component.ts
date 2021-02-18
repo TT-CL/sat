@@ -8,6 +8,8 @@ import { StorageService } from '../../storage.service';
 
 import { ActivatedRoute } from '@angular/router';
 
+import { of } from 'rxjs';
+
 @Component({
   selector: 'app-editor-dashboard',
   templateUrl: './editor-dashboard.component.html',
@@ -23,8 +25,9 @@ export class EditorDashboardComponent implements OnInit{
 
   ngOnInit() : void {
     console.log("Loaded project:");
-    this.project_index = Number(this.route.snapshot.params.project_index)
-    console.log(this.storage.projects[this.project_index]);
+    this.project_index = Number(this.route.snapshot.params.project_index);
+    // this is unsafe. convert to subscribe in the future
+    console.log(this.storage.projects_support[this.project_index]);
   }
 
   project_index : number;

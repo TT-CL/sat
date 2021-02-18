@@ -41,6 +41,7 @@ import { NewProjectComponent } from './user-area/new-project/new-project.compone
 import { SummaryMinicardComponent } from './user-area/summary-minicard/summary-minicard.component';
 import { UploadOverlayComponent } from './user-area/upload-overlay/upload-overlay.component';
 
+import {NgxWebstorageModule} from 'ngx-webstorage';
 
 
 
@@ -83,7 +84,8 @@ import { UploadOverlayComponent } from './user-area/upload-overlay/upload-overla
     MatFormFieldModule,
     MatInputModule,
     OverlayModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    NgxWebstorageModule.forRoot(),
   ],
   providers: [OverlayService, DynamicOverlay, DynamicOverlayContainer],
   bootstrap: [AppComponent]

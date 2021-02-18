@@ -153,7 +153,9 @@ export class NewProjectComponent {
     console.log("Upload complete successfully");
     let title = this.projectForm.value.title
     let description = this.projectForm.value.description;
-    let proj = new Project(title, this.parsedSource);
+    let proj = new Project();
+    proj.name = title;
+    proj.sourceDoc = this.parsedSource;
     proj.creation_time = new Date();
     proj.last_edit = proj.creation_time;
     if (description && description != ""){
@@ -162,7 +164,7 @@ export class NewProjectComponent {
     if (this.parsedSummaries.length > 0){
       proj.summaryDocs = this.parsedSummaries;
     }
-    this.storage.projects.push(proj);
+    this.storage.addProject(proj);
     //console.log(this.storage);
     this.redirectOut();
   }

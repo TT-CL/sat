@@ -455,9 +455,7 @@ export class Project {
   sourceDoc : IUCollection;
   summaryDocs : IUCollection[];
 
-  constructor(name: string, source: IUCollection){
-    this.name = name;
+  constructor(){
     this.last_edit = new Date();
-    this.sourceDoc = source;
   }
 }
