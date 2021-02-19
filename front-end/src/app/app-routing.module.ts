@@ -16,12 +16,11 @@ const routes: Routes = [
     path: 'projects',
     component: ProjectDashComponent,
     canActivate: [AuthGuardService],
-    children:[
-      {
-        path: 'new-project',
-        component: NewProjectComponent,
-      },
-    ]
+  },
+  {
+    path: 'projects/new-project',
+    component: NewProjectComponent,
+    canActivate: [AuthGuardService],
   },
   {
     path: 'editor/:project_index',
