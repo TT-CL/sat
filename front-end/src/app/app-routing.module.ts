@@ -5,15 +5,35 @@ import { ProjectDashComponent } from './user-area/project-dash/project-dash.comp
 import { NewProjectComponent } from './user-area/new-project/new-project.component';
 import { EditorDashboardComponent } from './editor/editor-dashboard/editor-dashboard.component';
 
-import { LandingPageComponent } from './user-area/landing-page/landing-page.component';
+import { LoginPageComponent } from './user-area/login-page/login-page.component';
+import { CatchLoginComponent } from './user-area/catch-login/catch-login.component';
+
+import { OAuthService } from 'angular-oauth2-oidc';
+import { AuthGuardService } from './auth-guard.service';
 
 const routes: Routes = [
-  { path: 'projects/new-project', component: NewProjectComponent},
-  { path: 'projects', component: ProjectDashComponent},
-  { path: 'editor/:project_index', component: EditorDashboardComponent},
-  { path: '', component: LandingPageComponent},
-  { path: 'log-in', component: LandingPageComponent},
+  {
+    path: 'projects',
+    component: ProjectDashComponent,
+    canActivate: [AuthGuardService],
+    children:[
+      {
+        path: 'new-project',
+        component: NewProjectComponent,
+      },
+    ]
+  },
+  {
+    path: 'editor/:project_index',
+    component: EditorDashboardComponent,
+    canActivate: [AuthGuardService],
+  },
+  { path: '', component: LoginPageComponent},
+  { path: 'login', component: LoginPageComponent},
+  //page called upon receiving the OAuth token from Google
+  { path: 'catch-login', component: CatchLoginComponent},
   //{ path: '', redirectTo: '/projects', pathMatch: 'full' },
+  { path: '**', redirectTo: '/', pathMatch: 'full'}
 ];
 
 @NgModule({

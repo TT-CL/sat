@@ -4,8 +4,7 @@ import { StorageService } from '../../storage.service';
 
 import { Project } from '../../data-objects';
 
-import { Observable, of } from 'rxjs';
-
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-project-dash',
@@ -14,17 +13,10 @@ import { Observable, of } from 'rxjs';
 })
 export class ProjectDashComponent implements OnInit {
 
-  userObserver = {
-    next: user => {
-      if(user){
-        this.userName = user.getBasicProfile().getGivenName();
-      }
-    },
-    error: err => console.error('User observer got an error: ' + err),
-    complete: () => console.log('User observer got a complete notification'),
-  };
-
-  constructor(public storage : StorageService) {
+  constructor(
+    public storage : StorageService,
+    private oauthService: OAuthService
+  ) {
     storage.getProjects().subscribe(
       projs => {
         this.projects = projs;
@@ -33,14 +25,19 @@ export class ProjectDashComponent implements OnInit {
       },()=>{
         //default
       });
-
-    storage.getUser().subscribe(this.userObserver);
   }
 
   ngOnInit(): void {
   }
 
-  userName: string = "";
   projects : Project[] = [];
 
+  public get userName() {
+      var claims = this.oauthService.getIdentityClaims();
+      if (!claims){
+        return null;
+      }
+      //console.log(claims);
+      return claims['given_name'];
+  }
 }

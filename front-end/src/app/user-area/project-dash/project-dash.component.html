@@ -11,7 +11,7 @@
           <div class="scrollable-content">
             <app-project-item *ngFor="let proj of projects; let i = index" class="project-item" [project]="proj" [index]="i"></app-project-item>
             <div class="new-project-area def-button">
-              <button mat-flat-button color="accent" [routerLink]="['./new-project']">
+              <button mat-flat-button color="accent" [routerLink]="['/projects/new-project']">
                 <mat-icon>note_add</mat-icon>
                 Start a new project
               </button>

@@ -1,13 +1,13 @@
-<div *ngIf="userSignedIn" [ngIfElse]="loggedOut" class="user-widget-container">
+<div *ngIf="userSignedIn; else loggedOut" class="user-widget-container">
   <img [src]="userAvatar" class="avatar"/>
   <div class="username mat-h3"> {{userName}} </div>
-  <button mat-stroked-button (click)="logOut()" class="logout">
+  <button mat-stroked-button (click)="logout()" class="logout">
     Log out
   </button>
 </div>
 <ng-template #loggedOut>
   <div *ngIf="!landingArea" class="user-widget-container">
-    <button mat-flat-button color="warn" [routerLink]="['/log-in']">
+    <button mat-flat-button color="warn" [routerLink]="['/login']">
       Log In
     </button>
   </div>
