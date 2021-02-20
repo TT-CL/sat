@@ -1,11 +1,11 @@
-#SummaryEval
+# SummaryEval
 Complete server architechture for a framework for the evaluation of L2 summaries.
 
 Current server structure:
  - front-end: Angular front-end
  - computation: Python3 FastAPI server (served on port 8080)
 
-##First setup
+## First setup
 The server runs entirely on Docker architecture.
 Clone the repo and run `docker-compose build`.
 Once build is complete you can run `docker-compose up` to bring the servers up.
@@ -14,7 +14,7 @@ You can test the production nginx server on your machine by changing `target: de
 
 Follow the instructions in [Deployement](##Deployement) when deploying the project to a production server.
 
-##Deployement
+## Deployement
 When cloning the repo to a deployement server make sure to change `target: dev` to `target: prod` inside `./docker-compose.yml`.
 You can then build the server just like on your machine via `docker-compose build`.
 In production you can detach the instances of your docker containers from your ssh session by running `docker-compose up -d`. This will ensure that the servers will run when you exit your ssh session.
@@ -22,7 +22,7 @@ In production you can detach the instances of your docker containers from your s
 Since you will most likely be deploying your server via git, you will have to edit `./docker-compose.yml` every time you pull changes from your repo.
 You can avoid this by building and running the server by running the commands from `./production/`. The production docker-compose configuration file assumes that you will enable HTTPS support, so you will have to setup certbot by following the instructions in the [following section](##HTTPS-support-on-a-development-server).
 
-##HTTPS support on a development server
+## HTTPS support on a development server
 In order to enable HTTPS support, you will first need to deploy the project on a server that is open to the web (associated to a domain).
 Build it and run it once by editing `./docker-compose.yml` to make sure that everything is working.
 
