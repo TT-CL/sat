@@ -5,6 +5,9 @@ deployment.md
 /front-end/src/app/samples/
 /front-end/.env
 /test.py
+/production/certbot
+/production/init-letsencrypt.sh
+/production/nginx/nginx.config
 
 # Pretrained Glove W2V folder
 /computation/app/models/

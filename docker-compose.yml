@@ -3,9 +3,11 @@ services:
   web:
     build:
       context: ./front-end/
-      target: ${DOCKER_ENV}
+      target: dev
     ports:
-      - "${DOCKER_PORT}:4201"
+      - "5000:4201"
+    depends_on:
+      - computation
     volumes:
       - ./front-end:/opt/ng
 
