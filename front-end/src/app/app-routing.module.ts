@@ -23,9 +23,19 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
   },
   {
-    path: 'editor/:project_index',
-    component: EditorDashboardComponent,
+    path: 'editor',
     canActivate: [AuthGuardService],
+    children:[
+      {
+        path: '',
+        redirectTo: '/editor/viewer',
+        pathMatch: 'full'
+      },
+      {
+        path:':view',
+        component: EditorDashboardComponent,
+      }
+    ]
   },
   { path: '', component: LoginPageComponent},
   { path: 'login', component: LoginPageComponent},

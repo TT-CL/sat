@@ -147,7 +147,7 @@ export class DocumentViewerComponent implements OnInit {
 
   bubbleClick(seg) : void {
     //console.log(seg);
-    this.toggleIuSelect(this.doc.ius.get(seg.iu));
+    this.toggleIuSelect(this.doc.ius[seg.iu]);
 
     if(this.selected_iu){
       this.allowIuEdit = true;
@@ -158,19 +158,19 @@ export class DocumentViewerComponent implements OnInit {
 
   linkClick(seg) : void {
     console.log("click");
-    this.toggleIuSelect(this.doc.ius.get(seg.iu))
+    this.toggleIuSelect(this.doc.ius[seg.iu])
     if (this.doc.doc_type == "summary"){
       console.log("emitting iu from summary");
       this.iuLinkOutput.emit(new IdeaUnit());
-      this.iuLinkOutput.emit(this.doc.ius.get(seg.iu));
+      this.iuLinkOutput.emit(this.doc.ius[seg.iu]);
     }else if (this.doc.doc_type == "source"){
       this.iuLinkOutput.emit(new IdeaUnit());
       //if I have an input link
       if (this.iuLinkInput){
-        this.doc.ius.get(seg.iu).toggleIuLink(this.iuLinkInput);
+        this.doc.ius[seg.iu].toggleIuLink(this.iuLinkInput);
       }
       console.log("emitting iu from source");
-      this.iuLinkOutput.emit(this.doc.ius.get(seg.iu));
+      this.iuLinkOutput.emit(this.doc.ius[seg.iu]);
     }
   }
 
@@ -307,7 +307,7 @@ export class DocumentViewerComponent implements OnInit {
       let local_sims = this.similarities[summaryIU.label];
       for (var i=0; i<5; i++){
         let label = local_sims[i][1];
-        let suggested = this.doc.ius.get(label);
+        let suggested = this.doc.ius[label];
         this.suggested_ius.push(suggested);
       }
 

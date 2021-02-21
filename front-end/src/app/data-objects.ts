@@ -49,7 +49,7 @@ export class Segment {
       res = res + spacer + word.text;
     }
     if (printIuLabel && this.iu){
-      if (refDoc.ius.get(this.iu).disc){
+      if (refDoc.ius[this.iu].disc){
         res = this.iu + "|" + res;
       }
     }
@@ -62,7 +62,7 @@ export class Segment {
     let word_idx = this.words.indexOf(delWord.index);
     if (this.words.length == 1){
       // this is the last word of the segment
-      refDoc.ius.get(this.iu).detachSegment(this, refDoc);
+      refDoc.ius[this.iu].detachSegment(this, refDoc);
       refDoc.addGhostWord(delWord,this,"before");
       refDoc.removeSeg(this);
     }else if (word_idx == 0){
@@ -80,7 +80,8 @@ export class Segment {
 
       new_seg.words = this.words.slice(word_idx+1,this.words.length);
       new_seg.iu = this.iu;
-      refDoc.ius.get(this.iu).childSegs.add(new_seg.index);
+      //adding null to a dict => adding a value to a set
+      refDoc.ius[this.iu].childSegs[new_seg.index] = null;
       for (let new_word of new_seg.getWords(refDoc)){
         new_word.seg = new_seg.index;
       }
@@ -88,7 +89,7 @@ export class Segment {
       refDoc.segs.splice(refDoc.segs.indexOf(this)+1,0,new_seg);
 
       //set the disc flag
-      refDoc.ius.get(this.iu).disc = true;
+      refDoc.ius[this.iu].disc = true;
       // remove the unnecessary words
       this.words = this.words.slice(0,word_idx);
 
@@ -109,7 +110,7 @@ export class Segment {
 export class IdeaUnit {
   label : string;           //IU label
   disc : boolean;           //discontinuous flag
-  childSegs : Set<number>; //set of child segment indexes
+  childSegs : {[key: number]: void}; //set of child segment indexes
 
   //reference to document container
   linkedIus : string[];
@@ -118,7 +119,7 @@ export class IdeaUnit {
 
   constructor(label?: string, disc? : boolean){
     this.label = label || null;
-    this.childSegs = new Set();
+    this.childSegs = {};
     this.disc = disc || null;
     this.linkedIus = [];
     this.suggested = false;
@@ -131,8 +132,8 @@ export class IdeaUnit {
 
   getText(refDoc: IUCollection): string{
     let res = "";
-    for (let child_idx of this.childSegs){
-      let child = refDoc.findSegment(child_idx);
+    for (let child_idx in this.childSegs){
+      let child = refDoc.findSegment(Number(child_idx));
       res = res + " " + child.getText(refDoc);
     }
     return res.trim();
@@ -140,7 +141,7 @@ export class IdeaUnit {
 
   detachSegment(delSeg: Segment, refDoc: IUCollection){
     delSeg.iu = null;
-    switch (this.childSegs.size){
+    switch (Object.keys(this.childSegs).length){
       case 1:{
         // the iu needs to be removed
         refDoc.removeIU(this.label);
@@ -149,12 +150,12 @@ export class IdeaUnit {
       case 2:{
         // the iu only has 2 segments.
         // by removing 1 it will stop being discontinuous
-        this.childSegs.delete(delSeg.index);
+        delete this.childSegs[delSeg.index];
         this.disc = false;
         break;
       }
       default:{
-        this.childSegs.delete(delSeg.index);
+        delete this.childSegs[delSeg.index];
         break;
       }
     }
@@ -167,8 +168,8 @@ export class IdeaUnit {
     let ghostSeg = refDoc.findSegment(word.seg);
 
     let adjWords : Word[] = [];
-    for (var seg_idx of this.childSegs){
-      let seg = refDoc.findSegment(seg_idx);
+    for (var seg_idx in this.childSegs){
+      let seg = refDoc.findSegment(Number(seg_idx));
       for (var w of seg.getWords(refDoc)){
         if (Math.abs(w.index-word.index)==1){
           //I found an adjacent word
@@ -214,9 +215,9 @@ export class IdeaUnit {
           w.seg = master_seg.index;
           master_seg.words.push(w.index);
         }
-        refDoc.ius.get(del_seg.iu).detachSegment(del_seg,refDoc);
+        refDoc.ius[del_seg.iu].detachSegment(del_seg,refDoc);
         refDoc.removeSeg(del_seg);
-        if (this.childSegs.size == 1){
+        if (Object.keys(this.childSegs).length == 1){
           this.disc = false;
         }
 
@@ -225,8 +226,8 @@ export class IdeaUnit {
       default:{
         // the word is far away from the segments
         // ensure that the existing segments won't be ghosts any longer
-        for (var s_idx of this.childSegs){
-          let s = refDoc.findSegment(s_idx);
+        for (var s_idx in this.childSegs){
+          let s = refDoc.findSegment(Number(s_idx));
           s.type = "default";
         }
         //create the new segment for the words far a way
@@ -236,7 +237,8 @@ export class IdeaUnit {
         word.seg = new_seg.index;
         word.iu = this.label;
         this.disc = true;
-        this.childSegs.add(new_seg.index);
+        //adding null to a dict => adding a value to a set
+        this.childSegs[new_seg.index] = null;
         refDoc.segs.splice(refDoc.segs.indexOf(ghostSeg)+1,0,new_seg);
         break;
       }
@@ -257,8 +259,8 @@ export class IdeaUnit {
 
   getChildren(refDoc: IUCollection) : Segment[]{
     let segArray : Segment[] = [];
-    for (let s_idx of this.childSegs){
-      segArray.push(refDoc.findSegment(s_idx));
+    for (let s_idx in this.childSegs){
+      segArray.push(refDoc.findSegment(Number(s_idx)));
     }
     return segArray;
   }
@@ -268,7 +270,7 @@ export class IUCollection {
   doc_name: string;
   doc_type: string;
   words: Word[];
-  ius: Map<string, IdeaUnit>;
+  ius: {[key: string]: IdeaUnit};
   segs: Segment[];
   sents: string[];
 
@@ -281,7 +283,7 @@ export class IUCollection {
   }
 
   private cleanup(){
-    this.ius = new Map<string, IdeaUnit>();
+    this.ius = {};
     this.segs = [];
     this.sents = [];
     this.words = [];
@@ -326,15 +328,16 @@ export class IUCollection {
         //link the segment to the word
         temp_word.seg = cur_seg.index;
 
-        if (!this.ius.has(iu_label)){
+        if (!(iu_label in this.ius)){
           //console.log("iu not in memory");
           //creating an empty segment
           let temp_IU = new IdeaUnit(iu_label,read_word["disc"]);
-          this.ius.set(iu_label,temp_IU);
+          this.ius[iu_label] = temp_IU;
         }
         //adding segment to IU structure
-        let cur_IU = this.ius.get(iu_label);
-        cur_IU["childSegs"].add(cur_seg.index);
+        let cur_IU = this.ius[iu_label];
+        //adding null to a dict => adding a value to a set
+        cur_IU["childSegs"][cur_seg.index] = null;
 
         //adding IU references to a word and segment structure
         cur_seg.iu = cur_IU.label;
@@ -383,12 +386,13 @@ export class IUCollection {
     this.ghost_seg_count = this.ghost_seg_count + 1;
     word.seg = ghostSeg.index;
     word.iu = ghostIU.label;
-    ghostIU.childSegs.add(ghostSeg.index);
+    //adding null to a dict => adding a value to a set
+    ghostIU.childSegs[ghostSeg.index] = null;
     ghostSeg.words.push(word.index);
     ghostSeg.iu = ghostIU.label;
 
     //add structures to memory
-    this.ius.set(ghostLabel,ghostIU);
+    this.ius[ghostLabel] = ghostIU;
     let seg_idx = this.segs.indexOf(segment);
 
     switch(mode){
@@ -410,11 +414,11 @@ export class IUCollection {
 
   removeIU(iuLabel : string): void {
     console.log("Removing iu "+ iuLabel);
-    let iu = this.ius.get(iuLabel);
-    for (var seg of iu.childSegs){
-      this.removeSeg(this.findSegment(seg));
+    let iu = this.ius[iuLabel];
+    for (var seg in iu.childSegs){
+      this.removeSeg(this.findSegment(Number(seg)));
     }
-    this.ius.delete(iu.label);
+    delete this.ius[iu.label];
   }
 
   //this function prepares a new JSON object and serializes it
@@ -424,7 +428,8 @@ export class IUCollection {
                 "doc_type" : this.doc_type };
     let tempIus = {};
     var refDoc = this;
-    this.ius.forEach(function(iu, index) {
+    for (let index in this.ius){
+      let iu = this.ius[index];
       //temp structure for array of words
       let tempSeg = []
       //explore the child segments
@@ -436,7 +441,7 @@ export class IUCollection {
       }
       // associate the array of words to the iu index
       tempIus[index]=tempSeg;
-    });
+    }
 
     json["ius"] = tempIus;
     return JSON.stringify(json);
@@ -444,6 +449,61 @@ export class IUCollection {
 
   findSegment(segIndex : number): Segment{
     return this.segs.find(seg => seg.index == segIndex);
+  }
+
+  reconsolidate(anon){
+    console.log("reconsolidate");
+    console.log(this);
+    console.log(anon);
+    //standard objs
+    this.doc_name = anon.doc_name;
+    this.doc_type = anon.doc_type;
+    this.ghost_seg_count = Number(anon.ghost_seg_count);
+    this.manual_iu_count = Number(anon.manual_iu_count);
+    this.max_seg_count = Number(anon.max_seg_count);
+    for (let anon_sent of anon.sents){
+      this.sents.push(anon_sent);
+    }
+    //complex objects
+    //words
+    for (let anon_word of anon.words){
+      let word = new Word(anon_word.text,anon_word.index);
+      word.color = anon_word.color;
+      word.iu = anon_word.iu;
+      word.seg = anon_word.seg;
+      word.selected = anon_word.selected;
+      this.words.push(word);
+    }
+
+    //segs
+    for (let anon_seg of anon.segs){
+      let seg = new Segment(this);
+      seg.index = Number(anon_seg.index);
+      seg.iu = anon_seg.iu;
+      seg.selected = anon_seg.selected;
+      seg.type = anon_seg.type;
+      for (let anon_word of anon_seg.words){
+        seg.words.push(Number(anon_word));
+      }
+      this.segs.push(seg);
+    }
+
+    //ius
+    for (let anon_index in anon.ius){
+      let anon_iu = anon.ius[anon_index];
+      let iu = new IdeaUnit();
+      iu.disc = anon_iu.disc;
+      iu.label = anon_iu.label;
+      iu.suggested = anon_iu.suggested;
+      for (let anon_linked_iu of anon_iu.linkedIus){
+        iu.linkedIus.push(anon_linked_iu);
+      }
+      for (let child_seg_idx in anon.childSegs){
+        //adding null to a dict => adding a value to a JS set
+        iu.childSegs[child_seg_idx] = null;
+      }
+      this.ius[anon_index] = iu;
+    }
   }
 }
 
@@ -457,5 +517,35 @@ export class Project {
 
   constructor(){
     this.last_edit = new Date();
+  }
+
+  hasSummaries(): boolean{
+    if (this.summaryDocs){
+      return this.summaryDocs.length != 0;
+    }
+    return false;
+  }
+
+  reconsolidate(anonymous_oject: object) {
+    console.log("Reconsolidate")
+    console.log(this)
+    console.log(anonymous_oject);
+    //casting anonymous object as a Project
+    let anon = anonymous_oject as Project
+    //converting strings to dates
+    this.creation_time = new Date(anon.creation_time);
+    this.last_edit = new Date(anon.last_edit);
+    //assign static values
+    this.name = anon.name;
+    this.description = anon.description;
+    this.sourceDoc = new IUCollection();
+    this.sourceDoc.reconsolidate(anon.sourceDoc);
+
+    this.summaryDocs = [];
+    for (let anon_summary of anon.summaryDocs){
+      let summary = new IUCollection();
+      summary.reconsolidate(anon_summary);
+      this.summaryDocs.push(summary);
+    }
   }
 }

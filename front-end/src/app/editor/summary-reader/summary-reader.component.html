@@ -1,0 +1,17 @@
+<mat-card class="document-card">
+  <mat-card-header>
+    <mat-card-title>{{doc.doc_name}}</mat-card-title>
+    <mat-card-subtitle>Summary</mat-card-subtitle>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <div class="mat-card-dynamic-content">
+      <!-- Text View -->
+      <div class="scrollable-content">
+        <p *ngFor="let sent of doc.sents">
+          {{sent}}
+        </p>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

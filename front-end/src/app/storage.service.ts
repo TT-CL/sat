@@ -14,6 +14,18 @@ export class StorageService {
 
   sourceDoc : IUCollection;
   summaryDoc : IUCollection;
+
+  cur_project_idx : number = null;
+  cur_project_support : Project = null;
+  cur_project : BehaviorSubject<Project>;
+
+  work_summary_idx : number = null;
+  work_summary_support : IUCollection = null;
+  work_summary : BehaviorSubject<IUCollection>;
+  work_source_support : IUCollection = null;
+  work_source : BehaviorSubject<IUCollection>;
+
+
   projects_support : Project[] = [];
   projects : BehaviorSubject<Project []>;
 
@@ -24,18 +36,8 @@ export class StorageService {
     //load the projects as a Typescript Project
     if (anonymous_objects){
       for (let obj of anonymous_objects){
-        //casting anonymous object as a Project
-        //this will create a temporary object with
-        //all the correct variables but no methods
-        let temp = obj as Project
-        //converting strings to dates
-        temp.creation_time = new Date(temp.creation_time);
-        temp.last_edit = new Date(temp.last_edit);
-        //initialize a new project (along with all its methods)
         let proj = new Project();
-        //assign the variables of the temp object to the new object
-        Object.assign(proj, temp);
-        //now I have variables AND methods. Push it into the support structure
+        proj.reconsolidate(obj);
         this.projects_support.push(proj);
       }
     }
@@ -43,7 +45,12 @@ export class StorageService {
 
     // initialize the Subject for the observers
     this.projects = new BehaviorSubject<Project []>(this.projects_support);
+    this.cur_project = new BehaviorSubject<Project>(this.cur_project_support);
+    this.work_source = new BehaviorSubject<IUCollection>(this.work_source_support);
+    this.work_summary = new BehaviorSubject<IUCollection>(this.work_summary_support);
   }
+
+  /// ALL PROJECTS SAVE AREA ///
 
   saveProjects() {
     this.session.store('projects_support', this.projects_support);
@@ -69,6 +76,8 @@ export class StorageService {
 
   addProject(project: Project){
     this.projects_support.push(project);
+    //Upload to db
+    //TODO
     //update session
     this.saveProjects();
     //proc observers
@@ -77,6 +86,8 @@ export class StorageService {
 
   removeProject(project: Project){
     this.projects_support.unshift(project);
+    //Update database
+    //TODO
     //update session
     this.saveProjects();
     //proc observers
@@ -85,5 +96,101 @@ export class StorageService {
 
   getProjects(): Observable<Project []> {
     return this.projects.asObservable();
+  }
+
+  /// CURRENT PROJECT SAVE AREA ///
+
+  setCurProjIndex(idx: number){
+    this.cur_project_idx = idx;
+    this.initCurProject(idx);
+  }
+
+
+  initCurProject(idx: number){
+    this.cur_project_support = this.projects_support[idx];
+    this.cur_project.next(this.cur_project_support);
+
+    //init work source
+    this.work_source_support = this.cur_project_support.sourceDoc;
+    this.work_source.next(this.work_source_support);
+    // init work summary
+    if (this.cur_project_support.hasSummaries()){
+      this.setWorkSummaryIdx(0);
+    }
+  }
+
+  clearCurProject(){
+    this.cur_project_support = null;
+    this.cur_project_idx = null;
+    this.cur_project.next(this.cur_project_support);
+  }
+
+  updateCurProject(proj: Project){
+    //update current project
+    this.cur_project_support = proj;
+    this.cur_project.next(this.cur_project_support);
+    //TODO: upload to server
+
+    // update full projects in memory
+    this.projects_support[this.cur_project_idx] = proj;
+    this.projects.next(this.projects_support);
+    this.saveProjects();
+  }
+
+  getCurProject(): Observable <Project>{
+    return this.cur_project.asObservable();
+  }
+
+  /// CURRENT WORD DOCUMENTS SAVE AREA ///
+
+  setWorkSummaryIdx(idx: number){
+    this.work_summary_idx = idx;
+    this.work_summary_support = this.cur_project_support.summaryDocs[idx];
+    this.work_summary.next(this.work_summary_support);
+  }
+
+  updateWorkSummary(summary : IUCollection){
+    this.work_summary_support = summary;
+    this.work_summary.next(this.work_source_support);
+    this.cur_project_support.summaryDocs[this.work_summary_idx] = summary;
+    this.cur_project.next(this.cur_project_support);
+    //TODO: upload to server
+
+    // update full projects in memory
+    this.projects_support[this.cur_project_idx] = this.cur_project_support;
+    this.projects.next(this.projects_support);
+    this.saveProjects();
+  }
+
+  updateWorkSource(source : IUCollection){
+    this.work_source_support = source;
+    this.work_source.next(this.work_source_support);
+    this.cur_project_support.sourceDoc = source;
+    this.cur_project.next(this.cur_project_support);
+    //TODO: upload to server
+
+    // update full projects in memory
+    this.projects_support[this.cur_project_idx] = this.cur_project_support;
+    this.projects.next(this.projects_support);
+    this.saveProjects();
+  }
+
+  clearWorkSummary(){
+    this.work_summary_idx = null;
+    this.work_summary_support = null;
+    this.work_summary.next(this.work_summary_support);
+  }
+
+  clearWorkSource(){
+    this.work_source_support = null;
+    this.work_source.next(this.work_source_support);
+  }
+
+  getWorkSummary(): Observable <IUCollection>{
+    return this.work_summary.asObservable();
+  }
+
+  getWorkSource(): Observable <IUCollection>{
+    return this.work_source.asObservable();
   }
 }

@@ -48,6 +48,11 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { AuthGuardService } from './auth-guard.service';
 import { CatchLoginComponent } from './user-area/catch-login/catch-login.component';
 
+import {PortalModule} from '@angular/cdk/portal';
+import { SourceReaderComponent } from './editor/source-reader/source-reader.component';
+import { SummaryReaderComponent } from './editor/summary-reader/summary-reader.component';
+import { SummaryIuComponent } from './editor/summary-iu/summary-iu.component';
+import { SourceIuComponent } from './editor/source-iu/source-iu.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +71,11 @@ import { CatchLoginComponent } from './user-area/catch-login/catch-login.compone
     UploadOverlayComponent,
     LoginPageComponent,
     NavAuthWidgetComponent,
-    CatchLoginComponent
+    CatchLoginComponent,
+    SourceReaderComponent,
+    SummaryReaderComponent,
+    SummaryIuComponent,
+    SourceIuComponent
   ],
   imports: [
     BrowserModule,
@@ -92,6 +101,7 @@ import { CatchLoginComponent } from './user-area/catch-login/catch-login.compone
     MatProgressSpinnerModule,
     NgxWebstorageModule.forRoot(),
     OAuthModule.forRoot(),
+    PortalModule,
   ],
   providers: [OverlayService, DynamicOverlay, DynamicOverlayContainer, AuthGuardService],
   bootstrap: [AppComponent]

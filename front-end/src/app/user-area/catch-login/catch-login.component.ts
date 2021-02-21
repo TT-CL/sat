@@ -12,11 +12,13 @@ export class CatchLoginComponent implements OnInit {
     private router: Router,
   ) { }
 
+  timer : ReturnType<typeof setTimeout>;
   ngOnInit(): void {
-    setTimeout(()=>{this.redirectToProjects()}, 5000);
+    this.timer = setTimeout(()=>{this.redirectToProjects()}, 3000);
   }
 
   redirectToProjects() {
+    clearTimeout(this.timer);
     this.router.navigate(['/projects']);
   }
 }

@@ -1,6 +1,10 @@
 import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges} from '@angular/core';
 
-import { Word, Segment, IdeaUnit, IUCollection } from '../../data-objects';
+import { Word, Segment, IdeaUnit, IUCollection, Project } from '../../data-objects';
+
+import { StorageService } from '../../storage.service';
+
+import { ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 
 @Component({
   selector: 'app-dash-toolbar',
@@ -9,44 +13,54 @@ import { Word, Segment, IdeaUnit, IUCollection } from '../../data-objects';
 })
 export class DashToolbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private storage : StorageService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
+    router.events.subscribe((event) =>{
+      if(event instanceof NavigationEnd){
+        let proj = storage.cur_project_support;
+        if (proj) this.linkable = proj.hasSummaries();
+
+        let view: string = route.snapshot.params["view"];
+        this.colorButtons(view);
+      }
+    });
+  }
 
   ngOnInit(): void {
   }
 
+  linkable: boolean;
 
-  @Input() link_disabled_flag: boolean = true;
-
-  @Output() toolbarClick = new EventEmitter<string> ();
-
-  selectedView: String = "textView";
   tv_color = "accent";
   iv_color = "primary";
   etv_color = "primary";
   liv_color = "primary";
 
-  clickToolbar(view : string){
-    this.selectedView = view;
+  colorButtons(view: string){
+    //console.log("coloring");
     switch (view) {
-      case "textView":
+      case "reader":
         this.tv_color = "accent";
         this.iv_color = "primary";
         this.etv_color = "primary";
         this.liv_color = "primary";
         break;
-      case "iuView":
+      case "iu":
         this.tv_color = "primary";
         this.iv_color = "accent";
         this.etv_color = "primary";
         this.liv_color = "primary";
         break;
-      case "editTextView":
+      case "edit":
         this.tv_color = "primary";
         this.iv_color = "primary";
         this.etv_color = "accent";
         this.liv_color = "primary";
         break;
-      case "linkIuView":
+      case "link":
         this.tv_color = "primary";
         this.iv_color = "primary";
         this.etv_color = "primary";
@@ -57,11 +71,7 @@ export class DashToolbarComponent implements OnInit {
         this.iv_color = "primary";
         this.etv_color = "primary";
         this.liv_color = "primary";
-
-        this.selectedView = "textView";
         break;
     }
-    this.toolbarClick.emit(view);
-    //console.log("click");
   }
 }

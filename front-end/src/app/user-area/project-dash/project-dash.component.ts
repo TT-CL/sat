@@ -18,13 +18,7 @@ export class ProjectDashComponent implements OnInit {
     private oauthService: OAuthService
   ) {
     storage.getProjects().subscribe(
-      projs => {
-        this.projects = projs;
-      },(err)=>{
-        //on error
-      },()=>{
-        //default
-      });
+      projs => {this.projects = projs;});
   }
 
   ngOnInit(): void {
