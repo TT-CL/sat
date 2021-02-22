@@ -452,9 +452,11 @@ export class IUCollection {
   }
 
   reconsolidate(anon){
+    /**
     console.log("reconsolidate");
     console.log(this);
     console.log(anon);
+    **/
     //standard objs
     this.doc_name = anon.doc_name;
     this.doc_type = anon.doc_type;
@@ -527,9 +529,11 @@ export class Project {
   }
 
   reconsolidate(anonymous_oject: object) {
+    /**
     console.log("Reconsolidate")
     console.log(this)
     console.log(anonymous_oject);
+    **/
     //casting anonymous object as a Project
     let anon = anonymous_oject as Project
     //converting strings to dates
