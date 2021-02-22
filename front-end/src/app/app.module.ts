@@ -53,6 +53,10 @@ import { SourceReaderComponent } from './editor/source-reader/source-reader.comp
 import { SummaryReaderComponent } from './editor/summary-reader/summary-reader.component';
 import { SummaryIuComponent } from './editor/summary-iu/summary-iu.component';
 import { SourceIuComponent } from './editor/source-iu/source-iu.component';
+import { MatSelectModule } from '@angular/material/select';
+import { SummaryCardComponent } from './editor/summary-card/summary-card.component';
+import { SourceCardComponent } from './editor/source-card/source-card.component';
+
 
 @NgModule({
   declarations: [
@@ -75,7 +79,9 @@ import { SourceIuComponent } from './editor/source-iu/source-iu.component';
     SourceReaderComponent,
     SummaryReaderComponent,
     SummaryIuComponent,
-    SourceIuComponent
+    SourceIuComponent,
+    SummaryCardComponent,
+    SourceCardComponent
   ],
   imports: [
     BrowserModule,
@@ -102,6 +108,7 @@ import { SourceIuComponent } from './editor/source-iu/source-iu.component';
     NgxWebstorageModule.forRoot(),
     OAuthModule.forRoot(),
     PortalModule,
+    MatSelectModule,
   ],
   providers: [OverlayService, DynamicOverlay, DynamicOverlayContainer, AuthGuardService],
   bootstrap: [AppComponent]

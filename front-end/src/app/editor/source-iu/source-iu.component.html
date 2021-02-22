@@ -1,31 +1,18 @@
-<mat-card class="document-card">
-  <mat-card-header>
-    <mat-card-title>{{doc.doc_name}}</mat-card-title>
-    <mat-card-subtitle>Source text</mat-card-subtitle>
-  </mat-card-header>
-  <mat-divider></mat-divider>
-  <mat-card-content>
-    <div class="mat-card-dynamic-content">
-      <!-- IU View -->
-      <div class="scrollable-content">
-        <mat-chip-list
-          aria-label="sentence chips" class="iu-bubbles">
-          <ng-template ngFor let-seg [ngForOf]="doc.segs">
-            <ng-template [ngIf]="seg.type=='ghost'" [ngIfElse]="ghostElse">
-              <mat-chip color="ghost-bubble" [selected]="seg.selected">
-                {{seg.getText(doc, true)}}
-              </mat-chip>
-            </ng-template>
-            <ng-template #ghostElse>
-              <mat-chip color="primary" [selected]="seg.selected" [ngClass]="{
-                'disc-iu' : doc.ius[seg.iu].disc
-              }">
-                {{seg.getText(doc, true)}}
-              </mat-chip>
-            </ng-template>
-          </ng-template>
-        </mat-chip-list>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+<!-- IU View -->
+<mat-chip-list
+  aria-label="sentence chips" class="iu-bubbles">
+  <ng-template ngFor let-seg [ngForOf]="doc.segs">
+    <ng-template [ngIf]="seg.type=='ghost'" [ngIfElse]="ghostElse">
+      <mat-chip color="ghost-bubble" [selected]="seg.selected">
+        {{seg.getText(doc, true)}}
+      </mat-chip>
+    </ng-template>
+    <ng-template #ghostElse>
+      <mat-chip color="primary" [selected]="seg.selected" [ngClass]="{
+        'disc-iu' : doc.ius[seg.iu].disc
+      }">
+        {{seg.getText(doc, true)}}
+      </mat-chip>
+    </ng-template>
+  </ng-template>
+</mat-chip-list>

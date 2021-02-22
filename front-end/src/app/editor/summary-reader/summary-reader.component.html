@@ -1,31 +1,4 @@
-<mat-card class="document-card">
-  <mat-card-content class="card-container">
-    <div class="header-container">
-      <mat-card-header *ngIf="support_array.length <=1">
-        <mat-card-title>{{doc.doc_name}}</mat-card-title>
-        <mat-card-subtitle>Summary text</mat-card-subtitle>
-      </mat-card-header>
-      <div class="header-flex" *ngIf="support_array.length >1">
-        <div class="title">
-          Summary
-        </div>
-        <div class="title-selector">
-        <mat-form-field>
-          <mat-select [(value)]="summary_idx" #selector>
-            <mat-option *ngFor="let name of support_array; let i = index" [value]="i">{{name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-        </div>
-      </div>
-      <mat-divider></mat-divider>
-    </div>
-    <div class="mat-card-dynamic-content">
-      <!-- Text View -->
-      <div class="scrollable-content">
-        <p *ngFor="let sent of doc.sents">
-          {{sent}}
-        </p>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+<!-- Text View -->
+<p *ngFor="let sent of doc.sents">
+  {{sent}}
+</p>

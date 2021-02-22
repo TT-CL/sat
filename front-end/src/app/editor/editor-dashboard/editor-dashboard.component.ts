@@ -13,11 +13,9 @@ import { Router, ActivatedRoute, NavigationEnd} from '@angular/router';
 
 import { ComponentPortal, Portal } from '@angular/cdk/portal';
 
-import { SourceReaderComponent } from '../source-reader/source-reader.component';
-import { SourceIuComponent } from '../source-iu/source-iu.component';
+import { SummaryCardComponent } from '../summary-card/summary-card.component';
 
-import { SummaryReaderComponent } from '../summary-reader/summary-reader.component';
-import { SummaryIuComponent } from '../summary-iu/summary-iu.component';
+import { SourceCardComponent } from '../source-card/source-card.component';
 
 @Component({
   selector: 'app-editor-dashboard',
@@ -39,95 +37,34 @@ export class EditorDashboardComponent implements OnInit{
     if (this.project_index == null){
       router.navigate(["/"]);
     }
-    //initialize the view subject to allow observer behaviour
-    this.view = new BehaviorSubject<string>(null);
 
     //subscribing the project to be refreshed after each update
     this.storage.getCurProject().subscribe((proj) => {
         this.project = proj;
         if(proj) this.hasSummaries = proj.hasSummaries();
       });
-    //this is called each time we change the url
-    router.events.subscribe((event) =>{
-      if(event instanceof NavigationEnd){
-        this.view.next(route.snapshot.params["view"]);
-      }
-    });
   }
 
   ngOnInit() : void {
-    //Initialize the portal components
-    this.sourceReaderPortal = new ComponentPortal(SourceReaderComponent);
-    this.sourceIuPortal = new ComponentPortal(SourceIuComponent);
+    this.sourceCardPortal = new ComponentPortal(SourceCardComponent);
     if(this.hasSummaries){
-      this.summaryReaderPortal = new ComponentPortal(SummaryReaderComponent);
-      this.summaryIuPortal = new ComponentPortal(SummaryIuComponent);
+      this.summaryCardPortal = new ComponentPortal(SummaryCardComponent);
+      this.leftPortalOutlet = this.summaryCardPortal;
+      this.rightPortalOutlet = this.sourceCardPortal;
+    }else{
+      this.leftPortalOutlet = this.sourceCardPortal;
     }
-    /**
-    Debug printers
-    console.log("index: " + this.project_index);
-    console.log("Current Project:");
-    console.log(this.project);
-    console.log("Has summaries:");
-    console.log(this.project.hasSummaries());
-    **/
-    //the following will be called each time we switch view from the toolbar
-    this.view.asObservable().subscribe((view)=>{
-      //console.log("observed view: "+view);
-      if(this.hasSummaries){
-        // Show both panes
-        switch (view) {
-            case "reader": {
-              this.leftPortalOutlet = this.summaryReaderPortal;
-              this.rightPortalOutlet = this.sourceReaderPortal;
-              break;
-            }
-            case "iu": {
-              this.leftPortalOutlet = this.summaryIuPortal;
-              this.rightPortalOutlet = this.sourceIuPortal;
-              break;
-            }
-            default: {
-              this.leftPortalOutlet = this.summaryReaderPortal;
-              this.rightPortalOutlet = this.sourceReaderPortal;
-              break;
-            }
-        }
-      }else{
-        // show only the source text
-        switch (view) {
-            case "reader": {
-              this.leftPortalOutlet = this.sourceReaderPortal;
-              break;
-            }
-            case "iu": {
-              this.leftPortalOutlet = this.sourceIuPortal;
-              break;
-            }
-            default: {
-              this.leftPortalOutlet = this.sourceReaderPortal;
-              break;
-            }
-        }
-      }
-
-    });
   }
 
   project_index : number = null;
   project : Project;
   hasSummaries: boolean = false;
 
-  view : BehaviorSubject<string>;
-
   leftPortalOutlet: Portal<any>;
   rightPortalOutlet: Portal<any>;
 
-  sourceReaderPortal : ComponentPortal<SourceReaderComponent>;
-  summaryReaderPortal : ComponentPortal<SummaryReaderComponent>;
-  sourceIuPortal : ComponentPortal<SourceIuComponent>;
-  summaryIuPortal : ComponentPortal<SummaryIuComponent>;
-
+  summaryCardPortal : ComponentPortal<SummaryCardComponent>;
+  sourceCardPortal : ComponentPortal<SourceCardComponent>;
 
   summary_file: IUCollection = new IUCollection();
   source_file: IUCollection = new IUCollection();
