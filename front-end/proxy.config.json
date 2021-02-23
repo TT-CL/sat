@@ -1,11 +1,3 @@
 {
-  "/computation/*": {
-    "target": "http://computation:80",
-    "secure": false,
-    "changeOrigin": true,
-    "pathRewrite": {
-      "^/computation": ""
-    },
-    "logLevel": "debug"
-  }
+  
 }

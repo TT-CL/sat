@@ -9,7 +9,11 @@ from src.extract import label_ius
 from json_tricks import loads
 
 
-app = FastAPI()
+app = FastAPI(
+    title="Summary Eval API",
+    version="v1",
+    openapi_url="/docs/openapi.json",
+)
 
 origins = [
     "http://localhost",
@@ -32,24 +36,24 @@ async def startup_event():
     model = GloveDic()
 '''
 
-@app.post("/raw/")
+@app.post("/v1/raw/")
 async def label_raw_text(doc_type: str = Form(...), file: UploadFile = File(...)):
     parsedFile = import_file(file.file)['spacy']
     label_ius(parsedFile)
     json_data =prepare_json(parsedFile,file.filename, doc_type)
     return json_data
 
-@app.post("/lookup/word/")
+@app.post("/v1/lookup/word/")
 async def lookup_word(word: str = Form(...), autocorrect: bool = Form(...)):
     result=model.lookup(word,autocorrect,http=True)
     return result
 
-@app.post("/lookup/sent/")
+@app.post("/v1/lookup/sent/")
 async def lookup_word(sent: str = Form(...)):
     result=model.sentLookup(sent,http=True)
     return result
 
-@app.post("/similarities/")
+@app.post("/v1/similarities/")
 async def lookup_word(
         source_file: str = Form(...),
         summary_file: str =Form(...)):

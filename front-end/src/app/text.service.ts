@@ -10,9 +10,6 @@ const httpOptions = {
   })
 };
 
-const sampleSummaryURI: string = './samples/2.json';
-const sampleSourceURI: string = './samples/source.json';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -26,7 +23,7 @@ export class TextService {
   }
 
   getLabelledText(mode: string, text : File): Observable<HttpEvent<any>> {
-    let url = "/computation/raw/"
+    let url = "/api/v1/raw/"
     let formData = new FormData();
     formData.append('file', text);
     formData.append('doc_type', mode);
@@ -41,7 +38,7 @@ export class TextService {
   }
 
   getSimPredictions(source : any, summary: any): Observable<HttpEvent<any>> {
-    let url = "/computation/similarities/"
+    let url = "/api/v1/similarities/"
     let formData = new FormData();
     formData.append('source_file', source.jsonSerialize());
     formData.append('summary_file', summary.jsonSerialize());
