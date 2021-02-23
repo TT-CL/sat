@@ -73,12 +73,25 @@ $save-theme: mat-light-theme((
   )
 ));
 
-$link-primary: mat-palette($mat-yellow, 500);
-$link-accent: mat-palette($mat-light-green, A700);
-$link-theme: mat-light-theme((
+$summary-link-primary: mat-palette($mat-grey, 300);
+$summary-link-accent: mat-palette($mat-light-green, A700);
+$summary-link-warn: mat-palette($mat-yellow, 500);
+$summary-link-theme: mat-light-theme((
   color:(
-    primary: $link-primary,
-    accent: $link-accent,
+    primary: $summary-link-primary,
+    accent: $summary-link-accent,
+    warn: $summary-link-warn,
+  )
+));
+
+$summary-link-primary: mat-palette($mat-grey, 300);
+$summary-link-accent: mat-palette($mat-light-green, A700);
+$summary-link-warn: mat-palette($mat-yellow, 500);
+$summary-link-theme: mat-light-theme((
+  color:(
+    primary: $summary-link-primary,
+    accent: $summary-link-accent,
+    warn: $summary-link-warn,
   )
 ));
 
@@ -97,13 +110,18 @@ $link-theme: mat-light-theme((
   @include angular-material-color($save-theme)
 }
 
-.link-theme{
-  @include angular-material-color($link-theme)
+.summary-link-theme{
+  @include angular-material-color($summary-link-theme)
 }
 
 .mat-lime-bubble{
   color: #000 !important;
-  background-color: #c6ff00 !important;
+  background-color: #b2ff59 !important;
+}
+
+.mat-green-bubble{
+  color: #000 !important;
+  background-color: #81c784 !important;
 }
 
 .disc-iu{

@@ -14,6 +14,7 @@ import { Router, ActivatedRoute, NavigationEnd} from '@angular/router';
 
 import { SummaryReaderComponent } from '../summary-reader/summary-reader.component';
 import { SummaryIuComponent } from '../summary-iu/summary-iu.component';
+import { SummaryLinkComponent } from '../summary-link/summary-link.component';
 
 
 @Component({
@@ -35,8 +36,10 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
       for(let summary of storage.cur_project_support.summaryDocs){
         this.support_array.push(summary.doc_name);
       }
+      /**
       console.log(summary);
       console.log(summary.constructor.name);
+      **/
     });
 
     //initialize the view subject to allow observer behaviour
@@ -63,6 +66,7 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.summaryReaderPortal = new ComponentPortal(SummaryReaderComponent);
     this.summaryIuPortal = new ComponentPortal(SummaryIuComponent);
+    this.summaryLinkPortal = new ComponentPortal(SummaryLinkComponent);
 
     this.view.asObservable().subscribe((view)=>{
       //console.log("observed view: "+view);
@@ -73,6 +77,10 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
           }
           case "iu": {
             this.portalOutlet = this.summaryIuPortal;
+            break;
+          }
+          case "link": {
+            this.portalOutlet = this.summaryLinkPortal;
             break;
           }
           default: {
@@ -88,6 +96,7 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
   view : BehaviorSubject<string>;
   summaryReaderPortal : ComponentPortal<SummaryReaderComponent>;
   summaryIuPortal : ComponentPortal<SummaryIuComponent>;
+  summaryLinkPortal : ComponentPortal<SummaryLinkComponent>;
 
   support_array = [];
   summary_idx : number = null;

@@ -38,6 +38,7 @@ export class DashToolbarComponent implements OnInit {
   iv_color = "primary";
   etv_color = "primary";
   liv_color = "primary";
+  dow_color = "primary";
 
   colorButtons(view: string){
     //console.log("coloring");
@@ -47,30 +48,42 @@ export class DashToolbarComponent implements OnInit {
         this.iv_color = "primary";
         this.etv_color = "primary";
         this.liv_color = "primary";
+        this.dow_color = "primary";
         break;
       case "iu":
         this.tv_color = "primary";
         this.iv_color = "accent";
         this.etv_color = "primary";
         this.liv_color = "primary";
+        this.dow_color = "primary";
         break;
       case "edit":
         this.tv_color = "primary";
         this.iv_color = "primary";
         this.etv_color = "accent";
         this.liv_color = "primary";
+        this.dow_color = "primary";
         break;
       case "link":
         this.tv_color = "primary";
         this.iv_color = "primary";
         this.etv_color = "primary";
         this.liv_color = "accent";
+        this.dow_color = "primary";
+        break;
+      case "download":
+        this.tv_color = "primary";
+        this.iv_color = "primary";
+        this.etv_color = "primary";
+        this.liv_color = "primary";
+        this.dow_color = "accent";
         break;
       default:
         this.tv_color = "accent";
         this.iv_color = "primary";
         this.etv_color = "primary";
         this.liv_color = "primary";
+        this.dow_color = "primary";
         break;
     }
   }

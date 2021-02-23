@@ -56,6 +56,8 @@ import { SourceIuComponent } from './editor/source-iu/source-iu.component';
 import { MatSelectModule } from '@angular/material/select';
 import { SummaryCardComponent } from './editor/summary-card/summary-card.component';
 import { SourceCardComponent } from './editor/source-card/source-card.component';
+import { SourceLinkComponent } from './editor/source-link/source-link.component';
+import { SummaryLinkComponent } from './editor/summary-link/summary-link.component';
 
 
 @NgModule({
@@ -81,7 +83,9 @@ import { SourceCardComponent } from './editor/source-card/source-card.component'
     SummaryIuComponent,
     SourceIuComponent,
     SummaryCardComponent,
-    SourceCardComponent
+    SourceCardComponent,
+    SourceLinkComponent,
+    SummaryLinkComponent
   ],
   imports: [
     BrowserModule,

@@ -21,7 +21,6 @@ export class SummaryReaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  support_array = [];
   summary_idx : number = null;
   doc: IUCollection = null;
 }

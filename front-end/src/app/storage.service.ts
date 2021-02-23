@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IUCollection, Project } from './data-objects';
+import { IdeaUnit, IUCollection, Project } from './data-objects';
 
 import {BehaviorSubject, Observable} from 'rxjs';
 
@@ -25,6 +25,10 @@ export class StorageService {
   work_source_support : IUCollection = null;
   work_source : BehaviorSubject<IUCollection>;
 
+  clicked_source_iu_support : IdeaUnit = null;
+  clicked_source_iu : BehaviorSubject<IdeaUnit>;
+  clicked_summary_iu_support : IdeaUnit = null;
+  clicked_summary_iu : BehaviorSubject<IdeaUnit>;
 
   projects_support : Project[] = [];
   projects : BehaviorSubject<Project []>;
@@ -48,6 +52,8 @@ export class StorageService {
     this.cur_project = new BehaviorSubject<Project>(this.cur_project_support);
     this.work_source = new BehaviorSubject<IUCollection>(this.work_source_support);
     this.work_summary = new BehaviorSubject<IUCollection>(this.work_summary_support);
+    this.clicked_source_iu = new BehaviorSubject<IdeaUnit>(this.clicked_source_iu_support);
+    this.clicked_summary_iu = new BehaviorSubject<IdeaUnit>(this.clicked_summary_iu_support);
   }
 
   /// ALL PROJECTS SAVE AREA ///
@@ -144,6 +150,10 @@ export class StorageService {
   /// CURRENT WORD DOCUMENTS SAVE AREA ///
 
   setWorkSummaryIdx(idx: number){
+    this.clearClickedSummaryIU();
+
+
+    //set the new work_summary
     this.work_summary_idx = idx;
     this.work_summary_support = this.cur_project_support.summaryDocs[idx];
     this.work_summary.next(this.work_summary_support);
@@ -151,7 +161,7 @@ export class StorageService {
 
   updateWorkSummary(summary : IUCollection){
     this.work_summary_support = summary;
-    this.work_summary.next(this.work_source_support);
+    this.work_summary.next(this.work_summary_support);
     this.cur_project_support.summaryDocs[this.work_summary_idx] = summary;
     this.cur_project.next(this.cur_project_support);
     //TODO: upload to server
@@ -192,5 +202,45 @@ export class StorageService {
 
   getWorkSource(): Observable <IUCollection>{
     return this.work_source.asObservable();
+  }
+
+  /// CURRENT CLICKED IU SAVE AREA ///
+
+  switchClickedSourceIU(iu: IdeaUnit){
+    this.clicked_source_iu_support = iu;
+    this.clicked_source_iu.next(iu);
+  }
+
+  switchClickedSummaryIU(iu: IdeaUnit){
+    this.clicked_summary_iu_support = iu;
+    this.clicked_summary_iu.next(iu);
+  }
+
+  clearClickedSourceIU(){
+    this.switchClickedSourceIU(null);
+  }
+
+  clearClickedSummaryIU(){
+    this.switchClickedSummaryIU(null);
+  }
+
+  updateClickedSourceIU(iu: IdeaUnit){
+    this.switchClickedSourceIU(iu);
+    this.work_source_support.ius[iu.label]=iu;
+    this.updateWorkSource(this.work_source_support);
+  }
+
+  updateClickedSummaryIU(iu: IdeaUnit){
+    this.switchClickedSummaryIU(iu);
+    this.work_summary_support.ius[iu.label]=iu;
+    this.updateWorkSummary(this.work_summary_support);
+  }
+
+  getClickedSourceIU(): Observable<IdeaUnit>{
+    return this.clicked_source_iu.asObservable();
+  }
+
+  getClickedSummaryIU(): Observable<IdeaUnit>{
+    return this.clicked_summary_iu.asObservable();
   }
 }

@@ -12,6 +12,7 @@ import { Router, ActivatedRoute, NavigationEnd} from '@angular/router';
 
 import { SourceReaderComponent } from '../source-reader/source-reader.component';
 import { SourceIuComponent } from '../source-iu/source-iu.component';
+import { SourceLinkComponent } from '../source-link/source-link.component';
 
 @Component({
   selector: 'app-source-card',
@@ -38,13 +39,13 @@ export class SourceCardComponent implements OnInit {
           this.view.next(route.snapshot.params["view"]);
         }
       });
+
+      //Initialize the portal components
+      this.sourceReaderPortal = new ComponentPortal(SourceReaderComponent);
+      this.sourceIuPortal = new ComponentPortal(SourceIuComponent);
+      this.sourceLinkPortal = new ComponentPortal(SourceLinkComponent);
   }
-
   ngOnInit(): void {
-    //Initialize the portal components
-    this.sourceReaderPortal = new ComponentPortal(SourceReaderComponent);
-    this.sourceIuPortal = new ComponentPortal(SourceIuComponent);
-
     //the following will be called each time we switch view from the toolbar
     this.view.asObservable().subscribe((view)=>{
       //console.log("observed view: "+view);
@@ -55,6 +56,10 @@ export class SourceCardComponent implements OnInit {
           }
           case "iu": {
             this.portalOutlet = this.sourceIuPortal;
+            break;
+          }
+          case "link": {
+            this.portalOutlet = this.sourceLinkPortal;
             break;
           }
           default: {
@@ -70,6 +75,7 @@ export class SourceCardComponent implements OnInit {
   view : BehaviorSubject<string>;
   sourceReaderPortal : ComponentPortal<SourceReaderComponent>;
   sourceIuPortal : ComponentPortal<SourceIuComponent>;
+  sourceLinkPortal : ComponentPortal<SourceLinkComponent>;
 
   doc: IUCollection = null;
 }
