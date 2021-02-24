@@ -1,18 +1,4 @@
 <div class="dash-grid horizontal-center">
-  <!--
-  <div class="grid-cell horizontal-center vertical-center">
-    <app-file-uploader *ngIf="!showSummary" [mode]='"summary"' (fileUpload)='parseSummary($event)'></app-file-uploader>
-    <document-viewer *ngIf="showSummary" [doc]="summary_file" [other_doc]="source_file" [selectedView]="selectedView" [iuLinkInput]="summaryLinkInput" (iuLinkOutput)="sourceLinkInput = $event"></document-viewer>
-  </div>
-  <div class="grid-cell">
-    <app-dash-toolbar (toolbarClick)="selectedView=$event"  [link_disabled_flag]="link_disabled_flag" *ngIf="showToolbar"></app-dash-toolbar>
-  </div>
-  <div class="grid-cell horizontal-center vertical-center">
-    <app-file-uploader *ngIf="!showSource" [mode]='"source"' (fileUpload)='parseSource($event)'></app-file-uploader>
-    <document-viewer *ngIf="showSource" [doc]="source_file"
-    [other_doc]="summary_file" [selectedView]="selectedView" [iuLinkInput]="sourceLinkInput" (iuLinkOutput)="summaryLinkInput = $event"></document-viewer>
-  </div>
-  -->
   <div class="grid-cell horizontal-center vertical-center">
     <ng-template [cdkPortalOutlet]="leftPortalOutlet"></ng-template>
   </div>

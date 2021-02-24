@@ -23,7 +23,6 @@ import {MatChipsModule} from '@angular/material/chips';
 import { NavigationComponent } from './navigation/navigation.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
-import { FileUploaderComponent } from './editor/file-uploader/file-uploader.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatTableModule} from '@angular/material/table';
 import {MatInputModule} from '@angular/material/input';
@@ -67,7 +66,6 @@ import { SummaryLinkComponent } from './editor/summary-link/summary-link.compone
     DocumentViewerComponent,
     EditorDashboardComponent,
     NavigationComponent,
-    FileUploaderComponent,
     DashToolbarComponent,
     SpinnerOverlayComponent,
     ProjectDashComponent,
