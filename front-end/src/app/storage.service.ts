@@ -24,6 +24,7 @@ export class StorageService {
   work_summary : BehaviorSubject<IUCollection>;
   work_source_support : IUCollection = null;
   work_source : BehaviorSubject<IUCollection>;
+  work_similarities: BehaviorSubject<Object>;
 
   clicked_source_iu_support : IdeaUnit = null;
   clicked_source_iu : BehaviorSubject<IdeaUnit>;
@@ -54,6 +55,7 @@ export class StorageService {
     this.work_summary = new BehaviorSubject<IUCollection>(this.work_summary_support);
     this.clicked_source_iu = new BehaviorSubject<IdeaUnit>(this.clicked_source_iu_support);
     this.clicked_summary_iu = new BehaviorSubject<IdeaUnit>(this.clicked_summary_iu_support);
+    this.work_similarities = new BehaviorSubject<Object>(null);
   }
 
   /// ALL PROJECTS SAVE AREA ///
@@ -242,5 +244,11 @@ export class StorageService {
 
   getClickedSummaryIU(): Observable<IdeaUnit>{
     return this.clicked_summary_iu.asObservable();
+  }
+
+  /// SIMS ///
+
+  getSimilarities(): Observable<Object>{
+    return this.work_similarities.asObservable();
   }
 }

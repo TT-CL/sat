@@ -1,8 +1,9 @@
 import { Component, AfterViewInit, ViewChild, OnInit} from '@angular/core';
+import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 
 import { IUCollection } from '../../data-objects';
-
 import { StorageService } from '../../storage.service';
+import { TextService } from '../../text.service';
 
 import { MatSelect } from '@angular/material/select';
 
@@ -28,6 +29,7 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
     private storage: StorageService,
     private route: ActivatedRoute,
     private router: Router,
+    private textService: TextService,
   ) {
     storage.getWorkSummary().subscribe((summary: IUCollection)=>{
       this.doc = summary;
@@ -51,12 +53,20 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
         this.view.next(route.snapshot.params["view"]);
       }
     });
+
+    storage.getWorkSource().subscribe((source: IUCollection)=>{
+      this.sourceDoc = source;
+      if (this.view.value == "link"){
+        this.updateSuggestions();
+      }
+    });
   }
 
   ngAfterViewInit(): void {
     if(this.support_array.length > 1){
       this.selector.selectionChange.subscribe((evt)=>{
         this.storage.setWorkSummaryIdx(evt.value);
+        this.updateSuggestions();
       });
     }
   }
@@ -81,6 +91,7 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
           }
           case "link": {
             this.portalOutlet = this.summaryLinkPortal;
+            this.updateSuggestions();
             break;
           }
           default: {
@@ -101,4 +112,27 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
   support_array = [];
   summary_idx : number = null;
   doc: IUCollection = null;
+  sourceDoc: IUCollection = null;
+
+  updateSuggestions():void{
+    //only update suggestions if I am in the link view
+    if (this.view && this.view.value == "link"){
+      console.log("Updating IU recommendations");
+      this.textService.getSimPredictions(this.sourceDoc, this.doc).subscribe(
+      event => {
+        if (event.type == HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          console.log(`Upload in progress: ${percentDone}% done.`);
+        } else if (event instanceof HttpResponse) {
+          console.log('Similarities are ready!');
+          this.storage.work_similarities.next(event.body);
+        }
+      },
+      (err) => {
+        console.log("Similarities Error:", err);
+      }, () => {
+        console.log("Similarities calculated successfully");
+      });
+    }
+  }
 }

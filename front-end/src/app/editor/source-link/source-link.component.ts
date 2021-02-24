@@ -15,7 +15,7 @@ export class SourceLinkComponent implements OnInit {
       storage.getWorkSource().subscribe((source)=>{
         this.doc = source;
         //console.log(source);
-        console.log("updating source");
+        //console.log("retrieving source");
       });
 
       storage.getWorkSummary().subscribe((summary)=>{
@@ -24,6 +24,10 @@ export class SourceLinkComponent implements OnInit {
 
       storage.getClickedSummaryIU().subscribe((iu)=>{
         this.selected_summary_iu = iu;
+      });
+
+      storage.getSimilarities().subscribe((sims)=>{
+        this.sims = sims;
       });
   }
 
@@ -35,6 +39,7 @@ export class SourceLinkComponent implements OnInit {
 
   selected_iu: IdeaUnit = null;
   selected_summary_iu: IdeaUnit = null;
+  sims: Object = null;
 
   linkClick(seg) : void {
     //console.log("click");
@@ -47,5 +52,11 @@ export class SourceLinkComponent implements OnInit {
       this.storage.updateWorkSummary(this.summaryDoc);
       this.storage.switchClickedSourceIU(this.selected_iu);
     }
+  }
+
+  topNSims(iu: IdeaUnit, n: number){
+    //return the second column of the first n records
+    return this.sims[iu.label].slice(0,n).map(
+      (value,index)=>{return value[1]});
   }
 }
