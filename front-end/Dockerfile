@@ -27,4 +27,4 @@ RUN ng build --prod
 FROM nginx:alpine as prod
 COPY nginx.config /etc/nginx/conf.d/default.conf
 COPY --from=builder /opt/ng/dist/summary-eval /usr/share/nginx/html
-EXPOSE 4201
+EXPOSE 80

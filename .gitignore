@@ -3,13 +3,14 @@
 # user defined
 deployment.md
 /front-end/src/app/samples/
-/front-end/.env
 /test.py
-/production/certbot
-/production/init-letsencrypt.sh
-/production/nginx/nginx.config
-/production/computation/
-/production/nginx/front-end/
+
+# environment files
+.env
+/front-end/.env
+
+# Let's encrypt certificates
+/certificates/
 
 # Pretrained Glove W2V folder
 /computation/app/models/
