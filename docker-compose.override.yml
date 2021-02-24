@@ -18,12 +18,13 @@ services:
 
   web:
     build:
-      target: prod
+      target: dev
     volumes:
       - ./front-end:/opt/ng
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"
+      - "traefik.port=4201"
       - "traefik.http.routers.web.rule=Host(`localhost`)"
       - "traefik.http.routers.web.entrypoints=http"
 
