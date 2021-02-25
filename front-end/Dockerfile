@@ -5,7 +5,7 @@ COPY package.json ./
 RUN npm install --global npm@6
 RUN npm install -g @angular/cli@11.1.4
 RUN npm install
-RUN npm update
+#RUN npm update
 
 ENV PATH="./node_modules/.bin:$PATH"
 
