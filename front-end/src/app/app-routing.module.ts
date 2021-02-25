@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DocumentViewerComponent } from './editor/document-viewer/document-viewer.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProjectDashComponent } from './user-area/project-dash/project-dash.component';
 import { NewProjectComponent } from './user-area/new-project/new-project.component';
 import { EditorDashboardComponent } from './editor/editor-dashboard/editor-dashboard.component';
@@ -42,7 +43,7 @@ const routes: Routes = [
   //page called upon receiving the OAuth token from Google
   { path: 'catch-login', component: CatchLoginComponent},
   //{ path: '', redirectTo: '/projects', pathMatch: 'full' },
-  { path: '**', redirectTo: '/', pathMatch: 'full'}
+  { path: '**', component: PageNotFoundComponent}
 ];
 
 @NgModule({

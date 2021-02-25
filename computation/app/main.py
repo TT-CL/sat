@@ -2,6 +2,9 @@ from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+from fastapi.responses import RedirectResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
+
 from src.data import *
 from src.glove import GloveDic
 from src.extract import label_ius
@@ -35,6 +38,10 @@ model = GloveDic();
 async def startup_event():
     model = GloveDic()
 '''
+
+@app.exception_handler(StarletteHTTPException)
+async def custom_http_exception_handler(request, exc):
+    return RedirectResponse("/404")
 
 @app.post("/v1/raw/")
 async def label_raw_text(doc_type: str = Form(...), file: UploadFile = File(...)):

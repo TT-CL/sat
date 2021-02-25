@@ -32,7 +32,9 @@
             ],
             "styles": [
               "src/custom-theme.scss",
-              "src/styles.sass"
+              "src/styles.sass",
+              "node_modules/typeface-merriweather/index.css",
+              "node_modules/typeface-montserrat/index.css"
             ],
             "scripts": []
           },

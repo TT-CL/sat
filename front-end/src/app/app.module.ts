@@ -57,6 +57,7 @@ import { SummaryCardComponent } from './editor/summary-card/summary-card.compone
 import { SourceCardComponent } from './editor/source-card/source-card.component';
 import { SourceLinkComponent } from './editor/source-link/source-link.component';
 import { SummaryLinkComponent } from './editor/summary-link/summary-link.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -83,7 +84,8 @@ import { SummaryLinkComponent } from './editor/summary-link/summary-link.compone
     SummaryCardComponent,
     SourceCardComponent,
     SourceLinkComponent,
-    SummaryLinkComponent
+    SummaryLinkComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

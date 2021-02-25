@@ -25,6 +25,8 @@
     "ngx-webstorage": "^7.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
+    "typeface-merriweather": "^1.1.13",
+    "typeface-montserrat": "^1.1.13",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
