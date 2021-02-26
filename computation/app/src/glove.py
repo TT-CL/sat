@@ -80,11 +80,11 @@ class GloveDic():
 
         for summary_idx, summary_iu in summary["ius"].items():
             sims = []
-            summary_vect = self.sentLookup(summary_iu);
+            summary_vect = self.sentLookup(summary_iu)
             #print("sum_vect")
             #print(summary_vect)
             for source_idx, source_iu in source["ius"].items():
-                source_vect = self.sentLookup(source_iu);
+                source_vect = self.sentLookup(source_iu)
                 sim = similarity(summary_vect, source_vect)
                 sims.append([summary_idx,source_idx,sim])
             res[summary_idx] = sorted(sims, reverse=True, key=lambda data: data[2])

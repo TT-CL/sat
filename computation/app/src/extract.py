@@ -11,11 +11,11 @@
 from itertools import combinations
 from functools import cmp_to_key
 from collections import deque
-from src.iu_utils import iu_pprint
+from iu_utils import iu_pprint
 from pprint import pprint
 
 
-from src.data import read_filter
+from data import read_filter
 ##initialize the list of filtered IUs from an external file
 filter_file = "./src/transition_signals.txt"
 filtered_ius = read_filter(filter_file)

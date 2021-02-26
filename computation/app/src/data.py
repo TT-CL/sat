@@ -14,7 +14,7 @@ from nltk.tokenize import sent_tokenize#, word_tokenize
 import spacy
 from spacy.tokens import Token
 import re
-from src.iu_utils import *
+from iu_utils import *
 
 # %%codecell
 # Spacy Token Extension
@@ -26,6 +26,7 @@ nlp = spacy.load("en_core_web_sm")
 #gen_parser = CoreNLPParser(url="http://localhost:9000")
 acceptable_models = ["spacy","corenlp_dep","corenlp_ps"]
 # %%codecell
+# pylint: disable=anomalous-backslash-in-string
 # functions
 # string cleanup function
 def clean_str(s):
@@ -91,6 +92,7 @@ def read_filter(filename):
 #   "spacy" : spacy parsers
 #   "corenlp_dep": Stanford CoreNLP dependency parser
 #   "corenlp_ps": Stanford CoreNLP ps rule parser
+#   WARNING: Currently only spacy is supported
 def parse_file(sents, input_models=["spacy"]):
     #filter models with acceptable ones
     models = [model for model in input_models if model in acceptable_models]
@@ -105,10 +107,13 @@ def parse_file(sents, input_models=["spacy"]):
             parsed_sent = None
             if model == "spacy":
                 parsed_sent = nlp(sent.strip())
+            '''
+            # Only spacy is supported, as it is faster
             elif model == "corenlp_dep":
                 parsed_sent, = dep_parser.raw_parse(sent)
             elif model == "corenlp_ps":
                 parsed_sent, = gen_parser.raw_parse(sent)
+            '''
             res[model].append(parsed_sent)
     return res
 
@@ -117,7 +122,7 @@ def parse_file(sents, input_models=["spacy"]):
 # The @models argument accepts a list containing the parse models that the user
 #   wishes to adopt
 def import_file(f, models=["spacy"]):
-    raws = None;
+    raws = None
     if isinstance(f, str):
         raws = read_file(f)
     else:
@@ -253,6 +258,7 @@ def prepare_json(text, doc_name, doc_type):
 
 def export_labeled_json(text, filename, doc_name):
     doc_type = "Source text"
+    data = {}
     if doc_name != "source":
         data['doc_type'] = "Summary text"
     data = prepare_json(text,doc_name,doc_type)

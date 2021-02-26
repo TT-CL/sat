@@ -1,3 +1,4 @@
+# pylint: disable=no-name-in-module
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -5,7 +6,7 @@ from pydantic import BaseModel
 from fastapi.responses import RedirectResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
-from src.data import *
+from src.data import import_file, prepare_json
 from src.glove import GloveDic
 from src.extract import label_ius
 
@@ -31,7 +32,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-model = GloveDic();
+model = GloveDic()
 
 '''
 @app.on_event("startup")
@@ -56,12 +57,12 @@ async def lookup_word(word: str = Form(...), autocorrect: bool = Form(...)):
     return result
 
 @app.post("/v1/lookup/sent/")
-async def lookup_word(sent: str = Form(...)):
+async def lookup_sent(sent: str = Form(...)):
     result=model.sentLookup(sent,http=True)
     return result
 
 @app.post("/v1/similarities/")
-async def lookup_word(
+async def lookup_sims(
         source_file: str = Form(...),
         summary_file: str =Form(...)):
     source = loads(source_file)
