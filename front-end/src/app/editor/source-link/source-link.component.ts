@@ -27,7 +27,7 @@ export class SourceLinkComponent implements OnInit {
       });
 
       storage.getSimilarities().subscribe((sims)=>{
-        this.sims = sims;
+        this.simsStack = sims;
       });
   }
 
@@ -39,7 +39,17 @@ export class SourceLinkComponent implements OnInit {
 
   selected_iu: IdeaUnit = null;
   selected_summary_iu: IdeaUnit = null;
-  sims: Object = null;
+  simsStack: Object = null;
+
+  
+  public get sims() : Object {
+    if (this.simsStack && this.simsStack[this.summaryDoc.doc_name]){
+      return this.simsStack[this.summaryDoc.doc_name];
+    }else{
+      return null;
+    }
+  }
+  
 
   linkClick(seg) : void {
     //console.log("click");

@@ -24,6 +24,7 @@ export class StorageService {
   work_summary : BehaviorSubject<IUCollection>;
   work_source_support : IUCollection = null;
   work_source : BehaviorSubject<IUCollection>;
+  work_similarities_support = {};
   work_similarities: BehaviorSubject<Object>;
 
   clicked_source_iu_support : IdeaUnit = null;
@@ -55,7 +56,7 @@ export class StorageService {
     this.work_summary = new BehaviorSubject<IUCollection>(this.work_summary_support);
     this.clicked_source_iu = new BehaviorSubject<IdeaUnit>(this.clicked_source_iu_support);
     this.clicked_summary_iu = new BehaviorSubject<IdeaUnit>(this.clicked_summary_iu_support);
-    this.work_similarities = new BehaviorSubject<Object>(null);
+    this.work_similarities = new BehaviorSubject<Object>(this.work_similarities_support);
   }
 
   /// ALL PROJECTS SAVE AREA ///
@@ -247,6 +248,11 @@ export class StorageService {
   }
 
   /// SIMS ///
+
+  addReceivedSimilarity(simsDoc: Object): void{
+    this.work_similarities_support[simsDoc["doc_name"]] = simsDoc["sims"];
+    this.work_similarities.next(this.work_similarities_support);
+  }
 
   getSimilarities(): Observable<Object>{
     return this.work_similarities.asObservable();

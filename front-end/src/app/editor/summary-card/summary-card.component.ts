@@ -125,7 +125,7 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
           console.log(`Upload in progress: ${percentDone}% done.`);
         } else if (event instanceof HttpResponse) {
           console.log('Similarities are ready!');
-          this.storage.work_similarities.next(event.body);
+          this.storage.addReceivedSimilarity(event.body);
         }
       },
       (err) => {
