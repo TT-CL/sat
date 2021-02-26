@@ -30,8 +30,8 @@ export class Segment {
     this.iu = null;
     this.type = type;
     //increasing unique segmend indexes
-    doc.max_seg_count = doc.max_seg_count + 1;
     this.index = doc.max_seg_count;
+    doc.max_seg_count = doc.max_seg_count + 1;
   }
 
   getText(refDoc : IUCollection, printIuLabel = false) : string {
@@ -422,9 +422,13 @@ export class IUCollection {
     delete this.ius[iu.label];
   }
 
+  /**
+   * Commenting this function out.
+   * Now that the data structure is not circular anymore I want to send
+   * the whole IUCollection instead
   //this function prepares a new JSON object and serializes it
   //necessary due to the circular references in my data structure
-  jsonSerialize() : string {
+  jsonSerialize() : object {
     var json = {"doc_name" : this.doc_name,
                 "doc_type" : this.doc_type };
     let tempIus = {};
@@ -445,14 +449,17 @@ export class IUCollection {
     }
 
     json["ius"] = tempIus;
-    return JSON.stringify(json);
+    //return JSON.stringify(json);
+    return json;
   }
+  **/
+  
 
   findSegment(segIndex : number): Segment{
     return this.segs.find(seg => seg.index == segIndex);
   }
 
-  reconsolidate(anon){
+  reconsolidate(anon: any){
     /**
     console.log("reconsolidate");
     console.log(this);
