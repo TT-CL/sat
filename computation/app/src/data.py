@@ -8,13 +8,14 @@
 # This data will later be segmented in Idea Units
 # %%codecell
 #import nltk
-import csv, json
+import csv
+import json
+import re
+import spacy
 from nltk.tokenize import sent_tokenize#, word_tokenize
 #from nltk.parse.corenlp import *
-import spacy
 from spacy.tokens import Token
-import re
-from iu_utils import *
+from src.iu_utils import iu_pprint
 
 # %%codecell
 # Spacy Token Extension
@@ -24,20 +25,20 @@ Token.set_extension("iu_index", default=-1, force=True)
 nlp = spacy.load("en_core_web_sm")
 #dep_parser = CoreNLPDependencyParser(url="http://localhost:9000")
 #gen_parser = CoreNLPParser(url="http://localhost:9000")
-acceptable_models = ["spacy","corenlp_dep","corenlp_ps"]
+acceptable_models = ["spacy", "corenlp_dep", "corenlp_ps"]
 # %%codecell
 # pylint: disable=anomalous-backslash-in-string
 # functions
 # string cleanup function
 def clean_str(s):
     res = s
-    res = res.replace("\s\\t\s"," ")
-    res = res.replace("\s\\n\s"," ")
-    res = res.replace("\s\\r\s"," ")
-    res = res.replace("\s\\f\s"," ")
-    res = res.replace("’","'")
-    res = res.replace("“","\"")
-    res = res.replace("”","\"")
+    res = res.replace("\s\\t\s", " ")
+    res = res.replace("\s\\n\s", " ")
+    res = res.replace("\s\\r\s", " ")
+    res = res.replace("\s\\f\s", " ")
+    res = res.replace("’", "'")
+    res = res.replace("“", "\"")
+    res = res.replace("”", "\"")
     res = re.sub("\s+", " ", res) #replace multiple spaces with a single one
     res = res.strip()
     return res
@@ -100,7 +101,7 @@ def parse_file(sents, input_models=["spacy"]):
     res = {}
     res["raw"] = sents #add raw file as well
     for model in models:
-        res[model]=[]
+        res[model] = []
 
     for sent in sents:
         for model in models:
@@ -134,8 +135,8 @@ def import_file(f, models=["spacy"]):
 # this is to allow flexibility with the amount of files and avoid uploading
 # sensitive data (like filenames) on VCS
 def retrieve_filenames(
-    namefile = "./data/BEA2019/names.txt", #file with the filenames
-    folder = "./data/BEA2019/base/",):
+        namefile="./data/BEA2019/names.txt", #file with the filenames
+        folder="./data/BEA2019/base/",):
     names = []
     sources = []
     sourceSection = False #bool flag to check if I am in the source section

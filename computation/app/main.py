@@ -1,7 +1,7 @@
-# pylint: disable=no-name-in-module
+""" FastAPI server """
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+#from pydantic import BaseModel
 
 from fastapi.responses import RedirectResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException

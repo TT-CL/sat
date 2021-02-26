@@ -2,7 +2,12 @@
 
 # user defined
 /samples/
+/computation/app/samples/
 /test.py
+
+#VS Code
+.vscode/
+*.code-workspace
 
 # environment files
 .env

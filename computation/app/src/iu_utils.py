@@ -1,7 +1,10 @@
-# %% codecell
-## This function prints sentences nicely with their IU numbers in brackets
-#  you can customize the brackets by changing the opener and closer parameters
-def iu_pprint(sent, gold = False, opener="[",closer="]"):
+# %% codecell\
+""" Standard library with utilities for working with Idea Units """
+
+def iu_pprint(sent, gold=False, opener="[", closer="]"):
+    """This function prints sentences nicely with their IU numbers in brackets.
+    You can customize the brackets by changing the opener and closer parameters"""
+
     texts = [token.text for token in sent]
     indexes = None
     if gold is False:
