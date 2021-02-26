@@ -1,0 +1,9 @@
+setuptools
+wheel
+nltk
+# numpy
+gensim
+spacy
+python-multipart
+autocorrect
+json-tricks
