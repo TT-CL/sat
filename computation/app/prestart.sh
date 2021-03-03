@@ -19,8 +19,10 @@ else
     echo "Downloading .zip with pretrained models..."
     curl -sS http://downloads.cs.stanford.edu/nlp/data/glove.6B.zip -o glove.zip
     echo "Download completed, preparing files..."
-    mkdir models
-    unzip glove.zip -d models
+    if ! [ -d "models" ] ;then
+      mkdir models
+    fi
+    unzip -o glove.zip -d models
     #Prepending model dimensions for gensim import
     # This is no longer required as of gensim 4.0
     # Keeping it just in case
@@ -30,7 +32,7 @@ else
     rm -f glove.zip
     custom_model="./models/glove.6B.300d.txt"
     #Initializing normed gensim model
-    python /src/init_vectors.py "$custom_model" "$gensim_model" True
+    python ./src/init_vectors.py "$custom_model" "$gensim_model" True
     echo "The optimized glove gensim model was created successfully."
   fi
 fi
