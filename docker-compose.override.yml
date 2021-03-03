@@ -29,6 +29,8 @@ services:
       - "traefik.http.routers.web.entrypoints=http"
 
   computation:
+    ports:
+      - "9000:80"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.computation.rule=Host(`localhost`) && PathPrefix(`/api/`) || PathPrefix(`/docs`)"

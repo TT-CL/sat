@@ -1,24 +1,67 @@
-if test -f ./models/glove.6B.50d.txt
+#!/bin/sh
+#Check if the env variables are set, if not use the defaults
+custom_model="${CUSTOM_VECTORS:-models/vectors.txt}"
+echo $custom_model
+gensim_model="${GENSIM_MODEL:-models/gensim/model.bin}"
+
+if test -f "$gensim_model"
 then
-  echo "Glove model found."
+  echo "Optimized gensim model found."
 else
-  echo "Glove model not found!"
-  echo "Downloading .zip with pretrained models..."
-  curl -sS http://downloads.cs.stanford.edu/nlp/data/glove.6B.zip -o glove.zip
-  echo "Download completed, preparing files..."
-  mkdir models
-  unzip glove.zip -d models
-  #Prepending model dimensions for gensim import
-  echo "Prepending dims to glove.6B.50d.txt..."
-  sed -i '1s;^;400000 50\n;' models/glove.6B.50d.txt
-  echo "Prepending dims to glove.6B.100d.txt..."
-  sed -i '1s;^;400000 100\n;' models/glove.6B.100d.txt
-  echo "Prepending dims to glove.6B.200d.txt..."
-  sed -i '1s;^;400000 200\n;' models/glove.6B.200d.txt
-  echo "Prepending dims to glove.6B.300d.txt..."
-  sed -i '1s;^;400000 300\n;' models/glove.6B.300d.txt
-  rm -f glove.zip
-  echo "The Glove model is ready."
+  echo "Optimized gensim model not found."
+  if test -f "$custom_model"
+  then
+    echo "Custom vector file found!"
+    echo "Generating gensim model..."
+    python ./src/init_vectors.py "$custom_model" "$gensim_model"
+  else
+    echo "No custom vector file provided. GloVe will be downloaded."
+    echo "Downloading .zip with pretrained models..."
+    curl -sS http://downloads.cs.stanford.edu/nlp/data/glove.6B.zip -o glove.zip
+    echo "Download completed, preparing files..."
+    mkdir models
+    unzip glove.zip -d models
+    #Prepending model dimensions for gensim import
+    # This is no longer required as of gensim 4.0
+    # Keeping it just in case
+    # sed -i '1s;^;400000 300\n;' models/glove.6B.300d.txt
+
+    #Deleting the downloaded zipfile
+    rm -f glove.zip
+    custom_model="./models/glove.6B.300d.txt"
+    #Initializing normed gensim model
+    python /src/init_vectors.py "$custom_model" "$gensim_model" True
+    echo "The optimized glove gensim model was created successfully."
+  fi
 fi
 
-echo "Proceeding with deployment..."
+echo "Proceeding with deployment."
+
+# preparing pipes for multithreading
+server_start=/tmp/wv_server_start_pipe
+unload_model=/tmp/wv_model_ram_pipe
+
+# removing leftover pipes from previous runs
+rm -f $server_start
+rm -f $unload_model
+
+# this should delete the pipes when exiting, but it does not always work
+trap "rm -f $server_start" EXIT
+trap "rm -f $unload_model" EXIT
+
+# if the pipes do not exist create them
+[ -p "$server_start" ] || mkfifo "$server_start" 
+[ -p "$unload_model" ] || mkfifo "$unload_model"
+
+# load the gensim model in memory as a detached process
+python ./src/loader.py "$gensim_model" &
+
+while true
+do
+    if read line <$server_start; then
+        if [ "$line" = "START" ]; then
+            break
+        fi
+        echo $line
+    fi
+done

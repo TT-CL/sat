@@ -24,6 +24,8 @@ services:
     build: ./computation/
     depends_on:
       - traefik
+    environment: 
+      - "PYTHONUNBUFFERED=1"
     volumes:
       - ./computation/app:/app
     #ports:

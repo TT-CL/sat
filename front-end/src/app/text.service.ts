@@ -38,7 +38,7 @@ export class TextService {
   }
 
   getSimPredictions(source : any, summary: any): Observable<HttpEvent<any>> {
-    let url = "/api/v1/similarities/"
+    let url = "/api/v1/doc/sims/"
     let formData = new FormData()
     console.log("Source vs stringified")
     console.log(source)

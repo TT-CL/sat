@@ -2,7 +2,8 @@ setuptools
 wheel
 nltk
 # numpy
-gensim
+smart-open==3.0.0
+gensim>=4.0.0b0
 spacy
 python-multipart
 autocorrect
