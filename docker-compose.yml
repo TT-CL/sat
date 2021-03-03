@@ -26,6 +26,8 @@ services:
       - traefik
     environment: 
       - "PYTHONUNBUFFERED=1"
+    env_file: 
+      - ./computation/variables.env
     volumes:
       - ./computation/app:/app
     #ports:

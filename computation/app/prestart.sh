@@ -1,8 +1,8 @@
 #!/bin/sh
 #Check if the env variables are set, if not use the defaults
 custom_model="${CUSTOM_VECTORS:-models/vectors.txt}"
-echo $custom_model
 gensim_model="${GENSIM_MODEL:-models/gensim/model.bin}"
+header_flag="${NO_HEADER:-false}"
 
 if test -f "$gensim_model"
 then
@@ -13,7 +13,7 @@ else
   then
     echo "Custom vector file found!"
     echo "Generating gensim model..."
-    python ./src/init_vectors.py "$custom_model" "$gensim_model"
+    python ./src/init_vectors.py "$custom_model" "$gensim_model" "$header_flag"
   else
     echo "No custom vector file provided. GloVe will be downloaded."
     echo "Downloading .zip with pretrained models..."
@@ -23,7 +23,7 @@ else
       mkdir models
     fi
     unzip -o glove.zip -d models
-    #Prepending model dimensions for gensim import
+    # Prepending model dimensions for gensim import
     # This is no longer required as of gensim 4.0
     # Keeping it just in case
     # sed -i '1s;^;400000 300\n;' models/glove.6B.300d.txt
@@ -31,7 +31,8 @@ else
     #Deleting the downloaded zipfile
     rm -f glove.zip
     custom_model="./models/glove.6B.300d.txt"
-    #Initializing normed gensim model
+    # Initializing normed gensim model.
+    # The headers need to be inferred, so I set the header flag to True
     python ./src/init_vectors.py "$custom_model" "$gensim_model" True
     echo "The optimized glove gensim model was created successfully."
   fi
