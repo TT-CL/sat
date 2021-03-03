@@ -22,14 +22,14 @@ class ModelWebWrapper(Model):
             vect = self._vector(word)
             httpRes = {
                 "word": word,
-                "vect": vect.item()
+                "vect": vect
             }
         elif autocorrect is True and spell(word.strip().lower()) in self._model:
             vect = self._vector(spell(word.lower()))
             httpRes = {
                 "word": word,
                 "autocorrect": spell(word.lower()),
-                "vect": vect.item()
+                "vect": vect
             }
         else:
             self._add_miss(word)
@@ -56,7 +56,7 @@ class ModelWebWrapper(Model):
         if http is True:
             # json preparation for HTTP protocol
             temp = {'sent': sent,
-                    'vector': res.item()}
+                    'vector': res}
             res = dumps(temp)
         return res
 

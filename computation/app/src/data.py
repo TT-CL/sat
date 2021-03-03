@@ -12,8 +12,6 @@ import csv
 import json
 import re
 import spacy
-from nltk.tokenize import sent_tokenize  # word_tokenize
-# from nltk.parse.corenlp import *
 from spacy.tokens import Token
 from src.iu_utils import iu_pprint
 
@@ -56,7 +54,7 @@ def read_file(filename):
             if cleaned_row != "" and cleaned_row != "start":
                 lines.append(cleaned_row)
     joined_lines = " ".join(lines)
-    sents = sent_tokenize(joined_lines)
+    sents = [sent.text for sent in nlp(joined_lines).sents]
     return sents
 
 
@@ -74,7 +72,7 @@ def read_buffer(fileBuffer):
             lines.append(cleaned_row)
     fileBuffer.close()
     joined_lines = " ".join(lines)
-    sents = sent_tokenize(joined_lines)
+    sents = [sent.text for sent in nlp(joined_lines).sents]
     return sents
 
 

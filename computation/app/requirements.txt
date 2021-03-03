@@ -1,6 +1,6 @@
 setuptools
 wheel
-nltk
+# nltk
 # numpy
 smart-open==3.0.0
 gensim>=4.0.0b0
