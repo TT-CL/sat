@@ -1,11 +1,12 @@
 <div class="dash-grid horizontal-center">
-  <div class="grid-cell horizontal-center vertical-center">
-    <ng-template [cdkPortalOutlet]="leftPortalOutlet"></ng-template>
+  <div class="grid-cell horizontal-center vertical-center summary-cell"   [ngClass]="{'summary-cell-show': hasSummaries, 'summary-cell-hide': ! hasSummaries}" >
+    <ng-template [cdkPortalOutlet]="summaryOutlet"></ng-template>
   </div>
-  <div class="grid-cell">
+  <div class="grid-cell toolbar-cell">
     <app-dash-toolbar></app-dash-toolbar>
   </div>
-  <div class="grid-cell horizontal-center vertical-center" *ngIf="hasSummaries">
-    <ng-template [cdkPortalOutlet]="rightPortalOutlet"></ng-template>
+  <div class="grid-cell horizontal-center vertical-center source-cell"
+  [ngClass]="{'source-cell-has-summaries': hasSummaries, 'source-cell-no-summaries': ! hasSummaries}" >
+    <ng-template [cdkPortalOutlet]="sourceOutlet"></ng-template>
   </div>
 </div>

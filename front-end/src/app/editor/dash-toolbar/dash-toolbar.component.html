@@ -5,7 +5,7 @@
         <mat-icon>subject</mat-icon>
       </button>
     </mat-list-item>
-    <mat-list-item>
+    <mat-list-item *ngIf="! linkable">
       <button mat-flat-button [routerLink]="['../iu']" [color]="iv_color">
         <mat-icon>mode_comment</mat-icon>
       </button>

@@ -14,7 +14,7 @@ export class CatchLoginComponent implements OnInit {
 
   timer : ReturnType<typeof setTimeout>;
   ngOnInit(): void {
-    this.timer = setTimeout(()=>{this.redirectToProjects()}, 3000);
+    //this.timer = setTimeout(()=>{this.redirectToProjects()}, 3000);
   }
 
   redirectToProjects() {

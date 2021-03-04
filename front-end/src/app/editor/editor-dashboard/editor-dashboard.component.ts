@@ -20,7 +20,7 @@ import { SourceCardComponent } from '../source-card/source-card.component';
 @Component({
   selector: 'app-editor-dashboard',
   templateUrl: './editor-dashboard.component.html',
-  styleUrls: ['./editor-dashboard.component.css']
+  styleUrls: ['./editor-dashboard.component.sass']
 })
 export class EditorDashboardComponent implements OnInit{
 
@@ -47,12 +47,11 @@ export class EditorDashboardComponent implements OnInit{
 
   ngOnInit() : void {
     this.sourceCardPortal = new ComponentPortal(SourceCardComponent);
+    this.sourceOutlet = this.sourceCardPortal;
     if(this.hasSummaries){
       this.summaryCardPortal = new ComponentPortal(SummaryCardComponent);
-      this.leftPortalOutlet = this.summaryCardPortal;
-      this.rightPortalOutlet = this.sourceCardPortal;
+      this.summaryOutlet = this.summaryCardPortal;
     }else{
-      this.leftPortalOutlet = this.sourceCardPortal;
     }
   }
 
@@ -60,8 +59,8 @@ export class EditorDashboardComponent implements OnInit{
   project : Project;
   hasSummaries: boolean = false;
 
-  leftPortalOutlet: Portal<any>;
-  rightPortalOutlet: Portal<any>;
+  summaryOutlet: Portal<any>;
+  sourceOutlet: Portal<any>;
 
   summaryCardPortal : ComponentPortal<SummaryCardComponent>;
   sourceCardPortal : ComponentPortal<SourceCardComponent>;
