@@ -552,10 +552,12 @@ export class Project {
     this.sourceDoc.reconsolidate(anon.sourceDoc);
 
     this.summaryDocs = [];
-    for (let anon_summary of anon.summaryDocs){
-      let summary = new IUCollection();
-      summary.reconsolidate(anon_summary);
-      this.summaryDocs.push(summary);
+    if(anon.summaryDocs){
+      for (let anon_summary of anon.summaryDocs){
+        let summary = new IUCollection();
+        summary.reconsolidate(anon_summary);
+        this.summaryDocs.push(summary);
+      }
     }
   }
 }
