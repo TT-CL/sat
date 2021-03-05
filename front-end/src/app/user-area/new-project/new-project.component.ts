@@ -8,7 +8,7 @@ import { UploadOverlayComponent } from '../upload-overlay/upload-overlay.compone
 
 import { IUCollection, Project } from '../../data-objects';
 
-import { TextService } from '../../text.service';
+import { BackEndService } from '../../back-end.service';
 import { StorageService } from '../../storage.service';
 
 import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
@@ -25,7 +25,7 @@ export class NewProjectComponent {
   constructor(
     private formBuilder: FormBuilder,
     private overlayService: OverlayService,
-    private textService : TextService,
+    private textService : BackEndService,
     private storage: StorageService,
     private router: Router,
     private route: ActivatedRoute) { }

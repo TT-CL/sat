@@ -13,7 +13,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class TextService {
+export class BackEndService {
 
   constructor( private http: HttpClient ) {
   }

@@ -1,15 +1,11 @@
-import { Component, OnInit, Injector, InjectionToken } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 //import { map } from 'rxjs/operators';
 //import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { Word, Segment, IdeaUnit, IUCollection, Project } from '../../data-objects';
+import { IdeaUnit, IUCollection, Project } from '../../data-objects';
 
-import { TextService } from '../../text.service';
 import { StorageService } from '../../storage.service';
 
-import { of } from 'rxjs';
-import {BehaviorSubject, Observable} from 'rxjs';
-
-import { Router, ActivatedRoute, NavigationEnd} from '@angular/router';
+import { Router} from '@angular/router';
 
 import { ComponentPortal, Portal } from '@angular/cdk/portal';
 
@@ -25,11 +21,8 @@ import { SourceCardComponent } from '../source-card/source-card.component';
 export class EditorDashboardComponent implements OnInit{
 
   constructor(
-    private textService : TextService,
     private storage: StorageService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private injector: Injector,
+    router: Router,
   ) {
     //first of all, get the current project index to access the obj in memory
     this.project_index = storage.cur_project_idx;

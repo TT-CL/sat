@@ -14,7 +14,7 @@ import {
 import { ComponentPortal, Portal, TemplatePortal } from '@angular/cdk/portal';
 import { Word, Segment, IdeaUnit, IUCollection } from '../../data-objects';
 
-import { TextService } from '../../text.service';
+import { BackEndService } from '../../back-end.service';
 import { StorageService } from '../../storage.service';
 
 import { OverlayService } from '../../overlay.service';
@@ -32,7 +32,7 @@ import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 export class DocumentViewerComponent implements OnInit {
 
   constructor(
-    private textService : TextService,
+    private textService : BackEndService,
     private overlay: Overlay,
     private overlayService : OverlayService,
     private storage: StorageService){  }

@@ -3,7 +3,7 @@ import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 
 import { IUCollection } from '../../data-objects';
 import { StorageService } from '../../storage.service';
-import { TextService } from '../../text.service';
+import { BackEndService } from '../../back-end.service';
 
 import { MatSelect } from '@angular/material/select';
 
@@ -29,7 +29,7 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
     private storage: StorageService,
     private route: ActivatedRoute,
     private router: Router,
-    private textService: TextService,
+    private textService: BackEndService,
   ) {
     storage.getWorkSummary().subscribe((summary: IUCollection)=>{
       this.doc = summary;
