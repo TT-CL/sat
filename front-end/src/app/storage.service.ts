@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IdeaUnit, IUCollection, Project } from './data-objects';
+import { IdeaUnit, IUCollection, Project } from './objects/objects.module';
 
 import {BehaviorSubject, Observable} from 'rxjs';
 

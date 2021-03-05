@@ -2,7 +2,7 @@ import { Component, OnInit, Input} from '@angular/core';
 
 import { StorageService } from '../../storage.service';
 
-import { Project } from '../../data-objects';
+import { Project } from '../../objects/objects.module';
 
 import { OAuthService } from 'angular-oauth2-oidc';
 

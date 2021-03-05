@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { IdeaUnit, IUCollection } from '../../data-objects';
+import { IdeaUnit, IUCollection } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
 

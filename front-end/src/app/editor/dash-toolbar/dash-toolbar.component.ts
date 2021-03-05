@@ -1,7 +1,5 @@
 import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges} from '@angular/core';
 
-import { Word, Segment, IdeaUnit, IUCollection, Project } from '../../data-objects';
-
 import { StorageService } from '../../storage.service';
 
 import { ActivatedRoute, Router, NavigationEnd} from '@angular/router';

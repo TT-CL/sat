@@ -11,8 +11,7 @@ import {
   ViewContainerRef,
   ElementRef
 } from '@angular/core';
-import { ComponentPortal, Portal, TemplatePortal } from '@angular/cdk/portal';
-import { Word, Segment, IdeaUnit, IUCollection } from '../../data-objects';
+import { Word, IdeaUnit, IUCollection } from '../../objects/objects.module';
 
 import { BackEndService } from '../../back-end.service';
 import { StorageService } from '../../storage.service';

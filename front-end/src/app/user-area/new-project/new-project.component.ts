@@ -6,7 +6,7 @@ import { Observable, of} from 'rxjs';
 import { OverlayService } from '../../overlay.service';
 import { UploadOverlayComponent } from '../upload-overlay/upload-overlay.component';
 
-import { IUCollection, Project } from '../../data-objects';
+import { IUCollection, Project } from '../../objects/objects.module';
 
 import { BackEndService } from '../../back-end.service';
 import { StorageService } from '../../storage.service';

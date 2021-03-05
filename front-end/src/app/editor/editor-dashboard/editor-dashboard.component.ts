@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 //import { map } from 'rxjs/operators';
 //import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
-import { IdeaUnit, IUCollection, Project } from '../../data-objects';
+import { IdeaUnit, IUCollection, Project } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
 

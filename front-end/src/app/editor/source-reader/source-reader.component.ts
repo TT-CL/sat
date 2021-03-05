@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { IUCollection } from '../../data-objects';
+import { IUCollection } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
 

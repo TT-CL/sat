@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, ViewChild, OnInit} from '@angular/core';
 import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 
-import { IUCollection } from '../../data-objects';
+import { IUCollection } from '../../objects/objects.module';
 import { StorageService } from '../../storage.service';
 import { BackEndService } from '../../back-end.service';
 

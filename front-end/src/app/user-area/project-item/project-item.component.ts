@@ -1,5 +1,5 @@
 import { Component, OnInit, Input} from '@angular/core';
-import { Project } from '../../data-objects';
+import { Project } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
 import { Router} from '@angular/router';
