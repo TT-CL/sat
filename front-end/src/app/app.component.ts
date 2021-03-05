@@ -13,6 +13,9 @@ export const authCodeFlowConfig: AuthConfig = {
     // URL of the SPA to redirect the user to after login
     redirectUri: window.location.origin + '/catch-login',
 
+    // URL of the SPA to redirect the user after silent refresh
+    silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
+
     // The SPA's id. The SPA is registerd with this id at the auth-server
     // clientId: 'server.code',
     clientId: environment.googleOAuthSecret,
@@ -100,6 +103,7 @@ export class AppComponent {
     **/
     this.oauthService.setStorage(sessionStorage);
     this.oauthService.configure(authCodeFlowConfig);
+    this.oauthService.setupAutomaticSilentRefresh();
     this.oauthService.loadDiscoveryDocumentAndTryLogin();
   }
 }
