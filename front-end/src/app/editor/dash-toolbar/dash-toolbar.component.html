@@ -1,27 +1,32 @@
 <div class="vertical-center horizontal-center dash-toolbar">
   <mat-list role="list">
     <mat-list-item>
-      <button mat-flat-button [routerLink]="['../reader']" [color]="tv_color">
+      <button mat-flat-button [routerLink]="['../manage']" [color]="manage_project_color">
+        <mat-icon>build</mat-icon>
+      </button>
+    </mat-list-item>
+    <mat-list-item>
+      <button mat-flat-button [routerLink]="['../reader']" [color]="text_view_color">
         <mat-icon>subject</mat-icon>
       </button>
     </mat-list-item>
     <mat-list-item *ngIf="! linkable">
-      <button mat-flat-button [routerLink]="['../iu']" [color]="iv_color">
+      <button mat-flat-button [routerLink]="['../iu']" [color]="iu_view_color">
         <mat-icon>mode_comment</mat-icon>
       </button>
     </mat-list-item>
     <mat-list-item>
-      <button mat-flat-button [routerLink]="['../edit']" [color]="etv_color">
+      <button mat-flat-button [routerLink]="['../edit']" [color]="edit_text_view_color">
         <mat-icon>create</mat-icon>
       </button>
     </mat-list-item>
     <mat-list-item *ngIf="linkable">
-      <button mat-flat-button [routerLink]="['../link']" [color]="liv_color">
+      <button mat-flat-button [routerLink]="['../link']" [color]="link_iu_view_color">
         <mat-icon>link</mat-icon>
       </button>
     </mat-list-item>
     <mat-list-item>
-      <button mat-flat-button [routerLink]="['../download']" [color]="dow_color">
+      <button mat-flat-button [routerLink]="['../download']" [color]="download_project_color">
         <mat-icon>download</mat-icon>
       </button>
     </mat-list-item>

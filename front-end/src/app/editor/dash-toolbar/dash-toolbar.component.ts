@@ -32,56 +32,71 @@ export class DashToolbarComponent implements OnInit {
 
   linkable: boolean;
 
-  tv_color = "accent";
-  iv_color = "primary";
-  etv_color = "primary";
-  liv_color = "primary";
-  dow_color = "primary";
+  manage_project_color = "accent";
+  text_view_color = "primary";
+  iu_view_color = "primary";
+  edit_text_view_color = "primary";
+  link_iu_view_color = "primary";
+  download_project_color = "primary";
 
   colorButtons(view: string){
     //console.log("coloring");
     switch (view) {
+      case "manage":
+        this.manage_project_color = "accent";
+        this.text_view_color = "primary";
+        this.iu_view_color = "primary";
+        this.edit_text_view_color = "primary";
+        this.link_iu_view_color = "primary";
+        this.download_project_color = "primary";
+        break;
       case "reader":
-        this.tv_color = "accent";
-        this.iv_color = "primary";
-        this.etv_color = "primary";
-        this.liv_color = "primary";
-        this.dow_color = "primary";
+        this.manage_project_color = "primary";
+        this.text_view_color = "accent";
+        this.iu_view_color = "primary";
+        this.edit_text_view_color = "primary";
+        this.link_iu_view_color = "primary";
+        this.download_project_color = "primary";
         break;
       case "iu":
-        this.tv_color = "primary";
-        this.iv_color = "accent";
-        this.etv_color = "primary";
-        this.liv_color = "primary";
-        this.dow_color = "primary";
+        this.manage_project_color = "primary";
+        this.text_view_color = "primary";
+        this.iu_view_color = "accent";
+        this.edit_text_view_color = "primary";
+        this.link_iu_view_color = "primary";
+        this.download_project_color = "primary";
         break;
       case "edit":
-        this.tv_color = "primary";
-        this.iv_color = "primary";
-        this.etv_color = "accent";
-        this.liv_color = "primary";
-        this.dow_color = "primary";
+        this.manage_project_color = "primary";
+        this.text_view_color = "primary";
+        this.iu_view_color = "primary";
+        this.edit_text_view_color = "accent";
+        this.link_iu_view_color = "primary";
+        this.download_project_color = "primary";
         break;
       case "link":
-        this.tv_color = "primary";
-        this.iv_color = "primary";
-        this.etv_color = "primary";
-        this.liv_color = "accent";
-        this.dow_color = "primary";
+        this.manage_project_color = "primary";
+        this.text_view_color = "primary";
+        this.iu_view_color = "primary";
+        this.edit_text_view_color = "primary";
+        this.link_iu_view_color = "accent";
+        this.download_project_color = "primary";
         break;
       case "download":
-        this.tv_color = "primary";
-        this.iv_color = "primary";
-        this.etv_color = "primary";
-        this.liv_color = "primary";
-        this.dow_color = "accent";
+        this.manage_project_color = "primary";
+        this.text_view_color = "primary";
+        this.iu_view_color = "primary";
+        this.edit_text_view_color = "primary";
+        this.link_iu_view_color = "primary";
+        this.download_project_color = "accent";
         break;
       default:
-        this.tv_color = "accent";
-        this.iv_color = "primary";
-        this.etv_color = "primary";
-        this.liv_color = "primary";
-        this.dow_color = "primary";
+        this.manage_project_color = "accent";
+        this.text_view_color = "primary";
+        this.iu_view_color = "primary";
+        this.edit_text_view_color = "primary";
+        this.link_iu_view_color = "primary";
+        this.download_project_color = "primary";
         break;
     }
   }

@@ -24,7 +24,7 @@ export class ProjectItemComponent implements OnInit {
 
   editProject(){
     this.storage.setCurProjIndex(this.index);
-    this.router.navigate(['/editor/reader']);
+    this.router.navigate(['/editor/']);
   }
 
   ngOnInit(): void {
