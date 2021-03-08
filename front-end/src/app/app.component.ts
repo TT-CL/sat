@@ -14,10 +14,10 @@ export const authCodeFlowConfig: AuthConfig = {
     redirectUri: window.location.origin + '/catch-login',
 
     // URL of the SPA to redirect the user after silent refresh
-    silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
+    //silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
 
     // enabling silent refresh
-    useSilentRefresh: true,
+    //useSilentRefresh: true,
 
     // The SPA's id. The SPA is registerd with this id at the auth-server
     // clientId: 'server.code',
@@ -36,7 +36,7 @@ export const authCodeFlowConfig: AuthConfig = {
     // The first four are defined by OIDC.
     // Important: Request offline_access to get a refresh token
     // The api scope is a usecase specific one
-    scope: 'openid profile email',
+  scope: 'openid profile email',
 
     showDebugInformation: true,
   };

@@ -19,20 +19,23 @@ export class AuthGuardService {
 
     var loggedIn = hasIdToken && hasAccessToken
     if (!loggedIn && idToken != null){
+      /**
       this.oauthService.silentRefresh()
       .then(info => console.debug('refresh ok', info))
       .catch(err => console.error('refresh error', err));
     }else if(!loggedIn){
+      */
       this.router.navigate(['/'])
     }
-
+    
+    /**
     console.log("ID Token")
     console.log(this.oauthService.getIdToken())
     console.log("ID Claims")
     console.log(this.oauthService.getIdentityClaims())
     console.log(`Has ID Token? ${hasIdToken}`)
     console.log(`Has Valid Access Token? ${hasAccessToken}`)
-
+    */
     return loggedIn;
   }
 }
