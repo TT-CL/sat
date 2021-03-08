@@ -16,6 +16,9 @@ export const authCodeFlowConfig: AuthConfig = {
     // URL of the SPA to redirect the user after silent refresh
     silentRefreshRedirectUri: window.location.origin + '/silent-refresh.html',
 
+    // enabling silent refresh
+    useSilentRefresh: true,
+
     // The SPA's id. The SPA is registerd with this id at the auth-server
     // clientId: 'server.code',
     clientId: environment.googleOAuthSecret,
