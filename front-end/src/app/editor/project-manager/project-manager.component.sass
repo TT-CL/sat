@@ -1,26 +1,13 @@
-
-
-.dash-grid
-  display: grid
-  grid-row-gap: 5px
-  grid-template-columns: 500px
-  grid-template-rows: auto 450px auto
-  margin-top: 30px
-  height: 600px
-  margin-left: auto
-  margin-right: auto
-
-.grid-cell
-  height: 450px
-  grid-column: 1
-  grid-row: 2
+@use '../../../dashboard.sass' as dash
 
 .mat-card
-  width: 500px
-  height: 450px
-  max-width: 500px
-  max-height: 600px
-  padding-bottom: 5px
+  width: dash.$card-width-alone
+  height: dash.$card-height
+  max-width: dash.$card-width-alone
+  max-height: dash.$card-height
+
+.mat-card-content
+  height: dash.$card-height
 
 .title-container
   display: flex
@@ -44,13 +31,19 @@
 .summary-title
   margin-top: 10px
 
+.main-content
+  display: flex
+  flex-direction: column
+
+.grow-area
+  height: 100%
+
 .summary-area
   width: inherit
-  height: 115px
+  height: calc(100% - 23px)
   background-color: #eeeeee
-  margin-top: 5px
-  margin-bottom: 5px
   padding: 5px
+  margin-top: 5px
   border-radius: 5px
   border-color: #e0e0e0
   border-style: solid
@@ -62,7 +55,6 @@
   overflow-y: auto
 
 .card-content-with-toolbar
-  padding-top: 10px
   display: grid
   height: 100%
   grid-template-rows: auto 50px

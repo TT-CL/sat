@@ -28,6 +28,13 @@ $card-max-width-alone: 800px
 $toolbar-width: 90px
 
 $card-height: 600px
+$card-max-height: 700px
+
+$card-margin: 12px //horizontal margin
+$card-content-margin: 6px //vertical margin
+
+$card-header-height: 64px
+$card-header-margin: 10px
 
 .dash-grid
   display: grid
@@ -41,36 +48,83 @@ $card-height: 600px
 .grid-cell
   height: $card-height
 
-.summary-cell-show
+.summary-cell-display-both
   grid-area: left
   display: block
   order: 1
   width: $card-width-side-by-side
 
-.summary-cell-hide
+.summary-cell-display-source
   disply: none
+
+.summary-cell-display-summary
+  grid-area: left
+  display: block
+  order: 1
+  width: $card-width-alone
+  max-width: $card-max-width-alone
 
 .toolbar-cell
   grid-area: toolbar
   order: 2
   width: $toolbar-width
 
-.source-cell-has-summaries
+.source-cell-display-both
   grid-area: right
   order: 3
   width: $card-width-side-by-side
 
-.source-cell-no-summaries
+.source-cell-display-source
   order: 1
   grid-area: left
   width: $card-width-alone
   max-width: $card-max-width-alone
 
+.source-cell-display-summary
+  disply: none
+
 // CARDS
 .mat-card
-  padding-bottom: 5px
+  padding: 0px !important
+
+.mat-card-content
+  margin: $card-margin !important
+
+.mat-card-header
+  padding-top: $card-header-margin
+  height: $card-header-height
 
 .mat-card-dynamic-content
-  padding-top: 5px
-  height: 500px
+  padding-top: $card-content-margin
+  padding-bottom: $card-content-margin
+  height: calc(#{$card-height} - #{$card-header-height} - #{$card-header-margin} - #{$card-content-margin * 2})
 
+.scrollable-content
+  height: inherit
+  overflow: hidden
+  overflow-x: hidden
+  overflow-y: auto
+
+
+// HEADER
+
+.card-title
+  display: block
+  font: (400 22px Roboto, "Helvetica Neue", sans-serif)
+  color: rgba(0, 0, 0, 0.87)
+
+.card-subtitle
+  display: block
+  font: (400 16px Roboto, "Helvetica Neue", sans-serif)
+  color: rgba(0, 0, 0, 0.54)
+
+.card-header, .header-flex
+  height: $card-header-height
+  padding-top: $card-header-margin
+
+.header-flex
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-content: center
+  height: 100%

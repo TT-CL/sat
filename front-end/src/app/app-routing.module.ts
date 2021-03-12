@@ -29,7 +29,7 @@ const routes: Routes = [
     children:[
       {
         path: '',
-        redirectTo: '/editor/viewer',
+        redirectTo: '/editor/manager',
         pathMatch: 'full'
       },
       {

@@ -1,4 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import { IUCollection } from 'src/app/objects/objects.module';
+
+type FileOrDoc = File | IUCollection;
 
 @Component({
   selector: 'app-summary-minicard',
@@ -10,10 +13,17 @@ export class SummaryMinicardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    if (this.file instanceof File){
+      this.name = this.file.name;
+    }else if (this.file instanceof IUCollection){
+      this.name = this.file.doc_name;
+    }
   }
 
-  @Input() file : File;
+  @Input() file : FileOrDoc;
 
-  @Output() close = new EventEmitter<File>();
+  name: string;
+
+  @Output() close = new EventEmitter<FileOrDoc>();
 
 }

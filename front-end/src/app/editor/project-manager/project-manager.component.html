@@ -1,0 +1,80 @@
+<div #overlayOrigin>
+<form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+  <mat-card>
+    <mat-card-content>
+      <div class="card-content-with-toolbar">
+      <div class="main-content">
+        <div class="title-area">
+        <label class="mat-caption hint"> Fields marked with an asterisk are required </label>
+        <mat-form-field class="form-field">
+          <mat-label for="">Project title</mat-label>
+          <input matInput type="text" placeholder="Ex. Apollo 11" required autocomplete="off" id="title" name="title"
+            formControlName="title" [value]="projTitle">
+          <mat-error *ngIf="projectForm.controls.title.hasError('required')">
+            A project title is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        </div>
+  
+        <div class="description-area">
+        <mat-form-field class="form-field">
+          <mat-label>Description</mat-label>
+          <input matInput type="text" placeholder="Ex. A news article about the moon landing" autocomplete="off" id="description" name="description" formControlName="description" [value]="projDescription">
+        </mat-form-field>
+        </div>
+        
+        <div class="source-area">
+        <!-- Form control name is required here to record changes on the file selector -->
+        <input type="file" style="display: none" #sourceInput accept=".txt" (change)="onChangeSourceInput()" id="source"
+          name="source" formControlName="source" />
+  
+        <mat-form-field class="form-field" [ngClass]="sourceFormFieldClass">
+          <mat-label>Source text</mat-label>
+          <!-- Form control name is required here to allow mat-error to appear according to changes to the visible input -->
+          <input matInput placeholder="source.txt" readonly required (click)="onClickSourceForm()" #sourceForm
+            autocomplete="off" [value]="sourceFormValue" formControlName="sourceValue">
+          <button mat-button *ngIf="sourceFile" matSuffix mat-icon-button aria-label="Clear" (click)="removesourceFile()">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-hint>Filetypes allowed: .txt</mat-hint>
+          <mat-error *ngIf="projectForm.controls.sourceValue.hasError('required')">
+            A source document is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+        </div>
+
+        <div class="summary-title-area">
+        <input type="file" style="display: none" #summaryInput accept=".txt" (change)="onChangeSummaryInput()" multiple />
+  
+        <div class="mat-body-1 summary-title"> Summaries </div>
+        </div>
+        <div class="grow-area">
+        <div class="summary-area scrollable-content">
+          <div class="summary-flex">
+            <!-- Print one minicard for each summary selected -->
+            <app-summary-minicard *ngFor="let summary of summaryFiles" [file]="summary" (close)="removeSummary($event)">
+            </app-summary-minicard>
+            <!-- Default minicard that allows to update new files -->
+            <div class="plus-container" (click)="newSummary()">
+              <div class="plus-card-inner">
+                <mat-icon class="plus-icon">note_add</mat-icon>
+                <div>NEW</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+      <div>
+        <mat-divider></mat-divider>
+        <div class="card-toolbar vertical-center save-theme">
+          <button type="submit" mat-flat-button color="primary" [disabled]="!projectForm.valid">
+            Save <mat-icon>save</mat-icon>
+          </button>
+        </div>
+      </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</form>
+</div>

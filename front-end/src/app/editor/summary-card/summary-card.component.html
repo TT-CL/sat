@@ -1,13 +1,17 @@
 <mat-card class="document-card">
   <mat-card-content class="card-container">
     <div class="header-container">
-      <mat-card-header *ngIf="support_array.length <=1">
-        <mat-card-title>{{doc.doc_name}}</mat-card-title>
-        <mat-card-subtitle>Summary text</mat-card-subtitle>
-      </mat-card-header>
+      <div class="card-header" *ngIf="support_array.length <=1">
+        <div class="card-header-text">
+          <div class="card-title">{{doc.doc_name}}</div>
+          <div class="card-subtitle">Summary text</div>
+        </div>
+      </div>
       <div class="header-flex" *ngIf="support_array.length >1">
-        <div class="title">
-          Summary
+        <div class="card-header-text">
+          <div class="card-title">
+            Summary
+          </div>
         </div>
         <div class="title-selector">
         <mat-form-field>

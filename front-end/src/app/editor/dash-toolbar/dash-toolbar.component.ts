@@ -42,7 +42,7 @@ export class DashToolbarComponent implements OnInit {
   colorButtons(view: string){
     //console.log("coloring");
     switch (view) {
-      case "manage":
+      case "manager":
         this.manage_project_color = "accent";
         this.text_view_color = "primary";
         this.iu_view_color = "primary";

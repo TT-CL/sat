@@ -58,6 +58,7 @@ import { SourceCardComponent } from './editor/source-card/source-card.component'
 import { SourceLinkComponent } from './editor/source-link/source-link.component';
 import { SummaryLinkComponent } from './editor/summary-link/summary-link.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ProjectManagerComponent } from './editor/project-manager/project-manager.component';
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     SourceCardComponent,
     SourceLinkComponent,
     SummaryLinkComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ProjectManagerComponent
   ],
   imports: [
     BrowserModule,
