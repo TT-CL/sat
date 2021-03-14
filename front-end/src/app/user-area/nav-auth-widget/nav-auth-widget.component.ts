@@ -2,11 +2,11 @@ import { Component, OnInit, NgZone } from '@angular/core';
 
 import { Router, ActivatedRoute, NavigationEnd} from '@angular/router';
 
-import { OAuthService } from 'angular-oauth2-oidc';
 
 import { filter } from 'rxjs/operators';
 
-import { StorageService } from '../../storage.service';
+
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-nav-auth-widget',
@@ -17,10 +17,7 @@ export class NavAuthWidgetComponent implements OnInit{
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private zone: NgZone,
-    private oauthService: OAuthService,
-    private storage: StorageService,
+    private auth: AuthService
   ) {
     //listen to router change events to hide the login button when redundant
     router.events.pipe(
@@ -29,46 +26,28 @@ export class NavAuthWidgetComponent implements OnInit{
       this.landingArea = event.url == "/" || event.url == "/login";
       //console.log(this.landingArea);
     });
+    auth.retrieveUserIdentity().subscribe(id =>{
+      this.identity = id;
+    })
   }
 
   landingArea:boolean = true;
+  
+  identity: boolean | Object;
 
   redirectToRoot() {
     this.router.navigate(['/']);
   }
 
   public get userSignedIn() {
-      var claims = this.oauthService.getIdentityClaims();
-      if (!claims){
-        //console.log("user not logged in");
-        return false;
-      }
-      //console.log("user logged in");
-      return true;
+    return Boolean(this.identity);
   }
 
-  public get userAvatar() {
-      var claims = this.oauthService.getIdentityClaims();
-      if (!claims){
-        return null;
-      }
-      return claims['picture'];
-  }
-
-  public get userName() {
-      var claims = this.oauthService.getIdentityClaims();
-      if (!claims){
-        return null;
-      }
-      return claims['given_name'];
-  }
+  userName$ = this.auth.getUserName();
+  avatar$ = this.auth.getAvatar();
 
   public logout() {
-    //only clearing projects to avoid deleeting some objects that I shouldn't
-    //this.storage.clearSession();
-    this.storage.clearProjects();
-    this.oauthService.logOut();
-    this.redirectToRoot();
+    this.auth.logout();
   }
 
   ngOnInit() {

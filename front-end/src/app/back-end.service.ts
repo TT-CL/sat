@@ -23,7 +23,7 @@ export class BackEndService {
   }
 
   getLabelledText(mode: string, text : File): Observable<HttpEvent<any>> {
-    let url = "/api/v1/raw/"
+    let url = "/api/v1/raw"
     let formData = new FormData();
     formData.append('file', text);
     formData.append('doc_type', mode);
@@ -38,7 +38,7 @@ export class BackEndService {
   }
 
   getSimPredictions(source : any, summary: any): Observable<HttpEvent<any>> {
-    let url = "/api/v1/doc/sims/"
+    let url = "/api/v1/doc/sims"
     let formData = new FormData()
     console.log("Source vs stringified")
     console.log(source)

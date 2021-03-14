@@ -1,6 +1,6 @@
 <div *ngIf="userSignedIn; else loggedOut" class="user-widget-container">
-  <img [src]="userAvatar" class="avatar"/>
-  <div class="username mat-h3"> {{userName}} </div>
+  <img [src]="avatar$ | async" class="avatar"/>
+  <div class="username mat-h3"> {{ userName$ | async }} </div>
   <button mat-stroked-button (click)="logout()" class="logout">
     Log out
   </button>

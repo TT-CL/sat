@@ -2,14 +2,14 @@
   <div class="grid-cell horizontal-center vertical-center">
     <mat-card class="mat-card">
       <mat-card-header>
-        <mat-card-title>Welcome {{userName}}</mat-card-title>
+        <mat-card-title>Welcome {{ userName$ | async }}</mat-card-title>
         <mat-card-subtitle>Please select a project</mat-card-subtitle>
       </mat-card-header>
       <mat-divider></mat-divider>
       <mat-card-content>
         <div class="content horizontal-center">
           <div class="scrollable-content">
-            <app-project-item *ngFor="let proj of projects; let i = index" class="project-item" [project]="proj" [index]="i"></app-project-item>
+            <app-project-item *ngFor="let proj of projects$ | async; let i = index" class="project-item" [project]="proj" [index]="i"></app-project-item>
             <div class="new-project-area def-button">
               <button mat-flat-button color="accent" [routerLink]="['/projects/new-project']">
                 <mat-icon>note_add</mat-icon>

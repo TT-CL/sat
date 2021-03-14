@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  googleOAuthSecret: process.env.GOOGLE_OAUTH_SECRET,
 };
 
 /*

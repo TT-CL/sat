@@ -43,7 +43,6 @@ import {NgxWebstorageModule} from 'ngx-webstorage';
 import { LoginPageComponent } from './user-area/login-page/login-page.component';
 import { NavAuthWidgetComponent } from './user-area/nav-auth-widget/nav-auth-widget.component';
 
-import { OAuthModule } from 'angular-oauth2-oidc';
 import { AuthGuardService } from './auth-guard.service';
 import { CatchLoginComponent } from './user-area/catch-login/catch-login.component';
 
@@ -112,7 +111,6 @@ import { ProjectManagerComponent } from './editor/project-manager/project-manage
     OverlayModule,
     MatProgressSpinnerModule,
     NgxWebstorageModule.forRoot(),
-    OAuthModule.forRoot(),
     PortalModule,
     MatSelectModule,
   ],

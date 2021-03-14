@@ -1,41 +1,29 @@
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { OAuthService } from 'angular-oauth2-oidc';
 import { Injectable } from '@angular/core';
+import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuardService {
 
-  constructor(private oauthService: OAuthService, private router: Router) { }
+  constructor(
+    private auth: AuthService,
+    private router: Router) {
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot) {
-
-    var idToken = this.oauthService.getIdToken()
-    var hasIdToken = this.oauthService.hasValidIdToken();
-    var hasAccessToken = this.oauthService.hasValidAccessToken();
-
-    var loggedIn = hasIdToken && hasAccessToken
-    if (!loggedIn && idToken != null){
-      /**
-      this.oauthService.silentRefresh()
-      .then(info => console.debug('refresh ok', info))
-      .catch(err => console.error('refresh error', err));
-    }else if(!loggedIn){
-      */
-      this.router.navigate(['/'])
-    }
+    state: RouterStateSnapshot): Promise<Boolean> {
     
-    /**
-    console.log("ID Token")
-    console.log(this.oauthService.getIdToken())
-    console.log("ID Claims")
-    console.log(this.oauthService.getIdentityClaims())
-    console.log(`Has ID Token? ${hasIdToken}`)
-    console.log(`Has Valid Access Token? ${hasAccessToken}`)
-    */
-    return loggedIn;
+    return this.auth.loggedInPromise().then(loggedIn =>{
+      if (!loggedIn) {
+        console.log(loggedIn);
+        this.router.navigate(['/']);
+      }
+      return loggedIn
+    });
   }
 }

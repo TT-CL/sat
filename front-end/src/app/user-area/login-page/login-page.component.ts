@@ -1,7 +1,8 @@
-import { Component, OnInit, NgZone} from '@angular/core';
+import { Component, OnInit, NgZone, AfterViewInit} from '@angular/core';
 
-import { OAuthService } from 'angular-oauth2-oidc';
 import { Router, ActivatedRoute } from '@angular/router';
+
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -11,23 +12,29 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class LoginPageComponent implements OnInit {
 
   constructor(
-    private oauthService: OAuthService,
     private router: Router,
+    private auth: AuthService,
   ) {
   }
-
   ngOnInit() {
-    var claims = this.oauthService.getIdentityClaims();
-    if (claims){
-      this.redirectToProjects();
-    }
+    this.auth.loggedInPromise().then(loggedIn => {
+      if (loggedIn){
+        console.log("redirect")
+        this.redirectToProjects();
+      }
+    });
   }
 
   redirectToProjects() {
     this.router.navigate(['/projects']);
   }
 
-  public login(){
-    this.oauthService.initLoginFlow();
+  public googleLogin(){
+    window.location.replace(location.origin + "/api/login/google");
+    /**
+    this.auth.googleLogin().subscribe((res)=>{
+      console.log(res);
+    });
+    **/
   }
 }

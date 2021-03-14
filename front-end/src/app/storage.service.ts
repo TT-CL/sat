@@ -5,8 +5,6 @@ import {BehaviorSubject, Observable} from 'rxjs';
 
 import {SessionStorageService} from 'ngx-webstorage';
 
-import { environment } from 'src/environments/environment';
-
 @Injectable({
   providedIn: 'root'
 })
