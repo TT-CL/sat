@@ -8,3 +8,7 @@ spacy
 python-multipart
 autocorrect
 json-tricks
+Authlib
+requests
+httpx
+itsdangerous

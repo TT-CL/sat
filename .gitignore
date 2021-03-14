@@ -11,6 +11,7 @@
 
 # environment files
 .env
+/computation/variables.env
 /front-end/.env
 
 # Let's encrypt certificates
