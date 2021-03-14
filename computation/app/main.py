@@ -155,7 +155,9 @@ async def logged_in(request: Request):
         user = request.session['user']
         res = {
             'given_name': user['given_name'],
-            'avatar': user['picture']
+            'picture': user['picture'],
+            'name': user['name'],
+            'email': user['email'],
         }
     return res
 

@@ -19,7 +19,7 @@ export class ProjectDashComponent implements OnInit {
     private auth: AuthService,
   ) { }
 
-  public userName$ = this.auth.getUserName();
+  public userName$ = this.auth.getGivenName();
 
   public projects$ = this.storage.getProjects();
 

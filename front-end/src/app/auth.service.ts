@@ -32,12 +32,20 @@ export class AuthService {
     return this.http.request(req).pipe(pluck('body'));
   }
 
-  getUserName(): Observable<string>{
+  getGivenName(): Observable<string>{
     return this.retrieveUserIdentity().pipe(pluck('given_name'));
   }
 
   getAvatar(): Observable<string> {
-    return this.retrieveUserIdentity().pipe(pluck('avatar'));
+    return this.retrieveUserIdentity().pipe(pluck('picture'));
+  }
+  
+  getName(): Observable<string>{
+    return this.retrieveUserIdentity().pipe(pluck('name'));
+  }
+
+  getEmail(): Observable<string> {
+    return this.retrieveUserIdentity().pipe(pluck('email'));
   }
 
   loggedInPromise(): Promise<boolean>{

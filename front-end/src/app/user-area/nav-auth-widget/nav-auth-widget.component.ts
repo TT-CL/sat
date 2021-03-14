@@ -43,7 +43,7 @@ export class NavAuthWidgetComponent implements OnInit{
     return Boolean(this.identity);
   }
 
-  userName$ = this.auth.getUserName();
+  userName$ = this.auth.getGivenName();
   avatar$ = this.auth.getAvatar();
 
   public logout() {
