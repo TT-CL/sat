@@ -253,4 +253,32 @@ export class IUCollection {
       this.ius[anon_index] = iu;
     }
   }
+
+  prepareWorksheet(source: IUCollection = null){
+    let doc = this;
+    let res = [];
+    if(doc.doc_type == "summary"){
+      res.push(["idx","Idea Unit", "-","Link idxs", "Linked Iu"]);
+    }else{
+      res.push(["idx", "Idea Unit"]);
+    }
+    this.segs.map(seg =>{
+      const iu = doc.ius[seg.iu]
+      let row = [];
+      row.push(seg.iu)
+      row.push(seg.getText(doc));
+
+      console.log(doc.doc_type);
+      //if I am printing a summary I want to print the links as well
+      if(doc.doc_type == "summary" && source != null){
+        row.push()    //separator
+        row.push(iu.linkedIus.join(', ')) //concat iu indexes
+        for (let linked_label of iu.linkedIus){
+          row.push(source.ius[linked_label].getText(source))
+        }
+      }
+      res.push(row);
+    })
+    return res;
+  }
 }
