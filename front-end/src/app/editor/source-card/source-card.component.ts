@@ -47,27 +47,34 @@ export class SourceCardComponent implements OnInit {
   }
   ngOnInit(): void {
     //the following will be called each time we switch view from the toolbar
-    this.view.asObservable().subscribe((view)=>{
-      //console.log("observed view: "+view);
-      switch (view) {
-          case "reader": {
-            this.portalOutlet = this.sourceReaderPortal;
-            break;
-          }
-          case "iu": {
-            this.portalOutlet = this.sourceIuPortal;
-            break;
-          }
-          case "link": {
-            this.portalOutlet = this.sourceLinkPortal;
-            break;
-          }
-          default: {
-            this.portalOutlet = this.sourceReaderPortal;
-            break;
-          }
-      }
+    this.view.asObservable().subscribe((view) => {
+      this.handleViewChange(view);
     });
+
+    //forcibly trigger route update on init
+    this.view.next(this.route.snapshot.params["view"]);
+  }
+
+  handleViewChange(view){
+    //console.log("observed view: "+view);
+    switch (view) {
+      case "reader": {
+        this.portalOutlet = this.sourceReaderPortal;
+        break;
+      }
+      case "iu": {
+        this.portalOutlet = this.sourceIuPortal;
+        break;
+      }
+      case "link": {
+        this.portalOutlet = this.sourceLinkPortal;
+        break;
+      }
+      default: {
+        this.portalOutlet = this.sourceReaderPortal;
+        break;
+      }
+    }
   }
 
   portalOutlet: Portal<any>;

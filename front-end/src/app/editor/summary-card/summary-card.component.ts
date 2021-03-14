@@ -79,27 +79,34 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
     this.summaryLinkPortal = new ComponentPortal(SummaryLinkComponent);
 
     this.view.asObservable().subscribe((view)=>{
-      //console.log("observed view: "+view);
-      switch (view) {
-          case "reader": {
-            this.portalOutlet = this.summaryReaderPortal;
-            break;
-          }
-          case "iu": {
-            this.portalOutlet = this.summaryIuPortal;
-            break;
-          }
-          case "link": {
-            this.portalOutlet = this.summaryLinkPortal;
-            this.updateSuggestions();
-            break;
-          }
-          default: {
-            this.portalOutlet = this.summaryReaderPortal;
-            break;
-          }
-      }
+      this.handleViewChange(view);
     });
+
+    //forcibly trigger route update on init
+    this.view.next(this.route.snapshot.params["view"]);
+  }
+
+  handleViewChange(view){
+    //console.log("observed view: "+view);
+    switch (view) {
+      case "reader": {
+        this.portalOutlet = this.summaryReaderPortal;
+        break;
+      }
+      case "iu": {
+        this.portalOutlet = this.summaryIuPortal;
+        break;
+      }
+      case "link": {
+        this.portalOutlet = this.summaryLinkPortal;
+        this.updateSuggestions();
+        break;
+      }
+      default: {
+        this.portalOutlet = this.summaryReaderPortal;
+        break;
+      }
+    }
   }
 
   portalOutlet: Portal<any>;
