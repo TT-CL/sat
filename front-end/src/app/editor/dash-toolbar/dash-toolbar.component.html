@@ -1,11 +1,6 @@
 <div class="vertical-center horizontal-center dash-toolbar">
   <mat-list role="list">
     <mat-list-item>
-      <button mat-flat-button [routerLink]="['../manager']" [color]="manage_project_color">
-        <mat-icon>build</mat-icon>
-      </button>
-    </mat-list-item>
-    <mat-list-item>
       <button mat-flat-button [routerLink]="['../reader']" [color]="text_view_color">
         <mat-icon>subject</mat-icon>
       </button>
@@ -23,6 +18,11 @@
     <mat-list-item *ngIf="linkable">
       <button mat-flat-button [routerLink]="['../link']" [color]="link_iu_view_color">
         <mat-icon>link</mat-icon>
+      </button>
+    </mat-list-item>
+    <mat-list-item>
+      <button mat-flat-button [routerLink]="['../manager']" [color]="manage_project_color">
+        <mat-icon>build</mat-icon>
       </button>
     </mat-list-item>
     <mat-list-item>

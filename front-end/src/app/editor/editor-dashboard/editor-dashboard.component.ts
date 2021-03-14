@@ -12,6 +12,7 @@ import { ComponentPortal, Portal } from '@angular/cdk/portal';
 import { SummaryCardComponent } from '../summary-card/summary-card.component';
 import { SourceCardComponent } from '../source-card/source-card.component';
 import { ProjectManagerComponent } from '../project-manager/project-manager.component';
+import { ProjectDownloaderComponent } from '../project-downloader/project-downloader.component';
 
 import { BehaviorSubject } from 'rxjs';
 
@@ -61,6 +62,7 @@ export class EditorDashboardComponent implements OnInit{
     //initialize the components
     this.sourceCardPortal = new ComponentPortal(SourceCardComponent);
     this.projectManagerPortal = new ComponentPortal(ProjectManagerComponent);
+    this.projectDownloaderPortal = new ComponentPortal(ProjectDownloaderComponent);
     if (this.hasSummaries) {
       this.summaryCardPortal = new ComponentPortal(SummaryCardComponent);
     }
@@ -73,6 +75,16 @@ export class EditorDashboardComponent implements OnInit{
           //this will allow some animations later in development when switching
           //between views
           this.summaryOutlet = this.projectManagerPortal;
+          this.sourceOutlet = null;
+          this.mode = Modes.Summary
+          break;
+        }
+        case "download": {
+          //this is a special case where I have to show the contents of the
+          //projectManagerPortal inside the Summary Outlet.
+          //this will allow some animations later in development when switching
+          //between views
+          this.summaryOutlet = this.projectDownloaderPortal;
           this.sourceOutlet = null;
           this.mode = Modes.Summary
           break;
@@ -108,6 +120,7 @@ export class EditorDashboardComponent implements OnInit{
   summaryCardPortal : ComponentPortal<SummaryCardComponent>;
   sourceCardPortal : ComponentPortal<SourceCardComponent>;
   projectManagerPortal : ComponentPortal<ProjectManagerComponent>;
+  projectDownloaderPortal : ComponentPortal<ProjectDownloaderComponent>;
 
   view: BehaviorSubject<string>;
 }

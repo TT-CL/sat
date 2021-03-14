@@ -27,7 +27,7 @@ const routes: Routes = [
     children:[
       {
         path: '',
-        redirectTo: '/editor/manager',
+        redirectTo: '/editor/reader',
         pathMatch: 'full'
       },
       {
