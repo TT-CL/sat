@@ -58,6 +58,7 @@ import { SourceLinkComponent } from './editor/source-link/source-link.component'
 import { SummaryLinkComponent } from './editor/summary-link/summary-link.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProjectManagerComponent } from './editor/project-manager/project-manager.component';
+import { ProjectDownloaderComponent } from './editor/project-downloader/project-downloader.component';
 
 
 @NgModule({
@@ -86,7 +87,8 @@ import { ProjectManagerComponent } from './editor/project-manager/project-manage
     SourceLinkComponent,
     SummaryLinkComponent,
     PageNotFoundComponent,
-    ProjectManagerComponent
+    ProjectManagerComponent,
+    ProjectDownloaderComponent
   ],
   imports: [
     BrowserModule,
