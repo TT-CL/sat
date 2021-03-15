@@ -29,6 +29,8 @@ services:
       - "traefik.http.middlewares.testHeader.headers.sslredirect=true"
       - "traefik.http.middlewares.testHeader.headers.sslHost=`${DOMAIN_NAME}`"
       - "traefik.http.middlewares.testHeader.headers.sslProxyHeaders=true"
+      - "traefik.https.middlewares.testHeader.headers.sslHost=`${DOMAIN_NAME}`"
+      - "traefik.https.middlewares.testHeader.headers.sslProxyHeaders=true"
       - "traefik.http.middlewares.test-redirectscheme.redirectscheme.scheme=https"
       - "traefik.http.middlewares.test-redirectscheme.redirectscheme.permanent=true"
 
@@ -49,11 +51,11 @@ services:
   computation:
     restart: unless-stopped
     environment:
-      - "GUNICORN_CMD_ARGS=--forwarded-allow-ips='*' --proxy-headers"
+      - "GUNICORN_CMD_ARGS=--forwarded-allow-ips='*'"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.computation.rule=Host(`${DOMAIN_NAME}`) && PathPrefix(`/api/`)"
-      - "traefik.http.middlewares.computation-strip.stripprefix.prefixes=/api/"
+      - "traefik.http.middlewares.computation-strip.stripprefix.prefixes=/api"
       - "traefik.http.middlewares.computation-strip.stripprefix.forceslash=false"
       - "traefik.http.routers.computation.middlewares=computation-strip@docker"
       - "traefik.http.routers.computation.entrypoints=https"
