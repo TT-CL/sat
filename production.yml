@@ -27,6 +27,8 @@ services:
 
       - "traefik.http.middlewares.testHeader.headers.framedeny=true"
       - "traefik.http.middlewares.testHeader.headers.sslredirect=true"
+      - "traefik.http.middlewares.testHeader.headers.sslHost=`${DOMAIN_NAME}`"
+      - "traefik.http.middlewares.testHeader.headers.sslProxyHeaders=true"
       - "traefik.http.middlewares.test-redirectscheme.redirectscheme.scheme=https"
       - "traefik.http.middlewares.test-redirectscheme.redirectscheme.permanent=true"
 
@@ -46,6 +48,8 @@ services:
 
   computation:
     restart: unless-stopped
+    environment:
+      - "GUNICORN_CMD_ARGS=--forwarded-allow-ips='*' --proxy-headers"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.computation.rule=Host(`${DOMAIN_NAME}`) && PathPrefix(`/api/`)"

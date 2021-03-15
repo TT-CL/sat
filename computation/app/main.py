@@ -1,7 +1,6 @@
 """ FastAPI server """
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
-from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
 # from pydantic import BaseModel
 
@@ -62,10 +61,6 @@ app.add_middleware(
 
 app.add_middleware(
     SessionMiddleware, secret_key=SECRET_KEY
-)
-
-app.add_middleware(
-    ProxyHeadersMiddleware
 )
 
 model = ModelWebWrapper(MODEL_URI)
