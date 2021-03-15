@@ -1,7 +1,6 @@
 """ FastAPI server """
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 # from pydantic import BaseModel
 
 from fastapi.responses import RedirectResponse, HTMLResponse
@@ -62,8 +61,6 @@ app.add_middleware(
 app.add_middleware(
     SessionMiddleware, secret_key=SECRET_KEY
 )
-
-app.add_middleware(HTTPSRedirectMiddleware)
 
 model = ModelWebWrapper(MODEL_URI)
 
