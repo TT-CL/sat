@@ -1,6 +1,7 @@
 """ FastAPI server """
 from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
+from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 # from pydantic import BaseModel
 
 from fastapi.responses import RedirectResponse, HTMLResponse
@@ -60,6 +61,10 @@ app.add_middleware(
 
 app.add_middleware(
     SessionMiddleware, secret_key=SECRET_KEY
+)
+
+app.add_middleware(
+    ProxyHeadersMiddleware
 )
 
 model = ModelWebWrapper(MODEL_URI)
@@ -133,7 +138,7 @@ async def doc_sims(
 
 @app.get("/login/google")
 async def login_via_google(request: Request):
-    redirect_uri = request.url_for('auth_via_google')
+    redirect_uri = request.url_for('auth_via_google', )
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
 
