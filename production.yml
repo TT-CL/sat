@@ -43,9 +43,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.computation.rule=Host(`${DOMAIN_NAME}`) && PathPrefix(`/api/`)"
-      //- "traefik.http.middlewares.computation-strip.stripprefix.prefixes=/api/v1/"
+      - "traefik.http.middlewares.computation-strip.stripprefix.prefixes=/api/"
       - "traefik.http.middlewares.computation-strip.stripprefix.forceslash=false"
       - "traefik.http.routers.computation.middlewares=computation-strip@docker"
       - "traefik.http.routers.computation.entrypoints=https"
       - "traefik.http.routers.computation.tls.certresolver=myresolver"
+      - "traefik.http.middlewares.enforce-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.enforce-https.redirectscheme.permanent=true"
       - "traefik.docker.network=frontend"

@@ -33,7 +33,7 @@ services:
       - "9000:80"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.computation.rule=Host(`localhost`) && PathPrefix(`/api/`) || PathPrefix(`/docs`)"
+      - "traefik.http.routers.computation.rule=Host(`localhost`) && PathPrefix(`/api/`)"
       - "traefik.http.routers.computation.entrypoints=http"
       - "traefik.http.middlewares.computation-strip.stripprefix.prefixes=/api"
       - "traefik.http.middlewares.computation-strip.stripprefix.forceslash=false"
