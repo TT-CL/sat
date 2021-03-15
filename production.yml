@@ -12,6 +12,7 @@ services:
       - --providers.docker.exposedbydefault=false
       - --providers.docker.network=frontend
       - --entrypoints.http.address=:80
+      - --entryPoints.web.forwardedHeaders.trustedIPs=127.0.0.1/32, 0.0.0.0/32
       - --entrypoints.https.address=:443
       ## Certificate Settings (Let's Encrypt)
       - --certificatesresolvers.myresolver.acme.tlschallenge=true
@@ -25,14 +26,10 @@ services:
       #- "traefik.http.routers.api.service=api@internal"
     labels:
 
-      - "traefik.http.middlewares.testHeader.headers.framedeny=true"
-      - "traefik.http.middlewares.testHeader.headers.sslredirect=true"
       - "traefik.http.middlewares.testHeader.headers.sslHost=`${DOMAIN_NAME}`"
       - "traefik.http.middlewares.testHeader.headers.sslProxyHeaders=true"
       - "traefik.https.middlewares.testHeader.headers.sslHost=`${DOMAIN_NAME}`"
       - "traefik.https.middlewares.testHeader.headers.sslProxyHeaders=true"
-      - "traefik.http.middlewares.test-redirectscheme.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.test-redirectscheme.redirectscheme.permanent=true"
 
   web:
     build:
