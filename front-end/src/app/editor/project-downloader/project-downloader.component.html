@@ -1,21 +1,51 @@
 <mat-card>
-  <mat-card-header>
-    <mat-card-title> {{ curProj.name }} </mat-card-title>
-    <mat-card-subtitle *ngIf="curProj.description">
-      {{ curProj.description }}
-    </mat-card-subtitle>
-  </mat-card-header>
-  <mat-divider></mat-divider>
   <mat-card-content>
-    <div class="project-download-container vertical-center horizontal-center">
-      <h3>Use these buttons to store your work on your computer.</h3>
-      <button type="submit" mat-flat-button color="primary" (click)="downloadProject()" class="xls-button">
-        Export project spreadsheet (.xlsx) <mat-icon>save</mat-icon>
-      </button>
-      <button type="submit" mat-flat-button color="primary" (click)="downloadProject()">
-        Backup project (.iuproj) <mat-icon>save</mat-icon>
-      </button>
+    <div class="card-content">
+      <div class="header-flex-container">
+        <mat-card-header>
+          <mat-card-title> {{ curProj.name }} </mat-card-title>
+          <mat-card-subtitle *ngIf="curProj.description">
+            {{ curProj.description }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+      </div>
+      <div class="project-flex-container">
+        <div class="project-download-container vertical-center horizontal-center">
+          <h3>Use these buttons to store your work on your computer.</h3>
+          <button type="submit" mat-flat-button color="primary" (click)="downloadProject()" class="xls-button">
+            Export project spreadsheet (.xlsx) <mat-icon>functions</mat-icon>
+          </button>
+          <button type="submit" mat-flat-button color="primary" (click)="downloadProject()">
+            Backup project (.iuproj) <mat-icon>save</mat-icon>
+          </button>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+      <div class="single-docs-flex-container scrollable-content">
+        <div class="doc_card">
+          <div class="inner-card-flex">
+            <mat-icon class="source-icon">description</mat-icon>
+            <div class="card-btn-layout">
+              <p>{{curProj.sourceDoc.doc_name}}</p>
+              <a color="primary" (click)="downloadDoc(curProj.sourceDoc)" class="xls-link" href="#">
+                Download spreadsheet (.xlsx)
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="doc_card" *ngFor="let summary of curProj.summaryDocs">
+          <div class="inner-card-flex">
+            <mat-icon class="summary-icon">description</mat-icon>
+            <div class="card-btn-layout">
+              <p>{{summary.doc_name}}</p>
+              <a color="primary" (click)="downloadDoc(summary)" class="xls-link" href="#">
+                Download spreadsheet (.xlsx)
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <mat-divider></mat-divider>
   </mat-card-content>
 </mat-card>

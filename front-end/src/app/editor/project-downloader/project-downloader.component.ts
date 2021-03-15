@@ -27,7 +27,8 @@ export class ProjectDownloaderComponent implements OnInit {
   curProj: Project;
   
   downloadDoc(doc: IUCollection){
-    this.exporter.generatedDocSpreadsheet(doc);;
+    this.exporter.generatedDocSpreadsheet(doc);
+    return false;
   }
 
   downloadProject() {
