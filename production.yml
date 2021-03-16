@@ -13,6 +13,7 @@ services:
       - --providers.docker.network=frontend
       - --entrypoints.http.address=:80
       - --entryPoints.http.forwardedHeaders.trustedIPs=127.0.0.1/32, 0.0.0.0/32
+      # TODO: figure out why authlib does not compute the correct scheme for the google redirect
       - --entrypoints.http.http.redirections.entryPoint.to=https
       - --entrypoints.http.http.redirections.entryPoint.scheme=https
       - --entrypoints.https.address=:443
