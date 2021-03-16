@@ -1,6 +1,6 @@
 <div class="source-editor">
   <div class="inner-content-area">
-    <mat-tab-group mat-align-tabs="start">
+    <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChanged($event)">
       <mat-tab label="Alter segments">
         <div class="scrollable-content">
           <pre contenteditable="true" class="monospace-editor" #preEditor (input)="preInput($event)" propValueAccessor="innerHTML" [formControl]="editor"></pre>
@@ -9,11 +9,11 @@
       <mat-tab label="Connect segments">
         <div class="scrollable-content">
           <mat-chip-list aria-label="sentence chips" class="summary-link-theme">
-            <ng-template ngFor let-seg [ngForOf]="doc.segs">
+            <ng-template ngFor let-seg [ngForOf]="newDoc.segs">
               <mat-chip color="primary" (click)="segClick(seg)" selected [ngClass]="{
-                'disc-iu' : doc.ius[seg.iu].disc
+                'disc-iu' : newDoc.ius[seg.iu].disc 
               }">
-                {{seg.getText(doc, true)}}
+                {{seg.getText(newDoc, true)}}
               </mat-chip>
             </ng-template><!-- NGFor -->
           </mat-chip-list>

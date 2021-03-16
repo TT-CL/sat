@@ -50,8 +50,13 @@ export class IUCollection {
         //initializing Word object
         let temp_word: Word = new Word(read_word["text"], read_word["word_index"]);
 
-        //automatically generated IUs are prefixed with the "a" letter
-        let iu_label = "a" + read_word["iu_index"];
+        //automatically generated IUs are prefixed with the letter "a"
+        let prefix = "a";
+        if (read_word["iu_label"] == "MAN"){
+          //manually generated IUs are prefixed with the letter "m" 
+          prefix = "m"
+        }
+        let iu_label = prefix + read_word["iu_index"];
         //boundary check
         if (iu_label != prev_label) {
           //console.log("boundary");
