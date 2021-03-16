@@ -12,8 +12,9 @@ services:
       - --providers.docker.exposedbydefault=false
       - --providers.docker.network=frontend
       - --entrypoints.http.address=:80
-      - --entryPoints.web.forwardedHeaders.trustedIPs=127.0.0.1/32, 0.0.0.0/32
+      - --entryPoints.http.forwardedHeaders.trustedIPs=127.0.0.1/32, 0.0.0.0/32
       - --entrypoints.https.address=:443
+      - --entryPoints.https.forwardedHeaders.trustedIPs=127.0.0.1/32, 0.0.0.0/32
       ## Certificate Settings (Let's Encrypt)
       - --certificatesresolvers.myresolver.acme.tlschallenge=true
       - --certificatesresolvers.myresolver.acme.email=${CERT_EMAIL}
