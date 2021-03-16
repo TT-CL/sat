@@ -31,6 +31,8 @@ services:
       - "traefik.http.middlewares.testHeader.headers.sslProxyHeaders=true"
       - "traefik.https.middlewares.testHeader.headers.sslHost=`${DOMAIN_NAME}`"
       - "traefik.https.middlewares.testHeader.headers.sslProxyHeaders=true"
+      - "traefik.http.middlewares.test-redirectscheme.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.test-redirectscheme.redirectscheme.permanent=true"
 
   web:
     build:
