@@ -141,6 +141,27 @@ export class StorageService {
     // update full projects in memory
     this.projects_support[this.cur_project_idx] = proj;
     this.projects.next(this.projects_support);
+    // update work source
+    this.work_source_support = this.cur_project_support.sourceDoc;
+    this.work_source.next(this.work_source_support);
+    // update work summary
+    if(this.cur_project_support.summaryDocs){
+      if(this.work_summary_idx &&
+         this.work_summary_idx < this.cur_project_support.summaryDocs.length){
+        //if the summary index still refers to some work_summary after the update
+        //refresh the work structure in case the indexes shifted around
+        this.setWorkSummaryIdx(this.work_summary_idx);
+      }else if (this.cur_project_support.summaryDocs.length > 0){
+        //default 1: if I now have some summaries, set the work index to 0
+        this.setWorkSummaryIdx(0);
+      }else{
+        // I have emptied the summary queue, remove the work summaries
+        this.clearWorkSummary();
+      }
+    }else{
+      // I do not have a summary queue, ensure no work summary is set
+      this.clearWorkSummary();
+    }
     this.saveProjects();
   }
 

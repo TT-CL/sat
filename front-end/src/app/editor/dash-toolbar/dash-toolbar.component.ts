@@ -18,12 +18,12 @@ export class DashToolbarComponent implements OnInit {
   ) {
     router.events.subscribe((event) =>{
       if(event instanceof NavigationEnd){
-        let proj = storage.cur_project_support;
-        if (proj) this.linkable = proj.hasSummaries();
-
         let view: string = route.snapshot.params["view"];
         this.colorButtons(view);
       }
+    });
+    storage.getCurProject().subscribe(proj =>{
+      if (proj) this.linkable = proj.hasSummaries();
     });
   }
 

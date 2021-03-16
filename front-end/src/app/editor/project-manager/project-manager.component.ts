@@ -193,12 +193,18 @@ export class ProjectManagerComponent implements OnInit {
     }
 
     if(this.parsedSummaries.length > 0){
-      this.cur_proj.summaryDocs = this.cur_proj.summaryDocs.concat(
-        this.parsedSummaries);
+      if(this.cur_proj.summaryDocs){
+        //If I already have some summaries then concat
+        this.cur_proj.summaryDocs = this.cur_proj.summaryDocs.concat(
+          this.parsedSummaries);
+      }else{
+        //If I don't have summaries, then include them
+        this.cur_proj.summaryDocs = this.parsedSummaries;
+      }
     }
 
     this.storage.updateCurProject(this.cur_proj);
-    //console.log(this.storage);
+    console.log(this.storage);
   }
 
   nonFileValuesChanged(): boolean {
