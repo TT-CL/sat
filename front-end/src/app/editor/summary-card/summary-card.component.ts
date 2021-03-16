@@ -16,6 +16,7 @@ import { Router, ActivatedRoute, NavigationEnd} from '@angular/router';
 import { SummaryReaderComponent } from '../summary-reader/summary-reader.component';
 import { SummaryIuComponent } from '../summary-iu/summary-iu.component';
 import { SummaryLinkComponent } from '../summary-link/summary-link.component';
+import { SummaryEditorComponent } from '../summary-editor/summary-editor.component';
 
 
 @Component({
@@ -77,6 +78,7 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
     this.summaryReaderPortal = new ComponentPortal(SummaryReaderComponent);
     this.summaryIuPortal = new ComponentPortal(SummaryIuComponent);
     this.summaryLinkPortal = new ComponentPortal(SummaryLinkComponent);
+    this.summaryEditorPortal = new ComponentPortal(SummaryEditorComponent);
 
     this.view.asObservable().subscribe((view)=>{
       this.handleViewChange(view);
@@ -102,6 +104,10 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
         this.updateSuggestions();
         break;
       }
+      case "edit": {
+        this.portalOutlet = this.summaryEditorPortal;
+        break;
+      }
       default: {
         this.portalOutlet = this.summaryReaderPortal;
         break;
@@ -115,6 +121,7 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
   summaryReaderPortal : ComponentPortal<SummaryReaderComponent>;
   summaryIuPortal : ComponentPortal<SummaryIuComponent>;
   summaryLinkPortal : ComponentPortal<SummaryLinkComponent>;
+  summaryEditorPortal : ComponentPortal<SummaryEditorComponent>;
 
   support_array = [];
   summary_idx : number = null;

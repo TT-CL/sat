@@ -13,6 +13,7 @@ import { Router, ActivatedRoute, NavigationEnd} from '@angular/router';
 import { SourceReaderComponent } from '../source-reader/source-reader.component';
 import { SourceIuComponent } from '../source-iu/source-iu.component';
 import { SourceLinkComponent } from '../source-link/source-link.component';
+import { SourceEditorComponent } from '../source-editor/source-editor.component';
 
 @Component({
   selector: 'app-source-card',
@@ -44,6 +45,7 @@ export class SourceCardComponent implements OnInit {
       this.sourceReaderPortal = new ComponentPortal(SourceReaderComponent);
       this.sourceIuPortal = new ComponentPortal(SourceIuComponent);
       this.sourceLinkPortal = new ComponentPortal(SourceLinkComponent);
+      this.sourceEditorPortal = new ComponentPortal(SourceEditorComponent);
   }
   ngOnInit(): void {
     //the following will be called each time we switch view from the toolbar
@@ -70,6 +72,10 @@ export class SourceCardComponent implements OnInit {
         this.portalOutlet = this.sourceLinkPortal;
         break;
       }
+      case "edit": {
+        this.portalOutlet = this.sourceEditorPortal;
+        break;
+      }
       default: {
         this.portalOutlet = this.sourceReaderPortal;
         break;
@@ -83,6 +89,7 @@ export class SourceCardComponent implements OnInit {
   sourceReaderPortal : ComponentPortal<SourceReaderComponent>;
   sourceIuPortal : ComponentPortal<SourceIuComponent>;
   sourceLinkPortal : ComponentPortal<SourceLinkComponent>;
+  sourceEditorPortal : ComponentPortal<SourceEditorComponent>;
 
   doc: IUCollection = null;
 }

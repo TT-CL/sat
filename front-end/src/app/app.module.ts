@@ -59,6 +59,8 @@ import { SummaryLinkComponent } from './editor/summary-link/summary-link.compone
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProjectManagerComponent } from './editor/project-manager/project-manager.component';
 import { ProjectDownloaderComponent } from './editor/project-downloader/project-downloader.component';
+import { SourceEditorComponent } from './editor/source-editor/source-editor.component';
+import { SummaryEditorComponent } from './editor/summary-editor/summary-editor.component';
 
 
 @NgModule({
@@ -88,7 +90,9 @@ import { ProjectDownloaderComponent } from './editor/project-downloader/project-
     SummaryLinkComponent,
     PageNotFoundComponent,
     ProjectManagerComponent,
-    ProjectDownloaderComponent
+    ProjectDownloaderComponent,
+    SourceEditorComponent,
+    SummaryEditorComponent,
   ],
   imports: [
     BrowserModule,
