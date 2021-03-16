@@ -61,6 +61,8 @@ import { ProjectManagerComponent } from './editor/project-manager/project-manage
 import { ProjectDownloaderComponent } from './editor/project-downloader/project-downloader.component';
 import { SourceEditorComponent } from './editor/source-editor/source-editor.component';
 import { SummaryEditorComponent } from './editor/summary-editor/summary-editor.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ContenteditableModule } from '@ng-stack/contenteditable';
 
 
 @NgModule({
@@ -119,6 +121,8 @@ import { SummaryEditorComponent } from './editor/summary-editor/summary-editor.c
     NgxWebstorageModule.forRoot(),
     PortalModule,
     MatSelectModule,
+    MatTooltipModule,
+    ContenteditableModule,
   ],
   providers: [OverlayService, DynamicOverlay, DynamicOverlayContainer, AuthGuardService],
   bootstrap: [AppComponent]

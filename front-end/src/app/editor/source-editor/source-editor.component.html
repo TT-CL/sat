@@ -1,1 +1,41 @@
-<p>source-editor works!</p>
+<div class="source-editor">
+  <div class="inner-content-area">
+    <mat-tab-group mat-align-tabs="start">
+      <mat-tab label="Alter segments">
+        <div class="scrollable-content">
+          <pre contenteditable="true" class="monospace-editor" #preEditor (input)="preInput($event)" propValueAccessor="innerHTML" [formControl]="editor"></pre>
+        </div>
+      </mat-tab>
+      <mat-tab label="Connect segments">
+        <div class="scrollable-content">
+          <mat-chip-list aria-label="sentence chips" class="summary-link-theme">
+            <ng-template ngFor let-seg [ngForOf]="doc.segs">
+              <mat-chip color="primary" (click)="segClick(seg)" selected [ngClass]="{
+                'disc-iu' : doc.ius[seg.iu].disc
+              }">
+                {{seg.getText(doc, true)}}
+              </mat-chip>
+            </ng-template><!-- NGFor -->
+          </mat-chip-list>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  <div class="toolbar-area">
+    <mat-divider></mat-divider>
+    <div class="card-toolbar vertical-center save-theme">
+      <button mat-flat-button color="accent" [disabled]="! editedFlag" (click)="resetEditor()">
+        Cancel <mat-icon>cancel</mat-icon>
+      </button>
+      <button 
+        mat-flat-button
+        color="primary"
+        matTooltip="WARNING: Altering the structure of a source file will erase all the manual links in your project!"
+        matTooltipPosition="above"
+        matTooltipClass="warn-tooltip"
+        [disabled]="! editedFlag">
+        Save <mat-icon>save</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

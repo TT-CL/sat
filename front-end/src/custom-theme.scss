@@ -169,6 +169,15 @@ $summary-link-theme: mat-light-theme((
   background-color: #76ff03 !important;
 }
 
+.warn-tooltip{
+  color: rgba(198, 40, 40, 1) !important;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  background-color: #ffebee !important;
+  border: 1px dashed;
+  border-color: rgba(198, 40, 40, 1) !important;
+}
+
 html, body { height: 100%; }
 body { margin: 0; }
 
