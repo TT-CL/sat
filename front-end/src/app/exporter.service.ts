@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { last } from 'rxjs/operators';
 
 import * as XLSX from 'xlsx';
@@ -14,6 +15,7 @@ export class ExporterService {
 
   constructor(
     private auth: AuthService,
+    private sanitizer: DomSanitizer,
   ) {
 
   }
@@ -74,5 +76,10 @@ export class ExporterService {
     wb.Sheets[doc.doc_name] = ws;
 
     XLSX.writeFile(wb, doc.doc_name + '.xlsx', { bookType: 'xlsx' });
+  }
+
+  generateProjectJsonURI(proj: Project){
+    let obj = JSON.stringify(proj);
+    return this.sanitizer.bypassSecurityTrustUrl("data:text/json;charset=UTF-8," + encodeURIComponent(obj));
   }
 }

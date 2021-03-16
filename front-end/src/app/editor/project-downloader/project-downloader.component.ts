@@ -14,7 +14,7 @@ export class ProjectDownloaderComponent implements OnInit {
 
   constructor(
     private storage: StorageService,
-    private exporter: ExporterService,
+    public exporter: ExporterService,
   ) {
     storage.getCurProject().subscribe(proj =>{
       this.curProj = proj;
