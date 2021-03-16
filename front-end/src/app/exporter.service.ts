@@ -80,6 +80,6 @@ export class ExporterService {
 
   generateProjectJsonURI(proj: Project){
     let obj = JSON.stringify(proj);
-    return this.sanitizer.bypassSecurityTrustUrl("data:text/json;charset=UTF-8," + encodeURIComponent(obj));
+    return this.sanitizer.bypassSecurityTrustUrl("data:application/json;charset=UTF-8," + encodeURIComponent(obj));
   }
 }

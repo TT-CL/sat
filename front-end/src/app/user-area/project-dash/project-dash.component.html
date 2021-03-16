@@ -15,7 +15,8 @@
                 <mat-icon>note_add</mat-icon>
                 Start a new project
               </button>
-              <button mat-flat-button color="primary">
+              <input style="display: none" type="file" (change)="backupFileSelect()" #backupInput accept=".iuproj, application/json">
+              <button mat-flat-button color="primary" (click)="backupInput.click()">
                 <mat-icon>settings_backup_restore</mat-icon>
                 Restore from backup
               </button>

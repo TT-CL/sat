@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input, ViewChild} from '@angular/core';
 
 import { StorageService } from '../../storage.service';
 
@@ -26,4 +26,32 @@ export class ProjectDashComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  @ViewChild('backupInput')
+  backupInput;
+
+  backupFileSelect(){
+    const files: { [key: string]: File } = this.backupInput.nativeElement.files;
+    if (files[0]) {
+      console.log(files[0]);
+      if (files[0].type == "application/json" 
+          && files[0].name.endsWith(".iuproj")) {
+        const fileReader = new FileReader();
+        fileReader.readAsText(files[0], "UTF-8");
+        fileReader.onload = () => {
+          // parse Json
+          let anon_proj = JSON.parse(String(fileReader.result));
+          // load Typescript methods
+          let proj = new Project();
+          proj.reconsolidate(anon_proj);
+          // add project to session
+          this.storage.addProject(proj);
+        }
+        fileReader.onerror = (error) => {
+          console.log(error);
+        }
+      }else{
+        console.log("Incorrect file type.")
+      }
+    }
+  }
 }
