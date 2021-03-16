@@ -12,7 +12,7 @@ import csv
 import json
 import re
 import spacy
-from spacy.tokens import Token
+from spacy.tokens import Doc, Token
 from src.iu_utils import iu_pprint
 
 # %%codecell
@@ -274,6 +274,57 @@ def prepare_json(text, doc_name, doc_type):
         for word in sent["words"]:
             if word['iu_label'] in disc_labels:
                 word['disc'] = True
+    return data
+
+
+def prepare_man_seg_json(text):
+    seg = text
+    if not isinstance(text, Doc):
+        seg = nlp(text)
+
+    word_index = 0
+    sent_data = {}
+    sent_data['words'] = []
+    for token in seg:
+        word = {
+            'text': token.text,
+            'word_index': word_index,
+            'iu_index': None,
+            'iu_label': 'MAN',
+            'disc': False
+        }
+        word_index = word_index + 1
+        sent_data['words'].append(word)
+    return sent_data
+
+
+def prepare_man_segs_json(segs, doc_name, doc_type):
+    data = {}
+    data['doc_name'] = doc_name
+    data['doc_type'] = doc_type
+    data['sents'] = []
+
+    cur_iu_index = 0
+    word_index = 0
+
+    for seg in segs:
+        if not isinstance(seg, Doc):
+            seg = nlp(seg)
+        sent_data = {}
+        sent_data['words'] = []
+        for token in seg:
+            word = {
+                'text': token.text,
+                'word_index': word_index,
+                'iu_index': cur_iu_index,
+                'iu_label': 'MAN',
+                'disc': False
+            }
+            word_index = word_index + 1
+            sent_data['words'].append(word)
+        cur_iu_index += 1
+
+        data['sents'].append(sent_data)
     return data
 
 

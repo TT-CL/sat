@@ -10,7 +10,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.requests import Request
 
-from src.data import import_file, prepare_json
+from src.data import import_file, prepare_json, prepare_man_segs_json
 from src.glove import ModelWebWrapper
 from src.extract import label_ius
 
@@ -101,6 +101,16 @@ async def label_raw_text(
     parsedFile = import_file(file.file)['spacy']
     label_ius(parsedFile)
     json_data = prepare_json(parsedFile, file.filename, doc_type)
+    return json_data
+
+
+@app.post("/v1/man/segs")
+async def tokenize_man_segs(
+        doc_name: str = Form(...),
+        doc_type: str = Form(...),
+        segments: str = Form(...)):
+    segs = loads(segments)
+    json_data = prepare_man_segs_json(segs, doc_name, doc_type)
     return json_data
 
 

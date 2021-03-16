@@ -5,6 +5,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { IdeaUnit, IUCollection, Segment } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
+import { BackEndService } from '../../back-end.service';
 
 import { FormControl } from '@angular/forms';
 import { runInThisContext } from 'vm';
@@ -19,7 +20,10 @@ export class SourceEditorComponent implements OnInit {
 
   doc: IUCollection = null;
 
-  constructor(private storage: StorageService) {
+  constructor(
+    private storage: StorageService,
+    private backend: BackEndService,
+    ) {
       storage.getWorkSource().subscribe((source)=>{
         this.doc = source;
         //console.log("retrieving source");
@@ -88,7 +92,15 @@ export class SourceEditorComponent implements OnInit {
     this.editor.setValue(html);
   }
 
-  segClick(): void{
+  retrieveTokenizedSegs(){
+    console.log(this.newSegments);
+    this.backend.getTokenizedSegs(
+      this.doc.doc_type, this.doc.doc_name, this.newSegments).subscribe(res =>{
+        console.log(res["body"]);
+      })
+  }
 
+  saveEdits(){
+    this.retrieveTokenizedSegs();
   }
 }

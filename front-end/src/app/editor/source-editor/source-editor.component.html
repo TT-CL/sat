@@ -33,7 +33,8 @@
         matTooltip="WARNING: Altering the structure of a source file will erase all the manual links in your project!"
         matTooltipPosition="above"
         matTooltipClass="warn-tooltip"
-        [disabled]="! editedFlag">
+        [disabled]="! editedFlag"
+        (click)="saveEdits()">
         Save <mat-icon>save</mat-icon>
       </button>
     </div>

@@ -54,6 +54,22 @@ export class BackEndService {
     return this.http.request(req);
   }
 
+  getTokenizedSegs(doc_name: string, doc_type: string, segs: Array<string>): Observable<HttpEvent<any>> {
+    let url = "/api/v1/man/segs"
+    let formData = new FormData()
+    formData.append('doc_name', doc_name)
+    formData.append('doc_type', doc_type)
+    formData.append('segments', JSON.stringify(segs))
+
+    const options = {
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('POST', url, formData, options);
+
+    return this.http.request(req);
+  }
+
   /*
   getSampleSummary(): Observable<object> {
     return of(SampleSummary);
