@@ -1,7 +1,7 @@
 <div class="scrollable-content">
   <mat-chip-list
     aria-label="sentence chips" class="summary-link-theme">
-    <ng-template ngFor let-seg [ngForOf]="doc.segs">
+    <ng-template ngFor let-seg [ngForOf]="doc.getSegArray()">
       <!-- if the input iu is inside the links of a source IU color it green -->
       <ng-template [ngIf]="selected_summary_iu" [ngIfElse]="notLinked">
         <ng-template [ngIf]="selected_summary_iu.linkedIus.includes(seg.iu)" [ngIfElse]="notLinked">

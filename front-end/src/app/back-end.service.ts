@@ -57,6 +57,8 @@ export class BackEndService {
   getTokenizedSegs(doc_name: string, doc_type: string, segs: Array<string>): Observable<HttpEvent<any>> {
     let url = "/api/v1/man/segs"
     let formData = new FormData()
+    console.log("Doc_name")
+    console.log(doc_name)
     formData.append('doc_name', doc_name)
     formData.append('doc_type', doc_type)
     formData.append('segments', JSON.stringify(segs))

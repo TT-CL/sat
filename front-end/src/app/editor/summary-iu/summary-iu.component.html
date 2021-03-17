@@ -1,7 +1,7 @@
 <div class="scrollable-content">
   <mat-chip-list
     aria-label="sentence chips" class="iu-bubbles">
-    <ng-template ngFor let-seg [ngForOf]="doc.segs">
+    <ng-template ngFor let-seg [ngForOf]="doc.getSegArray()">
       <ng-template [ngIf]="seg.type=='ghost'" [ngIfElse]="ghostElse">
         <mat-chip color="ghost-bubble" [selected]="seg.selected">
           {{seg.getText(doc, true)}}

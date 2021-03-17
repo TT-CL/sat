@@ -1,7 +1,7 @@
 <div class="scrollable-content">
   <mat-chip-list
     aria-label="sentence chips" class="summary-link-theme">
-    <ng-template ngFor let-seg [ngForOf]="doc.segs">
+    <ng-template ngFor let-seg [ngForOf]="doc.getSegArray()">
       <!-- If a summary IU has ANY links color it green -->
       <ng-template [ngIf]="doc.ius[seg.iu].linkedIus.length > 0" [ngIfElse]="notLinked">
         <ng-template [ngIf]="selected_iu && selected_iu.label == seg.iu" [ngIfElse]="summaryLinkNotSelected">

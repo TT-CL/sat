@@ -105,7 +105,7 @@ export class SourceEditorComponent implements OnInit {
   retrieveTokenizedSegs(save_to_storage = false){
     //console.log(this.newSegments);
     this.backend.getTokenizedSegs(
-      this.doc.doc_type, this.doc.doc_name, this.newSegments
+      this.doc.doc_name, this.doc.doc_type, this.newSegments
       ).subscribe(event => {
       if (event.type == HttpEventType.UploadProgress) {
         const percentDone = Math.round(100 * event.loaded / event.total);
@@ -190,6 +190,7 @@ export class SourceEditorComponent implements OnInit {
     //this.storage.updateWorkSource(this.newDoc);
     this.proj.sourceDoc = this.newDoc
     this.proj.purgeProjectLinks();
+    this.storage.clearAllSimilarities();
     this.storage.updateCurProject(this.proj)
     }
   }

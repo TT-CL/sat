@@ -277,6 +277,16 @@ export class StorageService {
     return this.work_similarities.asObservable();
   }
 
+  clearSimilarities(doc_name: string):void{
+    delete this.work_similarities_support[doc_name];
+    this.work_similarities.next(this.work_summary_support);
+  }
+
+  clearAllSimilarities():void{
+    this.work_similarities_support = {};
+    this.work_similarities.next(this.work_similarities_support);
+  }
+
   // MULTIPLE UPDATE
   updateStorage(
     cur_proj: Project = null, 
