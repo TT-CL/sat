@@ -176,7 +176,7 @@ def import_all_files(filenames, models=None):
     for filename in filenames:
         try:
             files.append(import_file(filename, models))
-        except:
+        except Exception:
             print("{} not found. Skipping...".format(filename))
     return files
 

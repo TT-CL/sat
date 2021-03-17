@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-catch-login',
@@ -10,7 +11,10 @@ export class CatchLoginComponent implements OnInit {
 
   constructor(
     private router: Router,
-  ) { }
+    private auth: AuthService,
+  ) {
+    auth.retrieveUserAuthToken()
+  }
 
   timer : ReturnType<typeof setTimeout>;
   ngOnInit(): void {

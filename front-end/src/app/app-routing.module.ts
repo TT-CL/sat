@@ -39,7 +39,7 @@ const routes: Routes = [
   { path: '', component: LoginPageComponent},
   { path: 'login', component: LoginPageComponent},
   //page called upon receiving the OAuth token from Google
-  { path: 'catch-login', component: CatchLoginComponent},
+  { path: 'logged-in', component: CatchLoginComponent},
   //{ path: '', redirectTo: '/projects', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent}
 ];

@@ -1,6 +1,7 @@
 import { Component, OnInit, NgZone, AfterViewInit} from '@angular/core';
 
 import { Router, ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs/operators';
 
 import { AuthService } from '../../auth.service';
 
@@ -17,7 +18,7 @@ export class LoginPageComponent implements OnInit {
   ) {
   }
   ngOnInit() {
-    this.auth.isIdentityCached().subscribe(loggedIn => {
+    this.auth.isIdentityCached().pipe(first()).subscribe(loggedIn => {
       if (loggedIn){
         console.log("redirect")
         this.redirectToProjects();

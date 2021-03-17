@@ -161,7 +161,7 @@ async def auth_via_google(request: Request):
         return HTMLResponse(f'<h1>{error.error}</h1>')
     user = await oauth.google.parse_id_token(request, token)
     request.session['user'] = dict(user)
-    return RedirectResponse(url='/')
+    return RedirectResponse(url='/logged-in')
 
 
 @app.get("/auth/identity")
@@ -181,4 +181,4 @@ async def logged_in(request: Request):
 @app.route('/auth/logout')
 async def logout(request: Request):
     request.session.pop('user', None)
-    return RedirectResponse(url='/projects')
+    return RedirectResponse(url='/')
