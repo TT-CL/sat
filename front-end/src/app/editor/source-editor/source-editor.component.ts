@@ -1,6 +1,4 @@
-import { Content } from '@angular/compiler/src/render3/r3_ast';
 import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
 
 import { IdeaUnit, IUCollection, Segment } from '../../objects/objects.module';
 
@@ -8,7 +6,6 @@ import { StorageService } from '../../storage.service';
 import { BackEndService } from '../../back-end.service';
 
 import { FormControl } from '@angular/forms';
-import { runInThisContext } from 'vm';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -56,15 +53,6 @@ export class SourceEditorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  obtainPreHTML(doc: IUCollection){
-    let data: string = "";
-    for( let key in doc.segs){
-      let seg = doc.segs[key];
-      data += seg.getText(doc) + "<br>"
-    };
-    return data;
-  }
-
   stripSpanStyles(node){
     if( node.tagName == "SPAN" ){
       // remove styles
@@ -105,19 +93,13 @@ export class SourceEditorComponent implements OnInit {
   resetEditor(){
     this.editedFlag = false;
     this.preEdited = false;
-    let html = ""
-    for (let idx in this.doc.segs){
-      let seg = this.doc.segs[idx];
-      //each segment goes in a div.
-      //divs are zebra colored via css
-      html += "<div>" + seg.getText(this.doc) + "</div>"
-    };
+    let html = this.doc.getPreHtml();
     this.editor.setValue(html);
-    delete this.newSegments
+    delete this.newSegments;
   }
 
   retrieveTokenizedSegs(save_to_storage = false){
-    console.log(this.newSegments);
+    //console.log(this.newSegments);
     this.backend.getTokenizedSegs(
       this.doc.doc_type, this.doc.doc_name, this.newSegments
       ).subscribe(event => {
@@ -173,47 +155,22 @@ export class SourceEditorComponent implements OnInit {
   connectSegs(){
     this.editedFlag = true;
     this.discEdited = true;
-    let iuLabel = "c"+ this.connectedSegsMaxIdx;
-    this.connectedSegsMaxIdx +=1;
-    // add the new IU
-    let newIu = new IdeaUnit(iuLabel, true);
-    for (let idx in this.newDoc.segs){
-      let seg = this.newDoc.segs[idx];
-      if(this.selectedIUs.has(seg.iu)){
-        delete this.newDoc.ius[seg.iu];
-        seg.iu = iuLabel;
-        newIu.childSegs[seg.index] = seg.index;
-      }
-    };
-    this.newDoc.ius[iuLabel] = newIu;
-    console.log(this.newDoc);
+
+    //compute
+    this.newDoc.connectSegs(this.selectedIUs);
+    //console.log(this.newDoc);
+
     this.clearSelectedSegs();
   }
 
-  disconnectSegs(){
+  disconnectSegs() {
     this.editedFlag = true;
     this.discEdited = true;
-    this.selectedIUs.forEach(sel_iu_label =>{
-      let sel_iu = this.newDoc.ius[sel_iu_label];
-      if(sel_iu.disc){
-        for(let key in sel_iu.childSegs){
-          let seg_idx = sel_iu.childSegs[key];
-          // find each segment
-          let child_seg = this.newDoc.segs[seg_idx]
-          // create a new IU for each segment
-          let iuLabel = "d" + this.disconnectedSegsMaxIdx;
-          this.disconnectedSegsMaxIdx += 1;
-          let newIu = new IdeaUnit(iuLabel, false);
-          newIu.childSegs[child_seg.index] = child_seg.index;
-          // store values
-          this.newDoc.ius[iuLabel] = newIu;
-          child_seg.iu = iuLabel;
-        }
-        //remove the old iu from memory
-        delete this.newDoc.ius[sel_iu_label];
-      }
-    });
-    console.log(this.newDoc);
+
+    //compute
+    this.newDoc.disconnectSegs(this.selectedIUs);
+
+    //console.log(this.newDoc);
     this.clearSelectedSegs();
   }
 
@@ -221,6 +178,8 @@ export class SourceEditorComponent implements OnInit {
     if (this.preEdited && !skip_check){
       this.retrieveTokenizedSegs(true);
     }else{
+
+    //compute
     this.newDoc.continuityCheck();
     // keep old sents;
     this.newDoc.sents = this.doc.sents;

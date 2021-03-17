@@ -17,6 +17,10 @@ export class IUCollection {
   max_seg_count: number;
   manual_iu_count: number;
 
+
+  max_connected_idx: number;
+  max_disc_idx: number;
+
   constructor() {
     this.cleanup();
   }
@@ -28,6 +32,8 @@ export class IUCollection {
     this.words = [];
     this.max_seg_count = 0;
     this.manual_iu_count = 0;
+    this.max_connected_idx = 1;
+    this.max_disc_idx = 1;
   }
 
   empty(): boolean {
@@ -254,5 +260,55 @@ export class IUCollection {
       res.push(this.segs[key]);
     };
     return res;
+  }
+
+  connectSegs(selectedIUs: Set<string>){
+    let iuLabel = "c" + this.max_connected_idx;
+    this.max_connected_idx += 1;
+    // add the new IU
+    let newIu = new IdeaUnit(iuLabel, true);
+    for (let idx in this.segs) {
+      let seg = this.segs[idx];
+      if (selectedIUs.has(seg.iu)) {
+        delete this.ius[seg.iu];
+        seg.iu = iuLabel;
+        newIu.childSegs[seg.index] = seg.index;
+      }
+    };
+    this.ius[iuLabel] = newIu;
+  }
+
+  disconnectSegs(selectedIUs : Set<string>){
+    selectedIUs.forEach(sel_iu_label =>{
+      let sel_iu = this.ius[sel_iu_label];
+      if(sel_iu.disc){
+        for(let key in sel_iu.childSegs){
+          let seg_idx = sel_iu.childSegs[key];
+          // find each segment
+          let child_seg = this.segs[seg_idx]
+          // create a new IU for each segment
+          let iuLabel = "d" + this.max_disc_idx;
+          this.max_disc_idx += 1;
+          let newIu = new IdeaUnit(iuLabel, false);
+          newIu.childSegs[child_seg.index] = child_seg.index;
+          // store values
+          this.ius[iuLabel] = newIu;
+          child_seg.iu = iuLabel;
+        }
+        //remove the old iu from memory
+        delete this.ius[sel_iu_label];
+      }
+    });
+  }
+
+  getPreHtml():string{
+    let data: string = "";
+    for( let key in this.segs){
+      let seg = this.segs[key];
+      //each segment goes in a div.
+      //divs are zebra colored via css
+      data += "<div>" + seg.getText(this) + "</div>"
+    };
+    return data;
   }
 }
