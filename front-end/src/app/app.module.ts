@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IuDisplayComponent } from './editor/iu-display/iu-display.component';
-import { DocumentViewerComponent } from './editor/document-viewer/document-viewer.component';
 
 import { MatCardModule } from '@angular/material/card';
 import { EditorDashboardComponent } from './editor/editor-dashboard/editor-dashboard.component';
@@ -69,7 +68,6 @@ import { ContenteditableModule } from '@ng-stack/contenteditable';
   declarations: [
     AppComponent,
     IuDisplayComponent,
-    DocumentViewerComponent,
     EditorDashboardComponent,
     NavigationComponent,
     DashToolbarComponent,

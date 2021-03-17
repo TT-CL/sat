@@ -7,16 +7,39 @@
         </div>
       </mat-tab>
       <mat-tab label="Connect segments">
-        <div class="scrollable-content">
-          <mat-chip-list aria-label="sentence chips" class="summary-link-theme">
-            <ng-template ngFor let-seg [ngForOf]="newDoc.segs">
-              <mat-chip color="primary" (click)="segClick(seg)" selected [ngClass]="{
-                'disc-iu' : newDoc.ius[seg.iu].disc 
-              }">
-                {{seg.getText(newDoc, true)}}
-              </mat-chip>
-            </ng-template><!-- NGFor -->
-          </mat-chip-list>
+        <div class="connect-container">
+          <div class="connect-chips">
+            <mat-chip-list aria-label="sentence chips" class="summary-link-theme">
+              <ng-template ngFor let-seg [ngForOf]="newDoc.getSegArray()">
+                <div *ngIf="selectedIUs.has(seg.iu); else notSelected">
+                  <mat-chip color="lime-bubble" (click)="segClick(seg)" selected>
+                    {{seg.getText(newDoc, true)}}
+                  </mat-chip>
+                </div>
+                <ng-template #notSelected>
+                  <mat-chip color="primary" (click)="segClick(seg)" selected [ngClass]="{
+                    'disc-iu' : newDoc.ius[seg.iu].disc 
+                  }">
+                    {{seg.getText(newDoc, true)}}
+                  </mat-chip>
+                </ng-template>
+              </ng-template><!-- NGFor -->
+            </mat-chip-list>
+          </div>
+          <div class="connect-toolbar">
+            <div class="connect-buttons def-button">
+              <button mat-stroked-button color="accent" [disabled]="selectedIUs.size <= 1" (click)="connectSegs()">
+                Connect
+              </button>
+              <button mat-stroked-button color="accent" [disabled]="selectedIUs.size == 0" (click)="disconnectSegs()">
+                Disconnect
+              </button>
+              <button mat-stroked-button color="warn"
+                matTooltipPosition="above" matTooltipClass="warn-tooltip" [disabled]="selectedIUs.size == 0" (click)="clearSelectedSegs()">
+                Cancel selection
+              </button>
+            </div>
+          </div>
         </div>
       </mat-tab>
     </mat-tab-group>

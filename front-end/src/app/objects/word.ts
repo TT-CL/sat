@@ -13,10 +13,4 @@ export class Word {
     this.index = index;
     this.color = "primary";
   }
-
-  remove(refDoc: IUCollection) {
-    //let old_seg = this.seg;
-    let old_seg = refDoc.findSegment(this.seg);
-    old_seg.detachWord(this, refDoc);
-  }
 }

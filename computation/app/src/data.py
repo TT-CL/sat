@@ -280,7 +280,7 @@ def prepare_json(text, doc_name, doc_type):
 def prepare_man_seg_json(text):
     seg = text
     if not isinstance(text, Doc):
-        seg = nlp(text)
+        seg = nlp(clean_str(seg))
 
     word_index = 0
     sent_data = {}
@@ -309,7 +309,7 @@ def prepare_man_segs_json(segs, doc_name, doc_type):
 
     for seg in segs:
         if not isinstance(seg, Doc):
-            seg = nlp(seg)
+            seg = nlp(clean_str(seg))
         sent_data = {}
         sent_data['words'] = []
         for token in seg:
@@ -325,6 +325,9 @@ def prepare_man_segs_json(segs, doc_name, doc_type):
         cur_iu_index += 1
 
         data['sents'].append(sent_data)
+    for sent in data['sents']:
+        for word in sent["words"]:
+            word['disc'] = False
     return data
 
 

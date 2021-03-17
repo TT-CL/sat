@@ -11,11 +11,10 @@ export class IUCollection {
   doc_type: string;
   words: Word[];
   ius: { [key: string]: IdeaUnit };
-  segs: Segment[];
+  segs: { [key: number]: Segment };
   sents: string[];
 
   max_seg_count: number;
-  ghost_seg_count: number;
   manual_iu_count: number;
 
   constructor() {
@@ -28,7 +27,6 @@ export class IUCollection {
     this.sents = [];
     this.words = [];
     this.max_seg_count = 0;
-    this.ghost_seg_count = 0;
     this.manual_iu_count = 0;
   }
 
@@ -63,11 +61,13 @@ export class IUCollection {
           prev_label = iu_label;
           //creating an empty segment
           //increase the segment index
-          let temp_seg = new Segment(this);
-          this.segs.push(temp_seg);
+          let temp_seg = new Segment();
+          temp_seg.index = this.max_seg_count;
+          this.segs[temp_seg.index] = temp_seg;
+          this.max_seg_count += 1;
         }
         //the current segment is always the last
-        let cur_seg = this.segs[this.segs.length - 1];
+        let cur_seg = this.segs[this.max_seg_count -1];
         //add word to the segment
         cur_seg.words.push(temp_word.index);
         //link the segment to the word
@@ -119,89 +119,7 @@ export class IUCollection {
   }
 
   removeSeg(delSeg: Segment): void {
-    let index = this.segs.indexOf(delSeg);
-    this.segs.splice(index, 1);
-  }
-
-  addGhostWord(word: Word, segment: Segment, mode: string) {
-    //create the new structures
-    let ghostSeg = new Segment(this, "ghost");
-    let ghostLabel = "m" + this.ghost_seg_count;
-    let ghostIU = new IdeaUnit(ghostLabel, false);
-    this.ghost_seg_count = this.ghost_seg_count + 1;
-    word.seg = ghostSeg.index;
-    word.iu = ghostIU.label;
-
-    ghostIU.childSegs[ghostSeg.index] = ghostSeg.index;
-    ghostSeg.words.push(word.index);
-    ghostSeg.iu = ghostIU.label;
-
-    //add structures to memory
-    this.ius[ghostLabel] = ghostIU;
-    let seg_idx = this.segs.indexOf(segment);
-
-    switch (mode) {
-      case "before": {
-        this.segs.splice(seg_idx, 0, ghostSeg);
-        break;
-      }
-
-      case "after": {
-        this.segs.splice(seg_idx + 1, 0, ghostSeg);
-        break;
-      }
-
-      default: {
-        break;
-      }
-    }
-  }
-
-  removeIU(iuLabel: string): void {
-    console.log("Removing iu " + iuLabel);
-    let iu = this.ius[iuLabel];
-    for (var index in iu.childSegs) {
-      let seg = iu.childSegs[index];
-      this.removeSeg(this.findSegment(seg));
-    }
-    delete this.ius[iu.label];
-  }
-
-  /**
-   * Commenting this function out.
-   * Now that the data structure is not circular anymore I want to send
-   * the whole IUCollection instead
-  //this function prepares a new JSON object and serializes it
-  //necessary due to the circular references in my data structure
-  jsonSerialize() : object {
-    var json = {"doc_name" : this.doc_name,
-                "doc_type" : this.doc_type };
-    let tempIus = {};
-    var refDoc = this;
-    for (let index in this.ius){
-      let iu = this.ius[index];
-      //temp structure for array of words
-      let tempSeg = []
-      //explore the child segments
-      for (var s of iu.getChildren(refDoc)){
-        //extract the words from each segment
-        for (var w_idx of s.words){
-          tempSeg.push(refDoc.words[w_idx].text);
-        }
-      }
-      // associate the array of words to the iu index
-      tempIus[index]=tempSeg;
-    }
-
-    json["ius"] = tempIus;
-    //return JSON.stringify(json);
-    return json;
-  }
-  **/
-
-
-  findSegment(segIndex: number): Segment {
-    return this.segs.find(seg => seg.index == segIndex);
+    delete this.segs[delSeg.index];
   }
 
   reconsolidate(anon: any) {
@@ -213,7 +131,6 @@ export class IUCollection {
     //standard objs
     this.doc_name = anon.doc_name;
     this.doc_type = anon.doc_type;
-    this.ghost_seg_count = anon.ghost_seg_count;
     this.manual_iu_count = anon.manual_iu_count;
     this.max_seg_count = anon.max_seg_count;
     for (let anon_sent of anon.sents) {
@@ -230,15 +147,20 @@ export class IUCollection {
     }
 
     //segs
-    for (let anon_seg of anon.segs) {
-      let seg = new Segment(this);
-      seg.index = anon_seg.index;
-      seg.iu = anon_seg.iu;
-      seg.type = anon_seg.type;
-      for (let anon_word of anon_seg.words) {
-        seg.words.push(anon_word);
+    for (let anon_seg_idx in anon.segs) {
+      let anon_seg = anon.segs[anon_seg_idx]
+      //since I can delete the segments there might be some inconsistencies in
+      //the indexes (null segs) when serialized
+      if (anon_seg != null){
+        let seg = new Segment();
+        seg.index = anon_seg.index;
+        seg.iu = anon_seg.iu;
+        seg.type = anon_seg.type;
+        for (let anon_word of anon_seg.words) {
+          seg.words.push(anon_word);
+        }
+        this.segs[seg.index] = seg;
       }
-      this.segs.push(seg);
     }
 
     //ius
@@ -267,7 +189,8 @@ export class IUCollection {
     }else{
       res.push(["idx", "Idea Unit"]);
     }
-    this.segs.map(seg =>{
+    for(let seg_idx in this.segs){
+      let seg = this.segs[seg_idx];
       const iu = doc.ius[seg.iu]
       let row = [];
       row.push(seg.iu)
@@ -283,7 +206,53 @@ export class IUCollection {
         }
       }
       res.push(row);
-    })
+    }
+    return res;
+  }
+
+  continuityCheck() {
+    // this function merges neighboring segments if they have the same IU index.
+    if (Object.keys(this.segs).length >1){
+      let keys = Object.keys(this.segs);
+      let prev_seg;
+      let cur_seg;
+      let seg_idx = 1;
+      let array_len = keys.length;
+      while (seg_idx < array_len) {
+        let prev_seg = this.segs[keys[seg_idx -1]];
+        let cur_seg = this.segs[keys[seg_idx]];
+        if(prev_seg.iu == cur_seg.iu){
+          //move the words inside the previous segment
+          cur_seg.words.map(w =>{
+            //deep copy
+            prev_seg.words.push(JSON.parse(JSON.stringify(w)))
+          });
+          //remove the segment reference from the IU
+          let iu = this.ius[cur_seg.iu];
+          delete iu.childSegs[seg_idx];
+          //adjust discontinuous flag
+          if (iu.childSegs.length > 1){
+            iu.disc = true;
+          }else{
+            iu.disc = false;
+          }
+          //remove the current element
+          delete this.segs[keys[seg_idx]];
+          // reduce the array_len
+          keys = Object.keys(this.segs)
+          array_len = keys.length;
+        }else{
+          seg_idx += 1;
+        }
+      }
+    }
+  }
+
+  getSegArray(): Array<Segment>{
+    let res: Array<Segment> = [];
+    for (let key in this.segs) {
+      res.push(this.segs[key]);
+    };
     return res;
   }
 }

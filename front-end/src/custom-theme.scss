@@ -73,16 +73,6 @@ $save-theme: mat-light-theme((
   )
 ));
 
-$summary-link-primary: mat-palette($mat-grey, 300);
-$summary-link-accent: mat-palette($mat-light-green, A700);
-$summary-link-warn: mat-palette($mat-yellow, 500);
-$summary-link-theme: mat-light-theme((
-  color:(
-    primary: $summary-link-primary,
-    accent: $summary-link-accent,
-    warn: $summary-link-warn,
-  )
-));
 
 $summary-link-primary: mat-palette($mat-grey, 300);
 $summary-link-accent: mat-palette($mat-light-green, A700);
