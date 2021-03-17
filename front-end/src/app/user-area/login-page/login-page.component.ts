@@ -17,7 +17,7 @@ export class LoginPageComponent implements OnInit {
   ) {
   }
   ngOnInit() {
-    this.auth.loggedInPromise().then(loggedIn => {
+    this.auth.isIdentityCached().subscribe(loggedIn => {
       if (loggedIn){
         console.log("redirect")
         this.redirectToProjects();

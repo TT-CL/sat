@@ -1,4 +1,4 @@
-<div *ngIf="userSignedIn; else loggedOut" class="user-widget-container">
+<div *ngIf="loggedIn; else loggedOut" class="user-widget-container">
   <img [src]="avatar$ | async" class="avatar"/>
   <div class="username mat-h3"> {{ userName$ | async }} </div>
   <button mat-stroked-button (click)="logout()" class="logout">

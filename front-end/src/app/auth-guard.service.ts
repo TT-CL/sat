@@ -2,7 +2,7 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { last, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +16,17 @@ export class AuthGuardService {
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Promise<Boolean> {
+    state: RouterStateSnapshot): Observable<Boolean> {
     
-    return this.auth.loggedInPromise().then(loggedIn =>{
-      if (!loggedIn) {
-        console.log(loggedIn);
-        this.router.navigate(['/']);
-      }
-      return loggedIn
-    });
+    return this.auth.isIdentityCached().pipe(
+      map(loggedIn =>{
+        console.log(`guard value ${loggedIn}`)
+        if (loggedIn == false) {
+          console.log(loggedIn);
+          this.router.navigate(['/']);
+        }
+        return loggedIn
+      })
+    );
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 
 import { Router, ActivatedRoute, NavigationEnd} from '@angular/router';
+import { Observable } from 'rxjs';
 
 
 import { filter } from 'rxjs/operators';
@@ -26,25 +27,20 @@ export class NavAuthWidgetComponent implements OnInit{
       this.landingArea = event.url == "/" || event.url == "/login";
       //console.log(this.landingArea);
     });
-    auth.retrieveUserIdentity().subscribe(id =>{
-      this.identity = id;
+
+    auth.isIdentityCached().subscribe(loggedIn =>{
+      this.loggedIn = loggedIn;
     })
   }
 
+  public loggedIn :boolean = false;
+  public userName$ = this.auth.getGivenName();
+  public avatar$ = this.auth.getAvatar();
   landingArea:boolean = true;
-  
-  identity: boolean | Object;
 
   redirectToRoot() {
     this.router.navigate(['/']);
   }
-
-  public get userSignedIn() {
-    return Boolean(this.identity);
-  }
-
-  userName$ = this.auth.getGivenName();
-  avatar$ = this.auth.getAvatar();
 
   public logout() {
     this.auth.logout();
