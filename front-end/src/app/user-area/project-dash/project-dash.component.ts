@@ -33,8 +33,8 @@ export class ProjectDashComponent implements OnInit {
     const files: { [key: string]: File } = this.backupInput.nativeElement.files;
     if (files[0]) {
       console.log(files[0]);
-      if (files[0].type == "application/json" 
-          && files[0].name.endsWith(".iuproj")) {
+      //files[0].type == "application/json"
+      if (files[0].name.endsWith(".iuproj")) {
         const fileReader = new FileReader();
         fileReader.readAsText(files[0], "UTF-8");
         fileReader.onload = () => {
