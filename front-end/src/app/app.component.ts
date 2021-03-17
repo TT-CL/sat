@@ -10,7 +10,7 @@ import { AuthService } from './auth.service';
 
 export class AppComponent {
   title = 'Summary Evaluator';
-  LOG_IN_INTERVAL: number = 1 //interval in minutes
+  LOG_IN_INTERVAL: number = 5 //interval in minutes
 
   constructor(private auth: AuthService) {
     let ms_interval = this.LOG_IN_INTERVAL * 60 * 1000; //interval in ms
