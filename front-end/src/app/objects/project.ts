@@ -46,4 +46,15 @@ export class Project {
       }
     }
   }
+
+  purgeProjectLinks() {
+    // THIS FUNCTION PURGES ALL MANUAL LINKS
+    // BE CAREFUL!
+    this.summaryDocs.forEach(summary => {
+      for (let iu_idx in summary.ius) {
+        let iu = summary.ius[iu_idx];
+        iu.linkedIus = [];
+      }
+    })
+  }
 }

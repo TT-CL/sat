@@ -276,4 +276,13 @@ export class StorageService {
   getSimilarities(): Observable<Object>{
     return this.work_similarities.asObservable();
   }
+
+  // MULTIPLE UPDATE
+  updateStorage(
+    cur_proj: Project = null, 
+    work_source: IUCollection = null,
+    work_summary: IUCollection = null,
+    ): void{
+      //TODO: implement this maybe?
+  }
 }

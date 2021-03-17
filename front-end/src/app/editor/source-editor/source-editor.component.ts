@@ -1,6 +1,6 @@
 import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
 
-import { IdeaUnit, IUCollection, Segment } from '../../objects/objects.module';
+import { IdeaUnit, IUCollection, Project, Segment } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
 import { BackEndService } from '../../back-end.service';
@@ -19,6 +19,7 @@ export class SourceEditorComponent implements OnInit {
   // data structs
   doc: IUCollection = null;
   newDoc: IUCollection;
+  proj : Project;
 
   editedFlag: boolean = false;
   // alter segments
@@ -48,6 +49,9 @@ export class SourceEditorComponent implements OnInit {
         this.connectedSegsMaxIdx = 1; //start from 1
         this.disconnectedSegsMaxIdx = 1;  //start from 1
       });
+      storage.getCurProject().subscribe(proj =>{
+        this.proj = proj;
+      })
   }
 
   ngOnInit(): void {
@@ -183,7 +187,10 @@ export class SourceEditorComponent implements OnInit {
     this.newDoc.continuityCheck();
     // keep old sents;
     this.newDoc.sents = this.doc.sents;
-    this.storage.updateWorkSource(this.newDoc);
+    //this.storage.updateWorkSource(this.newDoc);
+    this.proj.sourceDoc = this.newDoc
+    this.proj.purgeProjectLinks();
+    this.storage.updateCurProject(this.proj)
     }
   }
 }
