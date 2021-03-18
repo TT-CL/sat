@@ -1,6 +1,6 @@
 import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SessionStorageService } from 'ngx-webstorage';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { pluck, map, last } from 'rxjs/operators';
@@ -49,6 +49,16 @@ export class AuthService {
       let identity = id as unknown as Identity;
       this.cachedIdentity.next(identity);
       this.session.store('cached_identity', identity);
+    });
+  }
+  retrieveUserAuthTokenAndRediect() {
+    this.retrieveUserIdentity().subscribe(id => {
+      let identity = id as unknown as Identity;
+      this.cachedIdentity.next(identity);
+      this.session.store('cached_identity', identity);
+      if (identity != null){
+        this.router.navigate(['/projects']);
+      }
     });
   }
 
@@ -102,16 +112,14 @@ export class AuthService {
     this.storage.clearProjects();
     this.cachedIdentity.next(null);
     this.session.clear('cached_identity')
-    this.redirectToRoot();
+
     //call api server to log out user
     let url = "/api/auth/logout";
-
-    const req = new HttpRequest('GET', url, {
-      headers: new HttpHeaders({
-      'content-type': 'application/json',
-      })
-    });
-
-    this.http.request(req);
+    fetch(url, {
+      method: 'GET',
+      credentials: 'include'
+    }).then(()=> console.log("User Logged Out"));
+    //redirect
+    this.redirectToRoot();
   }
 }

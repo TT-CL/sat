@@ -65,7 +65,7 @@ app.add_middleware(
 )
 
 app.add_middleware(
-    ProxyHeadersMiddleware
+    ProxyHeadersMiddleware, trusted_hosts="*"
 )
 
 model = ModelWebWrapper(MODEL_URI)
