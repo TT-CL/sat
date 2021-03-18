@@ -159,6 +159,13 @@ $summary-link-theme: mat-light-theme((
   background-color: #76ff03 !important;
 }
 
+.hint-tooltip{
+  color: #eceff1 !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  background-color: rgba(38, 50, 56, 0.9) !important;
+}
+
 .warn-tooltip{
   color: rgba(198, 40, 40, 1) !important;
   font-weight: 700 !important;

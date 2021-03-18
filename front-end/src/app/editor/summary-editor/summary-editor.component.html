@@ -53,7 +53,9 @@
       </button>
       <button mat-flat-button color="primary"
         matTooltip="WARNING: Altering the structure of a summary file will erase all its manual links!"
-        matTooltipPosition="above" matTooltipClass="warn-tooltip" [disabled]="! editedFlag" (click)="saveEdits()">
+        matTooltipPosition="above"
+        matTooltipClass="warn-tooltip"
+        [disabled]="! editedFlag" (click)="saveEdits()">
         Save <mat-icon>save</mat-icon>
       </button>
     </div>
