@@ -13,6 +13,11 @@
 .env
 /computation/variables.env
 /front-end/.env
+/db/variables.env
+/db/api.env
+
+# database
+/db/storage/
 
 # Let's encrypt certificates
 /certificates/

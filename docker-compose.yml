@@ -35,10 +35,21 @@ services:
     networks:
       - frontend
 
+  db:
+    image: "mongo:4"
+    restart: always
+    env_file:
+      - ./db/variables.env
+      - ./db/api.env
+    volumes:
+      - ./db/storage:/data/db
+      - ./db/init:/docker-entrypoint-initdb.d
+    networks:
+      - backend
+
 networks:
   frontend:
     name: frontend
 
   backend:
     name: backend
-    internal: true

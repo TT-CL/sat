@@ -39,3 +39,14 @@ services:
       - "traefik.http.middlewares.computation-strip.stripprefix.forceslash=false"
       - "traefik.http.routers.computation.middlewares=computation-strip@docker"
       - "traefik.docker.network=frontend"
+
+  db:
+    ports:
+      - "8081:8081"
+      - "27017:27017"
+    labels:
+      - "traefik.enable=false"
+
+networks:
+  backend:
+    internal: false
