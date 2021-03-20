@@ -28,12 +28,14 @@ services:
       - "PYTHONUNBUFFERED=1"
     env_file: 
       - ./computation/variables.env
+      - ./db/api.env
     volumes:
       - ./computation/app:/app
     #ports:
       #- "8080:80"
     networks:
       - frontend
+      - backend
 
   db:
     image: "mongo:4"

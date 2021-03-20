@@ -12,3 +12,4 @@ Authlib
 requests
 httpx
 itsdangerous
+pymongo
