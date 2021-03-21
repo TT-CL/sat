@@ -1,13 +1,13 @@
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
-import { last, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuardService {
+export class AuthGuardService implements CanActivate{
 
   constructor(
     private auth: AuthService,
@@ -15,17 +15,17 @@ export class AuthGuardService {
   }
 
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<Boolean> {
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree>{
     
     return this.auth.isIdentityCached().pipe(
       map(loggedIn =>{
-        console.log(`guard value ${loggedIn}`)
+        //console.log(`guard value ${loggedIn}`)
         if (loggedIn == false) {
-          console.log(loggedIn);
-          this.router.navigate(['/']);
+          return this.router.createUrlTree(['/']);
+        }else{
+          return true;
         }
-        return loggedIn
       })
     );
   }

@@ -42,7 +42,6 @@ import {NgxWebstorageModule} from 'ngx-webstorage';
 import { LoginPageComponent } from './user-area/login-page/login-page.component';
 import { NavAuthWidgetComponent } from './user-area/nav-auth-widget/nav-auth-widget.component';
 
-import { AuthGuardService } from './auth-guard.service';
 import { CatchLoginComponent } from './user-area/catch-login/catch-login.component';
 
 import {PortalModule} from '@angular/cdk/portal';
@@ -62,6 +61,7 @@ import { SourceEditorComponent } from './editor/source-editor/source-editor.comp
 import { SummaryEditorComponent } from './editor/summary-editor/summary-editor.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContenteditableModule } from '@ng-stack/contenteditable';
+import { UserUnauthorizedComponent } from './user-unauthorized/user-unauthorized.component';
 
 
 @NgModule({
@@ -93,6 +93,7 @@ import { ContenteditableModule } from '@ng-stack/contenteditable';
     ProjectDownloaderComponent,
     SourceEditorComponent,
     SummaryEditorComponent,
+    UserUnauthorizedComponent,
   ],
   imports: [
     BrowserModule,
@@ -122,7 +123,7 @@ import { ContenteditableModule } from '@ng-stack/contenteditable';
     MatTooltipModule,
     ContenteditableModule,
   ],
-  providers: [OverlayService, DynamicOverlay, DynamicOverlayContainer, AuthGuardService],
+  providers: [OverlayService, DynamicOverlay, DynamicOverlayContainer ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

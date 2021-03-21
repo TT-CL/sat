@@ -7,10 +7,17 @@ import { EditorDashboardComponent } from './editor/editor-dashboard/editor-dashb
 
 import { LoginPageComponent } from './user-area/login-page/login-page.component';
 import { CatchLoginComponent } from './user-area/catch-login/catch-login.component';
+import { UserUnauthorizedComponent } from './user-unauthorized/user-unauthorized.component';
 
 import { AuthGuardService } from './auth-guard.service';
 
 const routes: Routes = [
+  { path: '', component: LoginPageComponent },
+  { path: 'unauthorized', component: UserUnauthorizedComponent },
+  { path: 'login', component: LoginPageComponent },
+  //page called upon receiving the OAuth token from Google
+  { path: 'logged-in', component: CatchLoginComponent },
+  //{ path: '', redirectTo: '/projects', pathMatch: 'full' },
   {
     path: 'projects',
     component: ProjectDashComponent,
@@ -36,12 +43,7 @@ const routes: Routes = [
       }
     ]
   },
-  { path: '', component: LoginPageComponent},
-  { path: 'login', component: LoginPageComponent},
-  //page called upon receiving the OAuth token from Google
-  { path: 'logged-in', component: CatchLoginComponent},
-  //{ path: '', redirectTo: '/projects', pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent}
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({

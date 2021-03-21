@@ -38,10 +38,6 @@ export class AuthService {
     this.cachedIdentity = new BehaviorSubject(anon_id);
   }
 
-  redirectToRoot() {
-    this.router.navigate(['/']);
-  }
-
   // USER AUTH //
 
   retrieveUserAuthToken(){
@@ -53,10 +49,10 @@ export class AuthService {
   }
   retrieveUserAuthTokenAndRediect() {
     this.retrieveUserIdentity().subscribe(id => {
-      let identity = id as unknown as Identity;
+      let identity = id as unknown as Identity | boolean;
       this.cachedIdentity.next(identity);
       this.session.store('cached_identity', identity);
-      if (identity != null){
+      if (identity != null && identity != false){
         this.router.navigate(['/projects']);
       }
     });
@@ -119,7 +115,5 @@ export class AuthService {
       method: 'GET',
       credentials: 'include'
     }).then(()=> console.log("User Logged Out"));
-    //redirect
-    this.redirectToRoot();
   }
 }

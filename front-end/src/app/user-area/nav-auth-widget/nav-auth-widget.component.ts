@@ -44,6 +44,7 @@ export class NavAuthWidgetComponent implements OnInit{
 
   public logout() {
     this.auth.logout();
+    this.redirectToRoot();
   }
 
   ngOnInit() {
