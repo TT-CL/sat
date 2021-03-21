@@ -17,6 +17,7 @@ export class IUCollection {
   //db values
   user_id
   project_id
+  history_id
   deleted: boolean
   version: number
 
@@ -149,10 +150,11 @@ export class IUCollection {
       this.sents.push(anon_sent);
     }
     //db objects
-    this.user_id = anon.user_id
-    this.project_id = anon.project_id
-    this.deleted = anon.deleted
-    this.version = anon.version
+    this.user_id = anon.user_id;
+    this.project_id = anon.project_id;
+    this.history_id = anon.history_id;
+    this.deleted = anon.deleted;
+    this.version = anon.version;
     //complex objects
     //words
     for (let anon_word of anon.words) {

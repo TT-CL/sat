@@ -65,8 +65,12 @@ summaries_col = db['summaries']
 summaries_hist_col = db['summaries_hist']
 
 
-def convert_bson(data):
+def convert_from_bson(data):
     return json.loads(bson.dumps(data))
+
+
+def convert_to_bson(data):
+    return bson.loads(json.dumps(data))
 
 
 app = FastAPI(
@@ -155,7 +159,10 @@ async def lookup_sent(sent: str = Form(...), autocorrect: bool = Form(...)):
 
 
 @app.post("/v1/lookup/sims")
-async def lookup_sims(sent1: str = Form(...), sent2: str = Form(...), autocorrect: bool = Form(...)):
+async def lookup_sims(
+        sent1: str = Form(...),
+        sent2: str = Form(...),
+        autocorrect: bool = Form(...)):
     result = model.simsLookup(sent1, sent2, autocorrect=autocorrect, http=True)
     return result
 
@@ -180,7 +187,9 @@ def get_project(proj_id):
     res_proj['sourceDoc'] = sources_col.find_one(res_proj['source_id'])
     res_proj['summaryDocs'] = []
     for sum_id in res_proj['summaries_id']:
-        res_proj['summaryDocs'].append(summaries_col.find_one(sum_id))
+        summary = summaries_col.find_one(sum_id)
+        if not summary['deleted']:
+            res_proj['summaryDocs'].append(summary)
     return res_proj
 
 
@@ -204,7 +213,6 @@ def new_summary(summary, proj_id, user_id):
     return db_summary_id
 
 
-
 @app.post("/v1/user/project/create", status_code=status.HTTP_201_CREATED)
 async def create_proj(
         request: Request,
@@ -214,124 +222,372 @@ async def create_proj(
         # Guard against unauthenticated
         response.status_code = status.HTTP_401_UNAUTHORIZED
         return False
-    else:
-        user = get_user_from_session(request)
-        project_obj = loads(project)
-        new_proj = {
-            # DB values
-            'user_id': user['_id'],
-            'deleted': False,
-            # JS values
-            'name': project_obj['name'],
-            'description': project_obj['description'],
-            'creation_time': project_obj['creation_time'],
-            'last_edit': project_obj['last_edit'],
-        }
-        db_proj_id = projects_col.insert_one(new_proj).inserted_id
 
-        new_source = project_obj['sourceDoc']
+    user = get_user_from_session(request)
+    project_obj = loads(project)
+    # defaults for optional parameters
+    description = None
+    if 'description' in project_obj.keys():
+        description = project_obj['description']
+    new_proj = {
         # DB values
-        new_source['user_id'] = user['_id']
-        new_source['project_id'] = db_proj_id
-        new_source['deleted'] = False
-        new_source['version'] = 0
+        'user_id': user['_id'],
+        'deleted': False,
+        # JS values
+        'name': project_obj['name'],
+        'description': description,
+        'creation_time': project_obj['creation_time'],
+        'last_edit': project_obj['last_edit'],
+    }
+    db_proj_id = projects_col.insert_one(new_proj).inserted_id
 
-        new_source_hist = {
-            # DB values
-            'user_id': user['_id'],
-            'project_id': db_proj_id,
-            'history': [new_source]
-        }
-        db_source_hist_id = sources_hist_col.insert_one(new_source_hist).inserted_id
+    new_source = project_obj['sourceDoc']
+    # DB values
+    new_source['user_id'] = user['_id']
+    new_source['project_id'] = db_proj_id
+    new_source['deleted'] = False
+    new_source['version'] = 0
 
-        new_source['history_id'] = db_source_hist_id
-        db_source_id = sources_col.insert_one(new_source).inserted_id
+    new_source_hist = {
+        # DB values
+        'user_id': user['_id'],
+        'project_id': db_proj_id,
+        'history': [new_source]
+    }
+    db_source_hist_id = sources_hist_col.insert_one(
+        new_source_hist).inserted_id
 
+    new_source['history_id'] = db_source_hist_id
+    db_source_id = sources_col.insert_one(new_source).inserted_id
+
+    # Summary docs are optional, provide a default empty array
+    new_summaries = []
+    if "summaryDocs" in project_obj.keys():
         new_summaries = project_obj['summaryDocs']
-        db_summaries_ids = []
-        for summary in new_summaries:
-            db_summaries_ids.append(
-                new_summary(summary, db_proj_id, user['_id']))
+    db_summaries_ids = []
+    for summary in new_summaries:
+        db_summaries_ids.append(
+            new_summary(summary, db_proj_id, user['_id']))
 
-        projects_col.update_one(
+    projects_col.update_one(
+        {
+            "_id": db_proj_id,
+        },
+        {
+            '$set':
             {
-                "_id": db_proj_id,
-            },
-            {
-                '$set':
-                {
-                    'source_id': db_source_id,
-                    'summaries_id': db_summaries_ids
-                }
+                'source_id': db_source_id,
+                'summaries_id': db_summaries_ids
             }
-            )
-        return convert_bson(get_project(db_proj_id))
+        }
+    )
+    return convert_from_bson(get_project(db_proj_id))
 
 
-@app.post("/v1/user/project/update")
+@app.post("/v1/user/project/update", status_code=status.HTTP_200_OK)
 async def update_proj(
         request: Request,
+        response: Response,
         project: str = Form(...)):
-    project_obj = loads(project)
+    if not is_user_valid(request):
+        # Guard against unauthenticated
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+
     user = get_user_from_session(request)
-    pprint(user)
-    pprint(project_obj)
-    return {"received": True}
+    project_obj = bson.loads(project)
+    db_proj = projects_col.find_one(project_obj['_id'])
+    # these 3 ids MUST coincide
+    db_proj_id = db_proj['user_id']
+    user_id = user['_id']
+    ram_id = project_obj['user_id']
+    if ram_id != db_proj_id or ram_id != user_id:
+        # Guard against unauthorized acces to db objets that are not
+        # the user's property
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+
+    # Proceed with the update
+    projects_col.update_one(
+        {
+            "_id": db_proj['_id'],
+        },
+        {
+            '$set':
+            {
+                'name': project_obj['name'],
+                'description': project_obj['description'],
+                'creation_time': project_obj['creation_time'],
+                'last_edit': project_obj['last_edit'],
+            }
+        }
+    )
+    return True
 
 
-@app.post("/v1/user/project/delete")
+@app.post("/v1/user/project/delete", status_code=status.HTTP_200_OK)
 async def delete_proj(
         request: Request,
+        response: Response,
         project: str = Form(...)):
-    project_obj = loads(project)
+    if not is_user_valid(request):
+        # Guard against unauthenticated
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+
     user = get_user_from_session(request)
-    pprint(user)
-    pprint(project_obj)
-    return {"received": True}
+    project_obj = bson.loads(project)
+    db_proj = projects_col.find_one(project_obj['_id'])
+    # these 3 ids MUST coincide
+    db_proj_id = db_proj['user_id']
+    user_id = user['_id']
+    ram_id = project_obj['user_id']
+    if ram_id != db_proj_id or ram_id != user_id:
+        # Guard against unauthorized acces to db objets that are not
+        # the user's property
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+
+    # Proceed with the deletion
+    projects_col.update_one(
+        {
+            "_id": db_proj['_id'],
+        },
+        {
+            '$set':
+            {
+                'deleted': True
+            }
+        }
+    )
+    return True
 
 
-@app.post("/v1/user/source/update")
+@app.post("/v1/user/source/update", status_code=status.HTTP_200_OK)
 async def update_source(
         request: Request,
-        source_file: str = Form(...)):
-    source = loads(source_file)
+        response: Response,
+        source: str = Form(...)):
+    if not is_user_valid(request):
+        # Guard against unauthenticated
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+
     user = get_user_from_session(request)
-    pprint(user)
-    pprint(source)
-    return {"received": True}
+    source_obj = bson.loads(source)
+    db_source = sources_col.find_one(source_obj['_id'])
+    # these 3 ids MUST coincide
+    db_source_id = db_source['user_id']
+    user_id = user['_id']
+    ram_id = source_obj['user_id']
+    if ram_id != db_source_id or ram_id != user_id:
+        # Guard against unauthorized acces to db objets that are not
+        # the user's property
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+
+    # Update source
+    sources_col.update_one(
+        {
+            "_id": db_source['_id'],
+        },
+        [{
+            '$set':
+            {
+                'doc_name': source_obj['doc_name'],
+                'doc_type': source_obj['doc_type'],
+                'ius': source_obj['ius'],
+                'manual_iu_count': source_obj['manual_iu_count'],
+                'max_connected_idx': source_obj['max_connected_idx'],
+                'nax_disc_idx': source_obj['nax_disc_idx'],
+                'max_seg_count': source_obj['max_seg_count'],
+                'segs': source_obj['segs'],
+                'sents': source_obj['sents'],
+                'words': source_obj['words'],
+            }
+        }, {
+            '$inc':
+            {
+                'version': 1
+            }
+        }
+        ]
+    )
+    # update history
+    cur_db_source = sources_col.find_one(source_obj['_id'])
+    sources_hist_col.update_one(
+        {
+            "_id": cur_db_source['history_id'],
+        },
+        {
+            '$push':
+            {
+                'history': cur_db_source,
+            }
+        }
+    )
+    return True
 
 
-@app.post("/v1/user/summary/create")
+@app.post("/v1/user/summary/create", status_code=status.HTTP_201_CREATED)
 async def create_summary(
         request: Request,
-        summary_file: str = Form(...)):
-    summary = loads(summary_file)
+        response: Response,
+        project_id: str = Form(...),
+        summary: str = Form(...)):
+    if not is_user_valid(request):
+        # Guard against unauthenticated
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+
     user = get_user_from_session(request)
-    pprint(user)
-    pprint(summary)
-    return {"received": True}
+    summary_obj = bson.loads(summary)
+    project_id_obj = bson.loads(project_id)
+    db_summary = summaries_col.find_one(summary_obj['_id'])
+    db_proj = projects_col.find_one(project_id_obj)
+    # these 4 ids MUST coincide
+    db_sum_id = db_summary['user_id']
+    db_proj_id = db_proj['user_id']
+    user_id = user['_id']
+    ram_id = summary_obj['user_id']
+    if ram_id != db_sum_id or ram_id != db_proj_id or ram_id != user_id:
+        # Guard against unauthorized acces to db objets that are not
+        # the user's property
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+
+    # Create summary
+    db_summary_id = new_summary(summary_obj, db_proj['_id'], user_id)
+
+    projects_col.update_one(
+        {
+            "_id": db_proj['_id'],
+        },
+        {
+            '$push':
+            {
+                'summaries_id': db_summary_id,
+            }
+        }
+    )
+    return True
 
 
-@app.post("/v1/user/summary/update")
+@app.post("/v1/user/summary/update", status_code=status.HTTP_200_OK)
 async def update_summary(
         request: Request,
-        summary_file: str = Form(...)):
-    summary = loads(summary_file)
+        response: Response,
+        summary: str = Form(...)):
+    if not is_user_valid(request):
+        # Guard against unauthenticated
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+
     user = get_user_from_session(request)
-    pprint(user)
-    pprint(summary)
-    return {"received": True}
+    summary_obj = bson.loads(summary)
+    db_summary = summaries_col.find_one(summary_obj['_id'])
+    # these 3 ids MUST coincide
+    db_sum_id = db_summary['user_id']
+    user_id = user['_id']
+    ram_id = summary_obj['user_id']
+    if ram_id != db_sum_id or ram_id != user_id:
+        # Guard against unauthorized acces to db objets that are not
+        # the user's property
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+
+    # Update source
+    summaries_col.update_one(
+        {
+            "_id": summary_obj['_id'],
+        },
+        [{
+            '$set':
+            {
+                'doc_name': summary_obj['doc_name'],
+                'doc_type': summary_obj['doc_type'],
+                'ius': summary_obj['ius'],
+                'manual_iu_count': summary_obj['manual_iu_count'],
+                'max_connected_idx': summary_obj['max_connected_idx'],
+                'nax_disc_idx': summary_obj['nax_disc_idx'],
+                'max_seg_count': summary_obj['max_seg_count'],
+                'segs': summary_obj['segs'],
+                'sents': summary_obj['sents'],
+                'words': summary_obj['words'],
+            }
+        }, {
+            '$inc':
+            {
+                'version': 1
+            }
+        }
+        ]
+    )
+    # update history
+    cur_db_summary = summaries_col.find_one(summary_obj['_id'])
+    summaries_hist_col.update_one(
+        {
+            "_id": cur_db_summary['history_id'],
+        },
+        {
+            '$push':
+            {
+                'history': cur_db_summary,
+            }
+        }
+    )
+    return True
 
 
-@app.post("/v1/user/summary/delete")
+@app.post("/v1/user/summary/delete", status_code=status.HTTP_200_OK)
 async def delete_summary(
         request: Request,
-        summary_file: str = Form(...)):
-    summary = loads(summary_file)
+        response: Response,
+        summary: str = Form(...)):
+    if not is_user_valid(request):
+        # Guard against unauthenticated
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+
     user = get_user_from_session(request)
-    pprint(user)
-    pprint(summary)
-    return {"received": True}
+    summary_obj = bson.loads(summary)
+    db_summary = summaries_col.find_one(summary_obj['_id'])
+    # these 3 ids MUST coincide
+    db_sum_id = db_summary['user_id']
+    user_id = user['_id']
+    ram_id = summary_obj['user_id']
+    if ram_id != db_sum_id or ram_id != user_id:
+        # Guard against unauthorized acces to db objets that are not
+        # the user's property
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+
+    # Update source
+    summaries_col.update_one(
+        {
+            "_id": summary_obj['_id'],
+        },
+        {
+            '$set':
+            {
+                'deleted': True
+            }
+        }
+    )
+    # update history
+    cur_db_summary = summaries_col.find_one(summary_obj['_id'])
+    summaries_hist_col.update_one(
+        {
+            "_id": cur_db_summary['history_id'],
+        },
+        {
+            '$push':
+            {
+                'history': cur_db_summary,
+            }
+        }
+    )
+    return True
 
 
 ### AUTH ###
@@ -374,13 +630,13 @@ async def auth_via_google(request: Request):
     # set the current issuer as google
     db_user["cur_iss"] = "google"
 
-    request.session['user'] = dict(convert_bson(db_user))
+    request.session['user'] = dict(convert_from_bson(db_user))
     return RedirectResponse(url='/logged-in')
 
 
 def get_user_from_session(request):
     user = request.session['user']
-    return bson.loads(json.dumps(user))
+    return convert_to_bson(user)
 
 
 def get_token_from_session(request):
