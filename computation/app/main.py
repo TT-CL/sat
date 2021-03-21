@@ -18,6 +18,7 @@ from json_tricks import loads
 from pprint import pprint
 
 import os
+import time
 
 from authlib.integrations.starlette_client import OAuth, OAuthError
 from starlette.config import Config
@@ -167,6 +168,86 @@ async def doc_sims(
     return result
 
 
+### USER DATA ###
+
+
+@app.post("/v1/user/project/create")
+async def create_proj(
+        request: Request,
+        project: str = Form(...)):
+    project_obj = loads(project)
+    user = get_user_from_session(request)
+    pprint(user)
+    pprint(project_obj)
+    return {"received" : True}
+
+
+@app.post("/v1/user/project/update")
+async def update_proj(
+        request: Request,
+        project: str = Form(...)):
+    project_obj = loads(project)
+    user = get_user_from_session(request)
+    pprint(user)
+    pprint(project_obj)
+    return {"received": True}
+
+
+@app.post("/v1/user/project/delete")
+async def delete_proj(
+        request: Request,
+        project: str = Form(...)):
+    project_obj = loads(project)
+    user = get_user_from_session(request)
+    pprint(user)
+    pprint(project_obj)
+    return {"received": True}
+
+
+@app.post("/v1/user/source/update")
+async def update_source(
+        request: Request,
+        source_file: str = Form(...)):
+    source = loads(source_file)
+    user = get_user_from_session(request)
+    pprint(user)
+    pprint(source)
+    return {"received": True}
+
+
+@app.post("/v1/user/summary/create")
+async def create_summary(
+        request: Request,
+        summary_file: str = Form(...)):
+    summary = loads(summary_file)
+    user = get_user_from_session(request)
+    pprint(user)
+    pprint(summary)
+    return {"received": True}
+
+
+@app.post("/v1/user/summary/update")
+async def update_summary(
+        request: Request,
+        summary_file: str = Form(...)):
+    summary = loads(summary_file)
+    user = get_user_from_session(request)
+    pprint(user)
+    pprint(summary)
+    return {"received": True}
+
+
+@app.post("/v1/user/summary/delete")
+async def delete_summary(
+        request: Request,
+        summary_file: str = Form(...)):
+    summary = loads(summary_file)
+    user = get_user_from_session(request)
+    pprint(user)
+    pprint(summary)
+    return {"received": True}
+
+
 ### AUTH ###
 
 
@@ -216,22 +297,21 @@ def get_user_from_session(request):
     return bson.loads(json.dumps(user))
 
 
-def validate_token(session_token, db_token):
-    # first check the keys
-    session_set = set(session_token.keys())
-    db_set = set(db_token.keys())
-    res = (len(db_set.symmetric_difference(session_set)) == 0)
-
-    # speed up computation if the tokens don't have the same keys
-    if res is True:
-        # check the values
-        for key, value in db_token.items():
-            res = res and value == session_token[key]
-    return res
+def get_token_from_session(request):
+    user = get_user_from_session(request)
+    return user[user["cur_iss"]]
 
 
-@app.get("/auth/identity")
-async def logged_in(request: Request):
+def is_about_to_expire(token):
+    iat = int(token['iat'])  # issued time
+    exp = int(token['exp'])  # expiry time
+    # Refresh a token if at least 75% of its lifetime has elapsed
+    expiry_treshold = int(iat + ((exp - iat) * 0.75))
+    now = int(time.time())   # Current Unix Time in int
+    return now > expiry_treshold
+
+
+def is_token_valid(request: Request):
     res = False
     if 'user' in request.session:
         user = get_user_from_session(request)
@@ -247,21 +327,46 @@ async def logged_in(request: Request):
         db_user = users_col.find_one(user["_id"])
         db_token = db_user[cur_iss]
 
-        db_valid = validate_token(token, db_token)
-        # TODO: add JWT validation here
+        # first check the keys
+        session_set = set(token.keys())
+        db_set = set(db_token.keys())
+        res = (len(db_set.symmetric_difference(session_set)) == 0)
 
-        if db_valid is True:
-            # prepare the decrypted printable data
-            res = {
-                'given_name': token['given_name'],
-                'picture': token['picture'],
-                'name': token['name'],
-                'email': token['email'],
-            }
-        else:
-            # the user tampered with the session
-            request.session.pop('user', None)
+        # avoid this check if we already have a different set of keys
+        if res is True:
+            # check the values
+            for key, value in db_token.items():
+                res = res and value == token[key]
 
+        # TODO: JWT validation here
+
+        if res is True:
+            # if I get here, then the session token is valid
+            if (is_about_to_expire(token)):
+                # refresh token if it is about to expire
+                pass
+
+    if res is False:
+        # the user tampered with the session
+        # break the session
+        request.session.pop('user', None)
+
+    return res
+
+
+@app.get("/auth/identity")
+async def logged_in(request: Request):
+    res = False
+    valid = is_token_valid(request)
+    if valid is True:
+        token = get_token_from_session(request)
+        # prepare the decrypted printable data
+        res = {
+            'given_name': token['given_name'],
+            'picture': token['picture'],
+            'name': token['name'],
+            'email': token['email'],
+        }
     return res
 
 
