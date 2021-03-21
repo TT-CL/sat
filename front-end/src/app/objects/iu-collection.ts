@@ -14,6 +14,12 @@ export class IUCollection {
   segs: { [key: number]: Segment };
   sents: string[];
 
+  //db values
+  user_id
+  project_id
+  deleted: boolean
+  version: number
+
   max_seg_count: number;
   manual_iu_count: number;
 
@@ -142,6 +148,11 @@ export class IUCollection {
     for (let anon_sent of anon.sents) {
       this.sents.push(anon_sent);
     }
+    //db objects
+    this.user_id = anon.user_id
+    this.project_id = anon.project_id
+    this.deleted = anon.deleted
+    this.version = anon.version
     //complex objects
     //words
     for (let anon_word of anon.words) {

@@ -25,7 +25,7 @@ export class NewProjectComponent {
   constructor(
     private formBuilder: FormBuilder,
     private overlayService: OverlayService,
-    private textService : BackEndService,
+    private backend : BackEndService,
     private storage: StorageService,
     private router: Router,
     private route: ActivatedRoute) { }
@@ -120,7 +120,7 @@ export class NewProjectComponent {
     let doc = new IUCollection();
     console.log("Uploading " + fName);
     if(file.type == "text/plain"){
-      this.textService.getLabelledText(mode, file).subscribe(
+      this.backend.getLabelledText(mode, file).subscribe(
       event => {
         if (event.type == HttpEventType.UploadProgress) {
           const percentDone = Math.round(100 * event.loaded / event.total);
@@ -149,8 +149,7 @@ export class NewProjectComponent {
 
   uploadComplete(): void {
     //Upload is complete
-    this.hideOverlay();
-    console.log("Upload complete successfully");
+    // create project
     let title = this.projectForm.value.title
     let description = this.projectForm.value.description;
     let proj = new Project();
@@ -158,19 +157,42 @@ export class NewProjectComponent {
     proj.sourceDoc = this.parsedSource;
     proj.creation_time = new Date();
     proj.last_edit = proj.creation_time;
-    if (description && description != ""){
+    if (description && description != "") {
       proj.description = description;
     }
-    if (this.parsedSummaries.length > 0){
+    if (this.parsedSummaries.length > 0) {
       proj.summaryDocs = this.parsedSummaries;
     }
-    this.storage.addProject(proj);
-    //console.log(this.storage);
-    this.redirectOut();
+    //Sync the DB
+    this.backend.createProject(proj).subscribe(
+      event => {
+        if (event.type == HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          //console.log('${fName} is ${percentDone}% loaded.');
+        } else if (event instanceof HttpResponse) {
+          let proj = new Project();
+          proj.reconsolidate(event.body);
+          this.storage.addProject(proj);
+        }
+      },
+      (err) => {
+        console.log("Error creating Project:", err);
+        if(err.status == 401){
+          this.redirectUnauthorized()
+        }
+      }, () => {
+        console.log("Project created successfully");
+        this.hideOverlay();
+        this.redirectOut();
+      });
   }
 
   redirectOut() {
     this.router.navigate(['../'], {relativeTo: this.route});
+  }
+
+  redirectUnauthorized() {
+    this.router.navigate(['/unauthorized']);
   }
 
   onSubmit(): void{

@@ -1,5 +1,5 @@
 """ FastAPI server """
-from fastapi import FastAPI, File, UploadFile, Form
+from fastapi import FastAPI, File, UploadFile, Form, Response, status
 from fastapi.middleware.cors import CORSMiddleware
 from uvicorn.middleware.proxy_headers import ProxyHeadersMiddleware
 
@@ -59,6 +59,10 @@ db_client = MongoClient(DB_CONN)
 db = db_client[DB_NAME]
 users_col = db['users']
 projects_col = db['projects']
+sources_col = db['sources']
+sources_hist_col = db['sources_hist']
+summaries_col = db['summaries']
+summaries_hist_col = db['summaries_hist']
 
 
 def convert_bson(data):
@@ -171,15 +175,97 @@ async def doc_sims(
 ### USER DATA ###
 
 
-@app.post("/v1/user/project/create")
+def get_project(proj_id):
+    res_proj = projects_col.find_one(proj_id)
+    res_proj['sourceDoc'] = sources_col.find_one(res_proj['source_id'])
+    res_proj['summaryDocs'] = []
+    for sum_id in res_proj['summaries_id']:
+        res_proj['summaryDocs'].append(summaries_col.find_one(sum_id))
+    return res_proj
+
+
+def new_summary(summary, proj_id, user_id):
+    summary['user_id'] = user_id
+    summary['project_id'] = proj_id
+    summary['deleted'] = False
+    summary['version'] = 0
+
+    summary_hist = {
+        # DB values
+        'user_id': user_id,
+        'project_id': proj_id,
+        'history': [summary]
+    }
+    db_summary_hist_id = summaries_hist_col.insert_one(
+        summary_hist).inserted_id
+
+    summary['history_id'] = db_summary_hist_id
+    db_summary_id = summaries_col.insert_one(summary).inserted_id
+    return db_summary_id
+
+
+
+@app.post("/v1/user/project/create", status_code=status.HTTP_201_CREATED)
 async def create_proj(
         request: Request,
+        response: Response,
         project: str = Form(...)):
-    project_obj = loads(project)
-    user = get_user_from_session(request)
-    pprint(user)
-    pprint(project_obj)
-    return {"received" : True}
+    if not is_user_valid(request):
+        # Guard against unauthenticated
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+    else:
+        user = get_user_from_session(request)
+        project_obj = loads(project)
+        new_proj = {
+            # DB values
+            'user_id': user['_id'],
+            'deleted': False,
+            # JS values
+            'name': project_obj['name'],
+            'description': project_obj['description'],
+            'creation_time': project_obj['creation_time'],
+            'last_edit': project_obj['last_edit'],
+        }
+        db_proj_id = projects_col.insert_one(new_proj).inserted_id
+
+        new_source = project_obj['sourceDoc']
+        # DB values
+        new_source['user_id'] = user['_id']
+        new_source['project_id'] = db_proj_id
+        new_source['deleted'] = False
+        new_source['version'] = 0
+
+        new_source_hist = {
+            # DB values
+            'user_id': user['_id'],
+            'project_id': db_proj_id,
+            'history': [new_source]
+        }
+        db_source_hist_id = sources_hist_col.insert_one(new_source_hist).inserted_id
+
+        new_source['history_id'] = db_source_hist_id
+        db_source_id = sources_col.insert_one(new_source).inserted_id
+
+        new_summaries = project_obj['summaryDocs']
+        db_summaries_ids = []
+        for summary in new_summaries:
+            db_summaries_ids.append(
+                new_summary(summary, db_proj_id, user['_id']))
+
+        projects_col.update_one(
+            {
+                "_id": db_proj_id,
+            },
+            {
+                '$set':
+                {
+                    'source_id': db_source_id,
+                    'summaries_id': db_summaries_ids
+                }
+            }
+            )
+        return convert_bson(get_project(db_proj_id))
 
 
 @app.post("/v1/user/project/update")
@@ -311,7 +397,7 @@ def is_about_to_expire(token):
     return now > expiry_treshold
 
 
-def is_token_valid(request: Request):
+def is_user_valid(request: Request):
     res = False
     if 'user' in request.session:
         user = get_user_from_session(request)
@@ -357,7 +443,7 @@ def is_token_valid(request: Request):
 @app.get("/auth/identity")
 async def logged_in(request: Request):
     res = False
-    valid = is_token_valid(request)
+    valid = is_user_valid(request)
     if valid is True:
         token = get_token_from_session(request)
         # prepare the decrypted printable data

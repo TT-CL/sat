@@ -8,6 +8,9 @@ export class Project {
   last_edit: Date;
   sourceDoc: IUCollection;
   summaryDocs: IUCollection[];
+  //DB values
+  user_id;
+  deleted : boolean;
 
   constructor() {
     this.last_edit = new Date();
@@ -36,6 +39,9 @@ export class Project {
     this.description = anon.description;
     this.sourceDoc = new IUCollection();
     this.sourceDoc.reconsolidate(anon.sourceDoc);
+    //DB values
+    this.user_id = anon.user_id;
+    this.deleted = anon.deleted;
 
     this.summaryDocs = [];
     if (anon.summaryDocs) {
