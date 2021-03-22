@@ -9,6 +9,7 @@ export class Project {
   sourceDoc: IUCollection;
   summaryDocs: IUCollection[];
   //DB values
+  _id;
   user_id;
   deleted : boolean;
 
@@ -40,6 +41,7 @@ export class Project {
     this.sourceDoc = new IUCollection();
     this.sourceDoc.reconsolidate(anon.sourceDoc);
     //DB values
+    this._id = anon._id;
     this.user_id = anon.user_id;
     this.deleted = anon.deleted;
 

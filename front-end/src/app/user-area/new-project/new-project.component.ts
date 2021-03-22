@@ -171,6 +171,7 @@ export class NewProjectComponent {
           //console.log('${fName} is ${percentDone}% loaded.');
         } else if (event instanceof HttpResponse) {
           let proj = new Project();
+          console.log(event.body);
           proj.reconsolidate(event.body);
           this.storage.addProject(proj);
         }

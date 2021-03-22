@@ -15,6 +15,7 @@ export class IUCollection {
   sents: string[];
 
   //db values
+  _id
   user_id
   project_id
   history_id
@@ -150,6 +151,7 @@ export class IUCollection {
       this.sents.push(anon_sent);
     }
     //db objects
+    this._id = anon._id;
     this.user_id = anon.user_id;
     this.project_id = anon.project_id;
     this.history_id = anon.history_id;

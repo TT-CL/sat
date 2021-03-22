@@ -3,7 +3,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
-import { Project } from './objects/objects.module';
+import { IUCollection, Project } from './objects/objects.module';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -87,6 +87,69 @@ export class BackEndService {
 
   createProject(project: Project): Observable<HttpEvent<any>>{
     let url = "/api/v1/user/project/create";
+
+    let formData = new FormData();
+    formData.append('project', JSON.stringify(project))
+
+    const options = {
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('POST', url, formData, options);
+
+    return this.http.request(req);
+  }
+  
+  updateSource(source: IUCollection, silent_mode: boolean): Observable<HttpEvent<any>> {
+    let url = "/api/v1/user/source/update";
+
+    let formData = new FormData();
+    formData.append('source', JSON.stringify(source))
+    formData.append('silent_mode', JSON.stringify(silent_mode))
+
+    const options = {
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('POST', url, formData, options);
+
+    return this.http.request(req);
+  }
+
+  createSummary(summary: IUCollection, project_id, silent_mode: boolean): Observable<HttpEvent<any>> {
+    let url = "/api/v1/user/summary/create";
+
+    let formData = new FormData();
+    formData.append('project_id', JSON.stringify(project_id))
+    formData.append('summary', JSON.stringify(summary))
+    formData.append('silent_mode', JSON.stringify(silent_mode))
+
+    const options = {
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('POST', url, formData, options);
+
+    return this.http.request(req);
+  }
+
+  deleteSummary(summary: IUCollection): Observable<HttpEvent<any>> {
+    let url = "/api/v1/user/summary/delete";
+
+    let formData = new FormData();
+    formData.append('summary_id', JSON.stringify(summary._id))
+
+    const options = {
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('POST', url, formData, options);
+
+    return this.http.request(req);
+  }
+
+  updateProject(project: Project): Observable<HttpEvent<any>> {
+    let url = "/api/v1/user/project/update";
 
     let formData = new FormData();
     formData.append('project', JSON.stringify(project))

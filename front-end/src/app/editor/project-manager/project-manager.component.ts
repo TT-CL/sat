@@ -23,7 +23,7 @@ export class ProjectManagerComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private overlayService: OverlayService,
-    private textService: BackEndService,
+    private backend: BackEndService,
     private storage: StorageService,
     private router: Router,
     private route: ActivatedRoute) {
@@ -148,7 +148,7 @@ export class ProjectManagerComponent implements OnInit {
     let doc = new IUCollection();
     console.log("Uploading " + fName);
     if(file.type == "text/plain"){
-      this.textService.getLabelledText(mode, file).subscribe(
+      this.backend.getLabelledText(mode, file).subscribe(
       event => {
         if (event.type == HttpEventType.UploadProgress) {
           const percentDone = Math.round(100 * event.loaded / event.total);
@@ -157,9 +157,16 @@ export class ProjectManagerComponent implements OnInit {
           let doc = new IUCollection();
           doc.readDocument(event.body);
           if (mode == "source"){
-            this.parsedSource = doc;
+            let cur_src = this.cur_proj.sourceDoc;
+            // copy over db data
+            doc._id = cur_src._id;
+            doc.user_id = cur_src.user_id;
+            doc.project_id = cur_src.project_id;
+            doc.history_id = cur_src.history_id;
+            doc.deleted = cur_src.deleted;
+            this.updateSource(doc);
           }else if (mode == "summary"){
-            this.parsedSummaries.push(doc);
+            this.createSummary(doc);
           }
         }
       },
@@ -167,12 +174,94 @@ export class ProjectManagerComponent implements OnInit {
         console.log("Error uploading " + fName + " :", err);
       }, () => {
         console.log(fName + " uploaded successfully");
+        /**
         this.progress = this.progress + 1;
         if(this.progress == this.docNumber){
             this.uploadComplete();
         }
+        */
       });
     }
+  }
+
+  createSummary(summary: IUCollection): void{
+    this.backend.createSummary(summary, this.cur_proj._id, false).subscribe(
+      event => {
+        if (event.type == HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          //console.log('${fName} is ${percentDone}% loaded.');
+        } else if (event instanceof HttpResponse) {
+          let doc = new IUCollection();
+          doc.reconsolidate(event.body);
+          this.parsedSummaries.push(doc);
+        }
+      },
+      (err) => {
+        console.log("Error inserting summary into db " + summary.doc_name + " :", err);
+      }, () => {
+        console.log(summary.doc_name + " inserted successfully");
+        this.progress = this.progress + 1;
+        if (this.progress == this.docNumber) {
+          this.uploadComplete();
+        }
+      });
+  }
+
+  updateSource(source: IUCollection): void{
+    this.backend.updateSource(source, false).subscribe(
+      event => {
+        if (event.type == HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          //console.log('${fName} is ${percentDone}% loaded.');
+        } else if (event instanceof HttpResponse) {
+          let doc = new IUCollection();
+          doc.reconsolidate(event.body);
+          this.parsedSource = doc;
+        }
+      },
+      (err) => {
+        console.log("Error updating source into db " + source.doc_name + " :", err);
+      }, () => {
+        console.log(source.doc_name + " updated successfully");
+        this.progress = this.progress + 1;
+        if (this.progress == this.docNumber) {
+          this.uploadComplete();
+        }
+      });
+  }
+
+  deleteSummary(summary: IUCollection): void {
+    this.backend.deleteSummary(summary).subscribe(
+      event => {
+        if (event.type == HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          //console.log('${fName} is ${percentDone}% loaded.');
+        } else if (event instanceof HttpResponse) {
+          console.log("ok!")
+        }
+      },
+      (err) => {
+        console.log("Error deleting summary " + summary.doc_name + " :", err);
+      }, () => {
+        console.log(summary.doc_name + " deleted successfully");
+      });
+  }
+
+  updateProject(project: Project): void {
+    this.backend.updateProject(project).subscribe(
+      event => {
+        if (event.type == HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          //console.log('${fName} is ${percentDone}% loaded.');
+        } else if (event instanceof HttpResponse) {
+          console.log("ok!")
+        }
+      },
+      (err) => {
+        console.log("Error updating the projcet:", err);
+      }, () => {
+        console.log("Project updated successfully");
+      });
   }
 
   uploadComplete(): void {
@@ -181,12 +270,15 @@ export class ProjectManagerComponent implements OnInit {
     console.log("Upload completed successfully");
     this.cur_proj.name = this.projectForm.value.title
     this.cur_proj.description = this.projectForm.value.description;
+    this.cur_proj.last_edit = new Date()
+    this.updateProject(this.cur_proj);
     if(this.parsedSource){
       this.cur_proj.sourceDoc = this.parsedSource;
       console.log("changed source file");
     }
     if(this.summaryRemovalQueue.length > 0 ){
       for(let summary of this.summaryRemovalQueue){
+        this.deleteSummary(summary);
         let index = this.cur_proj.summaryDocs.indexOf(summary);
         this.cur_proj.summaryDocs.splice(index, 1);
       }
@@ -203,7 +295,7 @@ export class ProjectManagerComponent implements OnInit {
       }
     }
 
-    this.storage.updateCurProject(this.cur_proj);
+    this.storage.updateCurProject(this.cur_proj, false);
     console.log(this.storage);
   }
 

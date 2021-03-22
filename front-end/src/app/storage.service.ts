@@ -132,7 +132,7 @@ export class StorageService {
     this.cur_project.next(this.cur_project_support);
   }
 
-  updateCurProject(proj: Project){
+  updateCurProject(proj: Project, sync: boolean = true){
     //update current project
     this.cur_project_support = proj;
     this.cur_project.next(this.cur_project_support);
