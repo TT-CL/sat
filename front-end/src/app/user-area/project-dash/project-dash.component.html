@@ -1,5 +1,6 @@
 <div class="dash-grid horizontal-center">
   <div class="grid-cell horizontal-center vertical-center">
+    <div class="overlay-container" #overlayOrigin>
     <mat-card class="mat-card">
       <mat-card-header>
         <mat-card-title>Welcome {{ userName$ | async }}</mat-card-title>
@@ -25,5 +26,6 @@
         </div>
       </mat-card-content>
     </mat-card>
+    </div>
   </div>
 </div>

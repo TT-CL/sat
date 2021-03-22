@@ -244,7 +244,10 @@ async def get_project_list(
         "user_id": {"$eq": user['_id']}
     })
 
-    projects_obj = [get_project(p['_id']) for p in projects]
+    projects_obj = []
+    for p in projects:
+        if p['deleted'] is False:
+            projects_obj.append(get_project(p['_id']))
 
     return convert_from_bson(projects_obj)
 
@@ -260,7 +263,7 @@ async def create_proj(
         return False
 
     user = get_user_from_session(request)
-    project_obj = loads(project)
+    project_obj = bson.loads(project)
     # defaults for optional parameters
     description = None
     if 'description' in project_obj.keys():
@@ -283,6 +286,9 @@ async def create_proj(
     new_source['project_id'] = db_proj_id
     new_source['deleted'] = False
     new_source['version'] = 0
+    # pop the id if it exists
+    if '_id' in new_source.keys():
+        new_source.pop('_id')
 
     new_source_hist = {
         # DB values
