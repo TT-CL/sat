@@ -329,19 +329,18 @@ async def update_proj(
 async def delete_proj(
         request: Request,
         response: Response,
-        project: str = Form(...)):
+        project_id: str = Form(...)):
     if not is_user_valid(request):
         # Guard against unauthenticated
         response.status_code = status.HTTP_401_UNAUTHORIZED
         return False
 
     user = get_user_from_session(request)
-    project_obj = bson.loads(project)
-    db_proj = projects_col.find_one(project_obj['_id'])
+    ram_id = bson.loads(project_id)
+    db_proj = projects_col.find_one(ram_id)
     # these 3 ids MUST coincide
     db_proj_id = db_proj['user_id']
     user_id = user['_id']
-    ram_id = project_obj['user_id']
     if ram_id != db_proj_id or ram_id != user_id:
         # Guard against unauthorized acces to db objets that are not
         # the user's property
@@ -543,19 +542,18 @@ async def update_summary(
 async def delete_summary(
         request: Request,
         response: Response,
-        summary: str = Form(...)):
+        summary_id: str = Form(...)):
     if not is_user_valid(request):
         # Guard against unauthenticated
         response.status_code = status.HTTP_401_UNAUTHORIZED
         return False
 
     user = get_user_from_session(request)
-    summary_obj = bson.loads(summary)
-    db_summary = summaries_col.find_one(summary_obj['_id'])
+    ram_id = bson.loads(summary_id)
+    db_summary = summaries_col.find_one(ram_id)
     # these 3 ids MUST coincide
     db_sum_id = db_summary['user_id']
     user_id = user['_id']
-    ram_id = summary_obj['user_id']
     if ram_id != db_sum_id or ram_id != user_id:
         # Guard against unauthorized acces to db objets that are not
         # the user's property
@@ -565,7 +563,7 @@ async def delete_summary(
     # Update source
     summaries_col.update_one(
         {
-            "_id": summary_obj['_id'],
+            "_id": db_summary['_id'],
         },
         {
             '$set':
@@ -575,7 +573,7 @@ async def delete_summary(
         }
     )
     # update history
-    cur_db_summary = summaries_col.find_one(summary_obj['_id'])
+    cur_db_summary = summaries_col.find_one(db_summary['_id'])
     summaries_hist_col.update_one(
         {
             "_id": cur_db_summary['history_id'],
