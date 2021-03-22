@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
-import { HttpClient, HttpEvent, HttpHeaders, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
 import { IUCollection, Project } from './objects/objects.module';
 
 const httpOptions = {
@@ -131,6 +131,39 @@ export class BackEndService {
     const req = new HttpRequest('POST', url, formData, options);
 
     return this.http.request(req);
+  }
+
+  updateSummary(summary: IUCollection, silent_mode: boolean): Observable<HttpEvent<any>> {
+    let url = "/api/v1/user/summary/update";
+
+    let formData = new FormData();
+    formData.append('summary', JSON.stringify(summary))
+    formData.append('silent_mode', JSON.stringify(silent_mode))
+
+    const options = {
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('POST', url, formData, options);
+
+    return this.http.request(req);
+  }
+
+  updateSummarySilent(summary: IUCollection): void{
+    this.updateSummary(summary, true).subscribe(
+      event => {
+        if (event.type == HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          //console.log('${fName} is ${percentDone}% loaded.');
+        } else if (event instanceof HttpResponse) {
+          console.log("ok!")
+        }
+      },
+      (err) => {
+        console.log("Error updating the work summary:", err);
+      }, () => {
+        console.log("Work summary updated successfully");
+      });
   }
 
   deleteSummary(summary: IUCollection): Observable<HttpEvent<any>> {

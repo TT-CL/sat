@@ -4,6 +4,7 @@ import { IdeaUnit, IUCollection, Project } from './objects/objects.module';
 import {BehaviorSubject, Observable} from 'rxjs';
 
 import {SessionStorageService} from 'ngx-webstorage';
+import { BackEndService } from './back-end.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,9 @@ export class StorageService {
   projects_support : Project[] = [];
   projects : BehaviorSubject<Project []>;
 
-  constructor(private session: SessionStorageService){
+  constructor(
+    private session: SessionStorageService,
+    private backend: BackEndService){
     console.log("Loading projects from session...");
     let anonymous_objects = this.session.retrieve('projects_support');
 
@@ -132,7 +135,7 @@ export class StorageService {
     this.cur_project.next(this.cur_project_support);
   }
 
-  updateCurProject(proj: Project, sync: boolean = true){
+  updateCurProject(proj: Project, sync: boolean = false){
     //update current project
     this.cur_project_support = proj;
     this.cur_project.next(this.cur_project_support);
@@ -181,12 +184,15 @@ export class StorageService {
     this.work_summary.next(this.work_summary_support);
   }
 
-  updateWorkSummary(summary : IUCollection){
+  updateWorkSummary(summary : IUCollection, sync: boolean = false){
     this.work_summary_support = summary;
     this.work_summary.next(this.work_summary_support);
     this.cur_project_support.summaryDocs[this.work_summary_idx] = summary;
     this.cur_project.next(this.cur_project_support);
     //TODO: upload to server
+    if (sync){
+      this.backend.updateSummarySilent(summary);
+    }
 
     // update full projects in memory
     this.projects_support[this.cur_project_idx] = this.cur_project_support;

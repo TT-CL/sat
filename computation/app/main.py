@@ -496,12 +496,14 @@ async def create_summary(
 async def update_summary(
         request: Request,
         response: Response,
-        summary: str = Form(...)):
+        summary: str = Form(...),
+        silent_mode: str = Form(...)):
     if not is_user_valid(request):
         # Guard against unauthenticated
         response.status_code = status.HTTP_401_UNAUTHORIZED
         return False
 
+    silent = json.loads(silent_mode)
     user = get_user_from_session(request)
     summary_obj = bson.loads(summary)
     db_summary = summaries_col.find_one(summary_obj['_id'])
@@ -528,7 +530,7 @@ async def update_summary(
                 'ius': summary_obj['ius'],
                 'manual_iu_count': summary_obj['manual_iu_count'],
                 'max_connected_idx': summary_obj['max_connected_idx'],
-                'nax_disc_idx': summary_obj['nax_disc_idx'],
+                'max_disc_idx': summary_obj['max_disc_idx'],
                 'max_seg_count': summary_obj['max_seg_count'],
                 'segs': summary_obj['segs'],
                 'sents': summary_obj['sents'],
@@ -551,7 +553,10 @@ async def update_summary(
             }
         }
     )
-    return convert_from_bson(cur_db_summary)
+    if silent:
+        return True
+    else:
+        return convert_from_bson(cur_db_summary)
 
 
 @app.post("/v1/user/summary/delete", status_code=status.HTTP_200_OK)

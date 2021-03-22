@@ -59,7 +59,8 @@ export class SourceLinkComponent implements OnInit {
       // I do not want to update the source, as it can have multiple summaries
       //this.selected_iu.toggleIuLink(this.selected_summary_iu);
       this.selected_summary_iu.toggleIuLink(this.selected_iu);
-      this.storage.updateWorkSummary(this.summaryDoc);
+      this.summaryDoc.ius[this.selected_summary_iu.label] = this.selected_summary_iu;
+      this.storage.updateWorkSummary(this.summaryDoc, true);
       this.storage.switchClickedSourceIU(this.selected_iu);
     }
   }
