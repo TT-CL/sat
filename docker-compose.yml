@@ -48,6 +48,8 @@ services:
       - ./db/init:/docker-entrypoint-initdb.d
     networks:
       - backend
+    labels:
+      - "traefik.enable=false"
 
 networks:
   frontend:

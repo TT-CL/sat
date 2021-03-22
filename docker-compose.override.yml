@@ -44,8 +44,6 @@ services:
     ports:
       - "8081:8081"
       - "27017:27017"
-    labels:
-      - "traefik.enable=false"
 
 networks:
   backend:
