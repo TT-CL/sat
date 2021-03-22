@@ -85,6 +85,20 @@ export class BackEndService {
 
   // CRUD METHODS TO KEEP THE DB UP TO DATE
 
+  getProjects(): Observable<HttpEvent<any>>{
+    let url = "/api/v1/user/project/list";
+
+    let formData = new FormData();
+
+    const options = {
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('GET', url, formData, options);
+
+    return this.http.request(req);
+  }
+
   createProject(project: Project): Observable<HttpEvent<any>>{
     let url = "/api/v1/user/project/create";
 

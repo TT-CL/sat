@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 
 import { filter } from 'rxjs/operators';
+import { StorageService } from 'src/app/storage.service';
 
 
 import { AuthService } from '../../auth.service';
@@ -18,7 +19,8 @@ export class NavAuthWidgetComponent implements OnInit{
 
   constructor(
     private router: Router,
-    private auth: AuthService
+    private auth: AuthService,
+    private storage: StorageService,
   ) {
     //listen to router change events to hide the login button when redundant
     router.events.pipe(
@@ -44,6 +46,7 @@ export class NavAuthWidgetComponent implements OnInit{
 
   public logout() {
     this.auth.logout();
+    this.storage.clearProjects();
     this.redirectToRoot();
   }
 

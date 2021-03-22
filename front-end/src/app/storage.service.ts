@@ -5,6 +5,8 @@ import {BehaviorSubject, Observable} from 'rxjs';
 
 import {SessionStorageService} from 'ngx-webstorage';
 import { BackEndService } from './back-end.service';
+import { AuthService } from './auth.service';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -36,28 +38,65 @@ export class StorageService {
 
   constructor(
     private session: SessionStorageService,
-    private backend: BackEndService){
+    private backend: BackEndService,
+    private auth: AuthService){
     console.log("Loading projects from session...");
     let anonymous_objects = this.session.retrieve('projects_support');
+    
+    // initialize the Subject for the observers
+    this.projects = new BehaviorSubject<Project[]>(null);
+    this.cur_project = new BehaviorSubject<Project>(null);
+    this.work_source = new BehaviorSubject<IUCollection>(null);
+    this.work_summary = new BehaviorSubject<IUCollection>(null);
+    this.clicked_source_iu = new BehaviorSubject<IdeaUnit>(null);
+    this.clicked_summary_iu = new BehaviorSubject<IdeaUnit>(null);
+    this.work_similarities = new BehaviorSubject<Object>(null);
+    auth.loggedInPromise().then(logged =>{
+      if (logged){
+        // retrieve projects from db
+        this.downloadProjects();
+      }else{
+        this.initSubjects(anonymous_objects);
+      }
+    })
+  }
 
+  downloadProjects(): void {
+    this.backend.getProjects().subscribe(
+      event => {
+        if (event.type == HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          //console.log('${fName} is ${percentDone}% loaded.');
+        } else if (event instanceof HttpResponse) {
+          //console.log("ok!")
+          this.initSubjects(event.body);
+        }
+      },
+      (err) => {
+        console.log("Error downloading projects:", err);
+      }, () => {
+        //console.log("Work summary updated successfully");
+      });
+  }
+
+  initSubjects( anonymous_objects){
     //load the projects as a Typescript Project
-    if (anonymous_objects){
-      for (let obj of anonymous_objects){
+    if (anonymous_objects) {
+      for (let obj of anonymous_objects) {
         let proj = new Project();
         proj.reconsolidate(obj);
         this.projects_support.push(proj);
       }
     }
     console.log(this.projects_support);
-
     // initialize the Subject for the observers
-    this.projects = new BehaviorSubject<Project []>(this.projects_support);
-    this.cur_project = new BehaviorSubject<Project>(this.cur_project_support);
-    this.work_source = new BehaviorSubject<IUCollection>(this.work_source_support);
-    this.work_summary = new BehaviorSubject<IUCollection>(this.work_summary_support);
-    this.clicked_source_iu = new BehaviorSubject<IdeaUnit>(this.clicked_source_iu_support);
-    this.clicked_summary_iu = new BehaviorSubject<IdeaUnit>(this.clicked_summary_iu_support);
-    this.work_similarities = new BehaviorSubject<Object>(this.work_similarities_support);
+    this.projects.next(this.projects_support);
+    this.cur_project.next(this.cur_project_support);
+    this.work_source.next(this.work_source_support);
+    this.work_summary.next(this.work_summary_support);
+    this.clicked_source_iu.next(this.clicked_source_iu_support);
+    this.clicked_summary_iu.next(this.clicked_summary_iu_support);
+    this.work_similarities.next(this.work_similarities_support);
   }
 
   /// ALL PROJECTS SAVE AREA ///

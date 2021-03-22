@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SessionStorageService } from 'ngx-webstorage';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { pluck, map, last } from 'rxjs/operators';
-import { StorageService } from './storage.service';
 
 interface Identity {
   email: string;
@@ -29,7 +28,6 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private storage: StorageService,
     private session: SessionStorageService,
     private router: Router,
   ) {
@@ -105,7 +103,6 @@ export class AuthService {
   logout() {
     //only clearing projects to avoid deleeting some objects that I shouldn't
     //this.storage.clearSession();
-    this.storage.clearProjects();
     this.cachedIdentity.next(null);
     this.session.clear('cached_identity')
 

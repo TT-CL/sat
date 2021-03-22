@@ -229,6 +229,26 @@ def new_summary(summary, proj_id, user_id):
     return db_summary_id
 
 
+@app.get("/v1/user/project/list", status_code=status.HTTP_200_OK)
+async def get_project_list(
+        request: Request,
+        response: Response):
+    if not is_user_valid(request):
+        # Guard against unauthenticated
+        response.status_code = status.HTTP_401_UNAUTHORIZED
+        return False
+
+    user = get_user_from_session(request)
+
+    projects = projects_col.find({
+        "user_id": {"$eq": user['_id']}
+    })
+
+    projects_obj = [get_project(p['_id']) for p in projects]
+
+    return convert_from_bson(projects_obj)
+
+
 @app.post("/v1/user/project/create", status_code=status.HTTP_201_CREATED)
 async def create_proj(
         request: Request,
