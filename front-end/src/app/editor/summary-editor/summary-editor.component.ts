@@ -183,8 +183,15 @@ export class SummaryEditorComponent implements OnInit {
       this.newDoc.continuityCheck();
       // keep old sents;
       this.newDoc.sents = this.doc.sents;
+      // copy over db data
+      this.newDoc._id = this.doc._id;
+      this.newDoc.user_id = this.doc.user_id;
+      this.newDoc.project_id = this.doc.project_id;
+      this.newDoc.history_id = this.doc.history_id;
+      this.newDoc.deleted = this.doc.deleted;
+
       this.storage.clearSimilarities(this.doc.doc_name);
-      this.storage.updateWorkSummary(this.newDoc);
+      this.storage.updateWorkSummary(this.newDoc, true);
     }
   }
 }

@@ -116,6 +116,23 @@ export class BackEndService {
     return this.http.request(req);
   }
 
+  updateSourceSilent(source: IUCollection): void {
+    this.updateSource(source, true).subscribe(
+      event => {
+        if (event.type == HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          //console.log('${fName} is ${percentDone}% loaded.');
+        } else if (event instanceof HttpResponse) {
+          //console.log("ok!")
+        }
+      },
+      (err) => {
+        console.log("Error updating the work source:", err);
+      }, () => {
+        //console.log("Work source updated successfully");
+      });
+  }
+
   createSummary(summary: IUCollection, project_id, silent_mode: boolean): Observable<HttpEvent<any>> {
     let url = "/api/v1/user/summary/create";
 
@@ -156,13 +173,13 @@ export class BackEndService {
           const percentDone = Math.round(100 * event.loaded / event.total);
           //console.log('${fName} is ${percentDone}% loaded.');
         } else if (event instanceof HttpResponse) {
-          console.log("ok!")
+          //console.log("ok!")
         }
       },
       (err) => {
         console.log("Error updating the work summary:", err);
       }, () => {
-        console.log("Work summary updated successfully");
+        //console.log("Work summary updated successfully");
       });
   }
 

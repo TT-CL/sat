@@ -141,6 +141,14 @@ export class StorageService {
     this.cur_project.next(this.cur_project_support);
     //TODO: upload to server
 
+    if(sync){
+      console.log(proj.sourceDoc)
+      this.backend.updateSourceSilent(proj.sourceDoc);
+      proj.summaryDocs.forEach(summary => {
+        this.backend.updateSummarySilent(summary);
+      });
+    }
+
     // update full projects in memory
     this.projects_support[this.cur_project_idx] = proj;
     this.projects.next(this.projects_support);

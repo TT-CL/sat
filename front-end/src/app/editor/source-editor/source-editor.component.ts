@@ -188,10 +188,17 @@ export class SourceEditorComponent implements OnInit {
     // keep old sents;
     this.newDoc.sents = this.doc.sents;
     //this.storage.updateWorkSource(this.newDoc);
+    // copy over db data
+    this.newDoc._id = this.doc._id;
+    this.newDoc.user_id = this.doc.user_id;
+    this.newDoc.project_id = this.doc.project_id;
+    this.newDoc.history_id = this.doc.history_id;
+    this.newDoc.deleted = this.doc.deleted;
+
     this.proj.sourceDoc = this.newDoc
     this.proj.purgeProjectLinks();
     this.storage.clearAllSimilarities();
-    this.storage.updateCurProject(this.proj)
+    this.storage.updateCurProject(this.proj, true)
     }
   }
 }
