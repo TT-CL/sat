@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  azure_app_insights: 'YOUR_CONNECTION_STRING_GOES_HERE',
 };
 
 /*

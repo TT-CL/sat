@@ -13,6 +13,8 @@
 .env
 /computation/variables.env
 /front-end/.env
+/front-end/src/environments/environment.ts
+/front-end/src/environments/environment.prod.ts
 /db/variables.env
 /db/api.env
 
