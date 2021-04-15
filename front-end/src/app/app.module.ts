@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -62,6 +62,7 @@ import { SummaryEditorComponent } from './editor/summary-editor/summary-editor.c
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContenteditableModule } from '@ng-stack/contenteditable';
 import { UserUnauthorizedComponent } from './user-unauthorized/user-unauthorized.component';
+import { TelemetryErrorHandlerService } from './telemetry-error-handler.service';
 
 
 @NgModule({
@@ -123,7 +124,15 @@ import { UserUnauthorizedComponent } from './user-unauthorized/user-unauthorized
     MatTooltipModule,
     ContenteditableModule,
   ],
-  providers: [OverlayService, DynamicOverlay, DynamicOverlayContainer ],
+  providers: [
+    OverlayService, 
+    DynamicOverlay, 
+    DynamicOverlayContainer, 
+    {
+      provide: ErrorHandler,
+      useClass: TelemetryErrorHandlerService
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
