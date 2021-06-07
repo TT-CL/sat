@@ -38,6 +38,10 @@ def clean_str(s):
     res = res.replace("“", "\"")
     res = res.replace("”", "\"")
     res = re.sub("\s+", " ", res)  # replace multiple spaces with a single one
+    # ensure that each open parens has at most one whitespace before
+    res = re.sub("\s*\\(", " (", res)
+    # ensure that each close parens has at most one whitespace afterwards
+    res = re.sub("\\)\s*", ") ", res)
     res = res.strip()
     return res
 
