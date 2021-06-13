@@ -195,7 +195,7 @@ def find_seq_head(sequence):
             node = father
             father = node.head
             # a root father will not have a head
-            if father is root:
+            if father == root:
                 node = father
                 break
     return node
