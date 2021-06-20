@@ -176,10 +176,10 @@ def is_isolated(sequence):
     for word in sequence:
         # if word does not have the attribute head, it is the root
         if hasattr(word, "head"):
-            if word.head not in sequence:
+            if word.head not in sequence and word.head.pos_ != 'PUNCT':
                 outside_connections += 1
         for child in word.children:
-            if child not in sequence:
+            if child not in sequence and child.pos_ != 'PUNCT':
                 outside_connections += 1
     # print(outside_connections)
     return outside_connections == 1
@@ -196,7 +196,8 @@ def find_seq_head(sequence):
             father = node.head
             # a root father will not have a head
             if father == root:
-                node = father
+                if father in sequence:
+                    node = father
                 break
     return node
 
