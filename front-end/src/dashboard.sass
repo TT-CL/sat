@@ -19,16 +19,21 @@
 
 // GRID AND CELL POSITIONS
 
-$card-width-side-by-side: 530px
+$toolbar-width: 90px
+$toolbar-height: 64px
+$toolbar-margin: 30px
+
+$card-width-side-by-side: max(530px, #{calc(35vw - #{$toolbar-width})})
 $card-max-width-side-by-side: 550px
 
-$card-width-alone: 700px
-$card-max-width-alone: 800px
+$card-width-alone: max(700px, #{calc(50vw - #{$toolbar-width})})
+//$card-max-width-alone: 800px
 
-$toolbar-width: 90px
 
-$card-height: 600px
-$card-max-height: 600px
+$body-height: calc(100vh - #{$toolbar-height})
+
+$card-height: calc(#{$body-height} - 50px)
+$card-max-height: 800px
 
 $card-margin: 12px //horizontal margin
 $card-content-margin: 6px //vertical margin
@@ -38,10 +43,11 @@ $card-header-margin: 10px
 
 .dash-grid
   display: grid
+  height: $body-height
   grid-column-gap: 5px
   grid-template-columns: auto auto auto
   grid-template-rows: auto
-  margin-top: 30px
+  padding-top: 0px
   margin-left: auto
   margin-right: auto
 
@@ -62,7 +68,7 @@ $card-header-margin: 10px
   display: block
   order: 1
   width: $card-width-alone
-  max-width: $card-max-width-alone
+  //max-width: $card-max-width-alone
 
 .toolbar-cell
   grid-area: toolbar
@@ -78,7 +84,7 @@ $card-header-margin: 10px
   order: 1
   grid-area: left
   width: $card-width-alone
-  max-width: $card-max-width-alone
+  //max-width: $card-max-width-alone
 
 .source-cell-display-summary
   disply: none
