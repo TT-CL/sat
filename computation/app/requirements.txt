@@ -4,12 +4,12 @@ wheel
 # numpy
 smart-open==3.0.0
 gensim>=4.0.0b0
-spacy
-python-multipart
-autocorrect
-json-tricks
-Authlib
-requests
-httpx
-itsdangerous
-pymongo
+spacy==3.1.2
+python-multipart==0.0.5
+autocorrect==2.5.0
+json-tricks==3.15.5
+Authlib==0.15.4
+requests==2.26.0
+httpx==0.18.1
+itsdangerous==2.0.1
+pymongo==3.12.0
