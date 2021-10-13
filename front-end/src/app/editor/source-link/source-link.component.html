@@ -32,7 +32,7 @@
       (these won't be printed if the prev bloc is true) -->
       <ng-template #notLinked>
         <ng-template [ngIf]="selected_summary_iu && sims" [ngIfElse]="notSuggested">
-          <ng-template [ngIf]="topNSims(selected_summary_iu,5).includes(seg.iu)" [ngIfElse]="notSuggested">
+          <ng-template [ngIf]="topNSims(selected_summary_iu,1).includes(seg.iu)" [ngIfElse]="notSuggested">
             <mat-chip color="suggested-link" (click)="linkClick(seg)" selected>
               {{seg.getText(doc,true)}}
             </mat-chip>

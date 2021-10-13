@@ -1,12 +1,12 @@
 <div class="source-editor">
   <div class="inner-content-area">
     <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChanged($event)">
-      <mat-tab label="Alter segments">
+      <mat-tab label="Text editor">
         <div class="scrollable-content">
           <pre contenteditable="true" class="monospace-editor" #preEditor (input)="preInput($event)" propValueAccessor="innerHTML" [formControl]="editor"></pre>
         </div>
       </mat-tab>
-      <mat-tab label="Connect segments">
+      <mat-tab label="Connect Disc IUs">
         <div class="connect-container">
           <div class="connect-chips">
             <mat-chip-list aria-label="sentence chips" class="summary-link-theme">

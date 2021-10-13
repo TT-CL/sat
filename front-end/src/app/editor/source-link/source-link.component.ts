@@ -66,8 +66,60 @@ export class SourceLinkComponent implements OnInit {
   }
 
   topNSims(iu: IdeaUnit, n: number){
+    /**
+    let temp_ius = Array(Object.keys(this.summaryDoc.ius))[0]
+    let card_iu = temp_ius.length
+    let iu_idx = temp_ius.indexOf(this.selected_summary_iu.label)
+    
+    let mean = (iu_idx+1)/card_iu
+    let sigma = 0.3
+
+    let card_source_iu = Array(Object.keys(this.doc.ius))[0].length
+
+    
+    let sims = this.sims[iu.label]
+    
+    return sims.sort(function(a, b){
+      //sort by label
+      var labelA = Number(a[1].substring(1))
+      var labelB = Number(b[1].substring(1))
+      if (labelA < labelB) {
+        return -1;
+      }
+      if (labelA > labelB) {
+        return 1;
+      }
+      return 0;
+    })
+    .map(
+        (value, index) => {
+          // gaussian adjustment
+          let x = (index + 1) / card_source_iu
+          let adjusted = value[2] * Math.exp(-1 / 2 * ((x - mean) ^ 2 / sigma ^ 2))
+          let res = [value[0], value[1], value[2], adjusted]
+          return res
+        }
+    )
+    .sort(function (a, b) {
+      //sort by sim
+      var simA = a[3]
+      var simB = b[3]
+      if (simA > simB) {
+        return -1;
+      }
+      if (simA < simB) {
+        return 1;
+      }
+      return 0;
+    }).slice(0, n).map(
+      (value, index) => {
+        return value[1]
+      });
+    */
+
     //return the second column of the first n records
-    return this.sims[iu.label].slice(0,n).map(
-      (value,index)=>{return value[1]});
+    return this.sims[iu.label].slice(0, n).map(
+      (value,index)=>{
+        return value[1]});
   }
 }

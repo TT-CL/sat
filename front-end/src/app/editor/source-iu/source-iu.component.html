@@ -1,17 +1,18 @@
 <!-- IU View -->
 <div class="scrollable-content">
   <mat-chip-list
-    aria-label="sentence chips" class="iu-bubbles">
+    aria-label="sentence chips" class="iu-viewer">
     <ng-template ngFor let-seg [ngForOf]="doc.getSegArray()">
       <ng-template [ngIf]="seg.type=='ghost'" [ngIfElse]="ghostElse">
-        <mat-chip color="ghost-bubble" [selected]="seg.selected">
+        <!--[selected]="seg.selected"-->
+        <mat-chip color="ghost-bubble" >
           {{seg.getText(doc, true)}}
         </mat-chip>
       </ng-template>
       <ng-template #ghostElse>
-        <mat-chip color="primary" [selected]="seg.selected" [ngClass]="{
+        <mat-chip color="primary" selected [ngClass]="{
           'disc-iu' : doc.ius[seg.iu].disc
-        }">
+        }"> <!--[selected]="seg.selected"-->
           {{seg.getText(doc, true)}}
         </mat-chip>
       </ng-template>

@@ -40,6 +40,17 @@ $def-button-theme: mat-light-theme((
   )
 ));
 
+$iu-viewer-primary: mat-palette($mat-amber, 50);
+$iu-viewer-accent: mat-palette($mat-blue, 200);
+$iu-viewer-warn: mat-palette($mat-grey, 300);
+$iu-viewer-theme: mat-light-theme((
+  color:(
+    primary: $iu-viewer-primary,
+    accent: $iu-viewer-accent,
+    warn: $iu-viewer-warn,
+  )
+));
+
 $iu-bubbles-primary: mat-palette($mat-light-blue);
 $iu-bubbles-accent: mat-palette($mat-yellow);
 $iu-bubbles-warn: mat-palette($mat-grey, 300);
@@ -87,6 +98,10 @@ $summary-link-theme: mat-light-theme((
 
 .def-button{
   @include angular-material-color($def-button-theme)
+}
+
+.iu-viewer{
+  @include angular-material-color($iu-viewer-theme)
 }
 
 .iu-bubbles{
