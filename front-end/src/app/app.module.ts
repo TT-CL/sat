@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -63,6 +63,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ContenteditableModule } from '@ng-stack/contenteditable';
 import { UserUnauthorizedComponent } from './user-unauthorized/user-unauthorized.component';
 import { TelemetryErrorHandlerService } from './telemetry-error-handler.service';
+import { GuideComponent } from './guide/guide.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 
 @NgModule({
@@ -95,6 +97,7 @@ import { TelemetryErrorHandlerService } from './telemetry-error-handler.service'
     SourceEditorComponent,
     SummaryEditorComponent,
     UserUnauthorizedComponent,
+    GuideComponent,
   ],
   imports: [
     BrowserModule,
@@ -123,6 +126,7 @@ import { TelemetryErrorHandlerService } from './telemetry-error-handler.service'
     MatSelectModule,
     MatTooltipModule,
     ContenteditableModule,
+    MarkdownModule.forRoot({ loader: HttpClient }),
   ],
   providers: [
     OverlayService, 

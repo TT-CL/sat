@@ -51,7 +51,7 @@ export class AuthService {
       this.cachedIdentity.next(identity);
       this.session.store('cached_identity', identity);
       if (identity != null && identity != false){
-        this.router.navigate(['/projects']);
+        //this.router.navigate(['/projects']);
       }
     });
   }

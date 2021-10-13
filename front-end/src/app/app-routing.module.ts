@@ -10,6 +10,7 @@ import { CatchLoginComponent } from './user-area/catch-login/catch-login.compone
 import { UserUnauthorizedComponent } from './user-unauthorized/user-unauthorized.component';
 
 import { AuthGuardService } from './auth-guard.service';
+import { GuideComponent } from './guide/guide.component';
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   //page called upon receiving the OAuth token from Google
   { path: 'logged-in', component: CatchLoginComponent },
   //{ path: '', redirectTo: '/projects', pathMatch: 'full' },
+  { path: 'guide', component: GuideComponent },
   {
     path: 'projects',
     component: ProjectDashComponent,
