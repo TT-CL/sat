@@ -1,5 +1,5 @@
-# SummaryEval
-Complete server architecture for a framework for the evaluation of L2 summaries.
+# Idea Unit Annotation Scribe
+Complete server architecture for a framework for supporting the annotation of Idea Unit alignment data.
 
 Current server structure:
  - traefik: reverse proxy and TLS certificates handler
