@@ -1,4 +1,4 @@
-# Idea Unit Annotation Scribe
+# Idea Unit Platform for Assisting Linking -- IU PAL
 Complete server architecture for a framework for supporting the annotation of Idea Unit alignment data.
 
 Current server structure:
