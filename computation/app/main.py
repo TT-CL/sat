@@ -10,9 +10,9 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.requests import Request
 
-from src.data import import_file, prepare_json, prepare_man_segs_json
+from iuextract.data import import_file, prepare_json, prepare_man_segs_json
 from src.glove import ModelWebWrapper
-from src.extract import label_ius
+from iuextract.extract import label_ius
 
 from json_tricks import loads
 from pprint import pprint
