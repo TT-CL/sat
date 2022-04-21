@@ -1,4 +1,5 @@
 # Segmentation and Alignment Tool - SAT
+![screenshot](./tool_screenshot.png)
 Complete server architecture for a framework for supporting the annotation of Idea Unit alignment data.
 
 Current server structure:
