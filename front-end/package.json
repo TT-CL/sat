@@ -23,13 +23,14 @@
     "@angular/router": "~13.3.4",
     "@microsoft/applicationinsights-web": "^2.6.1",
     "@ng-stack/contenteditable": "^1.1.1",
+    "marked": "^4.0.14",
     "ngx-markdown": "13.1",
     "ngx-webstorage": "^9.0.0",
     "rxjs": "^6.6.7",
     "tslib": "^2.0.0",
     "typeface-merriweather": "^1.1.13",
     "typeface-montserrat": "^1.1.13",
-    "xlsx": "^0.16.9",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {

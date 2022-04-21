@@ -37,6 +37,9 @@
 # dependencies
 /front-end/node_modules
 
+# Angular
+/front-end/.angular
+
 # profiling files
 /front-end/chrome-profiler-events*.json
 /front-end/speed-measure-plugin*.json
