@@ -74,7 +74,7 @@ def convert_to_bson(data):
 
 
 app = FastAPI(
-    title="Summary Eval API",
+    title="SAT API",
     version="v1",
     root_path="/api",
 )

@@ -14,7 +14,7 @@ import { ActivatedRouteSnapshot, ResolveEnd, Router } from '@angular/router';
 })
 
 export class AppComponent {
-  title = 'Summary Evaluator';
+  title = 'SAT';
   LOG_IN_INTERVAL: number = 5 //interval in minutes
 
   constructor(

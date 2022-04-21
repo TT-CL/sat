@@ -1,4 +1,4 @@
-# Idea Unit Platform for Assisting Linking -- IU PAL
+# Segmentation and Alignment Tool - SAT
 Complete server architecture for a framework for supporting the annotation of Idea Unit alignment data.
 
 Current server structure:
