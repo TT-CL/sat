@@ -1,9 +1,9 @@
 # Angular
-FROM node:15.10-alpine3.11 as front-end
+FROM node:18-alpine3.14 as front-end
 WORKDIR /opt/ng
 COPY package.json ./
-RUN npm install --global npm@6
-RUN npm install -g @angular/cli@11.2.3
+# RUN npm install --global npm@6
+RUN npm install -g @angular/cli@13
 RUN npm install
 # RUN npm update
 
