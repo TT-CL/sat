@@ -11,6 +11,6 @@ autocorrect==2.5.0
 json-tricks==3.15.5
 Authlib==0.15.4
 requests==2.26.0
-httpx==0.18.1
+httpx==0.23.0
 itsdangerous==2.0.1
 pymongo==3.12.0
