@@ -1,6 +1,6 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BackEndService } from 'src/app/back-end.service';
 import { OverlayService } from 'src/app/overlay.service';
@@ -21,7 +21,7 @@ type FileOrDoc = File | IUCollection;
 export class ProjectManagerComponent implements OnInit {
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private overlayService: OverlayService,
     private backend: BackEndService,
     private storage: StorageService,
@@ -54,7 +54,7 @@ export class ProjectManagerComponent implements OnInit {
 
   changedFlag: boolean = false;
 
-  projectForm : FormGroup = null;
+  projectForm : UntypedFormGroup = null;
 
   sourceFile: FileOrDoc | null = null;
   sourceFormValue: string = "";

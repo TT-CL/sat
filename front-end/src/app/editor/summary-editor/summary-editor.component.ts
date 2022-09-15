@@ -5,7 +5,7 @@ import { IdeaUnit, IUCollection, Project, Segment } from '../../objects/objects.
 import { StorageService } from '../../storage.service';
 import { BackEndService } from '../../back-end.service';
 
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -24,7 +24,7 @@ export class SummaryEditorComponent implements OnInit {
   preEdited: boolean = false;
   retrievedSegsFlag: boolean = false;
   newSegments: Array<string>;
-  editor = new FormControl();
+  editor = new UntypedFormControl();
 
   //connect segments
   discEdited = false;

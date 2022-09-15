@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef} from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 
 import { Observable, of} from 'rxjs';
 
@@ -23,7 +23,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class NewProjectComponent {
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private overlayService: OverlayService,
     private backend : BackEndService,
     private storage: StorageService,
