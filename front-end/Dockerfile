@@ -22,7 +22,7 @@ CMD ["npm", "start"]
 
 ## PRODUCTION
 FROM front-end as builder
-RUN ng build --prod
+RUN ng build --configuration production
 
 # nginx
 FROM nginx:alpine as prod
