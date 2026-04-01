@@ -84,19 +84,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "sat:build",
-            "proxyConfig": "./proxy.config.json"
+            "proxyConfig": "./proxy.config.json",
+            "buildTarget": "sat:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "sat:build:production"
+              "buildTarget": "sat:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "sat:build"
+            "buildTarget": "sat:build"
           }
         },
         "test": {
