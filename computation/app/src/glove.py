@@ -2,7 +2,7 @@ from autocorrect import Speller
 from json_tricks import dumps
 import spacy
 # from src.model import RAModel
-from src.model import Model
+from .model import Model
 
 nlp = spacy.load("en_core_web_sm")
 

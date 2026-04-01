@@ -2,6 +2,9 @@
 
 Web toolkit for the evaluation of L2 Summaries.
 
+## First Setup
+Copy `src/environments/environments.ts.example` to `src/environments/environments.ts` and edit the environment file accordingly. Afterwards, build the project dependencies with docker. See the README in the repo's main directory.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:5000/`. The app will automatically reload if you change any of the source files.

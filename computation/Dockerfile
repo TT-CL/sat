@@ -1,6 +1,11 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8
+FROM python:3.10.20-slim
 
-COPY ./app /app
+WORKDIR /code
 
-RUN pip install -r /app/requirements.txt
-RUN python -m spacy download en_core_web_sm
+COPY ./app/requirements.txt /code/app/requirements.txt
+
+RUN pip install --no-cache-dir --upgrade -r /code/app/requirements.txt
+
+COPY ./app /code/app
+
+CMD ["fastapi", "run", "app/main.py", "--proxy-headers", "--port", "80"]

@@ -10,7 +10,13 @@ Current server structure:
 The stack relies on Docker architecture and runs on docker-compose.
 
 ## First setup
-Clone the repo and run `docker-compose build`.
+Clone the repo and set up the environment files.
+### Setting up the environment files
+Copy example environment file in `db/api.env.example` and  `db/variables.env.example` to `db/api.env` and  `db/variables.env`. Edit the values accordingly.
+Run `touch computation/variables.env`. Check `computation/variables.env.example` for ideas on how to populate the backend's environment file. The `db/api.env` file will also be instantiated by docker compose, so there is no need to specify the api keys for the DB.
+Copy example environment file in `front-end/src/environments/environments.ts.example` to `front-end/src/environments/environments.ts`. Edit the values accordingly.
+### Building and serving the project
+Run `docker-compose build`.
 Once build is complete you can run `docker-compose up` to bring the servers up.
 Traefik handles reverse proxying.
 The angular `front-end` is served on `localhost:5000`, the FastAPI `computation` server is accessible via `localhost:5000/api` and the traefik dashboard is accessible via `traefik.localhost:5000`.

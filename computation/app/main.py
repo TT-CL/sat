@@ -10,8 +10,8 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.requests import Request
 
-from iuextract.data import import_file, prepare_json, prepare_man_segs_json
-from src.glove import ModelWebWrapper
+from iuextract.data import import_file, __prepare_json, __prepare_man_segs_json
+from .src.glove import ModelWebWrapper
 from iuextract.extract import label_ius
 
 from json_tricks import loads
@@ -40,7 +40,7 @@ oauth.register(
 # get the gensim model URI from the environment variable
 MODEL_URI = os.environ.get("GENSIM_MODEL")
 # if no environment variable is specified, then use the default location
-MODEL_URI = MODEL_URI if MODEL_URI else './models/gensim/model.bin'
+MODEL_URI = MODEL_URI if MODEL_URI else f'{(os.path.dirname(os.path.realpath(__file__)))}/models/gensim/model.bin'
 # get a secret key from the env variables
 SECRET_KEY = os.environ.get("SECRET_KEY")
 # if no environment variable is specified, then use random-string-12345

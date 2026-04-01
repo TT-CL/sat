@@ -1,7 +1,7 @@
 # Angular
 FROM node:18-alpine3.15 as front-end
 WORKDIR /opt/ng
-COPY package.json ./
+COPY package.json /opt/ng
 #RUN npm update
 # RUN npm install --global npm@6
 RUN npm install -g @angular/cli@14
@@ -14,7 +14,7 @@ COPY . ./
 
 ## DEVELOPMENT stage
 FROM front-end as dev
-RUN npm i --only=dev
+RUN npm i
 RUN ng build
 
 EXPOSE 4201
