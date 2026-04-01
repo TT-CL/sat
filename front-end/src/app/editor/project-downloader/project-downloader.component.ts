@@ -6,9 +6,10 @@ import { Project, IUCollection} from '../../objects/objects.module';
 import { StorageService } from '../../storage.service';
 
 @Component({
-  selector: 'app-project-downloader',
-  templateUrl: './project-downloader.component.html',
-  styleUrls: ['./project-downloader.component.sass']
+    selector: 'app-project-downloader',
+    templateUrl: './project-downloader.component.html',
+    styleUrls: ['./project-downloader.component.sass'],
+    standalone: false
 })
 export class ProjectDownloaderComponent implements OnInit {
 

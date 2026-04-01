@@ -1,9 +1,10 @@
 import { Component, OnInit, OnChanges, Input, SimpleChanges} from '@angular/core';
 
 @Component({
-  selector: 'iu-display',
-  templateUrl: './iu-display.component.html',
-  styleUrls: ['./iu-display.component.sass']
+    selector: 'iu-display',
+    templateUrl: './iu-display.component.html',
+    styleUrls: ['./iu-display.component.sass'],
+    standalone: false
 })
 export class IuDisplayComponent implements OnInit {
 

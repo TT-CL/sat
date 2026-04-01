@@ -9,10 +9,11 @@ import { UntypedFormControl } from '@angular/forms';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-summary-editor',
-  templateUrl: './summary-editor.component.html',
-  styleUrls: ['./summary-editor.component.sass'],
-  encapsulation: ViewEncapsulation.None, //required for css to work on innerHTML
+    selector: 'app-summary-editor',
+    templateUrl: './summary-editor.component.html',
+    styleUrls: ['./summary-editor.component.sass'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class SummaryEditorComponent implements OnInit {
   // data structs

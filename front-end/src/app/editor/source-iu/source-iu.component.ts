@@ -5,9 +5,10 @@ import { IUCollection } from '../../objects/objects.module';
 import { StorageService } from '../../storage.service';
 
 @Component({
-  selector: 'app-source-iu',
-  templateUrl: './source-iu.component.html',
-  styleUrls: ['./source-iu.component.sass']
+    selector: 'app-source-iu',
+    templateUrl: './source-iu.component.html',
+    styleUrls: ['./source-iu.component.sass'],
+    standalone: false
 })
 export class SourceIuComponent implements OnInit {
 

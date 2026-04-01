@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-user-unauthorized',
-  templateUrl: './user-unauthorized.component.html',
-  styleUrls: ['./user-unauthorized.component.sass']
+    selector: 'app-user-unauthorized',
+    templateUrl: './user-unauthorized.component.html',
+    styleUrls: ['./user-unauthorized.component.sass'],
+    standalone: false
 })
 export class UserUnauthorizedComponent {
 

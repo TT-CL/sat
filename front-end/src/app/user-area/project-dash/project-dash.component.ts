@@ -13,9 +13,10 @@ import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'app-project-dash',
-  templateUrl: './project-dash.component.html',
-  styleUrls: ['./project-dash.component.sass']
+    selector: 'app-project-dash',
+    templateUrl: './project-dash.component.html',
+    styleUrls: ['./project-dash.component.sass'],
+    standalone: false
 })
 export class ProjectDashComponent implements OnInit {
 

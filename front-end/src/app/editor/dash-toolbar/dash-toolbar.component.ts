@@ -5,9 +5,10 @@ import { StorageService } from '../../storage.service';
 import { ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 
 @Component({
-  selector: 'app-dash-toolbar',
-  templateUrl: './dash-toolbar.component.html',
-  styleUrls: ['./dash-toolbar.component.sass']
+    selector: 'app-dash-toolbar',
+    templateUrl: './dash-toolbar.component.html',
+    styleUrls: ['./dash-toolbar.component.sass'],
+    standalone: false
 })
 export class DashToolbarComponent implements OnInit {
 

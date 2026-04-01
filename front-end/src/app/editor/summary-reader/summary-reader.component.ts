@@ -5,9 +5,10 @@ import { IUCollection } from '../../objects/objects.module';
 import { StorageService } from '../../storage.service';
 
 @Component({
-  selector: 'app-summary-reader',
-  templateUrl: './summary-reader.component.html',
-  styleUrls: ['./summary-reader.component.sass']
+    selector: 'app-summary-reader',
+    templateUrl: './summary-reader.component.html',
+    styleUrls: ['./summary-reader.component.sass'],
+    standalone: false
 })
 export class SummaryReaderComponent implements OnInit {
 

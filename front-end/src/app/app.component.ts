@@ -8,9 +8,10 @@ import { TelemetryService } from './telemetry.service';
 import { ActivatedRouteSnapshot, ResolveEnd, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.sass']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.sass'],
+    standalone: false
 })
 
 export class AppComponent {

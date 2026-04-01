@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 
 @Component({
-  selector: 'app-catch-login',
-  templateUrl: './catch-login.component.html',
-  styleUrls: ['./catch-login.component.sass']
+    selector: 'app-catch-login',
+    templateUrl: './catch-login.component.html',
+    styleUrls: ['./catch-login.component.sass'],
+    standalone: false
 })
 export class CatchLoginComponent implements OnInit {
 

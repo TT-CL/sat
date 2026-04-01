@@ -5,9 +5,10 @@ import { StorageService } from '../../storage.service';
 import { Router} from '@angular/router';
 
 @Component({
-  selector: 'app-project-item',
-  templateUrl: './project-item.component.html',
-  styleUrls: ['./project-item.component.sass']
+    selector: 'app-project-item',
+    templateUrl: './project-item.component.html',
+    styleUrls: ['./project-item.component.sass'],
+    standalone: false
 })
 export class ProjectItemComponent implements OnInit {
 

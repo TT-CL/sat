@@ -16,9 +16,10 @@ import { SourceLinkComponent } from '../source-link/source-link.component';
 import { SourceEditorComponent } from '../source-editor/source-editor.component';
 
 @Component({
-  selector: 'app-source-card',
-  templateUrl: './source-card.component.html',
-  styleUrls: ['./source-card.component.sass']
+    selector: 'app-source-card',
+    templateUrl: './source-card.component.html',
+    styleUrls: ['./source-card.component.sass'],
+    standalone: false
 })
 export class SourceCardComponent implements OnInit {
 

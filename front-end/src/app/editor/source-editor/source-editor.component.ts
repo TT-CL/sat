@@ -9,10 +9,11 @@ import { UntypedFormControl } from '@angular/forms';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-source-editor',
-  templateUrl: './source-editor.component.html',
-  styleUrls: ['./source-editor.component.sass'],
-  encapsulation: ViewEncapsulation.None, //required for css to work on innerHTML
+    selector: 'app-source-editor',
+    templateUrl: './source-editor.component.html',
+    styleUrls: ['./source-editor.component.sass'],
+    encapsulation: ViewEncapsulation.None,
+    standalone: false
 })
 export class SourceEditorComponent implements OnInit {
 

@@ -23,9 +23,10 @@ enum Modes {
 }
 
 @Component({
-  selector: 'app-editor-dashboard',
-  templateUrl: './editor-dashboard.component.html',
-  styleUrls: ['./editor-dashboard.component.sass']
+    selector: 'app-editor-dashboard',
+    templateUrl: './editor-dashboard.component.html',
+    styleUrls: ['./editor-dashboard.component.sass'],
+    standalone: false
 })
 export class EditorDashboardComponent implements OnInit{
 

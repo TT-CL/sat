@@ -11,9 +11,10 @@ import { StorageService } from 'src/app/storage.service';
 import { AuthService } from '../../auth.service';
 
 @Component({
-  selector: 'app-nav-auth-widget',
-  templateUrl: './nav-auth-widget.component.html',
-  styleUrls: ['./nav-auth-widget.component.sass']
+    selector: 'app-nav-auth-widget',
+    templateUrl: './nav-auth-widget.component.html',
+    styleUrls: ['./nav-auth-widget.component.sass'],
+    standalone: false
 })
 export class NavAuthWidgetComponent implements OnInit{
 

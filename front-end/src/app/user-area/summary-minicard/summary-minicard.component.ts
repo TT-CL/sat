@@ -4,9 +4,10 @@ import { IUCollection } from 'src/app/objects/objects.module';
 type FileOrDoc = File | IUCollection;
 
 @Component({
-  selector: 'app-summary-minicard',
-  templateUrl: './summary-minicard.component.html',
-  styleUrls: ['./summary-minicard.component.sass']
+    selector: 'app-summary-minicard',
+    templateUrl: './summary-minicard.component.html',
+    styleUrls: ['./summary-minicard.component.sass'],
+    standalone: false
 })
 export class SummaryMinicardComponent implements OnInit {
 

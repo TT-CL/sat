@@ -5,9 +5,10 @@ import { IdeaUnit, IUCollection } from '../../objects/objects.module';
 import { StorageService } from '../../storage.service';
 
 @Component({
-  selector: 'app-source-link',
-  templateUrl: './source-link.component.html',
-  styleUrls: ['./source-link.component.sass']
+    selector: 'app-source-link',
+    templateUrl: './source-link.component.html',
+    styleUrls: ['./source-link.component.sass'],
+    standalone: false
 })
 export class SourceLinkComponent implements OnInit {
 

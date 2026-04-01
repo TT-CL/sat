@@ -20,9 +20,10 @@ import { SummaryEditorComponent } from '../summary-editor/summary-editor.compone
 
 
 @Component({
-  selector: 'app-summary-card',
-  templateUrl: './summary-card.component.html',
-  styleUrls: ['./summary-card.component.sass']
+    selector: 'app-summary-card',
+    templateUrl: './summary-card.component.html',
+    styleUrls: ['./summary-card.component.sass'],
+    standalone: false
 })
 export class SummaryCardComponent implements AfterViewInit, OnInit {
 

@@ -6,9 +6,10 @@ import { first } from 'rxjs/operators';
 import { AuthService } from '../../auth.service';
 
 @Component({
-  selector: 'app-login-page',
-  templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.sass']
+    selector: 'app-login-page',
+    templateUrl: './login-page.component.html',
+    styleUrls: ['./login-page.component.sass'],
+    standalone: false
 })
 export class LoginPageComponent implements OnInit {
 

@@ -14,9 +14,10 @@ type FileOrDoc = File | IUCollection;
 
 
 @Component({
-  selector: 'app-project-manager',
-  templateUrl: './project-manager.component.html',
-  styleUrls: ['./project-manager.component.sass']
+    selector: 'app-project-manager',
+    templateUrl: './project-manager.component.html',
+    styleUrls: ['./project-manager.component.sass'],
+    standalone: false
 })
 export class ProjectManagerComponent implements OnInit {
 

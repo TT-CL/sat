@@ -16,9 +16,10 @@ import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-new-project',
-  templateUrl: './new-project.component.html',
-  styleUrls: ['./new-project.component.sass']
+    selector: 'app-new-project',
+    templateUrl: './new-project.component.html',
+    styleUrls: ['./new-project.component.sass'],
+    standalone: false
 })
 export class NewProjectComponent {
 

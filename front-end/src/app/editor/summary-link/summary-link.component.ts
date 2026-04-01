@@ -5,9 +5,10 @@ import { IdeaUnit, Segment, IUCollection } from '../../objects/objects.module';
 import { StorageService } from '../../storage.service';
 
 @Component({
-  selector: 'app-summary-link',
-  templateUrl: './summary-link.component.html',
-  styleUrls: ['./summary-link.component.sass']
+    selector: 'app-summary-link',
+    templateUrl: './summary-link.component.html',
+    styleUrls: ['./summary-link.component.sass'],
+    standalone: false
 })
 export class SummaryLinkComponent implements OnInit {
 

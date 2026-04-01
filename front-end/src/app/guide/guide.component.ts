@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-guide',
-  templateUrl: './guide.component.html',
-  styleUrls: ['./guide.component.sass']
+    selector: 'app-guide',
+    templateUrl: './guide.component.html',
+    styleUrls: ['./guide.component.sass'],
+    standalone: false
 })
 export class GuideComponent implements OnInit {
 
