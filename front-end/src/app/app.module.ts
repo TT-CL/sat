@@ -38,7 +38,7 @@ import { NewProjectComponent } from './user-area/new-project/new-project.compone
 import { SummaryMinicardComponent } from './user-area/summary-minicard/summary-minicard.component';
 import { UploadOverlayComponent } from './user-area/upload-overlay/upload-overlay.component';
 
-import {NgxWebstorageModule} from 'ngx-webstorage';
+import { provideNgxWebstorage, withLocalStorage, withSessionStorage } from 'ngx-webstorage';
 import { LoginPageComponent } from './user-area/login-page/login-page.component';
 import { NavAuthWidgetComponent } from './user-area/nav-auth-widget/nav-auth-widget.component';
 
@@ -60,10 +60,10 @@ import { ProjectDownloaderComponent } from './editor/project-downloader/project-
 import { SourceEditorComponent } from './editor/source-editor/source-editor.component';
 import { SummaryEditorComponent } from './editor/summary-editor/summary-editor.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ContenteditableModule } from '@ng-stack/contenteditable';
 import { UserUnauthorizedComponent } from './user-unauthorized/user-unauthorized.component';
 import { TelemetryErrorHandlerService } from './telemetry-error-handler.service';
 import { GuideComponent } from './guide/guide.component';
+import { MaterialModule } from './material.module';
 import { MarkdownModule } from 'ngx-markdown';
 
 
@@ -121,17 +121,19 @@ import { MarkdownModule } from 'ngx-markdown';
     MatInputModule,
     OverlayModule,
     MatProgressSpinnerModule,
-    NgxWebstorageModule.forRoot(),
     PortalModule,
     MatSelectModule,
     MatTooltipModule,
-    ContenteditableModule,
+    MaterialModule,
     MarkdownModule.forRoot({ loader: HttpClient }),
   ],
   providers: [
     OverlayService, 
     DynamicOverlay, 
-    DynamicOverlayContainer, 
+    DynamicOverlayContainer,
+    provideNgxWebstorage(),
+    withLocalStorage(),
+    withSessionStorage(),
     {
       provide: ErrorHandler,
       useClass: TelemetryErrorHandlerService
