@@ -24,8 +24,6 @@
     "@microsoft/applicationinsights-web": "^2.6.1",
     "@ng-stack/contenteditable": "^1.1.1",
     "marked": "^12.0.0",
-    "ngx-markdown": "^18.0.0",
-    "ngx-webstorage": "^18.0.0",
     "rxjs": "^6.6.7",
     "tslib": "^2.0.0",
     "typeface-merriweather": "^1.1.13",
