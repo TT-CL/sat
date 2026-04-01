@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule} from '@angular/core';
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -126,9 +126,10 @@ import { MarkdownModule } from 'ngx-markdown';
         OverlayService,
         DynamicOverlay,
         DynamicOverlayContainer,
-        provideNgxWebstorage(),
-        withLocalStorage(),
-        withSessionStorage(),
+        provideNgxWebstorage(
+          withLocalStorage(),
+          withSessionStorage()
+        ),
         {
             provide: ErrorHandler,
             useClass: TelemetryErrorHandlerService
