@@ -1,10 +1,10 @@
 <div class="dash-grid horizontal-center">
   <div class="title-container">
-    <h1 class="mat-display-1 h1-title">NEW PROJECT</h1>
+    <h1 class="mat-headline-4 h1-title">NEW PROJECT</h1>
   </div>
   <div class="grid-cell horizontal-center vertical-center">
     <div class="overlay-container" #overlayOrigin>
-    <mat-card class="mat-card">
+    <mat-card appearance="outlined" class="mat-card">
       <!-- formGroup binds the formGroup and validators created inside the .ts
            ngSubmit overrides the submit function with a custom one -->
       <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
@@ -42,7 +42,7 @@
 
             <input type="file" style="display: none" #summaryInput accept=".txt" (change)="onChangeSummaryInput()" multiple/>
 
-            <div class="mat-body-1 summary-title"> Summaries </div>
+            <div class="mat-subtitle-2 summary-title"> Summaries </div>
             <div class="summary-area scrollable-content">
               <div class="summary-flex">
                 <!-- Print one minicard for each summary selected -->

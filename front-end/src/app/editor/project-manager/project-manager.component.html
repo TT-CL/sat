@@ -1,6 +1,6 @@
 <div #overlayOrigin>
 <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
-  <mat-card>
+  <mat-card appearance="outlined">
     <mat-card-content>
       <div class="card-content-with-toolbar">
       <div class="main-content">
@@ -46,7 +46,7 @@
         <div class="summary-title-area">
         <input type="file" style="display: none" #summaryInput accept=".txt" (change)="onChangeSummaryInput()" multiple />
   
-        <div class="mat-body-1 summary-title"> Summaries </div>
+        <div class="mat-subtitle-2 summary-title"> Summaries </div>
         </div>
         <div class="grow-area">
         <div class="summary-area scrollable-content">

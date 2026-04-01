@@ -1,3 +1,4 @@
+@use '@angular/material' as mat;
 
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
@@ -159,7 +160,7 @@ $summary-link-theme: mat-light-theme((
   background-color: #e53935 !important;
 }
 
-.mat-selected-link{
+.mat-mdc-selected-link{
   color: #000 !important;
   background-color: #ffee58 !important;
 }
@@ -218,4 +219,6 @@ $custom-typography: mat-typography-config(
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat-core($custom-typography);
+@include mat.core();
+@include mat.typography-hierarchy($custom-typography);
+//body { @include mat.all-component-themes($sat-theme); }

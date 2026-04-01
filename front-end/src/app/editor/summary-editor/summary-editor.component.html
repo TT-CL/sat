@@ -10,22 +10,22 @@
       <mat-tab label="Connect Disc IUs">
         <div class="connect-container">
           <div class="connect-chips">
-            <mat-chip-list aria-label="sentence chips" class="summary-link-theme">
+            <mat-chip-listbox aria-label="sentence chips" class="summary-link-theme">
               <ng-template ngFor let-seg [ngForOf]="newDoc.getSegArray()">
                 <div *ngIf="selectedIUs.has(seg.iu); else notSelected">
-                  <mat-chip color="lime-bubble" (click)="segClick(seg)" selected>
+                  <mat-chip-option color="lime-bubble" (click)="segClick(seg)" selected>
                     {{seg.getText(newDoc, true)}}
-                  </mat-chip>
+                  </mat-chip-option>
                 </div>
                 <ng-template #notSelected>
-                  <mat-chip color="primary" (click)="segClick(seg)" selected [ngClass]="{
+                  <mat-chip-option color="primary" (click)="segClick(seg)" selected [ngClass]="{
                     'disc-iu' : newDoc.ius[seg.iu].disc 
                   }">
                     {{seg.getText(newDoc, true)}}
-                  </mat-chip>
+                  </mat-chip-option>
                 </ng-template>
               </ng-template><!-- NGFor -->
-            </mat-chip-list>
+            </mat-chip-listbox>
           </div>
           <div class="connect-toolbar">
             <div class="connect-buttons def-button">
