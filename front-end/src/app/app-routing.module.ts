@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, ExtraOptions } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ProjectDashComponent } from './user-area/project-dash/project-dash.component';
 import { NewProjectComponent } from './user-area/new-project/new-project.component';
@@ -53,8 +53,14 @@ const routes: Routes = [
   { path: '**', component: PageNotFoundComponent , title: '404'},
 ];
 
+const routerConfig : ExtraOptions = {
+  canceledNavigationResolution: "replace",
+  paramsInheritanceStrategy: 'always',
+  urlUpdateStrategy: 'eager',
+};
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, routerConfig)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
