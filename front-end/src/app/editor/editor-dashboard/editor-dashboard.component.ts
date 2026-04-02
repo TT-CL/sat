@@ -7,7 +7,7 @@ import { StorageService } from '../../storage.service';
 
 import { Router, ActivatedRoute, NavigationEnd} from '@angular/router';
 
-import { ComponentPortal, Portal } from '@angular/cdk/portal';
+import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
 
 import { SummaryCardComponent } from '../summary-card/summary-card.component';
 import { SourceCardComponent } from '../source-card/source-card.component';
@@ -15,6 +15,8 @@ import { ProjectManagerComponent } from '../project-manager/project-manager.comp
 import { ProjectDownloaderComponent } from '../project-downloader/project-downloader.component';
 
 import { BehaviorSubject } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { DashToolbarComponent } from '../dash-toolbar/dash-toolbar.component';
 
 enum Modes {
   Both = 'both',
@@ -26,7 +28,12 @@ enum Modes {
     selector: 'app-editor-dashboard',
     templateUrl: './editor-dashboard.component.html',
     styleUrls: ['./editor-dashboard.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      PortalModule,
+      DashToolbarComponent
+    ]
 })
 export class EditorDashboardComponent implements OnInit{
 

@@ -2,13 +2,26 @@ import { Component, OnInit, Output, Input, EventEmitter, SimpleChanges} from '@a
 
 import { StorageService } from '../../storage.service';
 
-import { ActivatedRoute, Router, NavigationEnd} from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd, RouterModule} from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-dash-toolbar',
     templateUrl: './dash-toolbar.component.html',
     styleUrls: ['./dash-toolbar.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      MatIconModule,
+      MatButtonModule,
+      RouterModule,
+      MatListModule,
+      MatTooltipModule
+    ]
 })
 export class DashToolbarComponent implements OnInit {
 

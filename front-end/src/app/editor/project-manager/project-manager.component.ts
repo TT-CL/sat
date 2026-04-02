@@ -1,6 +1,6 @@
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BackEndService } from 'src/app/back-end.service';
 import { OverlayService } from 'src/app/overlay.service';
@@ -9,6 +9,14 @@ import { UploadOverlayComponent } from 'src/app/user-area/upload-overlay/upload-
 import { IUCollection, Project } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { SummaryMinicardComponent } from 'src/app/user-area/summary-minicard/summary-minicard.component';
 
 type FileOrDoc = File | IUCollection;
 
@@ -17,7 +25,18 @@ type FileOrDoc = File | IUCollection;
     selector: 'app-project-manager',
     templateUrl: './project-manager.component.html',
     styleUrls: ['./project-manager.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      ReactiveFormsModule,
+      MatCardModule,
+      MatDividerModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatButtonModule,
+      MatIconModule,
+      SummaryMinicardComponent
+    ]
 })
 export class ProjectManagerComponent implements OnInit {
 

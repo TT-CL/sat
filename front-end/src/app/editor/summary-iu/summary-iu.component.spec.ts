@@ -8,8 +8,8 @@ describe('SummaryIuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SummaryIuComponent ]
-    })
+    declarations: [SummaryIuComponent]
+})
     .compileComponents();
   });
 

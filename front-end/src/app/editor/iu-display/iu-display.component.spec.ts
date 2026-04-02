@@ -8,8 +8,8 @@ describe('IuDisplayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IuDisplayComponent ]
-    })
+    declarations: [IuDisplayComponent]
+})
     .compileComponents();
   });
 

@@ -4,12 +4,24 @@ import { ExporterService } from '../../exporter.service';
 import { Project, IUCollection} from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-project-downloader',
     templateUrl: './project-downloader.component.html',
     styleUrls: ['./project-downloader.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      MatCardModule,
+      MatDividerModule,
+      MatButtonModule,
+      MatIconModule
+    ]
 })
 export class ProjectDownloaderComponent implements OnInit {
 

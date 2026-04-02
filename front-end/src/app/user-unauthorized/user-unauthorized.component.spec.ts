@@ -8,8 +8,8 @@ describe('UserUnauthorizedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserUnauthorizedComponent ]
-    })
+    declarations: [UserUnauthorizedComponent]
+})
     .compileComponents();
   });
 

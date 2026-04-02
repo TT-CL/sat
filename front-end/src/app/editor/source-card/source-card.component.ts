@@ -4,7 +4,7 @@ import { IUCollection } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
 
-import { ComponentPortal, Portal } from '@angular/cdk/portal';
+import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
 
 import {BehaviorSubject, Observable} from 'rxjs';
 
@@ -14,12 +14,21 @@ import { SourceReaderComponent } from '../source-reader/source-reader.component'
 import { SourceIuComponent } from '../source-iu/source-iu.component';
 import { SourceLinkComponent } from '../source-link/source-link.component';
 import { SourceEditorComponent } from '../source-editor/source-editor.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-source-card',
     templateUrl: './source-card.component.html',
     styleUrls: ['./source-card.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      MatCardModule,
+      MatDividerModule,
+      PortalModule
+    ]
 })
 export class SourceCardComponent implements OnInit {
 

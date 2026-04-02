@@ -8,8 +8,8 @@ describe('ProjectDashComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProjectDashComponent ]
-    })
+    declarations: [ProjectDashComponent]
+})
     .compileComponents();
   });
 

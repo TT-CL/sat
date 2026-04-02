@@ -8,8 +8,8 @@ describe('CatchLoginComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CatchLoginComponent ]
-    })
+    declarations: [CatchLoginComponent]
+})
     .compileComponents();
   });
 

@@ -3,12 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { IdeaUnit, IUCollection } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
+import { MatChipsModule } from '@angular/material/chips';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-source-link',
     templateUrl: './source-link.component.html',
     styleUrls: ['./source-link.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      MatChipsModule
+    ]
 })
 export class SourceLinkComponent implements OnInit {
 

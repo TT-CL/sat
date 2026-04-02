@@ -1,4 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/auth.service';
 
@@ -6,7 +9,12 @@ import { AuthService } from 'src/app/auth.service';
     selector: 'app-catch-login',
     templateUrl: './catch-login.component.html',
     styleUrls: ['./catch-login.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      MatCardModule,
+      MatButtonModule
+    ]
 })
 export class CatchLoginComponent implements OnInit {
 

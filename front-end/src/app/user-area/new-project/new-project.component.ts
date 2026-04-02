@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef} from '@angular/core';
-import { UntypedFormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
 
 import { Observable, of} from 'rxjs';
 
@@ -14,12 +14,33 @@ import { StorageService } from '../../storage.service';
 import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { SummaryMinicardComponent } from '../summary-minicard/summary-minicard.component';
 
 @Component({
     selector: 'app-new-project',
     templateUrl: './new-project.component.html',
     styleUrls: ['./new-project.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      ReactiveFormsModule,
+      RouterModule,
+      MatCardModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatButtonModule,
+      MatIconModule,
+      MatDividerModule,
+      SummaryMinicardComponent
+    ]
 })
 export class NewProjectComponent {
 

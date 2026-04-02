@@ -8,8 +8,8 @@ describe('SpinnerOverlayComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SpinnerOverlayComponent ]
-    })
+    imports: [SpinnerOverlayComponent]
+})
     .compileComponents();
   });
 

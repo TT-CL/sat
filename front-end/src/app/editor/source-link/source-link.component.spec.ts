@@ -8,8 +8,8 @@ describe('SourceLinkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SourceLinkComponent ]
-    })
+    declarations: [SourceLinkComponent]
+})
     .compileComponents();
   });
 

@@ -3,12 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { IUCollection } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
+import { MatChipsModule } from '@angular/material/chips';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-source-iu',
     templateUrl: './source-iu.component.html',
     styleUrls: ['./source-iu.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      MatChipsModule
+    ]
 })
 export class SourceIuComponent implements OnInit {
 

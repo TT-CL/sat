@@ -10,13 +10,29 @@ import { UploadOverlayComponent } from '../upload-overlay/upload-overlay.compone
 import { BackEndService } from '../../back-end.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { ProjectItemComponent } from '../project-item/project-item.component';
 
 
 @Component({
     selector: 'app-project-dash',
     templateUrl: './project-dash.component.html',
     styleUrls: ['./project-dash.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      RouterModule,
+      MatCardModule,
+      MatDividerModule,
+      MatButtonModule,
+      MatIconModule,
+      ProjectItemComponent
+    ]
 })
 export class ProjectDashComponent implements OnInit {
 

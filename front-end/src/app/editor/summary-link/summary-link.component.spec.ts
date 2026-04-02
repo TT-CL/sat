@@ -8,8 +8,8 @@ describe('SummaryLinkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SummaryLinkComponent ]
-    })
+    declarations: [SummaryLinkComponent]
+})
     .compileComponents();
   });
 

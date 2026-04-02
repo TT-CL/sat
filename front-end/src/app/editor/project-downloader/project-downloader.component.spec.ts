@@ -8,8 +8,8 @@ describe('ProjectDownloaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProjectDownloaderComponent ]
-    })
+    declarations: [ProjectDownloaderComponent]
+})
     .compileComponents();
   });
 

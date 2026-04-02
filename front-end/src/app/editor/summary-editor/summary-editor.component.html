@@ -3,8 +3,7 @@
     <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChanged($event)">
       <mat-tab label="Text editor">
         <div class="scrollable-content">
-          <pre contenteditable="true" class="monospace-editor" #preEditor (input)="preInput($event)"
-            propValueAccessor="innerHTML" [formControl]="editor"></pre>
+          <pre contenteditable="true" class="monospace-editor" #preEditor (input)="preInput($event)"></pre>
         </div>
       </mat-tab>
       <mat-tab label="Connect Disc IUs">

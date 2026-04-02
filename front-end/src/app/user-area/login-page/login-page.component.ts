@@ -4,12 +4,20 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 import { AuthService } from '../../auth.service';
+import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-login-page',
     templateUrl: './login-page.component.html',
     styleUrls: ['./login-page.component.sass'],
-    standalone: false
+    standalone: true,
+    imports:[
+      CommonModule,
+      MatCardModule,
+      MatButtonModule
+    ]
 })
 export class LoginPageComponent implements OnInit {
 

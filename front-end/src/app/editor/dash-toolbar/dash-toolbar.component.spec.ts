@@ -8,8 +8,8 @@ describe('DashToolbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DashToolbarComponent ]
-    })
+    declarations: [DashToolbarComponent]
+})
     .compileComponents();
   });
 

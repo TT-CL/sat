@@ -19,8 +19,8 @@ services:
   web:
     build:
       target: dev
-    volumes:
-      - ./front-end:/opt/ng
+    #volumes:
+    #  - ./front-end:/opt/ng
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"

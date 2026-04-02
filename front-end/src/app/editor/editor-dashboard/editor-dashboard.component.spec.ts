@@ -15,8 +15,8 @@ describe('EditorDashboardComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [EditorDashboardComponent],
-      imports: [
+    declarations: [EditorDashboardComponent],
+    imports: [
         NoopAnimationsModule,
         LayoutModule,
         MatButtonModule,
@@ -24,8 +24,8 @@ describe('EditorDashboardComponent', () => {
         MatGridListModule,
         MatIconModule,
         MatMenuModule,
-      ]
-    }).compileComponents();
+    ]
+}).compileComponents();
   }));
 
   beforeEach(() => {

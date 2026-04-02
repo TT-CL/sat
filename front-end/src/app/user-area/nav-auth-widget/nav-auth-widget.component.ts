@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 
-import { Router, ActivatedRoute, NavigationEnd} from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, RouterModule} from '@angular/router';
 import { Observable } from 'rxjs';
 
 
@@ -9,12 +9,19 @@ import { StorageService } from 'src/app/storage.service';
 
 
 import { AuthService } from '../../auth.service';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
     selector: 'app-nav-auth-widget',
     templateUrl: './nav-auth-widget.component.html',
     styleUrls: ['./nav-auth-widget.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      RouterModule,
+      MatButtonModule
+    ]
 })
 export class NavAuthWidgetComponent implements OnInit{
 

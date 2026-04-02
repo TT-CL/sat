@@ -3,12 +3,20 @@ import { Project } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
 import { Router} from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
     selector: 'app-project-item',
     templateUrl: './project-item.component.html',
     styleUrls: ['./project-item.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      MatButtonModule,
+      MatIconModule
+    ]
 })
 export class ProjectItemComponent implements OnInit {
 

@@ -3,12 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { IdeaUnit, Segment, IUCollection } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
+import { MatChipsModule } from '@angular/material/chips';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-summary-link',
     templateUrl: './summary-link.component.html',
     styleUrls: ['./summary-link.component.sass'],
-    standalone: false
+    standalone: true,
+    imports:[
+      CommonModule,
+      MatChipsModule
+    ]
 })
 export class SummaryLinkComponent implements OnInit {
 

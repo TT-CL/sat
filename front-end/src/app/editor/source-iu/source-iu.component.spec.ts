@@ -8,8 +8,8 @@ describe('SourceIuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SourceIuComponent ]
-    })
+    declarations: [SourceIuComponent]
+})
     .compileComponents();
   });
 

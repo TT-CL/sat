@@ -1,19 +1,35 @@
-import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncapsulation } from '@angular/core';
+import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncapsulation, ElementRef } from '@angular/core';
 
 import { IdeaUnit, IUCollection, Project, Segment } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
 import { BackEndService } from '../../back-end.service';
 
-import { UntypedFormControl } from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatTab, MatTabsModule } from '@angular/material/tabs';
+import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
     selector: 'app-source-editor',
     templateUrl: './source-editor.component.html',
     styleUrls: ['./source-editor.component.sass'],
     encapsulation: ViewEncapsulation.None,
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      MatTabsModule,
+      MatDividerModule,
+      MatChipsModule,
+      MatButtonModule,
+      MatIconModule,
+      ReactiveFormsModule
+    ]
 })
 export class SourceEditorComponent implements OnInit {
 
@@ -35,7 +51,7 @@ export class SourceEditorComponent implements OnInit {
   connectedSegsMaxIdx: number;
   disconnectedSegsMaxIdx: number;
 
-  @ViewChild("preEditor") preEditor;
+  @ViewChild("preEditor") preEditor!: ElementRef<HTMLPreElement>;;
 
   constructor(
     private storage: StorageService,
@@ -58,25 +74,28 @@ export class SourceEditorComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  stripSpanStyles(node){
-    if( node.tagName == "SPAN" ){
+  stripSpanStyles(node) {
+    if (node['tagName'] == "SPAN") {
       // remove styles
-      node.removeAttribute("style");
+      node['removeAttribute']("style");
     }
     //recursively traverse the child tree
-    for( let child of node.childNodes){
+    for (let child of node.childNodes) {
       this.stripSpanStyles(child);
     }
   }
 
   parseEditedSegments(): Array<string>{
     let res = [];
-    for (let child of this.preEditor.nativeElement.childNodes){
-      if(child.tagName == "DIV"){
-        let temp = child.innerText.trim();
-        if (temp && temp != ""){
-          res.push(child.innerText);
-        }
+    if (this.preEditor?.nativeElement) {
+      const children = Array.from(this.preEditor.nativeElement.childNodes)
+      for (let child of children) {
+          if (child.nodeType === Node.ELEMENT_NODE && child.nodeName === 'DIV') {
+              let temp = child['innerText']?.trim();
+              if (temp && temp != "") {
+                  res.push(temp);
+              }
+          }
       }
     }
     return res;
@@ -84,21 +103,24 @@ export class SourceEditorComponent implements OnInit {
 
   preInput(evt){
     //set the edited flag to true
-    this.editedFlag = true;
-    this.preEdited = true;
-    // set the tokenized flag to false -> even if they were retrieve before,
-    // I need to retrieve them again after any kind of edit
-    this.retrievedSegsFlag = false;
-    // remove span styles to avoid inconsistent colors
-    this.stripSpanStyles(this.preEditor.nativeElement);
-    // parse the segments and update the structure
-    this.newSegments = this.parseEditedSegments();
+    const target = evt.target as HTMLElement;
+    if (this.preEditor?.nativeElement) {
+      this.editedFlag = true;
+      this.preEdited = true;
+      // set the tokenized flag to false -> even if they were retrieve before,
+      // I need to retrieve them again after any kind of edit
+      this.retrievedSegsFlag = false;
+      // remove span styles to avoid inconsistent colors
+      this.stripSpanStyles(this.preEditor.nativeElement);
+      // parse the segments and update the structure
+      this.newSegments = this.parseEditedSegments();
+    }
   }
 
   resetEditor(){
     this.editedFlag = false;
     this.preEdited = false;
-    let html = this.doc.getPreHtml();
+    const html = this.doc?.getPreHtml() || '';
     this.editor.setValue(html);
     delete this.newSegments;
   }

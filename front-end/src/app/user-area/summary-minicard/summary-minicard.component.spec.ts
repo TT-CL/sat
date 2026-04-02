@@ -8,8 +8,8 @@ describe('SummaryMinicardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SummaryMinicardComponent ]
-    })
+    declarations: [SummaryMinicardComponent]
+})
     .compileComponents();
   });
 

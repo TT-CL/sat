@@ -8,8 +8,8 @@ describe('SummaryEditorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SummaryEditorComponent ]
-    })
+    declarations: [SummaryEditorComponent]
+})
     .compileComponents();
   });
 

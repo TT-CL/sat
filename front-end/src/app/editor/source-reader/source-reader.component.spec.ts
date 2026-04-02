@@ -8,8 +8,8 @@ describe('SourceReaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SourceReaderComponent ]
-    })
+    declarations: [SourceReaderComponent]
+})
     .compileComponents();
   });
 

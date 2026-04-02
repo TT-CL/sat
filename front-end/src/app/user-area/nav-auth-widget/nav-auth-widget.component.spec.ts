@@ -8,8 +8,8 @@ describe('NavAuthWidgetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NavAuthWidgetComponent ]
-    })
+    declarations: [NavAuthWidgetComponent]
+})
     .compileComponents();
   });
 

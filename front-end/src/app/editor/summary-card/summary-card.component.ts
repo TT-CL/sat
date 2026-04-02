@@ -5,9 +5,9 @@ import { IUCollection } from '../../objects/objects.module';
 import { StorageService } from '../../storage.service';
 import { BackEndService } from '../../back-end.service';
 
-import { MatSelect } from '@angular/material/select';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
 
-import { ComponentPortal, Portal } from '@angular/cdk/portal';
+import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
 
 import {BehaviorSubject, Observable} from 'rxjs';
 
@@ -17,13 +17,25 @@ import { SummaryReaderComponent } from '../summary-reader/summary-reader.compone
 import { SummaryIuComponent } from '../summary-iu/summary-iu.component';
 import { SummaryLinkComponent } from '../summary-link/summary-link.component';
 import { SummaryEditorComponent } from '../summary-editor/summary-editor.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @Component({
     selector: 'app-summary-card',
     templateUrl: './summary-card.component.html',
     styleUrls: ['./summary-card.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      MatCardModule,
+      MatDividerModule,
+      MatFormFieldModule,
+      MatSelectModule,
+      PortalModule
+    ]
 })
 export class SummaryCardComponent implements AfterViewInit, OnInit {
 

@@ -6,12 +6,18 @@ import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 import { environment } from '../environments/environment';
 import { TelemetryService } from './telemetry.service';
 import { ActivatedRouteSnapshot, ResolveEnd, Router } from '@angular/router';
+import { NavigationComponent } from './navigation/navigation.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.sass'],
-    standalone: false
+    standalone: true,
+    imports: [
+      CommonModule,
+      NavigationComponent
+    ]
 })
 
 export class AppComponent {
