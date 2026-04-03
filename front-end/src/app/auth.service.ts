@@ -1,9 +1,9 @@
-import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { SessionStorageService } from 'ngx-webstorage';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { pluck, map, last } from 'rxjs/operators';
+import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 interface Identity {
   email: string;
@@ -15,102 +15,91 @@ interface Identity {
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
-  }),
-  observe: 'body'
+  })
 };
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-
-  cachedIdentity: BehaviorSubject<Identity | Boolean>;
+  cachedIdentity: BehaviorSubject<Identity | null>;
 
   constructor(
     private http: HttpClient,
     private session: SessionStorageService,
     private router: Router,
   ) {
-    let anon_id: Identity = null;
-    anon_id = this.session.retrieve('cached_identity');
-    this.cachedIdentity = new BehaviorSubject(anon_id);
+    const anonId = this.session.retrieve('cached_identity') as Identity | null;
+    this.cachedIdentity = new BehaviorSubject<Identity | null>(anonId);
   }
 
-  // USER AUTH //
-
-  retrieveUserAuthToken(){
-    this.retrieveUserIdentity().subscribe(id=>{
-      let identity = id as unknown as Identity;
+  retrieveUserAuthToken() {
+    this.retrieveUserIdentity().subscribe(identity => {
       this.cachedIdentity.next(identity);
       this.session.store('cached_identity', identity);
     });
   }
+
   retrieveUserAuthTokenAndRediect() {
-    this.retrieveUserIdentity().subscribe(id => {
-      let identity = id as unknown as Identity | boolean;
+    this.retrieveUserIdentity().subscribe(identity => {
       this.cachedIdentity.next(identity);
       this.session.store('cached_identity', identity);
-      if (identity != null && identity != false){
-        //this.router.navigate(['/projects']);
+      if (identity) {
+        // this.router.navigate(['/projects']);
       }
     });
   }
 
-  private retrieveUserIdentity(): Observable<HttpEvent<any>> {
-    let url = "/api/auth/identity";
-
-    const req = new HttpRequest('GET', url, httpOptions);
-
-    return this.http.request(req).pipe(pluck('body'));
+  private retrieveUserIdentity(): Observable<Identity | null> {
+    const url = '/api/auth/identity';
+    return this.http.get<Identity | null>(url, httpOptions);
   }
 
-  getGivenName(): Observable<string>{
-    return this.cachedIdentity.asObservable().pipe(pluck('given_name'));
+  getGivenName(): Observable<string | undefined> {
+    return this.cachedIdentity.asObservable().pipe(
+      map(identity => identity?.given_name)
+    );
   }
 
-  getAvatar(): Observable<string> {
-    return this.cachedIdentity.asObservable().pipe(pluck('picture'));
-  }
-  
-  getName(): Observable<string>{
-    return this.cachedIdentity.asObservable().pipe(pluck('name'));
+  getAvatar(): Observable<string | undefined> {
+    return this.cachedIdentity.asObservable().pipe(
+      map(identity => identity?.picture)
+    );
   }
 
-  getEmail(): Observable<string> {
-    return this.cachedIdentity.asObservable().pipe(pluck('email'));
+  getName(): Observable<string | undefined> {
+    return this.cachedIdentity.asObservable().pipe(
+      map(identity => identity?.name)
+    );
   }
 
-  isIdentityCached(): Observable<boolean>{
-    return this.cachedIdentity.asObservable().pipe(map(id=>{
-      return Boolean(id);
-    }))
+  getEmail(): Observable<string | undefined> {
+    return this.cachedIdentity.asObservable().pipe(
+      map(identity => identity?.email)
+    );
   }
 
-  loggedInPromise(): Promise<boolean>{
-    return this.retrieveUserIdentity(     //retrieve the identity observable
-    ).pipe(                               //pipe some operators
-      last(),                            //limit to only one result
-      map(id => { 
-        //cache identity
-        this.session.store('cached_identity', id);
-        this.cachedIdentity.next(id as unknown as Identity);
-        //cast to boolean
-        return Boolean(id);
-      })
-    ).toPromise();                        //cast to promise
+  isIdentityCached(): Observable<boolean> {
+    return this.cachedIdentity.asObservable().pipe(
+      map(identity => Boolean(identity))
+    );
+  }
+
+  async loggedInPromise(): Promise<boolean> {
+    const identity = await firstValueFrom(this.retrieveUserIdentity());
+    this.session.store('cached_identity', identity);
+    this.cachedIdentity.next(identity);
+    return Boolean(identity);
   }
 
   logout() {
-    //only clearing projects to avoid deleeting some objects that I shouldn't
-    //this.storage.clearSession();
     this.cachedIdentity.next(null);
-    this.session.clear('cached_identity')
+    this.session.clear('cached_identity');
 
-    //call api server to log out user
-    let url = "/api/auth/logout";
+    const url = '/api/auth/logout';
     fetch(url, {
       method: 'GET',
       credentials: 'include'
-    }).then(()=> console.log("User Logged Out"));
+    }).then(() => console.log('User Logged Out'));
   }
 }
