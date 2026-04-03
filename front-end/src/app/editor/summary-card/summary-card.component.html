@@ -1,26 +1,32 @@
 <mat-card appearance="outlined" class="document-card">
   <mat-card-content class="card-container">
     <div class="header-container">
-      <div class="card-header" *ngIf="support_array.length <=1">
-        <div class="card-header-text">
-          <div class="card-title">{{doc.doc_name}}</div>
-          <div class="card-subtitle">Summary text</div>
-        </div>
-      </div>
-      <div class="header-flex" *ngIf="support_array.length >1">
-        <div class="card-header-text">
-          <div class="card-title">
-            Summary
+      @if (support_array.length <=1) {
+        <div class="card-header">
+          <div class="card-header-text">
+            <div class="card-title">{{doc.doc_name}}</div>
+            <div class="card-subtitle">Summary text</div>
           </div>
         </div>
-        <div class="title-selector">
-        <mat-form-field>
-          <mat-select [(value)]="summary_idx" #selector>
-            <mat-option *ngFor="let name of support_array; let i = index" [value]="i">{{name}}</mat-option>
-          </mat-select>
-        </mat-form-field>
+      }
+      @if (support_array.length >1) {
+        <div class="header-flex">
+          <div class="card-header-text">
+            <div class="card-title">
+              Summary
+            </div>
+          </div>
+          <div class="title-selector">
+            <mat-form-field>
+              <mat-select [(value)]="summary_idx" #selector>
+                @for (name of support_array; track name; let i = $index) {
+                  <mat-option [value]="i">{{name}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
-      </div>
+      }
       <mat-divider></mat-divider>
     </div>
     <div class="mat-card-dynamic-content">

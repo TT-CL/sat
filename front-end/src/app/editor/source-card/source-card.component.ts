@@ -16,7 +16,7 @@ import { SourceLinkComponent } from '../source-link/source-link.component';
 import { SourceEditorComponent } from '../source-editor/source-editor.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-source-card',
@@ -24,11 +24,10 @@ import { CommonModule } from '@angular/common';
     styleUrls: ['./source-card.component.sass'],
     standalone: true,
     imports: [
-      CommonModule,
-      MatCardModule,
-      MatDividerModule,
-      PortalModule
-    ]
+    MatCardModule,
+    MatDividerModule,
+    PortalModule
+]
 })
 export class SourceCardComponent implements OnInit {
 

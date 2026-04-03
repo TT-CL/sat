@@ -1,6 +1,8 @@
 <!-- Text View -->
 <div class="scrollable-content">
-  <p *ngFor="let sent of doc.sents">
-    {{sent}}
-  </p>
+  @for (sent of doc.sents; track sent) {
+    <p>
+      {{sent}}
+    </p>
+  }
 </div>

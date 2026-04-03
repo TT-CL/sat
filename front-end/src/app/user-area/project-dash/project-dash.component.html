@@ -1,31 +1,33 @@
 <div class="dash-grid horizontal-center">
   <div class="grid-cell horizontal-center vertical-center">
     <div class="overlay-container" #overlayOrigin>
-    <mat-card appearance="outlined" class="mat-card">
-      <mat-card-header>
-        <mat-card-title>Welcome {{ userName$ | async }}</mat-card-title>
-        <mat-card-subtitle>Please select a project</mat-card-subtitle>
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        <div class="content horizontal-center">
-          <div class="scrollable-content">
-            <app-project-item *ngFor="let proj of projects$ | async; let i = index" class="project-item" [project]="proj" [index]="i"></app-project-item>
-            <div class="new-project-area def-button">
-              <button mat-flat-button color="accent" [routerLink]="['/projects/new-project']">
-                <mat-icon>note_add</mat-icon>
-                Start a new project
-              </button>
-              <input style="display: none" type="file" (change)="backupFileSelect()" #backupInput accept=".iuproj, application/json">
-              <button mat-flat-button color="primary" (click)="backupInput.click()">
-                <mat-icon>settings_backup_restore</mat-icon>
-                Restore from backup
-              </button>
+      <mat-card appearance="outlined" class="mat-card">
+        <mat-card-header>
+          <mat-card-title>Welcome {{ userName$ | async }}</mat-card-title>
+          <mat-card-subtitle>Please select a project</mat-card-subtitle>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content>
+          <div class="content horizontal-center">
+            <div class="scrollable-content">
+              @for (proj of projects$ | async; track proj; let i = $index) {
+                <app-project-item class="project-item" [project]="proj" [index]="i"></app-project-item>
+              }
+              <div class="new-project-area def-button">
+                <button mat-flat-button color="accent" [routerLink]="['/projects/new-project']">
+                  <mat-icon>note_add</mat-icon>
+                  Start a new project
+                </button>
+                <input style="display: none" type="file" (change)="backupFileSelect()" #backupInput accept=".iuproj, application/json">
+                <button mat-flat-button color="primary" (click)="backupInput.click()">
+                  <mat-icon>settings_backup_restore</mat-icon>
+                  Restore from backup
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </mat-card-content>
-    </mat-card>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
 </div>

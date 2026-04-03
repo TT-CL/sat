@@ -7,7 +7,7 @@ import { StorageService } from '../../storage.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -16,12 +16,11 @@ import { MatButtonModule } from '@angular/material/button';
     styleUrls: ['./project-downloader.component.sass'],
     standalone: true,
     imports: [
-      CommonModule,
-      MatCardModule,
-      MatDividerModule,
-      MatButtonModule,
-      MatIconModule
-    ]
+    MatCardModule,
+    MatDividerModule,
+    MatButtonModule,
+    MatIconModule
+]
 })
 export class ProjectDownloaderComponent implements OnInit {
 

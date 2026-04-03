@@ -3,7 +3,7 @@ import { Project } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
 import { Router} from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -13,10 +13,9 @@ import { MatIconModule } from '@angular/material/icon';
     styleUrls: ['./project-item.component.sass'],
     standalone: true,
     imports: [
-      CommonModule,
-      MatButtonModule,
-      MatIconModule
-    ]
+    MatButtonModule,
+    MatIconModule
+]
 })
 export class ProjectItemComponent implements OnInit {
 

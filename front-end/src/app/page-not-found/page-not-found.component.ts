@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
@@ -8,9 +8,8 @@ import { RouterModule } from '@angular/router';
     styleUrls: ['./page-not-found.component.sass'],
     standalone: true,
     imports: [
-      CommonModule,
-      RouterModule
-    ]
+    RouterModule
+]
 })
 export class PageNotFoundComponent implements OnInit {
 

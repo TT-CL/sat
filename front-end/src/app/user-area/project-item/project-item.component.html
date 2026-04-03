@@ -1,16 +1,18 @@
-<div class="project-item" *ngIf="project">
-  <mat-icon class="project-header-icon"> description </mat-icon>
-  <div class="project-header">
-    <span class="project-title">{{project.name}}</span>
-    <span class="project-subtitle">{{numSummaries}} summaries</span>
-    <!--
+@if (project) {
+  <div class="project-item">
+    <mat-icon class="project-header-icon"> description </mat-icon>
+    <div class="project-header">
+      <span class="project-title">{{project.name}}</span>
+      <span class="project-subtitle">{{numSummaries}} summaries</span>
+      <!--
       <span class="project-time">Last edited: {{lastEdit}}</span>
-    -->
+      -->
+    </div>
+    <div class="project-buttons">
+      <button mat-flat-button color="primary" (click)="editProject()">
+        <mat-icon>subject</mat-icon>
+        Go to editor
+      </button>
+    </div>
   </div>
-  <div class="project-buttons">
-    <button mat-flat-button color="primary" (click)="editProject()">
-      <mat-icon>subject</mat-icon>
-      Go to editor
-    </button>
-  </div>
-</div>
+}

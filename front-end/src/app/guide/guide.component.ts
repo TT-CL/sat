@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit } from '@angular/core';
 import { MarkdownModule } from 'ngx-markdown';
 
@@ -7,10 +7,9 @@ import { MarkdownModule } from 'ngx-markdown';
     templateUrl: './guide.component.html',
     styleUrls: ['./guide.component.sass'],
     standalone: true,
-    imports:[
-      CommonModule,
-      MarkdownModule
-    ]
+    imports: [
+    MarkdownModule
+]
 })
 export class GuideComponent implements OnInit {
 

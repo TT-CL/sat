@@ -2,20 +2,19 @@
 <div class="scrollable-content">
   <mat-chip-listbox
     aria-label="sentence chips" class="iu-viewer">
-    <ng-template ngFor let-seg [ngForOf]="doc.getSegArray()">
-      <ng-template [ngIf]="seg.type=='ghost'" [ngIfElse]="ghostElse">
+    @for (seg of doc.getSegArray(); track seg) {
+      @if (seg.type=='ghost') {
         <!--[selected]="seg.selected"-->
         <mat-chip-option color="ghost-bubble" >
           {{seg.getText(doc, true)}}
         </mat-chip-option>
-      </ng-template>
-      <ng-template #ghostElse>
+      } @else {
         <mat-chip-option color="primary" selected [ngClass]="{
           'disc-iu' : doc.ius[seg.iu].disc
         }"> <!--[selected]="seg.selected"-->
           {{seg.getText(doc, true)}}
         </mat-chip-option>
-      </ng-template>
-    </ng-template>
+      }
+    }
   </mat-chip-listbox>
 </div>

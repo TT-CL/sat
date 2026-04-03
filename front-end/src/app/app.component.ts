@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
 import { TelemetryService } from './telemetry.service';
 import { ActivatedRouteSnapshot, ResolveEnd, Router } from '@angular/router';
 import { NavigationComponent } from './navigation/navigation.component';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-root',
@@ -15,9 +15,8 @@ import { CommonModule } from '@angular/common';
     styleUrls: ['./app.component.sass'],
     standalone: true,
     imports: [
-      CommonModule,
-      NavigationComponent
-    ]
+    NavigationComponent
+]
 })
 
 export class AppComponent {

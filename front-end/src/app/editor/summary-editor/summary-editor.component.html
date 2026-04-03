@@ -10,53 +10,54 @@
         <div class="connect-container">
           <div class="connect-chips">
             <mat-chip-listbox aria-label="sentence chips" class="summary-link-theme">
-              <ng-template ngFor let-seg [ngForOf]="newDoc.getSegArray()">
-                <div *ngIf="selectedIUs.has(seg.iu); else notSelected">
-                  <mat-chip-option color="lime-bubble" (click)="segClick(seg)" selected>
-                    {{seg.getText(newDoc, true)}}
-                  </mat-chip-option>
-                </div>
-                <ng-template #notSelected>
+              @for (seg of newDoc.getSegArray(); track seg) {
+                @if (selectedIUs.has(seg.iu)) {
+                  <div>
+                    <mat-chip-option color="lime-bubble" (click)="segClick(seg)" selected>
+                      {{seg.getText(newDoc, true)}}
+                    </mat-chip-option>
+                  </div>
+                } @else {
                   <mat-chip-option color="primary" (click)="segClick(seg)" selected [ngClass]="{
                     'disc-iu' : newDoc.ius[seg.iu].disc 
                   }">
                     {{seg.getText(newDoc, true)}}
                   </mat-chip-option>
-                </ng-template>
-              </ng-template><!-- NGFor -->
-            </mat-chip-listbox>
-          </div>
-          <div class="connect-toolbar">
-            <div class="connect-buttons def-button">
-              <button mat-stroked-button color="accent" [disabled]="selectedIUs.size <= 1" (click)="connectSegs()">
-                Connect
-              </button>
-              <button mat-stroked-button color="accent" [disabled]="selectedIUs.size == 0" (click)="disconnectSegs()">
-                Disconnect
-              </button>
-              <button mat-stroked-button color="warn" matTooltipPosition="above" matTooltipClass="warn-tooltip"
-                [disabled]="selectedIUs.size == 0" (click)="clearSelectedSegs()">
-                Cancel selection
-              </button>
+                }
+                }<!-- NGFor -->
+              </mat-chip-listbox>
+            </div>
+            <div class="connect-toolbar">
+              <div class="connect-buttons def-button">
+                <button mat-stroked-button color="accent" [disabled]="selectedIUs.size <= 1" (click)="connectSegs()">
+                  Connect
+                </button>
+                <button mat-stroked-button color="accent" [disabled]="selectedIUs.size == 0" (click)="disconnectSegs()">
+                  Disconnect
+                </button>
+                <button mat-stroked-button color="warn" matTooltipPosition="above" matTooltipClass="warn-tooltip"
+                  [disabled]="selectedIUs.size == 0" (click)="clearSelectedSegs()">
+                  Cancel selection
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
-  </div>
-  <div class="toolbar-area">
-    <mat-divider></mat-divider>
-    <div class="card-toolbar vertical-center save-theme">
-      <button mat-flat-button color="accent" [disabled]="! editedFlag" (click)="resetEditor()">
-        Cancel <mat-icon>cancel</mat-icon>
-      </button>
-      <button mat-flat-button color="primary"
-        matTooltip="WARNING: Altering the structure of a summary file will erase all its manual links!"
-        matTooltipPosition="above"
-        matTooltipClass="warn-tooltip"
-        [disabled]="! editedFlag" (click)="saveEdits()">
-        Save <mat-icon>save</mat-icon>
-      </button>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    <div class="toolbar-area">
+      <mat-divider></mat-divider>
+      <div class="card-toolbar vertical-center save-theme">
+        <button mat-flat-button color="accent" [disabled]="! editedFlag" (click)="resetEditor()">
+          Cancel <mat-icon>cancel</mat-icon>
+        </button>
+        <button mat-flat-button color="primary"
+          matTooltip="WARNING: Altering the structure of a summary file will erase all its manual links!"
+          matTooltipPosition="above"
+          matTooltipClass="warn-tooltip"
+          [disabled]="! editedFlag" (click)="saveEdits()">
+          Save <mat-icon>save</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
-</div>

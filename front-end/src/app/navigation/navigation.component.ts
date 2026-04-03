@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { NavAuthWidgetComponent } from '../user-area/nav-auth-widget/nav-auth-widget.component'; 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -16,14 +16,13 @@ import { MatIconModule } from '@angular/material/icon';
     styleUrls: ['./navigation.component.sass'],
     standalone: true,
     imports: [
-      CommonModule,
-      RouterModule,
-      MatSidenavModule,
-      MatToolbarModule,
-      MatButtonModule,
-      MatIconModule,
-      NavAuthWidgetComponent
-    ]
+    RouterModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    NavAuthWidgetComponent
+]
 })
 export class NavigationComponent {
 

@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 
 import { AuthService } from '../../auth.service';
 import { MatCardModule } from '@angular/material/card';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -13,11 +13,10 @@ import { MatButtonModule } from '@angular/material/button';
     templateUrl: './login-page.component.html',
     styleUrls: ['./login-page.component.sass'],
     standalone: true,
-    imports:[
-      CommonModule,
-      MatCardModule,
-      MatButtonModule
-    ]
+    imports: [
+    MatCardModule,
+    MatButtonModule
+]
 })
 export class LoginPageComponent implements OnInit {
 

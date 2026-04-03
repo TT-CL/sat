@@ -1,46 +1,45 @@
 <div class="scrollable-content">
   <mat-chip-listbox
     aria-label="sentence chips" class="summary-link-theme">
-    <ng-template ngFor let-seg [ngForOf]="doc.getSegArray()">
+    @for (seg of doc.getSegArray(); track seg) {
       <!-- If a summary IU has ANY links color it green -->
-      <ng-template [ngIf]="doc.ius[seg.iu].linkedIus.length > 0" [ngIfElse]="notLinked">
-        <ng-template [ngIf]="selected_iu && selected_iu.label == seg.iu" [ngIfElse]="summaryLinkNotSelected">
+      @if (doc.ius[seg.iu].linkedIus.length > 0) {
+        @if (selected_iu && selected_iu.label == seg.iu) {
           <mat-chip-option color="lime-bubble" (click)="linkClick(seg)" selected>
             {{seg.getText(doc,true)}}
           </mat-chip-option>
-        </ng-template>
-        <ng-template #summaryLinkNotSelected>
+        } @else {
           <mat-chip-option color="green-bubble" (click)="linkClick(seg)" selected>
             {{seg.getText(doc,true)}}
           </mat-chip-option>
-        </ng-template>
-      </ng-template>
-      <!-- CASCADING ELSES
-      (these won't be printed if the prev bloc is true) -->
-      <ng-template #notLinked>
-        <ng-template [ngIf]="seg.type=='ghost'" [ngIfElse]="ghostElse">
+        }
+      } @else {
+        @if (seg.type=='ghost') {
           <mat-chip-option color="ghost-bubble" (click)="linkClick(seg)" selected>
             {{seg.getText(doc,true)}}
           </mat-chip-option>
-        </ng-template>
-        <ng-template #ghostElse>
-          <ng-template [ngIf]="selected_iu && selected_iu.label == seg.iu" [ngIfElse]="default">
+        } @else {
+          @if (selected_iu && selected_iu.label == seg.iu) {
             <mat-chip-option color="warn" (click)="linkClick(seg)" selected [ngClass]="{
               'disc-iu' : doc.ius[seg.iu].disc
             }">
               {{seg.getText(doc,true)}}
             </mat-chip-option>
-          </ng-template>
-          <!-- DEFAULT -->
-          <ng-template #default>
+          } @else {
             <mat-chip-option color="primary" (click)="linkClick(seg)" selected [ngClass]="{
               'disc-iu' : doc.ius[seg.iu].disc
             }">
               {{seg.getText(doc,true)}}
             </mat-chip-option>
-          </ng-template> <!-- Default -->
-        </ng-template> <!-- Ghostelse -->
-      </ng-template><!-- Not Linked -->
-    </ng-template><!-- NGFor -->
-  </mat-chip-listbox>
-</div>
+          }
+          <!-- DEFAULT -->
+          <!-- Default -->
+        }
+        <!-- Ghostelse -->
+      }
+      <!-- CASCADING ELSES
+      (these won't be printed if the prev bloc is true) -->
+      <!-- Not Linked -->
+      }<!-- NGFor -->
+    </mat-chip-listbox>
+  </div>

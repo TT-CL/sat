@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit, OnChanges, Input, SimpleChanges} from '@angular/core';
 import { MatChipsModule } from '@angular/material/chips';
 
@@ -8,9 +8,8 @@ import { MatChipsModule } from '@angular/material/chips';
     styleUrls: ['./iu-display.component.sass'],
     standalone: true,
     imports: [
-      CommonModule,
-      MatChipsModule
-    ]
+    MatChipsModule
+]
 })
 export class IuDisplayComponent implements OnInit {
 

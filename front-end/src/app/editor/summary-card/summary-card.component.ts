@@ -19,7 +19,7 @@ import { SummaryLinkComponent } from '../summary-link/summary-link.component';
 import { SummaryEditorComponent } from '../summary-editor/summary-editor.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
-import { CommonModule } from '@angular/common';
+
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 
@@ -29,13 +29,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     styleUrls: ['./summary-card.component.sass'],
     standalone: true,
     imports: [
-      CommonModule,
-      MatCardModule,
-      MatDividerModule,
-      MatFormFieldModule,
-      MatSelectModule,
-      PortalModule
-    ]
+    MatCardModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    PortalModule
+]
 })
 export class SummaryCardComponent implements AfterViewInit, OnInit {
 

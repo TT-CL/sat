@@ -3,16 +3,14 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { IUCollection } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
     selector: 'app-source-reader',
     templateUrl: './source-reader.component.html',
     styleUrls: ['./source-reader.component.sass'],
     standalone: true,
-    imports: [
-      CommonModule
-    ]
+    imports: []
 })
 export class SourceReaderComponent implements OnInit {
 

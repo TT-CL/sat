@@ -4,8 +4,10 @@
   </div>
   <div class="card-inner">
     <mat-icon class="doc-icon">description</mat-icon>
-    <div class="filename-area" *ngIf="file">
-      {{name}}
-    </div>
+    @if (file) {
+      <div class="filename-area">
+        {{name}}
+      </div>
+    }
   </div>
 </div>

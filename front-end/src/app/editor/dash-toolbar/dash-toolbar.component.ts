@@ -4,7 +4,7 @@ import { StorageService } from '../../storage.service';
 
 import { ActivatedRoute, Router, NavigationEnd, RouterModule} from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -15,13 +15,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     styleUrls: ['./dash-toolbar.component.sass'],
     standalone: true,
     imports: [
-      CommonModule,
-      MatIconModule,
-      MatButtonModule,
-      RouterModule,
-      MatListModule,
-      MatTooltipModule
-    ]
+    MatIconModule,
+    MatButtonModule,
+    RouterModule,
+    MatListModule,
+    MatTooltipModule
+]
 })
 export class DashToolbarComponent implements OnInit {
 

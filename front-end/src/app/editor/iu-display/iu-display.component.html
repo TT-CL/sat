@@ -1,8 +1,10 @@
 <mat-chip-listbox
   aria-label="sentence chips">
-  <mat-chip-option
-    class="iu-mat-chip"
-    *ngFor="let seg of segs" color="primary">
-    {{getSegText(seg)}}
-  </mat-chip-option>
+  @for (seg of segs; track seg) {
+    <mat-chip-option
+      class="iu-mat-chip"
+      color="primary">
+      {{getSegText(seg)}}
+    </mat-chip-option>
+  }
 </mat-chip-listbox>

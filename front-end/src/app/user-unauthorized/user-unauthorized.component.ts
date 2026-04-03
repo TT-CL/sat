@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { MatCardModule } from '@angular/material/card';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -11,10 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
     styleUrls: ['./user-unauthorized.component.sass'],
     standalone: true,
     imports: [
-      CommonModule,
-      MatCardModule,
-      MatButtonModule
-    ]
+    MatCardModule,
+    MatButtonModule
+]
 })
 export class UserUnauthorizedComponent {
 

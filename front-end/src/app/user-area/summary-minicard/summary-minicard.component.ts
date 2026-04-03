@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { IUCollection } from 'src/app/objects/objects.module';
@@ -11,9 +11,8 @@ type FileOrDoc = File | IUCollection;
     styleUrls: ['./summary-minicard.component.sass'],
     standalone: true,
     imports: [
-      CommonModule,
-      MatIconModule
-    ]
+    MatIconModule
+]
 })
 export class SummaryMinicardComponent implements OnInit {
 
