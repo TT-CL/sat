@@ -1,58 +1,32 @@
 <div class="scrollable-content">
   <mat-chip-listbox
-    aria-label="sentence chips" class="summary-link-theme">
-    <ng-template ngFor let-seg [ngForOf]="doc.getSegArray()">
-      <!-- if the input iu is inside the links of a source IU color it green -->
-      <ng-template [ngIf]="selected_summary_iu" [ngIfElse]="notLinked">
-        <ng-template [ngIf]="selected_summary_iu.linkedIus.includes(seg.iu)" [ngIfElse]="notLinked">
-          <!--
-          I don't want to distinguish between selected and not selected anymore
-          inside the source text.
-          <ng-template [ngIf]="selected_iu && seg.iu == selected_iu.label" [ngIfElse]="sourceLinkNotSelected">
-            <mat-chip color="linked-link-selected" (click)="linkClick(seg)" selected>
-              {{seg.getText(doc,true)}}
-            </mat-chip>
-          </ng-template>
-          -->
-          <mat-chip-option color="lime-bubble" (click)="linkClick(seg)" selected>
-            {{seg.getText(doc,true)}}
-          </mat-chip-option>
-        </ng-template>
-        <!--
-        I don't want to distinguish between selected and not selected anymore
-        inside the source text.
-        <ng-template #sourceLinkNotSelected>
-          <mat-chip color="linked-link" (click)="linkClick(seg)" selected>
-            {{seg.getText(doc,true)}}
-          </mat-chip>
-        </ng-template>
-        -->
-      </ng-template>
-      <!-- CASCADING ELSES
-      (these won't be printed if the prev bloc is true) -->
-      <ng-template #notLinked>
-        <ng-template [ngIf]="selected_summary_iu && sims" [ngIfElse]="notSuggested">
-          <ng-template [ngIf]="topNSims(selected_summary_iu,1).includes(seg.iu)" [ngIfElse]="notSuggested">
-            <mat-chip-option color="suggested-link" (click)="linkClick(seg)" selected>
-              {{seg.getText(doc,true)}}
-            </mat-chip-option>
-          </ng-template>
-        </ng-template>
-        <ng-template #notSuggested>
-          <ng-template [ngIf]="seg.type=='ghost'" [ngIfElse]="ghostElse">
-            <mat-chip-option color="ghost-bubble" (click)="linkClick(seg)" selected>
-              {{seg.getText(doc,true)}}
-            </mat-chip-option>
-          </ng-template>
-          <ng-template #ghostElse>
-            <mat-chip-option color="primary" (click)="linkClick(seg)" selected [ngClass]="{
-              'disc-iu' : doc.ius[seg.iu].disc
-            }">
-              {{seg.getText(doc,true)}}
-            </mat-chip-option>
-          </ng-template> <!-- Ghostelse -->
-        </ng-template> <!-- Not Suggested -->
-      </ng-template><!-- Not Linked -->
-    </ng-template><!-- NGFor -->
+    aria-label="sentence chips"
+    class="summary-link-theme">
+
+    @for (seg of doc.getSegArray(); track seg) {
+      @if (selected_summary_iu && selected_summary_iu.linkedIus.includes(seg.iu)) {
+        <mat-chip-option color="lime-bubble" (click)="linkClick(seg)" selected>
+          {{ seg.getText(doc, true) }}
+        </mat-chip-option>
+      } @else if (selected_summary_iu && sims && topNSims(selected_summary_iu, 1).includes(seg.iu)) {
+        <mat-chip-option color="suggested-link" (click)="linkClick(seg)" selected>
+          {{ seg.getText(doc, true) }}
+        </mat-chip-option>
+      } @else if (seg.type == 'ghost') {
+        <mat-chip-option color="ghost-bubble" (click)="linkClick(seg)" selected>
+          {{ seg.getText(doc, true) }}
+        </mat-chip-option>
+      } @else {
+        <mat-chip-option
+          color="primary"
+          (click)="linkClick(seg)"
+          selected
+          [ngClass]="{
+            'disc-iu': doc.ius[seg.iu].disc
+          }">
+          {{ seg.getText(doc, true) }}
+        </mat-chip-option>
+      }
+    }
   </mat-chip-listbox>
 </div>

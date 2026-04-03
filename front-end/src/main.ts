@@ -1,4 +1,4 @@
-import { enableProdMode, ErrorHandler, importProvidersFrom } from '@angular/core';
+import { enableProdMode, ErrorHandler, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 
@@ -40,7 +40,7 @@ if (environment.production) {
 
 bootstrapApplication(AppComponent, {
     providers: [
-        importProvidersFrom(BrowserModule, FormsModule, ReactiveFormsModule, AppRoutingModule, MatCardModule, MatGridListModule, MatMenuModule, MatIconModule, MatButtonModule, LayoutModule, MatToolbarModule, MatTabsModule, MatChipsModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatInputModule, OverlayModule, MatProgressSpinnerModule, PortalModule, MatSelectModule, MatTooltipModule, MarkdownModule.forRoot({ loader: HttpClient })),
+        provideZoneChangeDetection(),importProvidersFrom(BrowserModule, FormsModule, ReactiveFormsModule, AppRoutingModule, MatCardModule, MatGridListModule, MatMenuModule, MatIconModule, MatButtonModule, LayoutModule, MatToolbarModule, MatTabsModule, MatChipsModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatInputModule, OverlayModule, MatProgressSpinnerModule, PortalModule, MatSelectModule, MatTooltipModule, MarkdownModule.forRoot({ loader: HttpClient })),
         OverlayService,
         DynamicOverlay,
         DynamicOverlayContainer,
