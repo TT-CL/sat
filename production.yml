@@ -23,7 +23,7 @@ services:
       - --certificatesresolvers.myresolver.acme.email=${CERT_EMAIL}
       - --certificatesresolvers.myresolver.acme.storage=/certificates/acme.json
     volumes:
-      - ./certificates:/certificates
+      - ./certificates:/certificates:Z
     #labels:
       #- "traefik.enable=true"
       #- "traefik.http.routers.api.rule=Host(`traefik.${DOMAIN_NAME}`)"

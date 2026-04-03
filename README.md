@@ -14,26 +14,28 @@ Stack architecture:
 The stack relies on Docker and is designed to run either locally or on a single VPS via `docker compose`.
 
 ## First setup
-Clone the repo and set up the environment files.
+Clone the repo and run `./setup_repo.sh`.
+This will create the empty directories to be mounted as volumes and copy the `.env.example` files to `.env`.
 
-**WARNING:** ensure to set up the environment files before your first compose run or you will have problems with mongo not initializing the users correctly
+**WARNING:** ensure to populate up environment files before your first compose run or you will have problems with mongo not initializing the users correctly
 
 
-### Setting up the environment files
-**Database**<br>
+### Required environment files
+#### MongoDB database
 The `.env` files for Mongo setup are split in two to avoid passing the root user's credential to the FastAPI instance.
-Copy example environment file in `db/root_user.env.example` and  `db/api_user.env.example` to `db/root_user.env` and  `db/api_user.env`. Edit the values accordingly.
+- `db/root_user.env`
+- `db/api_user.env`
 
-**FastAPI instance**<br>
-Copy `computation/fastapi.env.example` into `computation/fastapi.env`. Check  for ideas on how to populate the backend's environment file. The `db/api_user.env` file will also be instantiated by docker compose, so there is no need to specify the api keys for the DB.
+#### FastAPI instance
+- `computation/fastapi.env`
 
-**Angular frontend**<br>
-Angular doesn't rely on `.env` files, instead you will have to populate an `environments.ts` file.
-Copy the example from `front-end/src/environments/environments.ts.example` to `front-end/src/environments/environments.ts`. Edit the values accordingly.
+#### Angular frontend
+Angular doesn't rely on `.env` files, instead you will have to populate an `environment.ts` file.
+- `front-end/src/environments/environment.ts`
 
 #### HTTPS Certificate variables (Production only)
-When cloning the repo to a deployement server, you will have to set up a domain name and an email for certbot. These will be used to correctly request https certificates.
-First copy `./.env.example` to `./.env` and populate DOMAIN_NAME and CERT_EMAIL.
+When cloning the repo to a deployement server, you will have to set up a domain name and an email for certbot. Editing this env file is not required when running the project locally.
+- `./.env`
 
 
 ### Building and serving the project
@@ -48,5 +50,5 @@ Follow the instructions in [Deployement](##Deployement) when deploying the proje
 ## Deployement
 Copy the repo to the production server and ensure that all `.env` files are populated correctly, including the [HTTPS Certificate Variables](#https-certificate-variables-production-only).
 
-Once the `.env` files are created, you can build the server from root by running `./prod-compose.sh build` and serve the stack via `./prod-compose.sh up -d`.
+Once the `.env` files are populated, you can build the server from root by running `./prod-compose.sh build` and serve the stack via `./prod-compose.sh up -d`.
 `./prod-compose.sh` is a simple shell script that aliases `docker compose` to avoid specifying the production configuration file each time we call the server.
