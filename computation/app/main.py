@@ -21,21 +21,12 @@ import os
 import time
 
 from authlib.integrations.starlette_client import OAuth, OAuthError
-from starlette.config import Config
+#from starlette.config import Config
 
 from pymongo import MongoClient
 import bson.json_util as bson
 import json
 
-config = Config('.env')
-oauth = OAuth(config)
-oauth.register(
-    name='google',
-    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
-    client_kwargs={
-        'scope': 'openid email profile'
-    }
-)
 
 # get the gensim model URI from the environment variable
 MODEL_URI = os.environ.get("GENSIM_MODEL")
@@ -45,6 +36,21 @@ MODEL_URI = MODEL_URI if MODEL_URI else f'{(os.path.dirname(os.path.realpath(__f
 SECRET_KEY = os.environ.get("SECRET_KEY")
 # if no environment variable is specified, then use random-string-12345
 SECRET_KEY = SECRET_KEY if SECRET_KEY else 'random-string-12345'
+
+GOOGLE_OAUTH_CLIENT_ID = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
+GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
+
+oauth = OAuth()
+oauth.register(
+    name='google',
+    client_id= GOOGLE_OAUTH_CLIENT_ID,
+    client_secret= GOOGLE_OAUTH_CLIENT_SECRET,
+    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+    client_kwargs={
+        'scope': 'openid email profile'
+    }
+)
+
 
 # Retrieve DB environment variables
 DB_NAME = os.environ.get("DB_NAME")
@@ -652,9 +658,13 @@ async def auth_via_google(request: Request):
         token = await oauth.google.authorize_access_token(request)
     except OAuthError as error:
         return HTMLResponse(f'<h1>{error.error}</h1>')
-    user = await oauth.google.parse_id_token(request, token)
+    user = token.get("userinfo")
+    if not user and "id_token" in token:
+        user = await oauth.google.parse_id_token(request, token)
+
+    if not user:
+        return HTMLResponse(f"<h1>OAuth failed</h1><pre>{token}</pre>", status_code=400)
     # TODO: validate JWT
-    # Query the DB for the user
     query = users_col.find_one({
         # each user has a dictionary of tokens, where the issuer is the key
         # and the token is the value
@@ -759,7 +769,7 @@ async def logged_in(request: Request):
     return res
 
 
-@app.route('/auth/logout')
+@app.get('/auth/logout')
 async def logout(request: Request):
     request.session.pop('user', None)
     return RedirectResponse(url='/')

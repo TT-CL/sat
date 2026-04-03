@@ -11,12 +11,12 @@
 
 # environment files
 .env
-/computation/variables.env
+/computation/fastapi.env
 /front-end/.env
 /front-end/src/environments/environment.ts
 /front-end/src/environments/environment.prod.ts
-/db/variables.env
-/db/api.env
+/db/root_user.env
+/db/api_user.env
 
 # database
 /db/storage/

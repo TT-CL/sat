@@ -26,10 +26,10 @@ services:
     environment: 
       - "PYTHONUNBUFFERED=1"
     env_file: 
-      - ./computation/variables.env
-      - ./db/api.env
+      - ./computation/fastapi.env
+      - ./db/api_user.env
     volumes:
-      - ./computation/app:/app
+      - ./computation/app:/app:Z
     #ports:
       #- "8080:80"
     networks:
@@ -40,11 +40,11 @@ services:
     image: "mongo:4"
     restart: always
     env_file:
-      - ./db/variables.env
-      - ./db/api.env
+      - ./db/root_user.env
+      - ./db/api_user.env
     volumes:
-      - ./db/storage:/data/db
-      - ./db/init:/docker-entrypoint-initdb.d
+      - ./db/storage:/data/db:Z
+      - ./db/init:/docker-entrypoint-initdb.d:Z,ro
     networks:
       - backend
     labels:

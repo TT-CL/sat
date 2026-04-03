@@ -19,8 +19,9 @@ services:
   web:
     build:
       target: dev
-    #volumes:
-    #  - ./front-end:/opt/ng
+    volumes:
+      - ./front-end:/opt/ng:Z
+      - web_node_modules:/opt/ng/node_modules
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"
@@ -48,3 +49,6 @@ services:
 networks:
   backend:
     internal: false
+
+volumes:
+  web_node_modules:
