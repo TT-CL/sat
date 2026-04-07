@@ -44,6 +44,8 @@ services:
       - "traefik.http.routers.web-secured.tls.domains[0].main=${DOMAIN_NAME}"
 
   computation:
+    build:
+      target: prod
     restart: unless-stopped
     environment:
       - "GUNICORN_CMD_ARGS=--forwarded-allow-ips='*'"
