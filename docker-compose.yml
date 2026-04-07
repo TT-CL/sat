@@ -29,7 +29,7 @@ services:
       - ./computation/fastapi.env
       - ./db/api_user.env
     volumes:
-      - ./computation/app:/app:Z
+      - ./computation/app:/code/app:Z
     #ports:
       #- "8080:80"
     networks:
