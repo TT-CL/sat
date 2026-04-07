@@ -8,7 +8,10 @@ Stack architecture:
     - OAuth authentication
     - GloVe wordvec hosting and cosine similarity operations
     - middleware for database interaction
- - front-end: Angular front-end
+ - front-end: Angular codebase
+    - User Interface
+    - Excel and Zipfile export
+    - (optional) Azure telemetry
  - db: MongoDB instance
 
 The stack relies on Docker and is designed to run either locally or on a single VPS via `docker compose`.
