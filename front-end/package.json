@@ -25,6 +25,7 @@
     "marked": "^17.0.5",
     "ngx-markdown": "^21.1.0",
     "ngx-webstorage": "^21.0.1",
+    "prismjs": "^1.30.0",
     "rxjs": "^7.8.2",
     "tslib": "^2.8.1",
     "typeface-merriweather": "^1.1.13",
@@ -33,7 +34,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^21.2.6",
-    "@angular/cli": "^21.2.6",
+    "@angular/cli": "^21.2.7",
     "@angular/compiler-cli": "^21.2.7",
     "@types/jasmine": "~5.1.9",
     "@types/node": "^22.15.30",
