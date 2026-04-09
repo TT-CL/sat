@@ -87,6 +87,10 @@ class ModelWebWrapper(Model):
     def docSims(self, source, summary):
         plainSummaryIUs = extractPlaintextIUs(summary)
         plainSourceIUs = extractPlaintextIUs(source)
+        print("source IUs")
+        print(plainSourceIUs)
+        print("summary IUs")
+        print(plainSummaryIUs)
 
         simsDict = {}
         for summary_idx, summary_iu in plainSummaryIUs.items():

@@ -19,7 +19,7 @@ The website's main page allows you to manage your saved projects and add a new o
 A list of project is shown undreneath your name. Each project has a **Go to editor** button that links to the *project editor*.
 
 You can upload a new project by clicking on the **Start a new project** button. This will lead you to the *new project page*.
-You can also upload a project backup downloaded from the *project backup page* via the **Restore from backup** button.
+You can also upload a project backup downloaded from the *project backup page* via the **Restore backup** button.
 
 ## New project page
 

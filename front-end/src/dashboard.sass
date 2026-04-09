@@ -44,6 +44,7 @@ $card-header-margin: 10px
 .dash-grid
   display: grid
   height: $body-height
+  max-height: $body-height
   grid-column-gap: 5px
   grid-template-columns: auto auto auto
   grid-template-rows: auto
@@ -52,7 +53,7 @@ $card-header-margin: 10px
   margin-right: auto
 
 .grid-cell
-  height: $card-height
+  height: auto
 
 .summary-cell-display-both
   grid-area: left
@@ -97,9 +98,6 @@ $card-header-margin: 10px
 .mat-card-content
   margin: $card-margin !important
 
-.mat-card-header
-  padding-top: $card-header-margin
-  height: $card-header-height
 
 .mat-card-dynamic-content
   padding-top: $card-content-margin
@@ -126,24 +124,13 @@ $card-header-margin: 10px
   font: (400 16px Roboto, "Helvetica Neue", sans-serif)
   color: rgba(0, 0, 0, 0.54)
 
-.card-header, .header-flex
-  height: $card-header-height
-  padding-top: $card-header-margin
-
 .header-flex
   display: flex
   flex-direction: row
   justify-content: space-between
   align-content: center
   height: 100%
-
-// Toolbar
-
-.card-toolbar
-  height: 50px
-
-.card-toolbar > button
-  margin-right: 7px
+  width: 100%
 
 // PRE editor
 

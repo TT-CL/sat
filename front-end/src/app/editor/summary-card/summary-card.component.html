@@ -1,7 +1,6 @@
 <mat-card appearance="outlined" class="document-card">
-  <mat-card-content class="card-container">
-    <div class="header-container">
-      @if (support_array.length <=1) {
+  <mat-card-header>
+      @if (summary_array.length <=1) {
         <div class="card-header">
           <div class="card-header-text">
             <div class="card-title">{{doc.doc_name}}</div>
@@ -9,7 +8,7 @@
           </div>
         </div>
       }
-      @if (support_array.length >1) {
+      @if (summary_array.length >1) {
         <div class="header-flex">
           <div class="card-header-text">
             <div class="card-title">
@@ -17,9 +16,9 @@
             </div>
           </div>
           <div class="title-selector">
-            <mat-form-field>
+            <mat-form-field subscriptSizing="dynamic">
               <mat-select [(value)]="summary_idx" #selector>
-                @for (name of support_array; track name; let i = $index) {
+                @for (name of summary_array; track name; let i = $index) {
                   <mat-option [value]="i">{{name}}</mat-option>
                 }
               </mat-select>
@@ -27,8 +26,9 @@
           </div>
         </div>
       }
-      <mat-divider></mat-divider>
-    </div>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content class="card-container">
     <div class="mat-card-dynamic-content">
       <ng-template [cdkPortalOutlet]="portalOutlet"></ng-template>
     </div>

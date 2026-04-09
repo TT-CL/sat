@@ -1,11 +1,11 @@
 <mat-card appearance="outlined" class="document-card">
-  <mat-card-content>
-    <div class="card-header">
-      <div class="card-header-text">
-        <div class="card-title">{{doc.doc_name}}</div>
-        <div class="card-subtitle">Source text</div>
-      </div>
+  <mat-card-header>
+    <div class="card-header-text">
+      <div class="card-title">{{doc.doc_name}}</div>
+      <div class="card-subtitle">Source text</div>
     </div>
+  </mat-card-header>
+  <mat-card-content>
     <mat-divider></mat-divider>
     <div class="mat-card-dynamic-content">
       <ng-template [cdkPortalOutlet]="portalOutlet"></ng-template>

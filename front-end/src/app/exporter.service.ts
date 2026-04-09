@@ -23,6 +23,7 @@ export class ExporterService {
 
   private async saveWorkbook(workbook: ExcelJS.Workbook, fileName: string): Promise<void> {
     const buffer = await workbook.xlsx.writeBuffer();
+    console.log("buffer")
     const blob = new Blob(
       [buffer],
       { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }
@@ -35,25 +36,39 @@ export class ExporterService {
     window.URL.revokeObjectURL(url);
   }
 
+  private safeSheetName(name: string): string {
+    return (name || 'Sheet')
+      .replace(/[:\\/?*\[\]]/g, '_')
+      .slice(0, 31);
+  }
+
   private addWorksheetFromAoA(
     workbook: ExcelJS.Workbook,
     sheetName: string,
     rows: any[][]
   ): void {
-    const worksheet = workbook.addWorksheet(sheetName);
+    const worksheet = workbook.addWorksheet(this.safeSheetName(sheetName));
     rows.forEach(row => worksheet.addRow(row));
   }
 
   async generateProjectSpreadsheet(proj: Project): Promise<void> {
+    if (!proj) {
+    console.error('generateProjectSpreadsheet: proj is null');
+    return;
+    }
+
+    console.log('Project:', proj);
     const wb = new ExcelJS.Workbook();
 
-    wb.creator = this.userFullName;
+    wb.creator = this.userFullName || 'SAT User';
     wb.created = new Date();
     wb.modified = new Date();
-    wb.subject = proj.description;
-    wb.title = proj.name;
+    wb.subject = proj.description || '';
+    wb.title = proj.name || 'SAT project';
 
     proj.summaryDocs.forEach(summary => {
+
+    console.log('Generating summary worksheet:', summary.doc_name);
       this.addWorksheetFromAoA(
         wb,
         summary.doc_name,
@@ -66,7 +81,7 @@ export class ExporterService {
       proj.sourceDoc.doc_name,
       proj.sourceDoc.prepareWorksheet()
     );
-
+    console.log(wb)
     await this.saveWorkbook(wb, `${proj.name}.xlsx`);
   }
 

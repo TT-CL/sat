@@ -1,10 +1,10 @@
 <mat-chip-listbox
   aria-label="sentence chips">
   @for (seg of segs; track seg) {
-    <mat-chip-option
+    <mat-chip
       class="iu-mat-chip"
       color="primary">
       {{getSegText(seg)}}
-    </mat-chip-option>
+    </mat-chip>
   }
 </mat-chip-listbox>

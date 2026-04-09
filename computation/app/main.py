@@ -10,7 +10,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.sessions import SessionMiddleware
 from starlette.requests import Request
 
-from iuextract.data import import_file, __prepare_json, __prepare_man_segs_json
+from iuextract.data import import_file, prepare_json, __prepare_man_segs_json
 from .src.glove import ModelWebWrapper
 from iuextract.extract import label_ius
 
@@ -22,6 +22,8 @@ import time
 
 from authlib.integrations.starlette_client import OAuth, OAuthError
 #from starlette.config import Config
+
+import spacy
 
 from pymongo import MongoClient
 import bson.json_util as bson
@@ -70,6 +72,7 @@ sources_hist_col = db['sources_hist']
 summaries_col = db['summaries']
 summaries_hist_col = db['summaries_hist']
 
+nlp = spacy.load("en_core_web_sm")
 
 def convert_from_bson(data):
     return json.loads(bson.dumps(data))
@@ -136,8 +139,14 @@ async def custom_http_exception_handler(request, exc):
 async def label_raw_text(
         doc_type: str = Form(...),
         file: UploadFile = File(...)):
-    parsedFile = import_file(file.file)['spacy']
+    file_contents = await file.read()
+    text = file_contents.decode("utf-8")
+    parsedFile = import_file(text, nlp=nlp)
+    #print(parsedFile)
     label_ius(parsedFile)
+    print(type(parsedFile))
+    print(type(list(parsedFile.sents)[0]))
+    print(parsedFile[0])
     json_data = prepare_json(parsedFile, file.filename, doc_type)
     return json_data
 
@@ -147,8 +156,9 @@ async def tokenize_man_segs(
         doc_name: str = Form(...),
         doc_type: str = Form(...),
         segments: str = Form(...)):
+    print(segments)
     segs = loads(segments)
-    json_data = prepare_man_segs_json(segs, doc_name, doc_type)
+    json_data = __prepare_man_segs_json(segs, doc_name, doc_type, nlp)
     return json_data
 
 

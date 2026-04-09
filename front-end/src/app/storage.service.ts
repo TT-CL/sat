@@ -236,7 +236,6 @@ export class StorageService {
     this.work_summary.next(this.work_summary_support);
     this.cur_project_support.summaryDocs[this.work_summary_idx] = summary;
     this.cur_project.next(this.cur_project_support);
-    //TODO: upload to server
     if (sync){
       this.backend.updateSummarySilent(summary);
     }

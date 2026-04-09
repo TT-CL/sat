@@ -1,27 +1,19 @@
+@use '../../../dashboard.sass' as dash
 
-
-.dash-grid
-  display: grid
-  grid-row-gap: 5px
-  grid-template-columns: 500px
-  grid-template-rows: auto 450px auto
-  margin-top: 0px
-  height: 550px
-  max-height: 600px
-  margin-left: auto
-  margin-right: auto
+$card-width: 600px
 
 .grid-cell
-  height: 450px
+  height: auto
   grid-column: 1
   grid-row: 2
+  margin-top: 0px
+  margin-bottom: auto
 
 .mat-card
-  width: 500px
-  height: 450px
-  max-width: 500px
-  max-height: 600px
-  padding-bottom: 5px
+  width: $card-width
+  height: auto
+  max-width: $card-width
+  padding: 0px
 
 .title-container
   display: flex
@@ -47,7 +39,6 @@
 
 .summary-area
   width: inherit
-  height: 115px
   background-color: #eeeeee
   margin-top: 5px
   margin-bottom: 5px
@@ -63,16 +54,19 @@
   overflow-y: auto
 
 .card-content-with-toolbar
-  padding-top: 10px
   display: grid
-  height: 100%
-  grid-template-rows: auto 50px
+  height: auto
+  grid-template-rows: auto 170px
+  padding-bottom: dash.$card-content-margin
+  padding-top: dash.$card-content-margin
 
 .card-toolbar
   height: 100%
 
 .card-toolbar > button
   margin-right: 7px
+  margin-top: 7px
+  margin-bottom: 7px
 
 .summary-flex
   width: inherit

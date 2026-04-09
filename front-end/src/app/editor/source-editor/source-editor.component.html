@@ -10,19 +10,19 @@
         <div class="connect-container">
           <div class="connect-chips">
             <mat-chip-listbox aria-label="sentence chips" class="summary-link-theme">
-              @for (seg of newDoc.getSegArray(); track seg) {
+              @for (seg of newDoc.getSegArray(); track seg.index) {
                 @if (selectedIUs.has(seg.iu)) {
                   <div>
-                    <mat-chip-option color="lime-bubble" (click)="segClick(seg)" selected>
+                    <mat-chip color="lime-bubble" (click)="segClick(seg)" selected>
                       {{seg.getText(newDoc, true)}}
-                    </mat-chip-option>
+                    </mat-chip>
                   </div>
                 } @else {
-                  <mat-chip-option color="primary" (click)="segClick(seg)" selected [ngClass]="{
+                  <mat-chip color="primary" (click)="segClick(seg)" selected [ngClass]="{
                     'disc-iu' : newDoc.ius[seg.iu].disc 
                   }">
                     {{seg.getText(newDoc, true)}}
-                  </mat-chip-option>
+                  </mat-chip>
                 }
                 }<!-- NGFor -->
               </mat-chip-listbox>

@@ -1,4 +1,4 @@
-import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncapsulation, ElementRef } from '@angular/core';
+import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncapsulation, ElementRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 
 import { IdeaUnit, IUCollection, Project, Segment } from '../../objects/objects.module';
 
@@ -14,6 +14,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SegEditQueue } from 'src/app/objects/seg-edit-queue';
 
 @Component({
     selector: 'app-summary-editor',
@@ -32,25 +33,22 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       ReactiveFormsModule
     ]
 })
-export class SummaryEditorComponent implements OnInit {
+export class SummaryEditorComponent implements AfterViewInit {
   // data structs
   doc: IUCollection = null;
   newDoc: IUCollection;
 
   editedFlag: boolean = false;
   // alter segments
-  preEdited: boolean = false;
   retrievedSegsFlag: boolean = false;
   newSegments: Array<string>;
-  editor = new UntypedFormControl();
 
   //connect segments
   discEdited = false;
   selectedIUs: Set<string> = new Set();
-  connectedSegsMaxIdx: number;
-  disconnectedSegsMaxIdx: number;
+  segEditQueue: SegEditQueue = new SegEditQueue();
 
-  @ViewChild("preEditor") preEditor!: ElementRef<HTMLPreElement>; ;
+  @ViewChild("preEditor") preEditor!: ElementRef<HTMLPreElement>;
 
   constructor(
     private storage: StorageService,
@@ -58,16 +56,14 @@ export class SummaryEditorComponent implements OnInit {
   ) {
     storage.getWorkSummary().subscribe((summary) => {
       this.doc = summary;
-      this.newDoc = summary;
-      //console.log("retrieving summary");
-      this.resetEditor();
-      this.selectedIUs.clear();
-      this.connectedSegsMaxIdx = 1; //start from 1
-      this.disconnectedSegsMaxIdx = 1;  //start from 1
+      this.newDoc = this.cloneIuCollection(summary);
+      //console.log("retrieved summary");
+      //console.log(this.newDoc)
     });
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    this.resetEditor();
   }
 
   stripSpanStyles(node) {
@@ -81,28 +77,35 @@ export class SummaryEditorComponent implements OnInit {
     }
   }
 
+  cloneIuCollection(doc: IUCollection): IUCollection {
+    const clone = new IUCollection();
+    clone.reconsolidate(JSON.parse(JSON.stringify(doc)));
+    return clone
+  }
+
   parseEditedSegments(): Array<string> {
     let res = [];
-    if (this.preEditor?.nativeElement) {
+    if (this.preEditor.nativeElement) {
       const children = Array.from(this.preEditor.nativeElement.childNodes)
       for (let child of children) {
           if (child.nodeType === Node.ELEMENT_NODE && child.nodeName === 'DIV') {
-              let temp = child['innerText']?.trim();
+              let temp = child['innerText'].trim();
               if (temp && temp != "") {
                   res.push(temp);
               }
           }
       }
     }
+    console.log("parsed segments")
+    console.log(res)
     return res;
   }
 
   preInput(evt) {
     //set the edited flag to true
     const target = evt.target as HTMLElement;
-    if (this.preEditor?.nativeElement) {
+    if (this.preEditor.nativeElement) {
       this.editedFlag = true;
-      this.preEdited = true;
       // set the tokenized flag to false -> even if they were retrieve before,
       // I need to retrieve them again after any kind of edit
       this.retrievedSegsFlag = false;
@@ -115,10 +118,16 @@ export class SummaryEditorComponent implements OnInit {
 
   resetEditor() {
     this.editedFlag = false;
-    this.preEdited = false;
-    const html = this.doc?.getPreHtml() || '';
-    this.editor.setValue(html);
-    delete this.newSegments;
+    this.discEdited = false;
+    this.segEditQueue.resetQueue();
+    this.selectedIUs.clear();
+    // reset disc bubbles
+    this.newDoc = this.cloneIuCollection(this.doc)
+    // reset pre editor
+    const html = this.doc.getPreHtml();
+    //console.log(html)
+    this.preEditor.nativeElement.innerHTML = html;
+    this.newSegments = this.parseEditedSegments();
   }
 
   retrieveTokenizedSegs(save_to_storage = false) {
@@ -134,9 +143,8 @@ export class SummaryEditorComponent implements OnInit {
         //console.log(event.body);
         new_doc.readDocument(event.body)
         console.log(new_doc)
-        this.retrievedSegsFlag = true;
-        this.preEdited = false;
         this.newDoc = new_doc
+        this.newDoc.applySegEditQueue(this.segEditQueue)
         if (save_to_storage) {
           // recall save edits, but this time skip the checks and go straight
           // to the storage section
@@ -152,15 +160,7 @@ export class SummaryEditorComponent implements OnInit {
   }
 
   tabChanged($event) {
-    if ($event.index == 1) { // only do this if we move to connected Segs
-      if (this.preEdited) {
-        // only upload if I have some edits
-        if (this.retrievedSegsFlag == false && this.editedFlag == true) {
-          // do not tokenize the segments again if they were already tokenized
-          this.retrieveTokenizedSegs();
-        }
-      }
-    }
+    this.resetEditor()
   }
 
   segClick(seg: Segment): void {
@@ -172,7 +172,7 @@ export class SummaryEditorComponent implements OnInit {
   }
 
   clearSelectedSegs() {
-    this.discEdited = false;
+    //this.discEdited = false;
     this.selectedIUs.clear();
   }
 
@@ -182,6 +182,7 @@ export class SummaryEditorComponent implements OnInit {
 
     //compute
     this.newDoc.connectSegs(this.selectedIUs);
+    this.segEditQueue.addSegConnection(this.selectedIUs)
     //console.log(this.newDoc);
 
     this.clearSelectedSegs();
@@ -193,13 +194,20 @@ export class SummaryEditorComponent implements OnInit {
 
     //compute
     this.newDoc.disconnectSegs(this.selectedIUs);
+    this.segEditQueue.addSegDisconnection(this.selectedIUs)
 
     //console.log(this.newDoc);
     this.clearSelectedSegs();
   }
 
   saveEdits(skip_check = false) {
-    if (this.preEdited && !skip_check) {
+    if (this.editedFlag && !skip_check && !this.discEdited) {
+      //console.log("newSegments")
+      //console.log(this.newSegments)
+      //console.log("doc")
+      //console.log(this.doc)
+      //console.log("newDoc")
+      //console.log(this.newDoc)
       this.retrieveTokenizedSegs(true);
     } else {
 
@@ -215,7 +223,11 @@ export class SummaryEditorComponent implements OnInit {
       this.newDoc.deleted = this.doc.deleted;
 
       this.storage.clearSimilarities(this.doc.doc_name);
+      //console.log(this.newDoc)
       this.storage.updateWorkSummary(this.newDoc, true);
+      this.doc = this.cloneIuCollection(this.newDoc)
+
+      this.editedFlag = false;
     }
   }
 }

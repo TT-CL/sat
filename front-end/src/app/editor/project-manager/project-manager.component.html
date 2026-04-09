@@ -1,4 +1,4 @@
-<div #overlayOrigin>
+<div #overlayOrigin class="project-manager">
   <form [formGroup]="projectForm" (ngSubmit)="onSubmit()">
     <mat-card appearance="outlined">
       <mat-card-content>
@@ -36,7 +36,7 @@
                 <input matInput placeholder="source.txt" readonly required (click)="onClickSourceForm()" #sourceForm
                   autocomplete="off" [value]="sourceFormValue" formControlName="sourceValue">
                 @if (sourceFile) {
-                  <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="removesourceFile()">
+                  <button matSuffix mat-icon-button aria-label="Clear" (click)="removesourceFile()">
                     <mat-icon>close</mat-icon>
                   </button>
                 }
@@ -73,14 +73,12 @@
               </div>
             </div>
           </div>
-          <div>
-            <mat-divider></mat-divider>
-            <div class="card-toolbar vertical-center save-theme">
-              <button type="submit" mat-flat-button color="primary" [disabled]="!projectForm.valid">
-                Save <mat-icon>save</mat-icon>
-              </button>
-            </div>
-          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="card-toolbar vertical-center save-theme">
+          <button type="submit" mat-flat-button color="primary" [disabled]="!projectForm.valid">
+            Save <mat-icon>save</mat-icon>
+          </button>
         </div>
       </mat-card-content>
     </mat-card>

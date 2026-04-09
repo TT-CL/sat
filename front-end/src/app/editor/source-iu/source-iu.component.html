@@ -5,15 +5,15 @@
     @for (seg of doc.getSegArray(); track seg) {
       @if (seg.type=='ghost') {
         <!--[selected]="seg.selected"-->
-        <mat-chip-option color="ghost-bubble" >
+        <mat-chip color="ghost-bubble" >
           {{seg.getText(doc, true)}}
-        </mat-chip-option>
+        </mat-chip>
       } @else {
-        <mat-chip-option color="primary" selected [ngClass]="{
+        <mat-chip color="primary" selected [ngClass]="{
           'disc-iu' : doc.ius[seg.iu].disc
         }"> <!--[selected]="seg.selected"-->
           {{seg.getText(doc, true)}}
-        </mat-chip-option>
+        </mat-chip>
       }
     }
   </mat-chip-listbox>

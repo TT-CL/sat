@@ -57,8 +57,8 @@ export class AppComponent {
   }
 
   retrieveAuthToken(time) {
-    console.log(`${time*this.LOG_IN_INTERVAL+1}mins`);
-    console.log("retrieve auth token");
+    //console.log(`${time*this.LOG_IN_INTERVAL+1} mins`);
+    //console.log("retrieve auth token");
     this.auth.retrieveUserAuthToken();
   }
 

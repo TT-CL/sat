@@ -1,4 +1,4 @@
-import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncapsulation, ElementRef } from '@angular/core';
+import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncapsulation, ElementRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 
 import { IdeaUnit, IUCollection, Project, Segment } from '../../objects/objects.module';
 
@@ -14,6 +14,7 @@ import { MatTab, MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { SegEditQueue } from 'src/app/objects/seg-edit-queue';
 
 @Component({
     selector: 'app-source-editor',
@@ -31,7 +32,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       ReactiveFormsModule
     ]
 })
-export class SourceEditorComponent implements OnInit {
+export class SourceEditorComponent implements AfterViewInit {
 
   // data structs
   doc: IUCollection = null;
@@ -40,38 +41,31 @@ export class SourceEditorComponent implements OnInit {
 
   editedFlag: boolean = false;
   // alter segments
-  preEdited: boolean = false;
   retrievedSegsFlag: boolean = false;
   newSegments: Array<string>;
-  editor = new UntypedFormControl();
 
   //connect segments
   discEdited = false;
-  selectedIUs: Set<string> = new Set(); 
-  connectedSegsMaxIdx: number;
-  disconnectedSegsMaxIdx: number;
+  selectedIUs: Set<string> = new Set();
+  segEditQueue: SegEditQueue = new SegEditQueue();
 
-  @ViewChild("preEditor") preEditor!: ElementRef<HTMLPreElement>;;
+  @ViewChild("preEditor") preEditor!: ElementRef<HTMLPreElement>;
 
   constructor(
     private storage: StorageService,
     private backend: BackEndService,
-    ) {
-      storage.getWorkSource().subscribe((source)=>{
-        this.doc = source;
-        this.newDoc = source;
-        //console.log("retrieving source");
-        this.resetEditor();
-        this.selectedIUs.clear();
-        this.connectedSegsMaxIdx = 1; //start from 1
-        this.disconnectedSegsMaxIdx = 1;  //start from 1
-      });
-      storage.getCurProject().subscribe(proj =>{
-        this.proj = proj;
-      })
+  ) {
+    storage.getCurProject().subscribe((proj)=>{
+      this.proj = proj
+      this.doc = this.cloneIuCollection(proj.sourceDoc)
+      this.newDoc = this.cloneIuCollection(proj.sourceDoc)
+      console.log("retrieved source document");
+      console.log(this.newDoc)
+    })
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    this.resetEditor();
   }
 
   stripSpanStyles(node) {
@@ -85,28 +79,35 @@ export class SourceEditorComponent implements OnInit {
     }
   }
 
-  parseEditedSegments(): Array<string>{
+  cloneIuCollection(doc: IUCollection): IUCollection {
+    const clone = new IUCollection();
+    clone.reconsolidate(JSON.parse(JSON.stringify(doc)));
+    return clone
+  }
+
+  parseEditedSegments(): Array<string> {
     let res = [];
-    if (this.preEditor?.nativeElement) {
+    if (this.preEditor.nativeElement) {
       const children = Array.from(this.preEditor.nativeElement.childNodes)
       for (let child of children) {
           if (child.nodeType === Node.ELEMENT_NODE && child.nodeName === 'DIV') {
-              let temp = child['innerText']?.trim();
+              let temp = child['innerText'].trim();
               if (temp && temp != "") {
                   res.push(temp);
               }
           }
       }
     }
+    console.log("parsed segments")
+    console.log(res)
     return res;
   }
 
   preInput(evt){
     //set the edited flag to true
     const target = evt.target as HTMLElement;
-    if (this.preEditor?.nativeElement) {
+    if (this.preEditor.nativeElement) {
       this.editedFlag = true;
-      this.preEdited = true;
       // set the tokenized flag to false -> even if they were retrieve before,
       // I need to retrieve them again after any kind of edit
       this.retrievedSegsFlag = false;
@@ -119,10 +120,16 @@ export class SourceEditorComponent implements OnInit {
 
   resetEditor(){
     this.editedFlag = false;
-    this.preEdited = false;
-    const html = this.doc?.getPreHtml() || '';
-    this.editor.setValue(html);
-    delete this.newSegments;
+    this.discEdited = false;
+    this.segEditQueue.resetQueue();
+    this.selectedIUs.clear();
+    // reset disc bubbles
+    this.newDoc = this.cloneIuCollection(this.doc)
+    // reset pre editor
+    const html = this.doc.getPreHtml();
+    //console.log(html)
+    this.preEditor.nativeElement.innerHTML = html;
+    this.newSegments = this.parseEditedSegments();
   }
 
   retrieveTokenizedSegs(save_to_storage = false){
@@ -138,8 +145,9 @@ export class SourceEditorComponent implements OnInit {
         //console.log(event.body);
         new_doc.readDocument(event.body)
         this.retrievedSegsFlag = true;
-        this.preEdited = false;
+        this.editedFlag = false;
         this.newDoc = new_doc
+        this.newDoc.applySegEditQueue(this.segEditQueue)
         if(save_to_storage){
           // recall save edits, but this time skip the checks and go straight
           // to the storage section
@@ -155,15 +163,7 @@ export class SourceEditorComponent implements OnInit {
   }
 
   tabChanged($event) {
-    if ($event.index == 1){ // only do this if we move to connected Segs
-      if (this.preEdited){
-      // only upload if I have some edits
-          if (this.retrievedSegsFlag == false && this.editedFlag == true) {
-          // do not tokenize the segments again if they were already tokenized
-            this.retrieveTokenizedSegs();
-        }
-      }
-    }
+    this.resetEditor()
   }
 
   segClick(seg: Segment):void{
@@ -175,7 +175,7 @@ export class SourceEditorComponent implements OnInit {
   }
 
   clearSelectedSegs(){
-    this.discEdited = false;
+    //this.discEdited = false;
     this.selectedIUs.clear();
   }
 
@@ -185,6 +185,7 @@ export class SourceEditorComponent implements OnInit {
 
     //compute
     this.newDoc.connectSegs(this.selectedIUs);
+    this.segEditQueue.addSegConnection(this.selectedIUs)
     //console.log(this.newDoc);
 
     this.clearSelectedSegs();
@@ -196,13 +197,20 @@ export class SourceEditorComponent implements OnInit {
 
     //compute
     this.newDoc.disconnectSegs(this.selectedIUs);
+    this.segEditQueue.addSegDisconnection(this.selectedIUs)
 
     //console.log(this.newDoc);
     this.clearSelectedSegs();
   }
 
   saveEdits(skip_check = false){
-    if (this.preEdited && !skip_check){
+    if (this.editedFlag && !skip_check && !this.discEdited) {
+      console.log("newSegments")
+      console.log(this.newSegments)
+      console.log("doc")
+      console.log(this.doc)
+      console.log("newDoc")
+      console.log(this.newDoc)
       this.retrieveTokenizedSegs(true);
     }else{
 
@@ -222,6 +230,9 @@ export class SourceEditorComponent implements OnInit {
     this.proj.purgeProjectLinks();
     this.storage.clearAllSimilarities();
     this.storage.updateCurProject(this.proj, true)
+    this.doc = this.cloneIuCollection(this.newDoc)
+
+    this.editedFlag = false;
     }
   }
 }

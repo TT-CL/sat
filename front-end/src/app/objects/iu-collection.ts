@@ -1,6 +1,7 @@
 import { Word } from './word';
 import { Segment } from './segment';
 import { IdeaUnit } from './idea-unit';
+import { SegEditQueue } from './seg-edit-queue';
 
 
 const punctuation: string = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
@@ -62,7 +63,7 @@ export class IUCollection {
         //initializing Word object
         let temp_word: Word = new Word(read_word["text"], read_word["word_index"]);
 
-        //automatically generated IUs are prefixed with the letter "a"
+        //automatically generated discontinuous IUs are prefixed with the letter "a"
         let prefix = "a";
         if (read_word["iu_label"] == "MAN"){
           //manually generated IUs are prefixed with the letter "m" 
@@ -136,6 +137,18 @@ export class IUCollection {
     delete this.segs[delSeg.index];
   }
 
+  findManConnectedMaxIdx(): number {
+    let max_idx = 0;
+    Object.keys(this.ius).forEach(key => {
+      let prefix = key.match(/^[a-zA-Z]+/)?.[0] ?? '';
+      let idx = Number(key.match(/\d+$/)?.[0] ?? '');
+      if(prefix === 'c'){
+        max_idx = Math.max(max_idx, idx);
+      ;}
+    });
+    return max_idx;
+  }
+
   reconsolidate(anon: any) {
     /**
     console.log("reconsolidate");
@@ -147,6 +160,7 @@ export class IUCollection {
     this.doc_type = anon.doc_type;
     this.manual_iu_count = anon.manual_iu_count;
     this.max_seg_count = anon.max_seg_count;
+    this.max_disc_idx = anon.max_disc_idx;
     for (let anon_sent of anon.sents) {
       this.sents.push(anon_sent);
     }
@@ -200,13 +214,15 @@ export class IUCollection {
       }
       this.ius[anon_index] = iu;
     }
+
+    this.max_connected_idx = this.findManConnectedMaxIdx() + 1
   }
 
   prepareWorksheet(source: IUCollection = null){
     let doc = this;
     let res = [];
     if(doc.doc_type == "summary"){
-      res.push(["idx","Idea Unit", "-","Link idxs", "Linked Iu"]);
+      res.push(["idx","Idea Unit","Link idxs", "Linked Iu"]);
     }else{
       res.push(["idx", "Idea Unit"]);
     }
@@ -312,6 +328,19 @@ export class IUCollection {
         }
         //remove the old iu from memory
         delete this.ius[sel_iu_label];
+      }
+    });
+  }
+
+  applySegEditQueue(queue : SegEditQueue){
+    queue.queue.forEach(seg_edit => {
+      if (seg_edit.type === 'connect'){
+        this.connectSegs(seg_edit.selectedIUs)
+      } else if (seg_edit.type === 'disconnect'){
+        this.disconnectSegs(seg_edit.selectedIUs)
+      } else {
+        console.log("ERROR: element in the SegEditQueue is of wront type")
+        console.log(seg_edit)
       }
     });
   }

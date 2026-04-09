@@ -1,17 +1,13 @@
 
 @use '../../../dashboard.sass' as dash
 
-.mat-card
+:host
   width: dash.$card-width-alone
-  height: dash.$card-height
-  max-width: dash.$card-width-alone
-  max-height: dash.$card-height
 
-.mat-card-title
-  margin-top: dash.$card-content-margin
-
-.mat-card-content
-  height: dash.$card-height
+.button
+  display: inline-flex !important
+  align-items: center !important
+  justify-content: center !important
 
 .card-content
   height: 100%
@@ -69,7 +65,7 @@
   display: flex
   flex-wrap: wrap
   align-items: flex-start
-  justify-content: flex-start
+  justify-content: center
   align-content: flex-start
   margin-left: auto
   margin-right: auto

@@ -47,9 +47,9 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
     storage.getWorkSummary().subscribe((summary: IUCollection)=>{
       this.doc = summary;
       this.summary_idx = storage.work_summary_idx;
-      this.support_array = [];
+      this.summary_array = [];
       for(let summary of storage.cur_project_support.summaryDocs){
-        this.support_array.push(summary.doc_name);
+        this.summary_array.push(summary.doc_name);
       }
       /**
       console.log(summary);
@@ -76,7 +76,7 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    if(this.support_array.length > 1){
+    if(this.summary_array.length > 1){
       this.selector.selectionChange.subscribe((evt)=>{
         this.storage.setWorkSummaryIdx(evt.value);
         this.updateSuggestions();
@@ -135,7 +135,7 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
   summaryLinkPortal : ComponentPortal<SummaryLinkComponent>;
   summaryEditorPortal : ComponentPortal<SummaryEditorComponent>;
 
-  support_array = [];
+  summary_array = [];
   summary_idx : number = null;
   doc: IUCollection = null;
   sourceDoc: IUCollection = null;

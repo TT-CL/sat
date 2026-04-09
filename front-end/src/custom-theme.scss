@@ -111,10 +111,15 @@ $summary-link-theme: mat.m2-define-light-theme((
   @include mat.all-component-colors($summary-link-theme);
 }
 
-// Your custom CSS (unchanged)
+// Your custom CSS
 .mat-lime-bubble {
   color: #000 !important;
   background-color: #b2ff59 !important;
+}
+
+.mat-yellow-bubble {
+  color: #000 !important;
+  background-color: #FFE57F !important;
 }
 
 .mat-green-bubble {

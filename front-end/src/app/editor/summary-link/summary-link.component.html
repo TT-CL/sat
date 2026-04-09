@@ -5,32 +5,32 @@
       <!-- If a summary IU has ANY links color it green -->
       @if (doc.ius[seg.iu].linkedIus.length > 0) {
         @if (selected_iu && selected_iu.label == seg.iu) {
-          <mat-chip-option color="lime-bubble" (click)="linkClick(seg)" selected>
+          <mat-chip color="lime-bubble" (click)="linkClick(seg)" selected>
             {{seg.getText(doc,true)}}
-          </mat-chip-option>
+          </mat-chip>
         } @else {
-          <mat-chip-option color="green-bubble" (click)="linkClick(seg)" selected>
+          <mat-chip color="green-bubble" (click)="linkClick(seg)" selected>
             {{seg.getText(doc,true)}}
-          </mat-chip-option>
+          </mat-chip>
         }
       } @else {
         @if (seg.type=='ghost') {
-          <mat-chip-option color="ghost-bubble" (click)="linkClick(seg)" selected>
+          <mat-chip color="ghost-bubble" (click)="linkClick(seg)" selected>
             {{seg.getText(doc,true)}}
-          </mat-chip-option>
+          </mat-chip>
         } @else {
           @if (selected_iu && selected_iu.label == seg.iu) {
-            <mat-chip-option color="warn" (click)="linkClick(seg)" selected [ngClass]="{
+            <mat-chip color="yellow-bubble" (click)="linkClick(seg)" selected [ngClass]="{
               'disc-iu' : doc.ius[seg.iu].disc
             }">
               {{seg.getText(doc,true)}}
-            </mat-chip-option>
+            </mat-chip>
           } @else {
-            <mat-chip-option color="primary" (click)="linkClick(seg)" selected [ngClass]="{
+            <mat-chip color="primary" (click)="linkClick(seg)" selected [ngClass]="{
               'disc-iu' : doc.ius[seg.iu].disc
             }">
               {{seg.getText(doc,true)}}
-            </mat-chip-option>
+            </mat-chip>
           }
           <!-- DEFAULT -->
           <!-- Default -->
