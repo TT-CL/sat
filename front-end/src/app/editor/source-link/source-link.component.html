@@ -1,23 +1,24 @@
 <div class="scrollable-content">
-  <mat-chip-listbox
+  <mat-chip-set
     aria-label="sentence chips"
     class="summary-link-theme">
 
     @for (seg of doc.getSegArray(); track seg) {
       @if (selected_summary_iu && selected_summary_iu.linkedIus.includes(seg.iu)) {
-        <mat-chip color="lime-bubble" (click)="linkClick(seg)" selected>
+        <mat-chip class="iu-mat-chip" color="lime-bubble" (click)="linkClick(seg)" selected>
           {{ seg.getText(doc, true) }}
         </mat-chip>
       } @else if (selected_summary_iu && sims && topNSims(selected_summary_iu, 1).includes(seg.iu)) {
-        <mat-chip color="suggested-link" (click)="linkClick(seg)" selected>
+        <mat-chip class="iu-mat-chip" color="suggested-link" (click)="linkClick(seg)" selected>
           {{ seg.getText(doc, true) }}
         </mat-chip>
       } @else if (seg.type == 'ghost') {
-        <mat-chip color="ghost-bubble" (click)="linkClick(seg)" selected>
+        <mat-chip class="iu-mat-chip"  color="ghost-bubble" (click)="linkClick(seg)" selected>
           {{ seg.getText(doc, true) }}
         </mat-chip>
       } @else {
         <mat-chip
+          class="iu-mat-chip" 
           color="primary"
           (click)="linkClick(seg)"
           selected
@@ -28,5 +29,5 @@
         </mat-chip>
       }
     }
-  </mat-chip-listbox>
+  </mat-chip-set>
 </div>

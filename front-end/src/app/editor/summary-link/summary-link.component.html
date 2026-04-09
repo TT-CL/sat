@@ -1,32 +1,32 @@
 <div class="scrollable-content">
-  <mat-chip-listbox
+  <mat-chip-set
     aria-label="sentence chips" class="summary-link-theme">
     @for (seg of doc.getSegArray(); track seg) {
       <!-- If a summary IU has ANY links color it green -->
       @if (doc.ius[seg.iu].linkedIus.length > 0) {
         @if (selected_iu && selected_iu.label == seg.iu) {
-          <mat-chip color="lime-bubble" (click)="linkClick(seg)" selected>
+          <mat-chip class="iu-mat-chip" color="lime-bubble" (click)="linkClick(seg)" selected>
             {{seg.getText(doc,true)}}
           </mat-chip>
         } @else {
-          <mat-chip color="green-bubble" (click)="linkClick(seg)" selected>
+          <mat-chip class="iu-mat-chip" color="green-bubble" (click)="linkClick(seg)" selected>
             {{seg.getText(doc,true)}}
           </mat-chip>
         }
       } @else {
         @if (seg.type=='ghost') {
-          <mat-chip color="ghost-bubble" (click)="linkClick(seg)" selected>
+          <mat-chip class="iu-mat-chip" color="ghost-bubble" (click)="linkClick(seg)" selected>
             {{seg.getText(doc,true)}}
           </mat-chip>
         } @else {
           @if (selected_iu && selected_iu.label == seg.iu) {
-            <mat-chip color="yellow-bubble" (click)="linkClick(seg)" selected [ngClass]="{
+            <mat-chip class="iu-mat-chip" color="yellow-bubble" (click)="linkClick(seg)" selected [ngClass]="{
               'disc-iu' : doc.ius[seg.iu].disc
             }">
               {{seg.getText(doc,true)}}
             </mat-chip>
           } @else {
-            <mat-chip color="primary" (click)="linkClick(seg)" selected [ngClass]="{
+            <mat-chip class="iu-mat-chip" color="primary" (click)="linkClick(seg)" selected [ngClass]="{
               'disc-iu' : doc.ius[seg.iu].disc
             }">
               {{seg.getText(doc,true)}}
@@ -41,5 +41,5 @@
       (these won't be printed if the prev bloc is true) -->
       <!-- Not Linked -->
       }<!-- NGFor -->
-    </mat-chip-listbox>
+    </mat-chip-set>
   </div>

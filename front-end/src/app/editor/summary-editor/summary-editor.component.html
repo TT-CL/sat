@@ -9,23 +9,23 @@
       <mat-tab label="Connect Disc IUs">
         <div class="connect-container">
           <div class="connect-chips">
-            <mat-chip-listbox aria-label="sentence chips" class="summary-link-theme">
+            <mat-chip-set aria-label="sentence chips" class="summary-link-theme">
               @for (seg of newDoc.getSegArray(); track seg.index) {
                 @if (selectedIUs.has(seg.iu)) {
                   <div>
-                    <mat-chip color="lime-bubble" (click)="segClick(seg)" selected>
+                    <mat-chip class="iu-mat-chip" color="lime-bubble" (click)="segClick(seg)" selected>
                       {{seg.getText(newDoc, true)}}
                     </mat-chip>
                   </div>
                 } @else {
-                  <mat-chip color="primary" (click)="segClick(seg)" selected [ngClass]="{
+                  <mat-chip class="iu-mat-chip" color="primary" (click)="segClick(seg)" selected [ngClass]="{
                     'disc-iu' : newDoc.ius[seg.iu].disc 
                   }">
                     {{seg.getText(newDoc, true)}}
                   </mat-chip>
                 }
                 }<!-- NGFor -->
-              </mat-chip-listbox>
+              </mat-chip-set>
             </div>
             <div class="connect-toolbar">
               <div class="connect-buttons def-button">
