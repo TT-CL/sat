@@ -212,6 +212,21 @@ export class BackEndService {
     return this.http.request(req);
   }
 
+  deleteProject(project: Project): Observable<HttpEvent<any>> {
+    let url = "/api/v1/user/project/delete";
+
+    let formData = new FormData();
+    formData.append('project', JSON.stringify(project))
+
+    const options = {
+      reportProgress: true,
+    };
+
+    const req = new HttpRequest('POST', url, formData, options);
+
+    return this.http.request(req);
+  }
+
   updateProject(project: Project): Observable<HttpEvent<any>> {
     let url = "/api/v1/user/project/update";
 
@@ -226,19 +241,4 @@ export class BackEndService {
 
     return this.http.request(req);
   }
- 
-  /**
-  createProject(project: Project){
-    let url = "/api/user/project/create";
-
-    let formData = new FormData();
-    formData.append('project', JSON.stringify(Project))
-
-    fetch(url, {
-      method: 'POST',
-      credentials: 'include',
-      body: formData
-    }).then(() => console.log("Created new Project"));
-  }
-  */
 }

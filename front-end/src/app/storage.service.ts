@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { IdeaUnit, IUCollection, Project } from './objects/objects.module';
 
-import {BehaviorSubject, Observable} from 'rxjs';
+import { BehaviorSubject, throwError, of, Observable } from 'rxjs';
+import { catchError, tap, map } from 'rxjs';
 
-import {SessionStorageService} from 'ngx-webstorage';
+import { SessionStorageService } from 'ngx-webstorage';
 import { BackEndService } from './back-end.service';
 import { AuthService } from './auth.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
@@ -12,6 +13,8 @@ import { HttpEventType, HttpResponse } from '@angular/common/http';
   providedIn: 'root'
 })
 export class StorageService {
+
+  offlineMode : boolean;
 
   sourceDoc : IUCollection;
   summaryDoc : IUCollection;
@@ -53,9 +56,11 @@ export class StorageService {
     this.work_similarities = new BehaviorSubject<Object>(null);
     auth.loggedInPromise().then(logged =>{
       if (logged){
+        this.offlineMode = false;
         // retrieve projects from db
         this.downloadProjects();
       }else{
+        this.offlineMode = true;
         this.initSubjects(anonymous_objects);
       }
     })
@@ -133,14 +138,40 @@ export class StorageService {
     this.projects.next(this.projects_support);
   }
 
-  removeProject(project: Project){
-    this.projects_support.unshift(project);
-    //Update database
-    //TODO
+  __removeProject(project: Project){
     //update session
+    this.projects_support = this.projects_support.filter(p => p._id !== project._id);
     this.saveProjects();
-    //proc observers
     this.projects.next(this.projects_support);
+  }
+
+  removeProject(project: Project): Observable<void>{
+    if( this.offlineMode ){
+      this.__removeProject(project)
+      return of(void 0);
+    }
+
+    //Update database    
+    return this.backend.deleteProject(project).pipe(
+      tap(event => {
+        if (event.type == HttpEventType.UploadProgress && event.total) {
+        const percentDone = Math.round(100 * event.loaded / event.total);
+        //console.log('${fName} is ${percentDone}% loaded.');
+        }
+      }),
+      tap( event =>{
+        if (event instanceof HttpResponse) {
+        console.log("ok!")
+        console.log(project.name + " deleted successfully from the database");
+        this.__removeProject(project)
+        }
+      }),
+      map(() => void 0),
+      catchError(err => {
+        console.log("Error deleting project " + project.name + " from database :", err);
+        return throwError(() => err)
+      })
+    );
   }
 
   getProjects(): Observable<Project []> {

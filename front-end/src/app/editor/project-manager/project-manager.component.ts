@@ -16,7 +16,9 @@ import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog'
 import { SummaryMinicardComponent } from 'src/app/user-area/summary-minicard/summary-minicard.component';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 type FileOrDoc = File | IUCollection;
 
@@ -46,7 +48,7 @@ export class ProjectManagerComponent implements OnInit {
     private backend: BackEndService,
     private storage: StorageService,
     private router: Router,
-    private route: ActivatedRoute) {
+    private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -66,6 +68,14 @@ export class ProjectManagerComponent implements OnInit {
         sourceValue: [this.sourceFormValue, Validators.required]
       });
     });
+  }
+
+  getFileName(file:FileOrDoc): string{
+    if (file instanceof File){
+      return file.name;
+    }else if (file instanceof IUCollection){
+      return file.doc_name;
+    }
   }
 
   cur_proj : Project = null;
@@ -136,6 +146,60 @@ export class ProjectManagerComponent implements OnInit {
     this.summaryInput.nativeElement.click();
   }
 
+openDeleteProjectDialog(): void {
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    width: '400px',
+    disableClose: true,
+    data: {
+      title: 'Delete Project',
+      message: 'Are you sure you want to delete this project?\nThis action cannot be undone.',
+      confirmText: 'Delete Project',
+      confirmColor: 'warn',
+      cancelText: 'Cancel',
+      cancelColor: 'primary'
+    }
+  });
+
+  dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+    if (confirmed) {
+      this.deleteProject();
+    }
+  });
+}
+
+openDeleteSummaryDialog(summary: FileOrDoc): void {
+  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+    width: '400px',
+    disableClose: true,
+    data: {
+      title: 'Delete Summary',
+      message: `Are you sure you want to remove summary ${this.getFileName(summary)}?\nThis action cannot be undone.`,
+      confirmText: 'Delete Summary',
+      confirmColor: 'warn',
+      cancelText: 'Cancel',
+      cancelColor: 'primary'
+    }
+  });
+
+  dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+    if (confirmed) {
+      this.removeSummary(summary);
+    }
+  });
+}
+
+deleteProject(): void {
+  console.log('Deleting Project');
+  this.storage.removeProject(this.cur_proj).subscribe({
+    next: () => {
+      console.log('Project successfully removed');
+      this.router.navigate(['/projects']);
+    },
+    error: err => {
+      console.log('Failed to delete project')
+    }
+  });
+}
   //save the summary file
   onChangeSummaryInput(): void {
     const summary_files: { [key: string]: File } = this.summaryInput.nativeElement.files;
@@ -328,7 +392,7 @@ export class ProjectManagerComponent implements OnInit {
   }
 
   onSubmit(): void{
-    console.log("here")
+    console.log("Saving project")
     let self = this;
     // Gather the data -> if I am able to submit then I passed the validators
     //set the progress tracker values
