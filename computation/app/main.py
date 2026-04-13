@@ -359,6 +359,9 @@ async def update_proj(
     db_proj_id = db_proj['user_id']
     user_id = user['_id']
     ram_id = project_obj['user_id']
+    print(f'ram_id{ram_id}')
+    print(f'db_proj_id{db_proj_id}')
+    print(f'user_id: {user_id}')
     if ram_id != db_proj_id or ram_id != user_id:
         # Guard against unauthorized acces to db objets that are not
         # the user's property
@@ -386,18 +389,22 @@ async def update_proj(
 async def delete_proj(
         request: Request,
         response: Response,
-        project_id: str = Form(...)):
+        project: str = Form(...)):
     if not is_user_valid(request):
         # Guard against unauthenticated
         response.status_code = status.HTTP_401_UNAUTHORIZED
         return False
 
     user = get_user_from_session(request)
-    ram_id = bson.loads(project_id)
-    db_proj = projects_col.find_one(ram_id)
+    project_obj = bson.loads(project)
+    db_proj = projects_col.find_one(project_obj['_id'])
     # these 3 ids MUST coincide
     db_proj_id = db_proj['user_id']
     user_id = user['_id']
+    ram_id = project_obj['user_id']
+    print(f'ram_id{ram_id}')
+    print(f'db_proj_id{db_proj_id}')
+    print(f'user_id: {user_id}')
     if ram_id != db_proj_id or ram_id != user_id:
         # Guard against unauthorized acces to db objets that are not
         # the user's property
@@ -722,8 +729,11 @@ def is_about_to_expire(token):
 
 def is_user_valid(request: Request):
     res = False
+    print("request")
+    print(request.session)
     if 'user' in request.session:
         user = get_user_from_session(request)
+        print(f'Session user: {user}')
 
         # I only keep only one token connection, so I need to know which ISS
         # the user is using for Auth at this moment.
@@ -736,10 +746,16 @@ def is_user_valid(request: Request):
         db_user = users_col.find_one(user["_id"])
         db_token = db_user[cur_iss]
 
+        print(f'DB user: {db_user}')
+        
+
         # first check the keys
         session_set = set(token.keys())
         db_set = set(db_token.keys())
+        print(f'session_set: {session_set}')
+        print(f'db_set: {db_set}')
         res = (len(db_set.symmetric_difference(session_set)) == 0)
+        print(res)
 
         # avoid this check if we already have a different set of keys
         if res is True:
@@ -748,6 +764,7 @@ def is_user_valid(request: Request):
                 res = res and value == token[key]
 
         # TODO: JWT validation here
+        print(res)
 
         if res is True:
             # if I get here, then the session token is valid
