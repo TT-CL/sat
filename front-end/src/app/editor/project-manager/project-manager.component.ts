@@ -232,6 +232,7 @@ deleteProject(): void {
     let doc = new IUCollection();
     console.log("Uploading " + fName);
     if(file.type == "text/plain"){
+      // Parse the file and create the doc structure
       this.backend.getLabelledText(mode, file).subscribe(
       event => {
         if (event.type == HttpEventType.UploadProgress) {
@@ -248,7 +249,12 @@ deleteProject(): void {
             doc.project_id = cur_src.project_id;
             doc.history_id = cur_src.history_id;
             doc.deleted = cur_src.deleted;
-            this.updateSource(doc);
+            //TODO This directly updates the source in the db.
+            //ensure that it doesn't happen more than once,
+            //instead just parse the document and queue the requests in the wrapper function
+            // This is to separate the file reader logic from the db calls
+            // so we can group the db calls and avoid them if we are working locally
+            this.parseSource(doc);
           }else if (mode == "summary"){
             this.createSummary(doc);
           }
@@ -269,66 +275,45 @@ deleteProject(): void {
   }
 
   createSummary(summary: IUCollection): void{
-    this.backend.createSummary(summary, this.cur_proj._id, false).subscribe(
-      event => {
-        if (event.type == HttpEventType.UploadProgress) {
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          //console.log('${fName} is ${percentDone}% loaded.');
-        } else if (event instanceof HttpResponse) {
-          let doc = new IUCollection();
-          doc.reconsolidate(event.body);
-          this.parsedSummaries.push(doc);
-        }
+    this.storage.getUpdatedSummary(summary, this.cur_proj._id, false).subscribe({
+      next: doc => {
+        this.parsedSummaries.push(doc);
       },
-      (err) => {
-        console.log("Error inserting summary into db " + summary.doc_name + " :", err);
-      }, () => {
+      error: err => console.error("Error inserting summary into db " + summary.doc_name + " :", err),
+      complete: () => {
         console.log(summary.doc_name + " inserted successfully");
         this.progress = this.progress + 1;
         if (this.progress == this.docNumber) {
           this.uploadComplete();
         }
-      });
+      }
+    });
   }
 
-  updateSource(source: IUCollection): void{
-    this.backend.updateSource(source, false).subscribe(
-      event => {
-        if (event.type == HttpEventType.UploadProgress) {
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          //console.log('${fName} is ${percentDone}% loaded.');
-        } else if (event instanceof HttpResponse) {
-          let doc = new IUCollection();
-          doc.reconsolidate(event.body);
-          this.parsedSource = doc;
-        }
+  parseSource(source: IUCollection): void{
+    // TODO: Put this and all cascading updates into a single function in the storage service
+    this.storage.getUpdatedSource(source, false).subscribe({
+      next: doc => {
+        this.parsedSource = doc;
       },
-      (err) => {
-        console.log("Error updating source into db " + source.doc_name + " :", err);
-      }, () => {
-        console.log(source.doc_name + " updated successfully");
+      error: err => console.error("Error updating source into db " + source.doc_name + " :", err),
+      complete: () => {
         this.progress = this.progress + 1;
         if (this.progress == this.docNumber) {
           this.uploadComplete();
         }
-      });
+      }});
   }
 
   deleteSummary(summary: IUCollection): void {
-    this.backend.deleteSummary(summary).subscribe(
-      event => {
-        if (event.type == HttpEventType.UploadProgress) {
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          //console.log('${fName} is ${percentDone}% loaded.');
-        } else if (event instanceof HttpResponse) {
-          console.log("ok!")
-        }
-      },
-      (err) => {
-        console.log("Error deleting summary " + summary.doc_name + " :", err);
-      }, () => {
+    this.storage.deleteSummary(summary).subscribe({
+      error: err => console.error("Error deleting summary " + summary.doc_name + " :", err),
+      complete: () => {
         console.log(summary.doc_name + " deleted successfully");
-      });
+        let index = this.cur_proj.summaryDocs.indexOf(summary);
+        this.cur_proj.summaryDocs.splice(index, 1);
+      }
+    });
   }
 
   updateProject(project: Project): void {
@@ -363,8 +348,6 @@ deleteProject(): void {
     if(this.summaryRemovalQueue.length > 0 ){
       for(let summary of this.summaryRemovalQueue){
         this.deleteSummary(summary);
-        let index = this.cur_proj.summaryDocs.indexOf(summary);
-        this.cur_proj.summaryDocs.splice(index, 1);
       }
     }
 
@@ -379,8 +362,13 @@ deleteProject(): void {
       }
     }
 
-    this.storage.updateCurProject(this.cur_proj, false);
-    console.log(this.storage);
+    this.storage.updateCurProject(this.cur_proj, false).subscribe({
+      error: err => console.error('Project update failed:', err),
+      complete: () => {
+        console.log("Project Update complete");
+        console.log(this.storage);
+      }
+    });
   }
 
   nonFileValuesChanged(): boolean {

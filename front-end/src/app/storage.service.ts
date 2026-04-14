@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { IdeaUnit, IUCollection, Project } from './objects/objects.module';
 
-import { BehaviorSubject, throwError, of, Observable } from 'rxjs';
-import { catchError, tap, map } from 'rxjs';
+import { BehaviorSubject, throwError, of, Observable, forkJoin } from 'rxjs';
+import { catchError, tap, filter, map } from 'rxjs';
 
 import { SessionStorageService } from 'ngx-webstorage';
 import { BackEndService } from './back-end.service';
 import { AuthService } from './auth.service';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -59,6 +59,7 @@ export class StorageService {
         this.offlineMode = false;
         // retrieve projects from db
         this.downloadProjects();
+        
       }else{
         this.offlineMode = true;
         this.initSubjects(anonymous_objects);
@@ -66,25 +67,29 @@ export class StorageService {
     })
   }
 
-  downloadProjects(): void {
-    this.backend.getProjects().subscribe(
-      event => {
-        if (event.type == HttpEventType.UploadProgress) {
+  downloadProjects(): void{
+    this.backend.getProjects().subscribe({
+      next: event => {
+        if (event.type === HttpEventType.DownloadProgress && event.total) {
           const percentDone = Math.round(100 * event.loaded / event.total);
-          //console.log('${fName} is ${percentDone}% loaded.');
-        } else if (event instanceof HttpResponse) {
-          //console.log("ok!")
-          this.initSubjects(event.body);
+          console.log(`Download is ${percentDone}% loaded.`);
+        }
+        if (event.type === HttpEventType.Response) {
+          const response = event as HttpResponse<any>;
+          console.log("Projects downloaded successfully!");
+          this.initSubjects(response.body);
         }
       },
-      (err) => {
+      error: err => {
         console.log("Error downloading projects:", err);
-      }, () => {
-        //console.log("Work summary updated successfully");
-      });
+      },
+      complete: () => {
+        console.log("Download request complete");
+      }
+    });
   }
 
-  initSubjects( anonymous_objects){
+  initSubjects(anonymous_objects){
     //load the projects as a Typescript Project
     if (anonymous_objects) {
       for (let obj of anonymous_objects) {
@@ -127,15 +132,45 @@ export class StorageService {
   setSummary(summary: IUCollection){
     this.summaryDoc = summary;
   }
-
-  addProject(project: Project){
-    this.projects_support.push(project);
-    //Upload to db
-    //TODO
+  
+  __addProject(project: Project){
     //update session
+    this.projects_support.push(project);
     this.saveProjects();
     //proc observers
     this.projects.next(this.projects_support);
+  }
+
+  addProject(project: Project): Observable<void>{
+    if( this.offlineMode ){
+      this.addProject(project)
+      return of(void 0);
+    }
+
+    //Update database    
+    return this.backend.createProject(project).pipe(
+      tap(event => {
+        if (event.type === HttpEventType.UploadProgress && event.total) {
+        const percentDone = Math.round(100 * event.loaded / event.total);
+        //console.log('${fName} is ${percentDone}% loaded.');
+        }
+      }),
+      tap( event =>{
+        if (event.type === HttpEventType.Response) {
+        console.log(project.name + " added successfully to the database");
+        //create new project structure to obtain db only objects (id, date, etc..)
+        let db_proj = new Project();
+        db_proj.reconsolidate(event.body);
+        //add the db project to the current sesstion
+        this.__addProject(db_proj)
+        }
+      }),
+      map(() => void 0),
+      catchError(err => {
+        console.log("Error adding project " + project.name + " to database :", err);
+        return throwError(() => err)
+      })
+    );
   }
 
   __removeProject(project: Project){
@@ -154,14 +189,13 @@ export class StorageService {
     //Update database    
     return this.backend.deleteProject(project).pipe(
       tap(event => {
-        if (event.type == HttpEventType.UploadProgress && event.total) {
+        if (event.type === HttpEventType.UploadProgress && event.total) {
         const percentDone = Math.round(100 * event.loaded / event.total);
         //console.log('${fName} is ${percentDone}% loaded.');
         }
       }),
       tap( event =>{
-        if (event instanceof HttpResponse) {
-        console.log("ok!")
+        if (event.type === HttpEventType.Response) {
         console.log(project.name + " deleted successfully from the database");
         this.__removeProject(project)
         }
@@ -205,19 +239,10 @@ export class StorageService {
     this.cur_project.next(this.cur_project_support);
   }
 
-  updateCurProject(proj: Project, sync: boolean = false){
+  __updateCurProject(proj: Project){
     //update current project
     this.cur_project_support = proj;
     this.cur_project.next(this.cur_project_support);
-    //TODO: upload to server
-
-    if(sync){
-      console.log(proj.sourceDoc)
-      this.backend.updateSourceSilent(proj.sourceDoc);
-      proj.summaryDocs.forEach(summary => {
-        this.backend.updateSummarySilent(summary);
-      });
-    }
 
     // update full projects in memory
     this.projects_support[this.cur_project_idx] = proj;
@@ -243,7 +268,113 @@ export class StorageService {
       // I do not have a summary queue, ensure no work summary is set
       this.clearWorkSummary();
     }
+
     this.saveProjects();
+  }
+  __updateDBSource(source: IUCollection, silent: boolean): Observable<HttpEvent<any>> {
+    return this.backend.updateSource(source, silent).pipe(
+      tap(event => {
+        if (event.type === HttpEventType.UploadProgress && event.total) {
+          const percentDone = Math.round((100 * event.loaded) / event.total);
+          if (!silent) {
+            console.log(`Source file update is ${percentDone}% complete.`);
+          }
+        } else if (event.type === HttpEventType.Response) {
+          if (!silent) {
+            console.log('Source updated successfully.');
+          }
+        }
+      })
+    );
+  }
+
+  getUpdatedSource(source:IUCollection, silent: boolean): Observable<IUCollection> {
+    // Updates the source on the db then returns the new document to be later stored in session
+    if(this.offlineMode){
+      let doc = new IUCollection()
+      doc.reconsolidate(source)
+      return of(doc)
+    }
+    return this.__updateDBSource(source, silent).pipe(
+      filter(event => event.type === HttpEventType.Response),
+      map((event: HttpResponse<any>) => {
+        let doc = new IUCollection()
+        doc.reconsolidate(event.body);
+        return doc;
+      })
+    );
+  }
+
+  getUpdatedSummary(summary:IUCollection, project_id:string, silent: boolean): Observable<IUCollection> {
+    // Updates the source on the db then returns the new document to be later stored in session
+    if(this.offlineMode){
+      let doc = new IUCollection()
+      doc.reconsolidate(summary)
+      doc.project_id = project_id
+      return of(doc)
+    }
+    return this.backend.createSummary(summary, project_id, silent).pipe(
+      filter(event => event.type === HttpEventType.Response),
+      map((event: HttpResponse<any>) => {
+        let doc = new IUCollection()
+        doc.reconsolidate(event.body);
+        return doc;
+      })
+    );
+  }
+
+  deleteSummary(summary:IUCollection): Observable<any> {
+    if(this.offlineMode){
+      return of(void 0)
+    }
+    return this.backend.deleteSummary(summary)
+  }
+
+
+
+  __updateDBSummary(summary: IUCollection, silent: boolean): Observable <any>{
+    return this.backend.updateSummary(summary, silent).pipe(
+      tap(event => {
+        if (event.type === HttpEventType.UploadProgress && event.total) {
+          const percentDone = Math.round((100 * event.loaded) / event.total);
+          if (!silent) {
+            console.log(`Summary file update is ${percentDone}% complete.`);
+          }
+        } else if (event.type === HttpEventType.Response) {
+          if (!silent) {
+            console.log('Summary updated successfully.');
+          }
+        }
+      }));
+  }
+
+
+  updateCurProject(proj: Project, sync: boolean = false): Observable<void>{
+    if (this.offlineMode || !sync) {
+      // if we are in offline mode or sync is disabled skip DB calls
+      this.__updateCurProject(proj);
+      return of(void 0);
+    }
+
+    // Update the db
+    const requests: Observable<void>[] = [
+    this.__updateDBSource(proj.sourceDoc, true),
+    ...proj.summaryDocs.map(summary => this.__updateDBSummary(summary, true))
+    ];
+
+    return forkJoin(requests).pipe(
+    map(() => void 0),
+    tap(() => {
+      console.log('Project sync completed successfully.');
+      this.__updateCurProject(proj);
+    }),
+    catchError(err => {
+      console.error('Error syncing project:', err);
+      throw err;
+    })
+  );
+
+    
   }
 
   getCurProject(): Observable <Project>{
@@ -262,21 +393,34 @@ export class StorageService {
     this.work_summary.next(this.work_summary_support);
   }
 
-  updateWorkSummary(summary : IUCollection, sync: boolean = false){
+  __updateWorkSummary (summary: IUCollection){
     this.work_summary_support = summary;
     this.work_summary.next(this.work_summary_support);
     this.cur_project_support.summaryDocs[this.work_summary_idx] = summary;
     this.cur_project.next(this.cur_project_support);
-    if (sync){
-      this.backend.updateSummarySilent(summary);
-    }
 
     // update full projects in memory
     this.projects_support[this.cur_project_idx] = this.cur_project_support;
     this.projects.next(this.projects_support);
+
     this.saveProjects();
   }
 
+  updateWorkSummary(summary : IUCollection, sync: boolean = false): Observable<void>{
+    if (this.offlineMode || !sync){
+      this.__updateWorkSummary(summary);
+      return of(void 0)
+    }
+    return this.__updateDBSummary(summary, true).pipe(
+      tap(event => {
+        if (event.type === HttpEventType.Response) {
+          this.__updateWorkSummary(summary);
+        }
+      }));    
+  }
+
+  /**
+   * Redundant?
   updateWorkSource(source : IUCollection){
     this.work_source_support = source;
     this.work_source.next(this.work_source_support);
@@ -289,6 +433,8 @@ export class StorageService {
     this.projects.next(this.projects_support);
     this.saveProjects();
   }
+
+   */
 
   clearWorkSummary(){
     this.work_summary_idx = null;
@@ -328,6 +474,8 @@ export class StorageService {
   clearClickedSummaryIU(){
     this.switchClickedSummaryIU(null);
   }
+  /**
+   * Redundant?
 
   updateClickedSourceIU(iu: IdeaUnit){
     this.switchClickedSourceIU(iu);
@@ -340,6 +488,7 @@ export class StorageService {
     this.work_summary_support.ius[iu.label]=iu;
     this.updateWorkSummary(this.work_summary_support);
   }
+  */
 
   getClickedSourceIU(): Observable<IdeaUnit>{
     return this.clicked_source_iu.asObservable();

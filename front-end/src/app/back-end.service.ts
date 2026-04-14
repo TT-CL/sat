@@ -24,6 +24,7 @@ export class BackEndService {
   }
 
   getLabelledText(mode: string, text : File): Observable<HttpEvent<any>> {
+    //TODO: Port this function to JS
     let url = "/api/v1/raw"
     let formData = new FormData();
     formData.append('file', text);
@@ -86,18 +87,13 @@ export class BackEndService {
   // CRUD METHODS TO KEEP THE DB UP TO DATE
 
   getProjects(): Observable<HttpEvent<any>>{
+    console.log("getProjects")
     let url = "/api/v1/user/project/list";
-
-    let formData = new FormData();
-
-    const options = {
-      reportProgress: true,
-    };
-
-    const req = new HttpRequest('GET', url, formData, options);
-
-    return this.http.request(req);
-  }
+    return this.http.get<any>(url, {
+      observe: 'events',
+      reportProgress: true
+    });
+    }
 
   createProject(project: Project): Observable<HttpEvent<any>>{
     let url = "/api/v1/user/project/create";
@@ -128,23 +124,6 @@ export class BackEndService {
     const req = new HttpRequest('POST', url, formData, options);
 
     return this.http.request(req);
-  }
-
-  updateSourceSilent(source: IUCollection): void {
-    this.updateSource(source, true).subscribe(
-      event => {
-        if (event.type == HttpEventType.UploadProgress) {
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          //console.log('${fName} is ${percentDone}% loaded.');
-        } else if (event instanceof HttpResponse) {
-          //console.log("ok!")
-        }
-      },
-      (err) => {
-        console.log("Error updating the work source:", err);
-      }, () => {
-        //console.log("Work source updated successfully");
-      });
   }
 
   createSummary(summary: IUCollection, project_id, silent_mode: boolean): Observable<HttpEvent<any>> {
@@ -178,23 +157,6 @@ export class BackEndService {
     const req = new HttpRequest('POST', url, formData, options);
 
     return this.http.request(req);
-  }
-
-  updateSummarySilent(summary: IUCollection): void{
-    this.updateSummary(summary, true).subscribe(
-      event => {
-        if (event.type == HttpEventType.UploadProgress) {
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          //console.log('${fName} is ${percentDone}% loaded.');
-        } else if (event instanceof HttpResponse) {
-          //console.log("ok!")
-        }
-      },
-      (err) => {
-        console.log("Error updating the work summary:", err);
-      }, () => {
-        //console.log("Work summary updated successfully");
-      });
   }
 
   deleteSummary(summary: IUCollection): Observable<HttpEvent<any>> {

@@ -229,10 +229,13 @@ export class SourceEditorComponent implements AfterViewInit {
     this.proj.sourceDoc = this.newDoc
     this.proj.purgeProjectLinks();
     this.storage.clearAllSimilarities();
-    this.storage.updateCurProject(this.proj, true)
-    this.doc = this.cloneIuCollection(this.newDoc)
-
-    this.editedFlag = false;
+    this.storage.updateCurProject(this.proj, true).subscribe({
+      error: err => console.error('Silent project update failed:', err),
+      complete: () =>{
+        this.doc = this.cloneIuCollection(this.newDoc);
+        this.editedFlag = false;
+      }
+    });
     }
   }
 }

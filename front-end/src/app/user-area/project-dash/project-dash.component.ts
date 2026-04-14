@@ -83,28 +83,18 @@ export class ProjectDashComponent implements OnInit {
   }
 
   restoreBackup(proj: Project):void{
-    //Sync the DB
-    this.backend.createProject(proj).subscribe(
-      event => {
-        if (event.type == HttpEventType.UploadProgress) {
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          //console.log('${fName} is ${percentDone}% loaded.');
-        } else if (event instanceof HttpResponse) {
-          let proj = new Project();
-          console.log(event.body);
-          proj.reconsolidate(event.body);
-          this.storage.addProject(proj);
-        }
-      },
-      (err) => {
-        console.log("Error restoring Project:", err);
-        if (err.status == 401) {
-          this.redirectUnauthorized()
-        }
-      }, () => {
+    this.storage.addProject(proj).subscribe({
+      next: () => {
         console.log("Project restored successfully");
         this.hideOverlay();
-      });
+      },
+      error: err => {
+        console.log("Error restoring Project:", err);
+        if (err.status == 401) {
+          this.router.navigate(['/unauthorized']);
+        }
+      }
+    });
   }
 
   redirectUnauthorized() {

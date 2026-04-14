@@ -158,19 +158,19 @@ export class NewProjectComponent {
         }
       },
       (err) => {
-        console.log("Error uploading " + fName + " :", err);
+        console.log("Error reading " + fName + " :", err);
       }, () => {
-        console.log(fName + " uploaded successfully");
+        console.log(fName + " read successfully");
         this.progress = this.progress + 1;
         if(this.progress == this.docNumber){
-            this.uploadComplete();
+            this.fileRead();
         }
       });
     }
   }
 
-  uploadComplete(): void {
-    //Upload is complete
+  fileRead(): void {
+    //Upload of local file is complete
     // create project
     let title = this.projectForm.value.title
     let description = this.projectForm.value.description;
@@ -185,29 +185,20 @@ export class NewProjectComponent {
     if (this.parsedSummaries.length > 0) {
       proj.summaryDocs = this.parsedSummaries;
     }
-    //Sync the DB
-    this.backend.createProject(proj).subscribe(
-      event => {
-        if (event.type == HttpEventType.UploadProgress) {
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          //console.log('${fName} is ${percentDone}% loaded.');
-        } else if (event instanceof HttpResponse) {
-          let proj = new Project();
-          console.log(event.body);
-          proj.reconsolidate(event.body);
-          this.storage.addProject(proj);
-        }
+
+    this.storage.addProject(proj).subscribe({
+      next: () => {
+        console.log("Project created successfully");
+        this.hideOverlay();
+        this.redirectOut();
       },
-      (err) => {
+      error: err => {
         console.log("Error creating Project:", err);
         if(err.status == 401){
           this.redirectUnauthorized()
         }
-      }, () => {
-        console.log("Project created successfully");
-        this.hideOverlay();
-        this.redirectOut();
-      });
+      }
+    });
   }
 
   redirectOut() {

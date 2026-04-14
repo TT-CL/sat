@@ -67,8 +67,10 @@ export class SourceLinkComponent implements OnInit {
       //this.selected_iu.toggleIuLink(this.selected_summary_iu);
       this.selected_summary_iu.toggleIuLink(this.selected_iu);
       this.summaryDoc.ius[this.selected_summary_iu.label] = this.selected_summary_iu;
-      this.storage.updateWorkSummary(this.summaryDoc, true);
       this.storage.switchClickedSourceIU(this.selected_iu);
+      this.storage.updateWorkSummary(this.summaryDoc, true).subscribe({
+        error: err => console.error(`Error updating summary "${this.summaryDoc.doc_name}":`, err),
+      });
     }
   }
 

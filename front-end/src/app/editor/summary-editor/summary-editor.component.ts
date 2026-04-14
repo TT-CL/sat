@@ -224,10 +224,13 @@ export class SummaryEditorComponent implements AfterViewInit {
 
       this.storage.clearSimilarities(this.doc.doc_name);
       //console.log(this.newDoc)
-      this.storage.updateWorkSummary(this.newDoc, true);
-      this.doc = this.cloneIuCollection(this.newDoc)
-
-      this.editedFlag = false;
+      this.storage.updateWorkSummary(this.newDoc, true).subscribe({
+        complete: () => {
+          this.doc = this.cloneIuCollection(this.newDoc)
+          this.editedFlag = false;
+        },
+        error: err => console.error(`Error updating summary "${this.newDoc.doc_name}":`, err),
+      });
     }
   }
 }
