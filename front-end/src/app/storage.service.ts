@@ -81,7 +81,7 @@ export class StorageService {
         }
       },
       error: err => {
-        console.log("Error downloading projects:", err);
+        console.error("Error downloading projects:", err);
       },
       complete: () => {
         console.log("Download request complete");
@@ -572,7 +572,34 @@ export class StorageService {
 
   /// SIMS ///
 
-  addReceivedSimilarity(simsDoc: Object): void{
+  updateSuggestions():void{
+    console.log("Updating IU recommendations");
+    if (this.offlineMode) {
+      // Do not provide similarity services in offline mode
+      const emptySims = { "sims" : null}
+      this.__addReceivedSimilarity( emptySims )
+    } else{
+    this.backend.getSimPredictions(this.work_source_support, this.work_summary_support).subscribe({
+      next: event => {
+        if (event.type === HttpEventType.DownloadProgress && event.total) {
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          console.log(`Upload is ${percentDone}% loaded.`);
+        }
+        if (event.type === HttpEventType.Response) {
+          const response = event as HttpResponse<any>;
+          this.__addReceivedSimilarity(response.body);
+          console.log(response.body)
+          console.log("Similarities are ready!");
+        }
+      },
+      error: err => {
+        console.error("Similarities Error:", err);
+      }
+    });
+    }
+  }
+
+  __addReceivedSimilarity(simsDoc: Object): void{
     this.work_similarities_support[simsDoc["doc_name"]] = simsDoc["sims"];
     this.work_similarities.next(this.work_similarities_support);
   }

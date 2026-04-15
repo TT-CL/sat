@@ -3,13 +3,12 @@ import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 
 import { IUCollection } from '../../objects/objects.module';
 import { StorageService } from '../../storage.service';
-import { BackEndService } from '../../back-end.service';
 
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 
 import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
 
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 
 import { Router, ActivatedRoute, NavigationEnd} from '@angular/router';
 
@@ -42,7 +41,6 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
     private storage: StorageService,
     private route: ActivatedRoute,
     private router: Router,
-    private textService: BackEndService,
   ) {
     storage.getWorkSummary().subscribe((summary: IUCollection)=>{
       this.doc = summary;
@@ -143,22 +141,7 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
   updateSuggestions():void{
     //only update suggestions if I am in the link view
     if (this.view && this.view.value == "link"){
-      console.log("Updating IU recommendations");
-      this.textService.getSimPredictions(this.sourceDoc, this.doc).subscribe(
-      event => {
-        if (event.type == HttpEventType.UploadProgress) {
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          console.log(`Upload in progress: ${percentDone}% done.`);
-        } else if (event instanceof HttpResponse) {
-          console.log('Similarities are ready!');
-          this.storage.addReceivedSimilarity(event.body);
-        }
-      },
-      (err) => {
-        console.log("Similarities Error:", err);
-      }, () => {
-        console.log("Similarities calculated successfully");
-      });
+      this.storage.updateSuggestions();
     }
   }
 }
