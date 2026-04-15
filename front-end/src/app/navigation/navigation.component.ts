@@ -10,6 +10,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
+import { AuthService } from '../auth.service';
+
 @Component({
     selector: 'app-navigation',
     templateUrl: './navigation.component.html',
@@ -32,6 +34,15 @@ export class NavigationComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  loggedIn : boolean;
+
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private auth: AuthService,
+  ) {
+    auth.isIdentityCached().subscribe(loggedIn =>{
+      this.loggedIn = loggedIn;
+    })
+  }
 
 }
