@@ -4,11 +4,8 @@ import { StorageService } from '../../storage.service';
 
 import { Project } from '../../objects/objects.module';
 import { AuthService } from '../../auth.service';
-import { pluck } from 'rxjs/operators';
 import { OverlayService } from '../../overlay.service';
 import { UploadOverlayComponent } from '../upload-overlay/upload-overlay.component';
-import { BackEndService } from '../../back-end.service';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
@@ -40,7 +37,6 @@ export class ProjectDashComponent implements OnInit {
     public storage : StorageService,
     private auth: AuthService,
     private overlayService: OverlayService,
-    private backend: BackEndService,
     private router: Router,
   ) { }
 

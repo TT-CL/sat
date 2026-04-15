@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, filter, map } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
 import { HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
@@ -16,15 +16,15 @@ const httpOptions = {
 })
 export class BackEndService {
 
-  constructor( private http: HttpClient ) {
+  constructor(
+    private http: HttpClient) {
   }
 
   private handleError(){
     console.log("Server Error");
   }
 
-  getLabelledText(mode: string, text : File): Observable<HttpEvent<any>> {
-    //TODO: Port this function to JS
+  getLabelledText(text : File, mode: string): Observable<HttpEvent<any>> {
     let url = "/api/v1/raw"
     let formData = new FormData();
     formData.append('file', text);

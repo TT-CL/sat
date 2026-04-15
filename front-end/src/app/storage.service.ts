@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IdeaUnit, IUCollection, Project } from './objects/objects.module';
 
-import { BehaviorSubject, throwError, of, Observable, forkJoin } from 'rxjs';
+import { BehaviorSubject, throwError, of, Observable, forkJoin, switchMap } from 'rxjs';
 import { catchError, tap, filter, map } from 'rxjs';
 
 import { SessionStorageService } from 'ngx-webstorage';
@@ -288,25 +288,28 @@ export class StorageService {
     );
   }
 
-  getUpdatedSource(source:IUCollection, silent: boolean): Observable<IUCollection> {
+  updateSource(source:IUCollection): Observable<IUCollection> {
     // Updates the source on the db then returns the new document to be later stored in session
     if(this.offlineMode){
       let doc = new IUCollection()
       doc.reconsolidate(source)
       return of(doc)
     }
-    return this.__updateDBSource(source, silent).pipe(
-      filter(event => event.type === HttpEventType.Response),
-      map((event: HttpResponse<any>) => {
+    return this.__updateDBSource(source, false).pipe(
+      filter((event): event is HttpResponse<any> => event.type === HttpEventType.Response),
+      map((event: HttpResponse<any> ) => {
+        //console.log("update_db_source")
+        //console.log(event.body)
         let doc = new IUCollection()
         doc.reconsolidate(event.body);
+        //console.log(doc)
         return doc;
       })
     );
   }
 
-  getUpdatedSummary(summary:IUCollection, project_id:string, silent: boolean): Observable<IUCollection> {
-    // Updates the source on the db then returns the new document to be later stored in session
+  createSummary(summary:IUCollection, project_id:string, silent: boolean): Observable<IUCollection> {
+    // Creates the summary on the db then returns the new document to be later stored in session
     if(this.offlineMode){
       let doc = new IUCollection()
       doc.reconsolidate(summary)
@@ -314,10 +317,13 @@ export class StorageService {
       return of(doc)
     }
     return this.backend.createSummary(summary, project_id, silent).pipe(
-      filter(event => event.type === HttpEventType.Response),
+      filter((event): event is HttpResponse<any> => event.type === HttpEventType.Response),
       map((event: HttpResponse<any>) => {
         let doc = new IUCollection()
+        //console.log("backend.createSummary");
+        //console.log(event.body);
         doc.reconsolidate(event.body);
+        //console.log(doc);
         return doc;
       })
     );
@@ -348,8 +354,36 @@ export class StorageService {
       }));
   }
 
+  updateProject(project: Project, silent: boolean): Observable<void> {
+    if( this.offlineMode ){
+      return of(void 0);
+    }
+    return this.backend.updateProject(project).pipe(
+        tap(event => {
+          if (event.type === HttpEventType.UploadProgress && event.total) {
+            const percentDone = Math.round((100 * event.loaded) / event.total);
+            if (!silent) {
+              console.log(`Project update is ${percentDone}% complete.`);
+            }
+          } else if (event.type === HttpEventType.Response) {
+            if (!silent) {
+              console.log('project updated successfully.');
+            }
+          }
+        }),
+      map(() => void 0));
 
-  updateCurProject(proj: Project, sync: boolean = false): Observable<void>{
+  }
+
+
+  updateCurProject(
+    proj: Project,
+    sync: boolean = false,
+    fromManager: boolean = false,
+    replacementSource: IUCollection = null,
+    summaryAddQueue: Set<IUCollection> = null,
+    summaryRemovalQueue: Set<IUCollection> = null
+  ): Observable<void>{
     if (this.offlineMode || !sync) {
       // if we are in offline mode or sync is disabled skip DB calls
       this.__updateCurProject(proj);
@@ -357,24 +391,62 @@ export class StorageService {
     }
 
     // Update the db
-    const requests: Observable<void>[] = [
-    this.__updateDBSource(proj.sourceDoc, true),
-    ...proj.summaryDocs.map(summary => this.__updateDBSummary(summary, true))
+    let source_request$ = null;
+    let summary_requests$: Observable<unknown>[] = [];
+
+    if (fromManager){
+      //I'm modifying the project from the project manager.
+      //get the new source only if it differs from the one in storage
+      if (replacementSource){
+        if (replacementSource != proj.sourceDoc){
+          source_request$ = this.updateSource(replacementSource).pipe(
+            tap( (new_source: IUCollection) => proj.sourceDoc = new_source)
+          )
+        }
+      }
+      //Do not update existing summaries, just add or remove them based on the queues
+      const add_summaries_queue$ = Array.from(summaryAddQueue ?? []).map(
+        summary => this.createSummary(summary, proj._id, false).pipe(
+          tap( (new_summary : IUCollection) => {
+            //console.log("new_summary")
+            //console.log(new_summary);
+            proj.summaryDocs.push(new_summary);
+          })
+        )
+      );
+
+      const removed_summaries_queue$ = Array.from(summaryRemovalQueue ?? []).map(
+        summary => this.deleteSummary(summary).pipe(
+        tap ( () => proj.summaryDocs = proj.summaryDocs.filter(s => s._id !== summary._id)))
+      );
+
+      summary_requests$ = [ ...add_summaries_queue$, ... removed_summaries_queue$]
+
+    } else {
+      //I'm updating the project either silently or through the document editors
+      source_request$ = this.updateSource(proj.sourceDoc).pipe(
+            tap( (new_source: IUCollection) => proj.sourceDoc = new_source)
+          )
+      //We are not adding/removing summaries, so we should update existing ones instead
+      summary_requests$ = [ 
+        ...proj.summaryDocs.map(summary => this.__updateDBSummary(summary, true))
+      ]
+    }
+
+    const requests: Observable<unknown>[] = [
+      ...(source_request$ ? [source_request$] : []), //turn the source into a list to handle null
+      ...summary_requests$
     ];
 
     return forkJoin(requests).pipe(
-    map(() => void 0),
-    tap(() => {
-      console.log('Project sync completed successfully.');
-      this.__updateCurProject(proj);
-    }),
-    catchError(err => {
-      console.error('Error syncing project:', err);
-      throw err;
-    })
-  );
-
-    
+      switchMap(() => this.updateProject(proj, true)),
+      tap (() => this.__updateCurProject(proj)),
+      map(() => void 0),
+      catchError(err => {
+        console.error('Error syncing project files:', err);
+        return throwError(() => err);
+      })
+      );
   }
 
   getCurProject(): Observable <Project>{

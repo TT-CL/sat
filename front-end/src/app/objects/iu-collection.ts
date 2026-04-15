@@ -49,13 +49,13 @@ export class IUCollection {
     return this.words.length == 0;
   }
 
-  private parseFile(text: object) {
-    console.log(text);
-    this.doc_name = text["doc_name"];
-    this.doc_type = text["doc_type"];
+  readDocument(file: object) {
+    this.cleanup();
+    this.doc_name = file["doc_name"];
+    this.doc_type = file["doc_type"];
     //seg boundary spy
     let prev_label: string = "";
-    for (var read_sent of text["sents"]) {
+    for (var read_sent of file["sents"]) {
       // temporary sentence string
       let temp_sent: string = "";
 
@@ -115,14 +115,6 @@ export class IUCollection {
       //adding Sent object to memory
       this.sents.push(temp_sent.trim());
     }
-
-
-    console.log(this);
-  }
-
-  readDocument(file: object) {
-    this.cleanup();
-    this.parseFile(file);
   }
 
   getText(): string {

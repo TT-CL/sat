@@ -27,7 +27,7 @@
 
             <div class="source-area">
               <!-- Form control name is required here to record changes on the file selector -->
-              <input type="file" style="display: none" #sourceInput accept=".txt" (change)="onChangeSourceInput()" id="source"
+              <input type="file" hidden #sourceInput accept=".txt" (change)="onChangeSourceInput()" (cancel)="onSourcePickerCancel()" id="source"
                 name="source" formControlName="source" />
 
               <mat-form-field class="form-field" [ngClass]="sourceFormFieldClass">

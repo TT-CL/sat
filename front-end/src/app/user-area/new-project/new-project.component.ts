@@ -142,7 +142,7 @@ export class NewProjectComponent {
     let doc = new IUCollection();
     console.log("Uploading " + fName);
     if(file.type == "text/plain"){
-      this.backend.getLabelledText(mode, file).subscribe(
+      this.backend.getLabelledText(file, mode).subscribe(
       event => {
         if (event.type == HttpEventType.UploadProgress) {
           const percentDone = Math.round(100 * event.loaded / event.total);
