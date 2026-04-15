@@ -14,7 +14,8 @@ import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
 })
 export class StorageService {
 
-  offlineMode : boolean;
+  offlineMode_support = false;
+  offlineMode : BehaviorSubject<boolean>;
 
   sourceDoc : IUCollection;
   summaryDoc : IUCollection;
@@ -53,15 +54,16 @@ export class StorageService {
     this.work_summary = new BehaviorSubject<IUCollection>(null);
     this.clicked_source_iu = new BehaviorSubject<IdeaUnit>(null);
     this.clicked_summary_iu = new BehaviorSubject<IdeaUnit>(null);
+    this.offlineMode = new BehaviorSubject(false);
     this.work_similarities = new BehaviorSubject<Object>(null);
     auth.loggedInPromise().then(logged =>{
       if (logged){
-        this.offlineMode = false;
+        this.exitOfflineMode();
         // retrieve projects from db
         this.downloadProjects();
         
       }else{
-        this.offlineMode = true;
+        this.enterOfflineMode();
         this.initSubjects(anonymous_objects);
       }
     })
@@ -618,12 +620,18 @@ export class StorageService {
     this.work_similarities.next(this.work_similarities_support);
   }
 
-  // MULTIPLE UPDATE
-  updateStorage(
-    cur_proj: Project = null, 
-    work_source: IUCollection = null,
-    work_summary: IUCollection = null,
-    ): void{
-      //TODO: implement this maybe?
+  // Offline Mode
+  getOfflineMode(): Observable<boolean>{
+    return this.offlineMode.asObservable();
+  }
+
+  enterOfflineMode(): void {
+    this.offlineMode_support = true;
+    this.offlineMode.next(this.offlineMode_support)
+  }
+
+  exitOfflineMode(): void {
+    this.offlineMode_support = false;
+    this.offlineMode.next(this.offlineMode_support)
   }
 }

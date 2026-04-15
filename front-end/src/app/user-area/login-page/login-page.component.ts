@@ -7,6 +7,8 @@ import { AuthService } from '../../auth.service';
 import { MatCardModule } from '@angular/material/card';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { StorageService } from 'src/app/storage.service';
 
 @Component({
     selector: 'app-login-page',
@@ -15,14 +17,15 @@ import { MatButtonModule } from '@angular/material/button';
     standalone: true,
     imports: [
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDividerModule
 ]
 })
 export class LoginPageComponent implements OnInit {
-
   constructor(
     private router: Router,
     private auth: AuthService,
+    private storage: StorageService
   ) {
   }
   ngOnInit() {
@@ -39,11 +42,17 @@ export class LoginPageComponent implements OnInit {
   }
 
   public googleLogin(){
+    this.storage.exitOfflineMode();
     window.location.replace(location.origin + "/api/login/google");
     /**
     this.auth.googleLogin().subscribe((res)=>{
       console.log(res);
     });
     **/
+  }
+
+  public goOffline(){
+    this.storage.enterOfflineMode();
+    this.redirectToProjects();
   }
 }

@@ -24,34 +24,39 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       -->
-      <div class="title-div" [routerLink]="['/']">
+      <div class="title-div" [routerLink]="(homeLink$ | async) ">
         <span class="title-span">SAT - Segmentation and Alignment Tool</span>
         <span class="version-tag">version 0.2.1</span>
       </div>
       <span class="toolbar-spacer"></span>
       <div class="navigation-button">
-        <a href="./guide">
-        <button
+        <button [routerLink]="['/guide']"
           mat-flat-button
           color="primary"
           >
           Guide
         </button>
-        </a>
       </div>
-      @if (loggedIn) {
+      @if ((loggedIn$ | async) || (offlineMode$ | async)) {
         <div class="navigation-button">
-          <a href="/projects">
-          <button
+          <button [routerLink]="['/projects']"
             mat-flat-button
             color="primary"
             >
             Projects
           </button>
-          </a>
         </div>
       }
       <div class="toolbar-end">
+        @if ( (offlineMode$ | async)) {
+          <mat-chip-set>
+            <mat-chip highlighted
+              color="accent"
+              >
+              Offline Mode
+            </mat-chip>
+          </mat-chip-set>
+        }
         <app-nav-auth-widget></app-nav-auth-widget>
       </div>
     </mat-toolbar>

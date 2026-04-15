@@ -7,7 +7,7 @@
     </button>
   </div>
 } @else {
-  @if (!landingArea) {
+  @if (!loggedIn) {
     <div class="user-widget-container">
       <button mat-flat-button color="warn" [routerLink]="['/login']">
         Log In

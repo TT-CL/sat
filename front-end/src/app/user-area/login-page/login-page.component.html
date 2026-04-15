@@ -12,10 +12,18 @@
         By using this toolkit you consent to share your private data.<br>
         </p>
         <br>
-        <div>Please log in with your Google account.</div>
+        <p>Please log in with your Google account.</p>
         <div class="control-container">
           <button mat-flat-button color="warn" (click)="googleLogin()"><!--(click)="authenticate()"-->
             Log In
+          </button>
+        </div>
+        <div>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="control-container">
+          <button mat-flat-button color="accent" (click)="goOffline()"><!--(click)="authenticate()"-->
+            Offline Mode
           </button>
         </div>
       </mat-card-content>
