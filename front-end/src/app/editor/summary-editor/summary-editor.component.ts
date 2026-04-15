@@ -3,7 +3,7 @@ import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncaps
 import { IdeaUnit, IUCollection, Project, Segment } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
-import { BackEndService } from '../../back-end.service';
+import { NLPService } from 'src/app/nlp.service';
 
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
@@ -52,7 +52,7 @@ export class SummaryEditorComponent implements AfterViewInit {
 
   constructor(
     private storage: StorageService,
-    private backend: BackEndService,
+    private nlp: NLPService,
   ) {
     storage.getWorkSummary().subscribe((summary) => {
       this.doc = summary;
@@ -129,36 +129,7 @@ export class SummaryEditorComponent implements AfterViewInit {
     this.preEditor.nativeElement.innerHTML = html;
     this.newSegments = this.parseEditedSegments();
   }
-
-  retrieveTokenizedSegs(save_to_storage = false) {
-    //console.log(this.newSegments);
-    this.backend.getTokenizedSegs(
-      this.doc.doc_name, this.doc.doc_type, this.newSegments
-    ).subscribe(event => {
-      if (event.type == HttpEventType.UploadProgress) {
-        const percentDone = Math.round(100 * event.loaded / event.total);
-        //console.log('${fName} is ${percentDone}% loaded.');
-      } else if (event instanceof HttpResponse) {
-        let new_doc = new IUCollection();
-        //console.log(event.body);
-        new_doc.readDocument(event.body)
-        console.log(new_doc)
-        this.newDoc = new_doc
-        this.newDoc.applySegEditQueue(this.segEditQueue)
-        if (save_to_storage) {
-          // recall save edits, but this time skip the checks and go straight
-          // to the storage section
-          this.saveEdits(true);
-        }
-      }
-    },
-      (err) => {
-        console.log("Error parsing manually edited segments");
-      }, () => {
-        console.log("Manual edits parsed successuflly");
-      });
-  }
-
+  
   tabChanged($event) {
     this.resetEditor()
   }
@@ -200,37 +171,41 @@ export class SummaryEditorComponent implements AfterViewInit {
     this.clearSelectedSegs();
   }
 
-  saveEdits(skip_check = false) {
-    if (this.editedFlag && !skip_check && !this.discEdited) {
-      //console.log("newSegments")
-      //console.log(this.newSegments)
-      //console.log("doc")
-      //console.log(this.doc)
-      //console.log("newDoc")
-      //console.log(this.newDoc)
-      this.retrieveTokenizedSegs(true);
-    } else {
+  private storeEdits(){
+    //compute
+    this.newDoc.continuityCheck();
+    // keep old sents;
+    this.newDoc.sents = this.doc.sents;
+    // copy over db data
+    this.newDoc._id = this.doc._id;
+    this.newDoc.user_id = this.doc.user_id;
+    this.newDoc.project_id = this.doc.project_id;
+    this.newDoc.history_id = this.doc.history_id;
+    this.newDoc.deleted = this.doc.deleted;
 
-      //compute
-      this.newDoc.continuityCheck();
-      // keep old sents;
-      this.newDoc.sents = this.doc.sents;
-      // copy over db data
-      this.newDoc._id = this.doc._id;
-      this.newDoc.user_id = this.doc.user_id;
-      this.newDoc.project_id = this.doc.project_id;
-      this.newDoc.history_id = this.doc.history_id;
-      this.newDoc.deleted = this.doc.deleted;
+    this.storage.clearSimilarities(this.doc.doc_name);
+    //console.log(this.newDoc)
+    this.storage.updateWorkSummary(this.newDoc, true).subscribe({
+      complete: () => {
+        this.doc = this.cloneIuCollection(this.newDoc)
+        this.editedFlag = false;
+      },
+      error: err => console.error(`Error updating summary "${this.newDoc.doc_name}":`, err),
+    });
+  }
 
-      this.storage.clearSimilarities(this.doc.doc_name);
-      //console.log(this.newDoc)
-      this.storage.updateWorkSummary(this.newDoc, true).subscribe({
-        complete: () => {
-          this.doc = this.cloneIuCollection(this.newDoc)
-          this.editedFlag = false;
-        },
-        error: err => console.error(`Error updating summary "${this.newDoc.doc_name}":`, err),
+  saveEdits() {
+    if (this.editedFlag && !this.discEdited) {
+      this.nlp.retrieveTokenizedSegs(this.doc, this.newSegments).subscribe({
+        next: (new_doc: IUCollection) => {
+          this.newDoc = new_doc;
+          this.newDoc.applySegEditQueue(this.segEditQueue);
+          this.storeEdits();
+        }
       });
+    } else {
+      this.storeEdits();
+   
     }
   }
 }

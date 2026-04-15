@@ -168,7 +168,7 @@ export class StorageService {
       map(() => void 0),
       catchError(err => {
         console.log("Error adding project " + project.name + " to database :", err);
-        return throwError(() => err)
+        return throwError(() => err);
       })
     );
   }
@@ -202,8 +202,8 @@ export class StorageService {
       }),
       map(() => void 0),
       catchError(err => {
-        console.log("Error deleting project " + project.name + " from database :", err);
-        return throwError(() => err)
+        console.error("Error deleting project " + project.name + " from database :", err);
+        return throwError(() => err);
       })
     );
   }

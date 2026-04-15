@@ -3,7 +3,6 @@ import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncaps
 import { IdeaUnit, IUCollection, Project, Segment } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
-import { BackEndService } from '../../back-end.service';
 
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
@@ -15,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SegEditQueue } from 'src/app/objects/seg-edit-queue';
+import { NLPService } from 'src/app/nlp.service';
 
 @Component({
     selector: 'app-source-editor',
@@ -53,14 +53,14 @@ export class SourceEditorComponent implements AfterViewInit {
 
   constructor(
     private storage: StorageService,
-    private backend: BackEndService,
+    private nlp: NLPService
   ) {
     storage.getCurProject().subscribe((proj)=>{
       this.proj = proj
       this.doc = this.cloneIuCollection(proj.sourceDoc)
       this.newDoc = this.cloneIuCollection(proj.sourceDoc)
-      console.log("retrieved source document");
-      console.log(this.newDoc)
+      //console.log("retrieved source document");
+      //console.log(this.newDoc)
     })
   }
 
@@ -132,36 +132,6 @@ export class SourceEditorComponent implements AfterViewInit {
     this.newSegments = this.parseEditedSegments();
   }
 
-  retrieveTokenizedSegs(save_to_storage = false){
-    //console.log(this.newSegments);
-    this.backend.getTokenizedSegs(
-      this.doc.doc_name, this.doc.doc_type, this.newSegments
-      ).subscribe(event => {
-      if (event.type == HttpEventType.UploadProgress) {
-        const percentDone = Math.round(100 * event.loaded / event.total);
-        //console.log('${fName} is ${percentDone}% loaded.');
-      } else if (event instanceof HttpResponse) {
-        let new_doc = new IUCollection();
-        //console.log(event.body);
-        new_doc.readDocument(event.body)
-        this.retrievedSegsFlag = true;
-        this.editedFlag = false;
-        this.newDoc = new_doc
-        this.newDoc.applySegEditQueue(this.segEditQueue)
-        if(save_to_storage){
-          // recall save edits, but this time skip the checks and go straight
-          // to the storage section
-          this.saveEdits(true);
-        }
-      }
-    },
-    (err) => {
-      console.log("Error parsing manually edited segments");
-    }, () => {
-      console.log("Manual edits parsed successuflly");
-    });
-  }
-
   tabChanged($event) {
     this.resetEditor()
   }
@@ -203,17 +173,7 @@ export class SourceEditorComponent implements AfterViewInit {
     this.clearSelectedSegs();
   }
 
-  saveEdits(skip_check = false){
-    if (this.editedFlag && !skip_check && !this.discEdited) {
-      console.log("newSegments")
-      console.log(this.newSegments)
-      console.log("doc")
-      console.log(this.doc)
-      console.log("newDoc")
-      console.log(this.newDoc)
-      this.retrieveTokenizedSegs(true);
-    }else{
-
+  private storeEdits(){
     //compute
     this.newDoc.continuityCheck();
     // keep old sents;
@@ -225,6 +185,8 @@ export class SourceEditorComponent implements AfterViewInit {
     this.newDoc.project_id = this.doc.project_id;
     this.newDoc.history_id = this.doc.history_id;
     this.newDoc.deleted = this.doc.deleted;
+    console.log("store_edits")
+    console.log(this.newDoc)
 
     this.proj.sourceDoc = this.newDoc
     this.proj.purgeProjectLinks();
@@ -236,6 +198,21 @@ export class SourceEditorComponent implements AfterViewInit {
         this.editedFlag = false;
       }
     });
+  }
+  
+  saveEdits(){
+
+    if (this.editedFlag && !this.discEdited) {
+      this.nlp.retrieveTokenizedSegs(this.doc, this.newSegments).subscribe({
+        next: (new_doc: IUCollection) => {
+          this.newDoc = new_doc;
+          this.newDoc.applySegEditQueue(this.segEditQueue);
+          this.storeEdits();
+        }
+      });
+    } else {
+      this.storeEdits();
+   
     }
   }
 }
