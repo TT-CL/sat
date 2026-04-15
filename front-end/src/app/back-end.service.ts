@@ -20,10 +20,6 @@ export class BackEndService {
     private http: HttpClient) {
   }
 
-  private handleError(){
-    console.log("Server Error");
-  }
-
   getLabelledText(text : File, mode: string): Observable<HttpEvent<any>> {
     let url = "/api/v1/raw"
     let formData = new FormData();

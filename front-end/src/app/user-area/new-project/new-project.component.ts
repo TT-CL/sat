@@ -1,15 +1,15 @@
 import { Component, ViewChild, ElementRef} from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
 
-import { Observable, of} from 'rxjs';
+import { forkJoin, Observable, of} from 'rxjs';
 
 import { OverlayService } from '../../overlay.service';
 import { UploadOverlayComponent } from '../upload-overlay/upload-overlay.component';
 
 import { IUCollection, Project } from '../../objects/objects.module';
 
-import { BackEndService } from '../../back-end.service';
 import { StorageService } from '../../storage.service';
+import { NLPService } from 'src/app/nlp.service';
 
 import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 
@@ -47,10 +47,10 @@ export class NewProjectComponent {
   constructor(
     private formBuilder: UntypedFormBuilder,
     private overlayService: OverlayService,
-    private backend : BackEndService,
     private storage: StorageService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private nlp: NLPService) { }
 
   projectForm = this.formBuilder.group({
     title: ['', Validators.required],
@@ -66,7 +66,7 @@ export class NewProjectComponent {
   summaryFiles = new Set<File>();
 
   parsedSource: IUCollection = null;
-  parsedSummaries: IUCollection[] = [];
+  parsedSummaries= new Set<IUCollection>();
 
   docNumber: number;
   progress: number;
@@ -78,17 +78,16 @@ export class NewProjectComponent {
   @ViewChild('summaryInput')
   summaryInput;
 
+  @ViewChild('sourceForm')
+  sourceForm;
+
   //show file selection window
   onClickSourceForm(): void {
     this.sourceInput.nativeElement.click();
-    //add animation classes, so that something happens when clicking even though the element is readonly
-    this.sourceFormFieldClass = "mat-form-field-should-float mat-focused";
-    // I have no way to check wheter cancel was pressed in the filepicker, so I have to remove the animation class after a time to ensure visual consistency
-    setTimeout(() => this.removeFocusSourceForm(), 5000);
   }
 
-  removeFocusSourceForm():void{
-    this.sourceFormFieldClass = "";
+  onSourcePickerCancel():void{
+    this.sourceForm.nativeElement.blur();
   }
 
   //save the source file
@@ -96,15 +95,21 @@ export class NewProjectComponent {
     const files: { [key: string]: File } = this.sourceInput.nativeElement.files;
     this.sourceFormFieldClass = "";
     if (files[0]){
-      this.sourceFile = files[0];
-      //set the value of the form to the name of the file
-      this.sourceFormValue = files[0].name;
-      //remove animation classes
+      this.nlp.parseRawIUCollection(files[0], "source").subscribe({
+        next: doc => {
+          this.parsedSource = doc;
+          //set the value of the form to the name of the file
+          this.sourceFormValue = files[0].name;
+        },
+        error: err => console.error("Error parsing new source document. Error:" + err)
+      })
     }
+    //Deselect the source fiele field
+    this.sourceForm.nativeElement.blur();
   }
 
   removesourceFile(): void {
-    this.sourceFile = null;
+    this.parsedSource = null;
     this.sourceFormValue = "";
     this.projectForm.controls.source.reset();
   }
@@ -115,21 +120,34 @@ export class NewProjectComponent {
 
   //save the summary file
   onChangeSummaryInput(): void {
-    const summary_files: { [key: string]: File } = this.summaryInput.nativeElement.files;
-    //add the files to the array
-    for (let key of Object.keys(summary_files)){
-      this.summaryFiles.add(summary_files[key]);
-    }
+    const fileList = this.summaryInput.nativeElement.files;
+    const summaryFiles: File[] = fileList ? Array.from(fileList) : [];
+
+    const requests = summaryFiles.map(file =>
+      this.nlp.parseRawIUCollection(file, 'summary')
+    );
+
+    forkJoin(requests).subscribe({
+      next: (docs) => {
+        docs.forEach(doc =>{
+          this.parsedSummaries.add(doc);
+        });
+      },
+      error: (err) => {
+        console.error('Error parsing summary files:', err);
+      }
+    });
   }
 
   //function to remove a summary from the list
-  removeSummary(summary: File): void{
-    this.summaryFiles.delete(summary);
+  removeSummary(summary: IUCollection): void{
+    this.parsedSummaries.delete(summary);
   }
 
   // overlay controls
   @ViewChild("overlayOrigin") overlayOrigin: ElementRef;
   overlayRef = null;
+
   showOverlay(){
     this.overlayRef = this.overlayService.showOverlay(this.overlayOrigin, UploadOverlayComponent);
   }
@@ -137,40 +155,21 @@ export class NewProjectComponent {
     this.overlayService.detach(this.overlayRef);
   }
 
-  loadTxt(file: File, mode: string): void{
-    let fName = file.name;
-    let doc = new IUCollection();
-    console.log("Uploading " + fName);
-    if(file.type == "text/plain"){
-      this.backend.getLabelledText(file, mode).subscribe(
-      event => {
-        if (event.type == HttpEventType.UploadProgress) {
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          //console.log('${fName} is ${percentDone}% loaded.');
-        } else if (event instanceof HttpResponse) {
-          let doc = new IUCollection();
-          doc.readDocument(event.body);
-          if (mode == "source"){
-            this.parsedSource = doc;
-          }else if (mode == "summary"){
-            this.parsedSummaries.push(doc);
-          }
-        }
-      },
-      (err) => {
-        console.log("Error reading " + fName + " :", err);
-      }, () => {
-        console.log(fName + " read successfully");
-        this.progress = this.progress + 1;
-        if(this.progress == this.docNumber){
-            this.fileRead();
-        }
-      });
-    }
-  }
-
   fileRead(): void {
     //Upload of local file is complete
+    
+  }
+
+  redirectOut() {
+    this.router.navigate(['../'], {relativeTo: this.route});
+  }
+
+  redirectUnauthorized() {
+    this.router.navigate(['/unauthorized']);
+  }
+
+  onSubmit(): void{
+    this.showOverlay();
     // create project
     let title = this.projectForm.value.title
     let description = this.projectForm.value.description;
@@ -182,8 +181,8 @@ export class NewProjectComponent {
     if (description && description != "") {
       proj.description = description;
     }
-    if (this.parsedSummaries.length > 0) {
-      proj.summaryDocs = this.parsedSummaries;
+    if (this.parsedSummaries.size > 0) {
+      proj.summaryDocs = Array.from(this.parsedSummaries);
     }
 
     this.storage.addProject(proj).subscribe({
@@ -199,29 +198,5 @@ export class NewProjectComponent {
         }
       }
     });
-  }
-
-  redirectOut() {
-    this.router.navigate(['../'], {relativeTo: this.route});
-  }
-
-  redirectUnauthorized() {
-    this.router.navigate(['/unauthorized']);
-  }
-
-  onSubmit(): void{
-    let self = this;
-    this.showOverlay();
-    // Gather the data -> if I am able to submit then I passed the validators
-    let source = this.sourceFile;
-    let summaries = this.summaryFiles;
-
-    this.docNumber = summaries.size + 1;
-    this.progress = 0;
-
-    this.loadTxt(source, "source");
-    for (let summary of summaries){
-      this.loadTxt(summary, "summary");
-    }
   }
 }

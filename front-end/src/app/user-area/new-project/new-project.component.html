@@ -27,14 +27,14 @@
               </mat-form-field>
 
               <!-- Form control name is required here to record changes on the file selector -->
-              <input type="file" style="display: none" #sourceInput accept=".txt" (change)="onChangeSourceInput()" id="source" name="source" formControlName="source" />
+              <input type="file" style="display: none" #sourceInput accept=".txt" (change)="onChangeSourceInput()" (cancel)="onSourcePickerCancel()" id="source" name="source" formControlName="source" />
 
               <mat-form-field class="form-field" [ngClass]="sourceFormFieldClass">
                 <mat-label>Source text</mat-label>
                 <!-- Form control name is required here to allow mat-error to appear according to changes to the visible input -->
-                <input matInput placeholder="source.txt" readonly required (click)="onClickSourceForm()" #summaryForm autocomplete="off" [value]="sourceFormValue" formControlName="source">
-                @if (sourceFile) {
-                  <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="removesourceFile()">
+                <input #sourceForm matInput placeholder="source.txt" readonly required (click)="onClickSourceForm()" #summaryForm autocomplete="off" [value]="sourceFormValue" formControlName="source">
+                @if (parsedSource) {
+                  <button matSuffix mat-icon-button aria-label="Clear" (click)="removesourceFile()">
                     <mat-icon>close</mat-icon>
                   </button>
                 }
@@ -53,7 +53,7 @@
             <div class="summary-area scrollable-content">
                 <div class="summary-flex">
                   <!-- Print one minicard for each summary selected -->
-                  @for (summary of summaryFiles; track summary) {
+                  @for (summary of parsedSummaries; track summary) {
                     <app-summary-minicard [file]="summary" (close)="removeSummary($event)"></app-summary-minicard>
                   }
                   <!-- Default minicard that allows to update new files -->
