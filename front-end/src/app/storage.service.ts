@@ -145,7 +145,7 @@ export class StorageService {
 
   addProject(project: Project): Observable<void>{
     if( this.offlineMode ){
-      this.addProject(project)
+      this.__addProject(project)
       return of(void 0);
     }
 
