@@ -14,7 +14,7 @@ pymongo==4.6.3
 annotated-doc==0.0.4
 annotated-types==0.7.0
 anyio==4.13.0
-Authlib==1.6.9
+Authlib==1.6.11
 blis==0.7.11
 catalogue==2.0.10
 certifi==2026.2.25
