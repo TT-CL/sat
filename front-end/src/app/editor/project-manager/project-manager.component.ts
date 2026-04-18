@@ -60,6 +60,8 @@ export class ProjectManagerComponent implements OnInit {
       //this.projDescription = proj.description;
       this.sourceFile = proj.sourceDoc;
       this.summaryFiles = new Set(proj.summaryDocs);
+      this.summaryRemovalQueue = new Set<IUCollection>();
+      this.summaryAddQueue = new Set<IUCollection>();
       this.projDescription = proj.description;
       this.sourceFormValue = proj.sourceDoc.doc_name;
       this.projectForm = this.formBuilder.group({

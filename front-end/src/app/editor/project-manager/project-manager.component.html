@@ -58,7 +58,7 @@
               <div class="summary-area scrollable-content">
                 <div class="summary-flex">
                   <!-- Print one minicard for each summary selected -->
-                  @for (summary of summaryFiles; track summary) {
+                  @for (summary of summaryFiles; track summary._id) {
                     <app-summary-minicard [file]="summary" (close)="openDeleteSummaryDialog($event)">
                     </app-summary-minicard>
                   }

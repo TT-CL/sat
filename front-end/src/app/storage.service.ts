@@ -144,7 +144,7 @@ export class StorageService {
   }
 
   addProject(project: Project): Observable<void>{
-    if( this.offlineMode ){
+    if( this.offlineMode_support){
       this.__addProject(project)
       return of(void 0);
     }
@@ -183,7 +183,7 @@ export class StorageService {
   }
 
   removeProject(project: Project): Observable<void>{
-    if( this.offlineMode ){
+    if( this.offlineMode_support){
       this.__removeProject(project)
       return of(void 0);
     }
@@ -292,7 +292,7 @@ export class StorageService {
 
   updateSource(source:IUCollection): Observable<IUCollection> {
     // Updates the source on the db then returns the new document to be later stored in session
-    if(this.offlineMode){
+    if(this.offlineMode_support){
       let doc = new IUCollection()
       doc.reconsolidate(source)
       return of(doc)
@@ -312,7 +312,7 @@ export class StorageService {
 
   createSummary(summary:IUCollection, project_id:string, silent: boolean): Observable<IUCollection> {
     // Creates the summary on the db then returns the new document to be later stored in session
-    if(this.offlineMode){
+    if(this.offlineMode_support){
       let doc = new IUCollection()
       doc.reconsolidate(summary)
       doc.project_id = project_id
@@ -332,7 +332,7 @@ export class StorageService {
   }
 
   deleteSummary(summary:IUCollection): Observable<any> {
-    if(this.offlineMode){
+    if(this.offlineMode_support){
       return of(void 0)
     }
     return this.backend.deleteSummary(summary)
@@ -357,7 +357,7 @@ export class StorageService {
   }
 
   updateProject(project: Project, silent: boolean): Observable<void> {
-    if( this.offlineMode ){
+    if( this.offlineMode_support){
       return of(void 0);
     }
     return this.backend.updateProject(project).pipe(
@@ -386,8 +386,9 @@ export class StorageService {
     summaryAddQueue: Set<IUCollection> = null,
     summaryRemovalQueue: Set<IUCollection> = null
   ): Observable<void>{
-    if (this.offlineMode || !sync) {
+    if (this.offlineMode_support || !sync) {
       // if we are in offline mode or sync is disabled skip DB calls
+      console.log("offline save")
       this.__updateCurProject(proj);
       return of(void 0);
     }
@@ -481,7 +482,7 @@ export class StorageService {
   }
 
   updateWorkSummary(summary : IUCollection, sync: boolean = false): Observable<void>{
-    if (this.offlineMode || !sync){
+    if (this.offlineMode_support || !sync){
       this.__updateWorkSummary(summary);
       return of(void 0)
     }
@@ -576,7 +577,7 @@ export class StorageService {
 
   updateSuggestions():void{
     console.log("Updating IU recommendations");
-    if (this.offlineMode) {
+    if (this.offlineMode_support) {
       // Do not provide similarity services in offline mode
       const emptySims = { "sims" : null}
       this.__addReceivedSimilarity( emptySims )
