@@ -9,6 +9,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 
 import { MatButtonModule } from '@angular/material/button';
+import { GrayFlexContainerComponent } from 'src/app/utils/gray-flex-container/gray-flex-container.component';
+import { DocCardComponent } from 'src/app/utils/doc-card/doc-card.component';
 
 @Component({
     selector: 'app-project-downloader',
@@ -19,7 +21,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatCardModule,
     MatDividerModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    GrayFlexContainerComponent,
+    DocCardComponent
 ]
 })
 export class ProjectDownloaderComponent implements OnInit {

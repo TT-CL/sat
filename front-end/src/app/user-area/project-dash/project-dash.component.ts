@@ -5,7 +5,7 @@ import { StorageService } from '../../storage.service';
 import { Project } from '../../objects/objects.module';
 import { AuthService } from '../../auth.service';
 import { OverlayService } from '../../overlay.service';
-import { UploadOverlayComponent } from '../upload-overlay/upload-overlay.component';
+import { UploadOverlayComponent } from 'src/app/utils/upload-overlay/upload-overlay.component';
 import { Router } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
@@ -13,7 +13,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
-import { ProjectItemComponent } from '../project-item/project-item.component';
+import { ProjectItemComponent } from 'src/app/utils/project-item/project-item.component';
 
 
 @Component({

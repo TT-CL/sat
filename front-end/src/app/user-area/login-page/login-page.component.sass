@@ -1,46 +1,8 @@
-.dash-grid
-  display: grid
-  grid-row-gap: 0px
-  grid-template-columns: fit-content(70%)
-  grid-template-rows: auto 350px auto
-
-.grid-cell
-  height: auto
-  grid-column: 1
-  grid-row: 2
-  margin-top: 0px
-  margin-bottom: auto
-
-.mat-card
-  width: 100%
-  height: auto
-  max-height: 600px
-  padding: 0px
-  padding-bottom: 5px
-
-mat-card-content
-  margin-left: 5px
-  margin-right: 5px
-
-.title-container
-  width:100%
-  display: flex
-  align-items: flex-end
-  grid-column: 1
-  grid-row: 1
-
-.h1-title
-  margin-left: 5px
-  margin-bottom: 0px
-  font-style: italic
-  font-weight: lighter
-  color: #3f51b5
+@use '../../../dashboard.sass' as dash
 
 .control-container
   display: flex
   justify-content: center
-  align-items: center
-  width: 100%
 
-div
-  margin: 7px
+mat-card-content
+  flex-direction: column

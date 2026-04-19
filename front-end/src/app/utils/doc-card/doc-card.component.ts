@@ -1,23 +1,22 @@
-
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { IUCollection } from 'src/app/objects/objects.module';
+import { IUCollection } from 'src/app/objects/iu-collection';
 
 type FileOrDoc = File | IUCollection;
 
+
 @Component({
-    selector: 'app-summary-minicard',
-    templateUrl: './summary-minicard.component.html',
-    styleUrls: ['./summary-minicard.component.sass'],
-    standalone: true,
-    imports: [
+  selector: 'doc-card',
+  imports: [
+    CommonModule,
     MatIconModule
-]
+  ],
+  templateUrl: './doc-card.component.html',
+  styleUrl: './doc-card.component.sass',
+  standalone: true
 })
-export class SummaryMinicardComponent implements OnInit {
-
-  constructor() { }
-
+export class DocCardComponent  implements OnInit{
   ngOnInit(): void {
     if (this.file instanceof File){
       this.name = this.file.name;
@@ -27,9 +26,10 @@ export class SummaryMinicardComponent implements OnInit {
   }
 
   @Input() file : FileOrDoc;
+  @Input() type : "source" | "summary";
 
   name: string;
 
-  @Output() close = new EventEmitter<FileOrDoc>();
+  @Output() download = new EventEmitter<void>();
 
 }

@@ -3,7 +3,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OverlayService } from 'src/app/overlay.service';
-import { UploadOverlayComponent } from 'src/app/user-area/upload-overlay/upload-overlay.component';
+import { UploadOverlayComponent } from 'src/app/utils/upload-overlay/upload-overlay.component';
 
 import { IUCollection, Project } from '../../objects/objects.module';
 
@@ -16,10 +16,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog'
-import { SummaryMinicardComponent } from 'src/app/user-area/summary-minicard/summary-minicard.component';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { SummaryMinicardComponent } from 'src/app/utils/summary-minicard/summary-minicard.component';
+import { ConfirmDialogComponent } from 'src/app/utils/confirm-dialog/confirm-dialog.component';
 import { forkJoin } from 'rxjs';
 import { NLPService } from 'src/app/nlp.service';
+import { GrayFlexContainerComponent } from 'src/app/utils/gray-flex-container/gray-flex-container.component';
 
 type FileOrDoc = File | IUCollection;
 
@@ -38,7 +39,8 @@ type FileOrDoc = File | IUCollection;
       MatInputModule,
       MatButtonModule,
       MatIconModule,
-      SummaryMinicardComponent
+      SummaryMinicardComponent,
+      GrayFlexContainerComponent
     ]
 })
 export class ProjectManagerComponent implements OnInit {

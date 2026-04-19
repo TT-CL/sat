@@ -1,10 +1,10 @@
-<div class="dash-grid horizontal-center">
-  <div class="title-container">
-    <h1 class="mat-headline-4 h1-title">SAT - Segmentation and Alignment Tool</h1>
-  </div>
-  <div class="grid-cell horizontal-center vertical-center">
-    <mat-card appearance="outlined" class="mat-card">
-      <mat-card-content class="card-content-with-toolbar">
+<div class="dash-grid mode-single">
+  <div class="grid-cell summary-cell-display-single">
+    <div class="outer-card-title">
+      <h1 class="main-title">SAT - Segmentation and Alignment Tool</h1>
+    </div>
+    <mat-card appearance="outlined" class="outer-title">
+      <mat-card-content>
         <p>Welcome to the Segmentation and Alignment Tool - SAT.<br>
         This website utilises cookies to store your data and progress.<br>
         Your activity is profiled to improve the performance of automatic segmentation tools.<br>
@@ -18,9 +18,9 @@
             Log In
           </button>
         </div>
-        <div>
-          <mat-divider></mat-divider>
-        </div>
+      </mat-card-content>
+        <mat-divider></mat-divider>
+      <mat-card-content>
         <div class="control-container">
           <button mat-flat-button color="accent" (click)="goOffline()"><!--(click)="authenticate()"-->
             Offline Mode

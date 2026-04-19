@@ -1,0 +1,23 @@
+<div class="flex-card">
+  @if (file) {
+  <div class="remove-button" (click)="close.emit(file)">
+    <mat-icon class="cancel-icon">cancel</mat-icon>
+  </div>
+  <div class="card-inner">
+    <mat-icon class="doc-icon">description</mat-icon>
+    @if (file) {
+    <div class="filename-area">
+      {{name}}
+    </div>
+    }
+  </div>
+  } @else if (new_file) {
+  <!-- Default minicard that enables the upload of new files -->
+  <div class="plus-container" (click)="new.emit()">
+    <div class="plus-card-inner">
+      <mat-icon class="plus-icon">note_add</mat-icon>
+      <div>NEW</div>
+    </div>
+  </div>
+  }
+</div>

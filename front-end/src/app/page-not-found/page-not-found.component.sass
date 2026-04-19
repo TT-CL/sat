@@ -1,7 +1,9 @@
+@use '../../dashboard.sass' as dash
+
 .page-container
   position: absolute
   width: 100%
-  height: calc(100% - 64px)
+  height: calc(100% - dash.$navbar-height)
 
 .container-404
   position: relative
@@ -15,6 +17,7 @@
   color: #9e9e9e
   text-align: center
   line-height: 1
+  padding-right: 0.15em //Necessary due to italics
 
 .subtitle-404
   position: absolute

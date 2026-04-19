@@ -1,11 +1,5 @@
 @use '../../dashboard.sass' as dash
 
-.md
-  margin-top: 30px
-  padding: 15px
-  background-color: #fff
-  width: dash.$card-width-alone
-
 :host ::ng-deep .mm code
   background-color: #000
   color: #fff
@@ -22,3 +16,12 @@
   :host ::ng-deep .md h2,
   :host ::ng-deep .md h3
   margin-top: 15px
+
+markdown
+  height: calc(100% - 2 * dash.$card-margin)
+  width: calc(100% - 2 * dash.$card-margin)
+  padding: dash.$card-margin
+
+.spacer
+  display: block
+  height: dash.$navbar-height

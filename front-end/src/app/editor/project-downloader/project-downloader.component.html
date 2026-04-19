@@ -1,55 +1,39 @@
-<mat-card appearance="outlined">
+<div class="outer-card-title">
+  <h1>Project Exporter </h1>
+</div>
+<mat-card appearance="outlined" class="outer-title">
+  <mat-card-header>
+    <mat-card-title>
+      <h1>{{ curProj.name }}</h1>
+    </mat-card-title>
+    @if (curProj.description) {
+    <mat-card-subtitle>
+      {{ curProj.description }}
+    </mat-card-subtitle>
+    }
+  </mat-card-header>
+
+
+  <mat-divider></mat-divider>
   <mat-card-content>
-    <div class="card-content">
-      <div class="header-flex-container">
-        <mat-card-header>
-          <mat-card-title> {{ curProj.name }} </mat-card-title>
-          @if (curProj.description) {
-            <mat-card-subtitle>
-              {{ curProj.description }}
-            </mat-card-subtitle>
-          }
-        </mat-card-header>
-        <mat-divider></mat-divider>
-      </div>
-      <div class="project-flex-container">
-        <div class="project-download-container vertical-center horizontal-center">
-          <h3>Use these buttons to store your work on your computer.</h3>
-          <button mat-flat-button class="button" color="primary" (click)="downloadProject()" class="xls-button">
-            Export project spreadsheet (.xlsx) <mat-icon>functions</mat-icon>
-          </button>
-          <a mat-flat-button class="button" color="primary" title="{{curProj.name}}" [href]="exporter.generateProjectJsonURI(curProj)" download="{{curProj.name}}.iuproj">
-            Backup project (.iuproj) <mat-icon>save</mat-icon>
-          </a>
-        </div>
-        <mat-divider></mat-divider>
-      </div>
-      <div class="single-docs-flex-container scrollable-content">
-        <div class="doc_card">
-          <div class="inner-card-flex">
-            <mat-icon class="source-icon">description</mat-icon>
-            <div class="card-btn-layout">
-              <p>{{curProj.sourceDoc.doc_name}}</p>
-              <a color="primary" (click)="downloadDoc(curProj.sourceDoc)" class="xls-link" href="#">
-                Download spreadsheet (.xlsx)
-              </a>
-            </div>
-          </div>
-        </div>
-        @for (summary of curProj.summaryDocs; track summary) {
-          <div class="doc_card">
-            <div class="inner-card-flex">
-              <mat-icon class="summary-icon">description</mat-icon>
-              <div class="card-btn-layout">
-                <p>{{summary.doc_name}}</p>
-                <a color="primary" (click)="downloadDoc(summary)" class="xls-link" href="#">
-                  Download spreadsheet (.xlsx)
-                </a>
-              </div>
-            </div>
-          </div>
-        }
-      </div>
+    <div class="project-download-container">
+      <h3>Use these buttons to store your work on your computer.</h3>
+      <a mat-flat-button class="button xls-button" color="primary" (click)="downloadProject()">
+        Export project spreadsheet (.xlsx) <mat-icon>functions</mat-icon>
+      </a>
+      <a mat-flat-button class="button" color="primary" title="{{curProj.name}}"
+        [href]="exporter.generateProjectJsonURI(curProj)" download="{{curProj.name}}.iuproj">
+        Backup project (.iuproj) <mat-icon>save</mat-icon>
+      </a>
     </div>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-content class="mat-card-dynamic-content">
+    <gray-flex-container>
+      <doc-card [file]="curProj.sourceDoc" [type]="'source'" (download)="downloadDoc(curProj.sourceDoc)" />
+      @for (summary of curProj.summaryDocs; track summary) {
+      <doc-card [file]="summary" [type]="'summary'" (download)="downloadDoc(summary)" />
+      }
+    </gray-flex-container>
   </mat-card-content>
 </mat-card>

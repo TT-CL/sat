@@ -1,0 +1,12 @@
+<div class="inner-card-flex">
+  <mat-icon [ngClass]="{
+    'source-icon': type==='source',
+    'summary-icon': type==='summary'
+  }">description</mat-icon>
+  <div class="card-btn-layout">
+    <p>{{name}}</p>
+    <a color="primary" (click)="download.emit()" class="xls-link" href="#">
+      Download spreadsheet (.xlsx)
+    </a>
+  </div>
+</div>

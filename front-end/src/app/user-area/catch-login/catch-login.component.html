@@ -1,19 +1,13 @@
-<div class="horizontal-center vertical-center container">
-  <mat-card appearance="outlined" class="mat-card">
-    <mat-card-content class="card-content-with-toolbar">
-      <div class="card-container">
-        <div>
-          <h3>User logged in successfully.</h3>
-          <h4 class="subtitle">Redirecting to user area...</h4>
-        </div>
-      </div>
-      <div>
-        <div class="card-toolbar vertical-center horizontal-center">
-          <button mat-flat-button color="primary" (click)="redirectToProjects()">
-            Redirect now
-          </button>
-        </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
+<div class="dash-grid mode-single">
+  <div class="grid-cell summary-cell-display-single">
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <h3>User logged in successfully.</h3>
+        <h4 class="subtitle">Redirecting to user area...</h4>
+        <button mat-flat-button color="primary" (click)="redirectToProjects()">
+          Redirect now
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

@@ -1,5 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
@@ -8,7 +9,8 @@ import { MarkdownModule } from 'ngx-markdown';
     styleUrls: ['./guide.component.sass'],
     standalone: true,
     imports: [
-    MarkdownModule
+    MarkdownModule,
+    MatCardModule
 ]
 })
 export class GuideComponent implements OnInit {

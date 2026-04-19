@@ -1,12 +1,26 @@
-<div class="dash-grid horizontal-center">
-  <div class="grid-cell horizontal-center vertical-center summary-cell"   [ngClass]="{'summary-cell-display-both': mode == 'both', 'summary-cell-display-source': mode == 'source','summary-cell-display-summary': mode == 'summary'}" >
+<div class="dash-grid " [ngClass]="{
+    'mode-both': mode === 'both',
+    'mode-source': mode === 'source',
+    'mode-summary': mode === 'summary'
+  }">
+  <div class="grid-cell"
+    [ngClass]="{
+      'summary-cell-display-both': mode === 'both',
+      'summary-cell-display-source': mode === 'source',
+      'summary-cell-display-summary': mode === 'summary'
+    }" >
     <ng-template [cdkPortalOutlet]="summaryOutlet"></ng-template>
   </div>
-  <div class="grid-cell toolbar-cell">
-    <app-dash-toolbar></app-dash-toolbar>
-  </div>
-  <div class="grid-cell horizontal-center vertical-center source-cell"
-  [ngClass]="{'source-cell-display-both': mode == 'both', 'source-cell-display-source': mode == 'source', 'source-cell-display-summmary': mode == 'summary'}" >
+    <app-dash-toolbar class="grid-cell toolbar-cell" [ngClass]="{
+      'toolbar-cell-mode-both': mode === 'both',
+      'toolbar-cell-mode-single': mode === 'source' || mode === 'summary'
+    }"></app-dash-toolbar>
+  <div class="grid-cell"
+    [ngClass]="{
+      'source-cell-display-both': mode === 'both',
+      'source-cell-display-source': mode === 'source',
+      'source-cell-display-summary': mode === 'summary'
+    }" >
     <ng-template [cdkPortalOutlet]="sourceOutlet"></ng-template>
   </div>
 </div>

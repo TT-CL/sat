@@ -1,36 +1,26 @@
 <mat-card appearance="outlined" class="document-card">
   <mat-card-header>
-      @if (summary_array.length <=1) {
-        <div class="card-header">
-          <div class="card-header-text">
-            <div class="card-title">{{doc.doc_name}}</div>
-            <div class="card-subtitle">Summary text</div>
-          </div>
+      @if (summary_array.length <= 1) {
+        <div class="header vertical">
+          <mat-card-title> {{doc.doc_name}} </mat-card-title>
+          <mat-card-subtitle> Summary text </mat-card-subtitle>
         </div>
       }
       @if (summary_array.length >1) {
-        <div class="header-flex">
-          <div class="card-header-text">
-            <div class="card-title">
-              Summary
-            </div>
-          </div>
-          <div class="title-selector">
-            <mat-form-field subscriptSizing="dynamic">
-              <mat-select [(value)]="summary_idx" #selector>
-                @for (name of summary_array; track name; let i = $index) {
-                  <mat-option [value]="i">{{name}}</mat-option>
-                }
-              </mat-select>
-            </mat-form-field>
-          </div>
+        <div class="header horizontal">
+          <mat-card-title>Summary</mat-card-title> 
+          <mat-form-field subscriptSizing="dynamic">
+            <mat-select [(value)]="summary_idx" #selector>
+              @for (name of summary_array; track name; let i = $index) {
+                <mat-option [value]="i">{{name}}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
         </div>
       }
   </mat-card-header>
   <mat-divider></mat-divider>
-  <mat-card-content class="card-container">
-    <div class="mat-card-dynamic-content">
-      <ng-template [cdkPortalOutlet]="portalOutlet"></ng-template>
-    </div>
+  <mat-card-content class="card-container mat-card-dynamic-content">
+    <ng-template [cdkPortalOutlet]="portalOutlet"></ng-template>
   </mat-card-content>
 </mat-card>

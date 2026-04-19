@@ -4,7 +4,7 @@ import { ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/fo
 import { forkJoin, Observable, of} from 'rxjs';
 
 import { OverlayService } from '../../overlay.service';
-import { UploadOverlayComponent } from '../upload-overlay/upload-overlay.component';
+import { UploadOverlayComponent } from 'src/app/utils/upload-overlay/upload-overlay.component';
 
 import { IUCollection, Project } from '../../objects/objects.module';
 
@@ -22,7 +22,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { SummaryMinicardComponent } from '../summary-minicard/summary-minicard.component';
+import { SummaryMinicardComponent } from 'src/app/utils/summary-minicard/summary-minicard.component';
+import { GrayFlexContainerComponent } from 'src/app/utils/gray-flex-container/gray-flex-container.component';
 
 @Component({
     selector: 'app-new-project',
@@ -39,7 +40,8 @@ import { SummaryMinicardComponent } from '../summary-minicard/summary-minicard.c
       MatButtonModule,
       MatIconModule,
       MatDividerModule,
-      SummaryMinicardComponent
+      SummaryMinicardComponent,
+      GrayFlexContainerComponent
     ]
 })
 export class NewProjectComponent {

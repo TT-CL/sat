@@ -1,92 +1,16 @@
 @use '../../../dashboard.sass' as dash
 
 :host
-  width:100%
-
-.title-container
-  display: flex
-  align-items: flex-end
-  grid-column: 1
-  grid-row: 1
-
-.h1-title
-  margin-left: 5px
-  margin-bottom: 0px
-  font-style: italic
-  font-weight: lighter
-  color: #3f51b5
+  display: block
+  width: 100%
+  min-width: 0px
+  min-height: 0px
 
 .hint
-  margin-bottom: 2px
+  margin-bottom: 0.5em
 
 .form-field
   width: 100%
 
-.summary-title
-  margin-top: 10px
-
-.main-content
-  display: flex
-  flex-direction: column
-
-.grow-area
-  height: 100%
-
-.summary-area
-  width: inherit
-  height: calc(100% - 23px)
-  background-color: #eeeeee
-  padding: 5px
-  margin-top: 5px
-  border-radius: 5px
-  border-color: #e0e0e0
-  border-style: solid
-  border-width: 1px
-
-.scrollable-content
-  overflow: hidden
-  overflow-x: hidden
-  overflow-y: auto
-
-.card-content-with-toolbar
-  display: grid
-  height: 100%
-
-.card-toolbar > button
-  margin-right: 7px
-  margin-top: 7px
-
-.summary-flex
-  width: inherit
-  display: flex
-  flex-wrap: wrap
-  justify-content: flex-start
-  align-content: flex-start
-
-.plus-container
-  width: 80px
-  height: 100px
-  margin: 3px
-  border-radius: 10px
-  background-color: #bdbdbd
-  cursor: pointer
-
-.plus-card-inner
-  width: 70px
-  height: 90px
-  margin: 5px
-  background-color: #e0e0e0
-  border-radius: 5px
-  display: flex
-  flex-direction: column
-  justify-content: center
-  align-items: center
-  color: #757575
-
-.plus-icon
-  width: 50px
-  height: 50px
-  font-size: 50px
-
-.overlay-container
-  border-radius: 4px
+.summaries-title > h2
+  margin-bottom: 0px
