@@ -22,7 +22,7 @@ export class NLPService {
       return throwError(() => new Error('Only .txt files are supported'));
     }
     const doc = new IUCollection();
-    if (this.storage.offlineMode){
+    if (this.storage.offlineMode_support){
       // Do not segment IUs with backend
       return this.parseIUCollectionOffline(file, mode);
     }else{
@@ -203,7 +203,7 @@ createOfflineTokenizedSegs(
 }
 
   retrieveTokenizedSegs(doc: IUCollection, newSegments: string[]):Observable<IUCollection> {
-    if (this.storage.offlineMode) {
+    if (this.storage.offlineMode_support) {
       try {
         const jsonData = this.createOfflineTokenizedSegs(
           doc.doc_name,
