@@ -25,6 +25,7 @@ ENV_EXAMPLES=(
   "db/api_user.env.example" 
   "computation/fastapi.env.example"
   "front-end/src/environments/environment.ts.example"
+  "front-end/src/environments/environment.prod.ts.example"
   ".env.example"
 )
 

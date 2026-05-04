@@ -35,6 +35,7 @@ The `.env` files for Mongo setup are split in two to avoid passing the root user
 #### Angular frontend
 Angular doesn't rely on `.env` files, instead you will have to populate an `environment.ts` file.
 - `front-end/src/environments/environment.ts`
+- `front-end/src/environments/environment.prod.ts` for production
 
 #### HTTPS Certificate variables (Production only)
 When cloning the repo to a deployement server, you will have to set up a domain name and an email for certbot. Editing this env file is not required when running the project locally.
