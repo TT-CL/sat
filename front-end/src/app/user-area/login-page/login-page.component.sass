@@ -1,8 +1,39 @@
 @use '../../../dashboard.sass' as dash
 
+
+.dash-grid.mode-login
+  grid-template-columns: 1fr minmax(225px, 25%) minmax(225px, 25%) 1fr
+  grid-template-rows: 1fr auto auto 1fr
+  gap: 1em
+
+.greeter-cell
+  grid-column: 2 / span 2
+  grid-row: 2
+
+.online-cell
+  grid-column: 2
+  grid-row: 3
+
+.offline-cell
+  grid-column: 3
+  grid-row: 3
+
 .control-container
   display: flex
   justify-content: center
 
 mat-card-content
   flex-direction: column
+
+.flex-card
+  display: flex
+  flex-direction: column
+  height: 100%
+
+.flex-card mat-card-content
+  flex: 1 1 auto
+  overflow: auto
+
+.flex-card mat-card-footer
+  margin-top: auto
+  flex-shrink: 0

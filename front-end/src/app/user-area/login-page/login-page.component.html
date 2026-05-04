@@ -1,32 +1,52 @@
-<div class="dash-grid mode-single">
-  <div class="grid-cell summary-cell-display-single">
+<div class="dash-grid mode-login">
+  <div class="grid-cell greeter-cell">
     <div class="outer-card-title">
       <h1 class="main-title">SAT - Segmentation and Alignment Tool</h1>
     </div>
     <mat-card appearance="outlined" class="outer-title">
       <mat-card-content>
         <p>Welcome to the Segmentation and Alignment Tool - SAT.<br>
-        This website utilises cookies to store your data and progress.<br>
-        Your activity is profiled to improve the performance of automatic segmentation tools.<br>
-        The documents you upload through this website are collected for research purposes.<br>
-        By using this toolkit you consent to share your private data.<br>
+          With SAT you can segment documents into Idea Units and connect them to create a set of aligned pairs. <br>
+          GDPR: This website utilises cookies to store your working data.<br>
+          Please choose your favored usage mode.
         </p>
-        <br>
-        <p>Please log in with your Google account.</p>
-        <div class="control-container">
-          <button mat-flat-button color="warn" (click)="googleLogin()"><!--(click)="authenticate()"-->
-            Log In
-          </button>
-        </div>
       </mat-card-content>
-        <mat-divider></mat-divider>
+    </mat-card>
+  </div>
+
+  <div class="grid-cell online-cell">
+    <mat-card appearance="outlined" class="flex-card">
       <mat-card-content>
-        <div class="control-container">
-          <button mat-flat-button color="accent" (click)="goOffline()"><!--(click)="authenticate()"-->
-            Offline Mode
-          </button>
-        </div>
+        <h2> Online Mode </h2>
+        Online mode stores your progress on an online database for indexing and research analysis. <br>
+        By using this toolkit online you consent to share your data with the research team.<br>
+        Note: online mode requires a Google account for authentication.
+
       </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-footer class="control-container">
+        <button mat-flat-button color="warn" (click)="googleLogin()"><!--(click)="authenticate()"-->
+          Log In
+        </button>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+
+  <div class="grid-cell offline-cell">
+    <mat-card appearance="outlined" class="flex-card">
+      <mat-card-content>
+        <h2> Offline Mode </h2>
+        Offline mode allows you to use the toolkit locally. <br>
+        No data will be shared with the research team. <br>
+        Note: ensure you always save your progress to avoid data loss
+
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-footer class="control-container">
+        <button mat-flat-button color="accent" (click)="goOffline()"><!--(click)="authenticate()"-->
+          Offline Mode
+        </button>
+      </mat-card-footer>
     </mat-card>
   </div>
 </div>

@@ -67,7 +67,7 @@ export class NewProjectComponent {
 
   summaryFiles = new Set<File>();
 
-  parsedSource: IUCollection = null;
+  parsedSource: IUCollection | null = null;
   parsedSummaries= new Set<IUCollection>();
 
   docNumber: number;
