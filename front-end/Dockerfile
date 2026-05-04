@@ -27,5 +27,5 @@ RUN ng build --configuration production
 # nginx
 FROM nginx:alpine AS prod
 COPY nginx.config /etc/nginx/conf.d/default.conf
-COPY --from=builder /opt/ng/dist/sat /usr/share/nginx/html
+COPY --from=builder /opt/ng/dist/sat/browser /usr/share/nginx/html
 EXPOSE 80

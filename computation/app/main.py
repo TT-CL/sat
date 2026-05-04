@@ -28,6 +28,7 @@ import spacy
 from pymongo import MongoClient
 import bson.json_util as bson
 import json
+import urllib.parse
 
 
 # get the gensim model URI from the environment variable
@@ -62,7 +63,10 @@ DB_PASSWORD = os.environ.get("DB_PASSWORD")
 if(DB_NAME is None or DB_USER is None or DB_PASSWORD is None):
     raise Exception("No DB environment variables found")
 
-DB_CONN = f'mongodb://{DB_USER}:{DB_PASSWORD}@db:27017/?authSource={DB_NAME}'
+escaped_user = urllib.parse.quote_plus(DB_USER)
+escaped_pass = urllib.parse.quote_plus(DB_PASSWORD)
+
+DB_CONN = f'mongodb://{escaped_user}:{escaped_pass}@db:27017/?authSource={DB_NAME}'
 db_client = MongoClient(DB_CONN)
 db = db_client[DB_NAME]
 users_col = db['users']
