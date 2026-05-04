@@ -14,6 +14,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { ProjectItemComponent } from 'src/app/utils/project-item/project-item.component';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -38,6 +39,7 @@ export class ProjectDashComponent implements OnInit {
     private auth: AuthService,
     private overlayService: OverlayService,
     private router: Router,
+    private http: HttpClient
   ) { }
 
   public userName$ = this.auth.getGivenName();
@@ -90,6 +92,14 @@ export class ProjectDashComponent implements OnInit {
           this.router.navigate(['/unauthorized']);
         }
       }
+    });
+  }
+
+  sampleProject():void{
+    this.http.get('/assets/apollo.json').subscribe(data => {
+      let proj = new Project();
+      proj.reconsolidate(data);
+      this.restoreBackup(proj)
     });
   }
 

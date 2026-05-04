@@ -11,7 +11,7 @@ import { IUCollection, Project } from '../../objects/objects.module';
 import { StorageService } from '../../storage.service';
 import { NLPService } from 'src/app/nlp.service';
 
-import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
+import { HttpResponse, HttpEvent, HttpEventType, HttpClient } from '@angular/common/http';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -52,7 +52,8 @@ export class NewProjectComponent {
     private storage: StorageService,
     private router: Router,
     private route: ActivatedRoute,
-    private nlp: NLPService) { }
+    private nlp: NLPService,
+    private http: HttpClient) { }
 
   projectForm = this.formBuilder.group({
     title: ['', Validators.required],
@@ -201,4 +202,6 @@ export class NewProjectComponent {
       }
     });
   }
+
+  
 }

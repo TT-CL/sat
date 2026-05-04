@@ -1,4 +1,4 @@
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpEventType, HttpResponse, HttpClient } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,7 +51,8 @@ export class ProjectManagerComponent implements OnInit {
     private storage: StorageService,
     private router: Router,
     private dialog: MatDialog,
-    private nlp: NLPService) {
+    private nlp: NLPService,
+    private http: HttpClient) {
   }
 
   ngOnInit(): void {
@@ -83,13 +84,13 @@ export class ProjectManagerComponent implements OnInit {
     }
   }
 
-  cur_proj : Project = null;
-  projDescription: string = null;
-  projTitle: string = null;
+  cur_proj : Project | null = null;
+  projDescription: string | null = null;
+  projTitle: string | null= null;
 
   changedFlag: boolean = false;
 
-  projectForm : UntypedFormGroup = null;
+  projectForm : UntypedFormGroup | null = null;
 
   sourceFile: IUCollection | null = null;
   sourceFormValue: string = "";
@@ -99,7 +100,7 @@ export class ProjectManagerComponent implements OnInit {
   summaryRemovalQueue = new Set<IUCollection>();
   summaryAddQueue = new Set<IUCollection>();
 
-  parsedSource: IUCollection = null;
+  parsedSource: IUCollection | null= null;
   parsedSummaries: IUCollection[] = [];
 
   docNumber: number;

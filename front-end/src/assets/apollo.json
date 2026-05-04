@@ -1,0 +1,9258 @@
+{
+  "last_edit": "2026-05-04T09:14:02.285Z",
+  "creation_time": "2026-05-04T09:14:02.285Z",
+  "name": "Apollo 11",
+  "description": "A news article on the first manned moon landing",
+  "sourceDoc": {
+    "ius": {
+      "a1": {
+        "label": "a1",
+        "childSegs": {
+          "0": 0
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a2": {
+        "label": "a2",
+        "childSegs": {
+          "1": 1
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a3": {
+        "label": "a3",
+        "childSegs": {
+          "2": 2
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a4": {
+        "label": "a4",
+        "childSegs": {
+          "3": 3
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a5": {
+        "label": "a5",
+        "childSegs": {
+          "4": 4
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a6": {
+        "label": "a6",
+        "childSegs": {
+          "5": 5
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a7": {
+        "label": "a7",
+        "childSegs": {
+          "6": 6
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a8": {
+        "label": "a8",
+        "childSegs": {
+          "7": 7
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a9": {
+        "label": "a9",
+        "childSegs": {
+          "8": 8
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a10": {
+        "label": "a10",
+        "childSegs": {
+          "9": 9
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a11": {
+        "label": "a11",
+        "childSegs": {
+          "10": 10
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a12": {
+        "label": "a12",
+        "childSegs": {
+          "11": 11
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a13": {
+        "label": "a13",
+        "childSegs": {
+          "12": 12
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a14": {
+        "label": "a14",
+        "childSegs": {
+          "13": 13
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a15": {
+        "label": "a15",
+        "childSegs": {
+          "14": 14,
+          "18": 18,
+          "20": 20
+        },
+        "disc": true,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a16": {
+        "label": "a16",
+        "childSegs": {
+          "15": 15
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a17": {
+        "label": "a17",
+        "childSegs": {
+          "16": 16
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a18": {
+        "label": "a18",
+        "childSegs": {
+          "17": 17
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a19": {
+        "label": "a19",
+        "childSegs": {
+          "19": 19
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a20": {
+        "label": "a20",
+        "childSegs": {
+          "21": 21
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a21": {
+        "label": "a21",
+        "childSegs": {
+          "22": 22
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a22": {
+        "label": "a22",
+        "childSegs": {
+          "23": 23
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a23": {
+        "label": "a23",
+        "childSegs": {
+          "24": 24
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a24": {
+        "label": "a24",
+        "childSegs": {
+          "25": 25
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a25": {
+        "label": "a25",
+        "childSegs": {
+          "26": 26
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a26": {
+        "label": "a26",
+        "childSegs": {
+          "27": 27
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a27": {
+        "label": "a27",
+        "childSegs": {
+          "28": 28
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a28": {
+        "label": "a28",
+        "childSegs": {
+          "29": 29
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a29": {
+        "label": "a29",
+        "childSegs": {
+          "30": 30
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a30": {
+        "label": "a30",
+        "childSegs": {
+          "31": 31
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a31": {
+        "label": "a31",
+        "childSegs": {
+          "32": 32
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a32": {
+        "label": "a32",
+        "childSegs": {
+          "33": 33
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a33": {
+        "label": "a33",
+        "childSegs": {
+          "34": 34
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a34": {
+        "label": "a34",
+        "childSegs": {
+          "35": 35,
+          "38": 38
+        },
+        "disc": true,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a35": {
+        "label": "a35",
+        "childSegs": {
+          "36": 36
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a36": {
+        "label": "a36",
+        "childSegs": {
+          "37": 37
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a37": {
+        "label": "a37",
+        "childSegs": {
+          "39": 39
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a38": {
+        "label": "a38",
+        "childSegs": {
+          "40": 40
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a39": {
+        "label": "a39",
+        "childSegs": {
+          "41": 41
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a40": {
+        "label": "a40",
+        "childSegs": {
+          "42": 42,
+          "44": 44,
+          "46": 46
+        },
+        "disc": true,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a41": {
+        "label": "a41",
+        "childSegs": {
+          "43": 43
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a42": {
+        "label": "a42",
+        "childSegs": {
+          "45": 45
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a43": {
+        "label": "a43",
+        "childSegs": {
+          "47": 47,
+          "51": 51
+        },
+        "disc": true,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a44": {
+        "label": "a44",
+        "childSegs": {
+          "48": 48
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a45": {
+        "label": "a45",
+        "childSegs": {
+          "49": 49
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a46": {
+        "label": "a46",
+        "childSegs": {
+          "50": 50
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a47": {
+        "label": "a47",
+        "childSegs": {
+          "52": 52
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a48": {
+        "label": "a48",
+        "childSegs": {
+          "53": 53
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a49": {
+        "label": "a49",
+        "childSegs": {
+          "54": 54
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a50": {
+        "label": "a50",
+        "childSegs": {
+          "55": 55
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a51": {
+        "label": "a51",
+        "childSegs": {
+          "56": 56
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a52": {
+        "label": "a52",
+        "childSegs": {
+          "57": 57
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a53": {
+        "label": "a53",
+        "childSegs": {
+          "58": 58
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a54": {
+        "label": "a54",
+        "childSegs": {
+          "59": 59
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a55": {
+        "label": "a55",
+        "childSegs": {
+          "60": 60
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      },
+      "a56": {
+        "label": "a56",
+        "childSegs": {
+          "61": 61
+        },
+        "disc": null,
+        "linkedIus": [],
+        "suggested": false
+      }
+    },
+    "segs": [
+      {
+        "words": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "iu": "a1",
+        "type": "default",
+        "index": 0
+      },
+      {
+        "words": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
+        "iu": "a2",
+        "type": "default",
+        "index": 1
+      },
+      {
+        "words": [
+          15,
+          16,
+          17
+        ],
+        "iu": "a3",
+        "type": "default",
+        "index": 2
+      },
+      {
+        "words": [
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ],
+        "iu": "a4",
+        "type": "default",
+        "index": 3
+      },
+      {
+        "words": [
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30
+        ],
+        "iu": "a5",
+        "type": "default",
+        "index": 4
+      },
+      {
+        "words": [
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48
+        ],
+        "iu": "a6",
+        "type": "default",
+        "index": 5
+      },
+      {
+        "words": [
+          49,
+          50,
+          51,
+          52,
+          53
+        ],
+        "iu": "a7",
+        "type": "default",
+        "index": 6
+      },
+      {
+        "words": [
+          54,
+          55,
+          56,
+          57,
+          58
+        ],
+        "iu": "a8",
+        "type": "default",
+        "index": 7
+      },
+      {
+        "words": [
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84
+        ],
+        "iu": "a9",
+        "type": "default",
+        "index": 8
+      },
+      {
+        "words": [
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95
+        ],
+        "iu": "a10",
+        "type": "default",
+        "index": 9
+      },
+      {
+        "words": [
+          96,
+          97,
+          98,
+          99,
+          100,
+          101
+        ],
+        "iu": "a11",
+        "type": "default",
+        "index": 10
+      },
+      {
+        "words": [
+          102,
+          103,
+          104
+        ],
+        "iu": "a12",
+        "type": "default",
+        "index": 11
+      },
+      {
+        "words": [
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111
+        ],
+        "iu": "a13",
+        "type": "default",
+        "index": 12
+      },
+      {
+        "words": [
+          112,
+          113,
+          114,
+          115,
+          116,
+          117
+        ],
+        "iu": "a14",
+        "type": "default",
+        "index": 13
+      },
+      {
+        "words": [
+          118,
+          119,
+          120,
+          121,
+          122,
+          123
+        ],
+        "iu": "a15",
+        "type": "default",
+        "index": 14
+      },
+      {
+        "words": [
+          124,
+          125,
+          126,
+          127,
+          128
+        ],
+        "iu": "a16",
+        "type": "default",
+        "index": 15
+      },
+      {
+        "words": [
+          129,
+          130
+        ],
+        "iu": "a17",
+        "type": "default",
+        "index": 16
+      },
+      {
+        "words": [
+          131,
+          132,
+          133,
+          134,
+          135,
+          136,
+          137,
+          138,
+          139,
+          140,
+          141
+        ],
+        "iu": "a18",
+        "type": "default",
+        "index": 17
+      },
+      {
+        "words": [
+          142,
+          143,
+          144
+        ],
+        "iu": "a15",
+        "type": "default",
+        "index": 18
+      },
+      {
+        "words": [
+          145,
+          146,
+          147,
+          148,
+          149,
+          150,
+          151,
+          152
+        ],
+        "iu": "a19",
+        "type": "default",
+        "index": 19
+      },
+      {
+        "words": [
+          153,
+          154,
+          155,
+          156
+        ],
+        "iu": "a15",
+        "type": "default",
+        "index": 20
+      },
+      {
+        "words": [
+          157,
+          158
+        ],
+        "iu": "a20",
+        "type": "default",
+        "index": 21
+      },
+      {
+        "words": [
+          159,
+          160
+        ],
+        "iu": "a21",
+        "type": "default",
+        "index": 22
+      },
+      {
+        "words": [
+          161,
+          162,
+          163,
+          164,
+          165,
+          166,
+          167,
+          168,
+          169,
+          170,
+          171,
+          172
+        ],
+        "iu": "a22",
+        "type": "default",
+        "index": 23
+      },
+      {
+        "words": [
+          173,
+          174,
+          175,
+          176,
+          177,
+          178
+        ],
+        "iu": "a23",
+        "type": "default",
+        "index": 24
+      },
+      {
+        "words": [
+          179,
+          180,
+          181,
+          182,
+          183,
+          184,
+          185
+        ],
+        "iu": "a24",
+        "type": "default",
+        "index": 25
+      },
+      {
+        "words": [
+          186,
+          187,
+          188,
+          189,
+          190,
+          191,
+          192,
+          193,
+          194,
+          195,
+          196
+        ],
+        "iu": "a25",
+        "type": "default",
+        "index": 26
+      },
+      {
+        "words": [
+          197,
+          198,
+          199,
+          200,
+          201,
+          202,
+          203,
+          204,
+          205,
+          206,
+          207
+        ],
+        "iu": "a26",
+        "type": "default",
+        "index": 27
+      },
+      {
+        "words": [
+          208
+        ],
+        "iu": "a27",
+        "type": "default",
+        "index": 28
+      },
+      {
+        "words": [
+          209,
+          210,
+          211,
+          212,
+          213,
+          214
+        ],
+        "iu": "a28",
+        "type": "default",
+        "index": 29
+      },
+      {
+        "words": [
+          215,
+          216,
+          217,
+          218,
+          219,
+          220
+        ],
+        "iu": "a29",
+        "type": "default",
+        "index": 30
+      },
+      {
+        "words": [
+          221,
+          222,
+          223,
+          224,
+          225,
+          226
+        ],
+        "iu": "a30",
+        "type": "default",
+        "index": 31
+      },
+      {
+        "words": [
+          227,
+          228,
+          229,
+          230,
+          231
+        ],
+        "iu": "a31",
+        "type": "default",
+        "index": 32
+      },
+      {
+        "words": [
+          232,
+          233
+        ],
+        "iu": "a32",
+        "type": "default",
+        "index": 33
+      },
+      {
+        "words": [
+          234,
+          235,
+          236,
+          237,
+          238,
+          239,
+          240,
+          241,
+          242,
+          243,
+          244
+        ],
+        "iu": "a33",
+        "type": "default",
+        "index": 34
+      },
+      {
+        "words": [
+          245,
+          246,
+          247,
+          248,
+          249
+        ],
+        "iu": "a34",
+        "type": "default",
+        "index": 35
+      },
+      {
+        "words": [
+          250,
+          251,
+          252,
+          253,
+          254,
+          255,
+          256,
+          257
+        ],
+        "iu": "a35",
+        "type": "default",
+        "index": 36
+      },
+      {
+        "words": [
+          258,
+          259,
+          260,
+          261,
+          262,
+          263
+        ],
+        "iu": "a36",
+        "type": "default",
+        "index": 37
+      },
+      {
+        "words": [
+          264
+        ],
+        "iu": "a34",
+        "type": "default",
+        "index": 38
+      },
+      {
+        "words": [
+          265,
+          266,
+          267,
+          268,
+          269
+        ],
+        "iu": "a37",
+        "type": "default",
+        "index": 39
+      },
+      {
+        "words": [
+          270,
+          271,
+          272,
+          273,
+          274,
+          275,
+          276,
+          277,
+          278,
+          279,
+          280,
+          281
+        ],
+        "iu": "a38",
+        "type": "default",
+        "index": 40
+      },
+      {
+        "words": [
+          282,
+          283,
+          284,
+          285
+        ],
+        "iu": "a39",
+        "type": "default",
+        "index": 41
+      },
+      {
+        "words": [
+          286,
+          287,
+          288,
+          289
+        ],
+        "iu": "a40",
+        "type": "default",
+        "index": 42
+      },
+      {
+        "words": [
+          290,
+          291,
+          292,
+          293,
+          294,
+          295,
+          296,
+          297
+        ],
+        "iu": "a41",
+        "type": "default",
+        "index": 43
+      },
+      {
+        "words": [
+          298,
+          299,
+          300
+        ],
+        "iu": "a40",
+        "type": "default",
+        "index": 44
+      },
+      {
+        "words": [
+          301,
+          302,
+          303,
+          304,
+          305,
+          306,
+          307,
+          308,
+          309,
+          310
+        ],
+        "iu": "a42",
+        "type": "default",
+        "index": 45
+      },
+      {
+        "words": [
+          311,
+          312,
+          313,
+          314,
+          315,
+          316
+        ],
+        "iu": "a40",
+        "type": "default",
+        "index": 46
+      },
+      {
+        "words": [
+          317,
+          318,
+          319,
+          320,
+          321
+        ],
+        "iu": "a43",
+        "type": "default",
+        "index": 47
+      },
+      {
+        "words": [
+          322,
+          323,
+          324,
+          325,
+          326
+        ],
+        "iu": "a44",
+        "type": "default",
+        "index": 48
+      },
+      {
+        "words": [
+          327,
+          328,
+          329,
+          330,
+          331,
+          332,
+          333,
+          334,
+          335
+        ],
+        "iu": "a45",
+        "type": "default",
+        "index": 49
+      },
+      {
+        "words": [
+          336,
+          337,
+          338,
+          339,
+          340,
+          341,
+          342
+        ],
+        "iu": "a46",
+        "type": "default",
+        "index": 50
+      },
+      {
+        "words": [
+          343
+        ],
+        "iu": "a43",
+        "type": "default",
+        "index": 51
+      },
+      {
+        "words": [
+          344,
+          345,
+          346,
+          347,
+          348,
+          349,
+          350,
+          351,
+          352,
+          353
+        ],
+        "iu": "a47",
+        "type": "default",
+        "index": 52
+      },
+      {
+        "words": [
+          354,
+          355,
+          356,
+          357,
+          358,
+          359,
+          360,
+          361,
+          362
+        ],
+        "iu": "a48",
+        "type": "default",
+        "index": 53
+      },
+      {
+        "words": [
+          363,
+          364,
+          365,
+          366,
+          367,
+          368,
+          369,
+          370
+        ],
+        "iu": "a49",
+        "type": "default",
+        "index": 54
+      },
+      {
+        "words": [
+          371,
+          372,
+          373,
+          374,
+          375,
+          376,
+          377,
+          378
+        ],
+        "iu": "a50",
+        "type": "default",
+        "index": 55
+      },
+      {
+        "words": [
+          379,
+          380,
+          381,
+          382,
+          383,
+          384,
+          385,
+          386
+        ],
+        "iu": "a51",
+        "type": "default",
+        "index": 56
+      },
+      {
+        "words": [
+          387,
+          388,
+          389,
+          390,
+          391,
+          392,
+          393,
+          394,
+          395,
+          396,
+          397
+        ],
+        "iu": "a52",
+        "type": "default",
+        "index": 57
+      },
+      {
+        "words": [
+          398,
+          399,
+          400,
+          401,
+          402,
+          403,
+          404
+        ],
+        "iu": "a53",
+        "type": "default",
+        "index": 58
+      },
+      {
+        "words": [
+          405,
+          406,
+          407,
+          408,
+          409,
+          410,
+          411,
+          412,
+          413,
+          414,
+          415,
+          416
+        ],
+        "iu": "a54",
+        "type": "default",
+        "index": 59
+      },
+      {
+        "words": [
+          417,
+          418,
+          419,
+          420,
+          421,
+          422,
+          423,
+          424,
+          425
+        ],
+        "iu": "a55",
+        "type": "default",
+        "index": 60
+      },
+      {
+        "words": [
+          426,
+          427,
+          428,
+          429,
+          430,
+          431,
+          432,
+          433,
+          434,
+          435,
+          436,
+          437,
+          438
+        ],
+        "iu": "a56",
+        "type": "default",
+        "index": 61
+      }
+    ],
+    "sents": [
+      "Apollo 11 was the historic space mission that first landed humans on the Moon.",
+      "Launched by NASA on July 16, 1969, from Kennedy Space Center in Florida, it was the fifth crewed flight of the Apollo program and fulfilled President John F. Kennedy 's challenge to achieve a Moon landing before the decade ended.",
+      "The three astronauts aboard were Neil Armstrong as mission commander, Michael Collins as command module pilot, and Buzz Aldrin as lunar module pilot.",
+      "All were seasoned pilots and had flown in space before.",
+      "This was their final mission.",
+      "The spacecraft rode atop the massive Saturn V rocket, the most powerful ever built.",
+      "It consisted of three sections: the command module Columbia, which served as the crew 's home and re- entry vehicle; the service module providing oxygen, power, and propulsion; and the lunar module Eagle, designed specifically for landing on and taking off from the Moon 's surface.",
+      "The journey took about three days to reach the Moon 's orbit.",
+      "There, Armstrong and Aldrin separated Eagle from Columbia and descended to the lunar surface in the Sea of Tranquility region, selected for its relatively flat terrain.",
+      "Collins remained in orbit alone.",
+      "Eagle touched down on July 20 with just seconds of fuel left.",
+      "Armstrong 's first steps outside came about six hours later.",
+      "He famously declared,\" That 's one small step for man, one giant leap for mankind.\"",
+      "Aldrin followed shortly after, and together they spent roughly two and a half hours exploring.",
+      "During their moonwalk, they deployed scientific instruments like a seismometer and solar wind collector, collected 47 pounds( 21 kilograms) of lunar soil and rocks, and planted the American flag.",
+      "They also spoke by radio with President Richard Nixon, who called it\" the most historic phone call ever made from the White House.\"",
+      "The astronauts described the Moon 's surface as fine, powdery gray dust that clung to their suits.",
+      "After over 21 hours on the surface, Eagle lifted off and docked with Columbia.",
+      "The crew then headed back to Earth, splashing down safely in the Pacific Ocean on July 24.",
+      "Watched by an estimated 650 million people( about one- fifth of the world 's population), the mission symbolized human achievement and inspired generations.",
+      "Apollo 11 's success paved the way for five more Moon landings."
+    ],
+    "words": [
+      {
+        "text": "Apollo",
+        "index": 0,
+        "color": "primary",
+        "iu": "a1",
+        "seg": 0
+      },
+      {
+        "text": "11",
+        "index": 1,
+        "color": "primary",
+        "iu": "a1",
+        "seg": 0
+      },
+      {
+        "text": "was",
+        "index": 2,
+        "color": "primary",
+        "iu": "a1",
+        "seg": 0
+      },
+      {
+        "text": "the",
+        "index": 3,
+        "color": "primary",
+        "iu": "a1",
+        "seg": 0
+      },
+      {
+        "text": "historic",
+        "index": 4,
+        "color": "primary",
+        "iu": "a1",
+        "seg": 0
+      },
+      {
+        "text": "space",
+        "index": 5,
+        "color": "primary",
+        "iu": "a1",
+        "seg": 0
+      },
+      {
+        "text": "mission",
+        "index": 6,
+        "color": "primary",
+        "iu": "a1",
+        "seg": 0
+      },
+      {
+        "text": "that",
+        "index": 7,
+        "color": "primary",
+        "iu": "a2",
+        "seg": 1
+      },
+      {
+        "text": "first",
+        "index": 8,
+        "color": "primary",
+        "iu": "a2",
+        "seg": 1
+      },
+      {
+        "text": "landed",
+        "index": 9,
+        "color": "primary",
+        "iu": "a2",
+        "seg": 1
+      },
+      {
+        "text": "humans",
+        "index": 10,
+        "color": "primary",
+        "iu": "a2",
+        "seg": 1
+      },
+      {
+        "text": "on",
+        "index": 11,
+        "color": "primary",
+        "iu": "a2",
+        "seg": 1
+      },
+      {
+        "text": "the",
+        "index": 12,
+        "color": "primary",
+        "iu": "a2",
+        "seg": 1
+      },
+      {
+        "text": "Moon",
+        "index": 13,
+        "color": "primary",
+        "iu": "a2",
+        "seg": 1
+      },
+      {
+        "text": ".",
+        "index": 14,
+        "color": "primary",
+        "iu": "a2",
+        "seg": 1
+      },
+      {
+        "text": "Launched",
+        "index": 15,
+        "color": "primary",
+        "iu": "a3",
+        "seg": 2
+      },
+      {
+        "text": "by",
+        "index": 16,
+        "color": "primary",
+        "iu": "a3",
+        "seg": 2
+      },
+      {
+        "text": "NASA",
+        "index": 17,
+        "color": "primary",
+        "iu": "a3",
+        "seg": 2
+      },
+      {
+        "text": "on",
+        "index": 18,
+        "color": "primary",
+        "iu": "a4",
+        "seg": 3
+      },
+      {
+        "text": "July",
+        "index": 19,
+        "color": "primary",
+        "iu": "a4",
+        "seg": 3
+      },
+      {
+        "text": "16",
+        "index": 20,
+        "color": "primary",
+        "iu": "a4",
+        "seg": 3
+      },
+      {
+        "text": ",",
+        "index": 21,
+        "color": "primary",
+        "iu": "a4",
+        "seg": 3
+      },
+      {
+        "text": "1969",
+        "index": 22,
+        "color": "primary",
+        "iu": "a4",
+        "seg": 3
+      },
+      {
+        "text": ",",
+        "index": 23,
+        "color": "primary",
+        "iu": "a4",
+        "seg": 3
+      },
+      {
+        "text": "from",
+        "index": 24,
+        "color": "primary",
+        "iu": "a5",
+        "seg": 4
+      },
+      {
+        "text": "Kennedy",
+        "index": 25,
+        "color": "primary",
+        "iu": "a5",
+        "seg": 4
+      },
+      {
+        "text": "Space",
+        "index": 26,
+        "color": "primary",
+        "iu": "a5",
+        "seg": 4
+      },
+      {
+        "text": "Center",
+        "index": 27,
+        "color": "primary",
+        "iu": "a5",
+        "seg": 4
+      },
+      {
+        "text": "in",
+        "index": 28,
+        "color": "primary",
+        "iu": "a5",
+        "seg": 4
+      },
+      {
+        "text": "Florida",
+        "index": 29,
+        "color": "primary",
+        "iu": "a5",
+        "seg": 4
+      },
+      {
+        "text": ",",
+        "index": 30,
+        "color": "primary",
+        "iu": "a5",
+        "seg": 4
+      },
+      {
+        "text": "it",
+        "index": 31,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "was",
+        "index": 32,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "the",
+        "index": 33,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "fifth",
+        "index": 34,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "crewed",
+        "index": 35,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "flight",
+        "index": 36,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "of",
+        "index": 37,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "the",
+        "index": 38,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "Apollo",
+        "index": 39,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "program",
+        "index": 40,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "and",
+        "index": 41,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "fulfilled",
+        "index": 42,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "President",
+        "index": 43,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "John",
+        "index": 44,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "F.",
+        "index": 45,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "Kennedy",
+        "index": 46,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "'s",
+        "index": 47,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "challenge",
+        "index": 48,
+        "color": "primary",
+        "iu": "a6",
+        "seg": 5
+      },
+      {
+        "text": "to",
+        "index": 49,
+        "color": "primary",
+        "iu": "a7",
+        "seg": 6
+      },
+      {
+        "text": "achieve",
+        "index": 50,
+        "color": "primary",
+        "iu": "a7",
+        "seg": 6
+      },
+      {
+        "text": "a",
+        "index": 51,
+        "color": "primary",
+        "iu": "a7",
+        "seg": 6
+      },
+      {
+        "text": "Moon",
+        "index": 52,
+        "color": "primary",
+        "iu": "a7",
+        "seg": 6
+      },
+      {
+        "text": "landing",
+        "index": 53,
+        "color": "primary",
+        "iu": "a7",
+        "seg": 6
+      },
+      {
+        "text": "before",
+        "index": 54,
+        "color": "primary",
+        "iu": "a8",
+        "seg": 7
+      },
+      {
+        "text": "the",
+        "index": 55,
+        "color": "primary",
+        "iu": "a8",
+        "seg": 7
+      },
+      {
+        "text": "decade",
+        "index": 56,
+        "color": "primary",
+        "iu": "a8",
+        "seg": 7
+      },
+      {
+        "text": "ended",
+        "index": 57,
+        "color": "primary",
+        "iu": "a8",
+        "seg": 7
+      },
+      {
+        "text": ".",
+        "index": 58,
+        "color": "primary",
+        "iu": "a8",
+        "seg": 7
+      },
+      {
+        "text": "The",
+        "index": 59,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "three",
+        "index": 60,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "astronauts",
+        "index": 61,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "aboard",
+        "index": 62,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "were",
+        "index": 63,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "Neil",
+        "index": 64,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "Armstrong",
+        "index": 65,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "as",
+        "index": 66,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "mission",
+        "index": 67,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "commander",
+        "index": 68,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": ",",
+        "index": 69,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "Michael",
+        "index": 70,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "Collins",
+        "index": 71,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "as",
+        "index": 72,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "command",
+        "index": 73,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "module",
+        "index": 74,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "pilot",
+        "index": 75,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": ",",
+        "index": 76,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "and",
+        "index": 77,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "Buzz",
+        "index": 78,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "Aldrin",
+        "index": 79,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "as",
+        "index": 80,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "lunar",
+        "index": 81,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "module",
+        "index": 82,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "pilot",
+        "index": 83,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": ".",
+        "index": 84,
+        "color": "primary",
+        "iu": "a9",
+        "seg": 8
+      },
+      {
+        "text": "All",
+        "index": 85,
+        "color": "primary",
+        "iu": "a10",
+        "seg": 9
+      },
+      {
+        "text": "were",
+        "index": 86,
+        "color": "primary",
+        "iu": "a10",
+        "seg": 9
+      },
+      {
+        "text": "seasoned",
+        "index": 87,
+        "color": "primary",
+        "iu": "a10",
+        "seg": 9
+      },
+      {
+        "text": "pilots",
+        "index": 88,
+        "color": "primary",
+        "iu": "a10",
+        "seg": 9
+      },
+      {
+        "text": "and",
+        "index": 89,
+        "color": "primary",
+        "iu": "a10",
+        "seg": 9
+      },
+      {
+        "text": "had",
+        "index": 90,
+        "color": "primary",
+        "iu": "a10",
+        "seg": 9
+      },
+      {
+        "text": "flown",
+        "index": 91,
+        "color": "primary",
+        "iu": "a10",
+        "seg": 9
+      },
+      {
+        "text": "in",
+        "index": 92,
+        "color": "primary",
+        "iu": "a10",
+        "seg": 9
+      },
+      {
+        "text": "space",
+        "index": 93,
+        "color": "primary",
+        "iu": "a10",
+        "seg": 9
+      },
+      {
+        "text": "before",
+        "index": 94,
+        "color": "primary",
+        "iu": "a10",
+        "seg": 9
+      },
+      {
+        "text": ".",
+        "index": 95,
+        "color": "primary",
+        "iu": "a10",
+        "seg": 9
+      },
+      {
+        "text": "This",
+        "index": 96,
+        "color": "primary",
+        "iu": "a11",
+        "seg": 10
+      },
+      {
+        "text": "was",
+        "index": 97,
+        "color": "primary",
+        "iu": "a11",
+        "seg": 10
+      },
+      {
+        "text": "their",
+        "index": 98,
+        "color": "primary",
+        "iu": "a11",
+        "seg": 10
+      },
+      {
+        "text": "final",
+        "index": 99,
+        "color": "primary",
+        "iu": "a11",
+        "seg": 10
+      },
+      {
+        "text": "mission",
+        "index": 100,
+        "color": "primary",
+        "iu": "a11",
+        "seg": 10
+      },
+      {
+        "text": ".",
+        "index": 101,
+        "color": "primary",
+        "iu": "a11",
+        "seg": 10
+      },
+      {
+        "text": "The",
+        "index": 102,
+        "color": "primary",
+        "iu": "a12",
+        "seg": 11
+      },
+      {
+        "text": "spacecraft",
+        "index": 103,
+        "color": "primary",
+        "iu": "a12",
+        "seg": 11
+      },
+      {
+        "text": "rode",
+        "index": 104,
+        "color": "primary",
+        "iu": "a12",
+        "seg": 11
+      },
+      {
+        "text": "atop",
+        "index": 105,
+        "color": "primary",
+        "iu": "a13",
+        "seg": 12
+      },
+      {
+        "text": "the",
+        "index": 106,
+        "color": "primary",
+        "iu": "a13",
+        "seg": 12
+      },
+      {
+        "text": "massive",
+        "index": 107,
+        "color": "primary",
+        "iu": "a13",
+        "seg": 12
+      },
+      {
+        "text": "Saturn",
+        "index": 108,
+        "color": "primary",
+        "iu": "a13",
+        "seg": 12
+      },
+      {
+        "text": "V",
+        "index": 109,
+        "color": "primary",
+        "iu": "a13",
+        "seg": 12
+      },
+      {
+        "text": "rocket",
+        "index": 110,
+        "color": "primary",
+        "iu": "a13",
+        "seg": 12
+      },
+      {
+        "text": ",",
+        "index": 111,
+        "color": "primary",
+        "iu": "a13",
+        "seg": 12
+      },
+      {
+        "text": "the",
+        "index": 112,
+        "color": "primary",
+        "iu": "a14",
+        "seg": 13
+      },
+      {
+        "text": "most",
+        "index": 113,
+        "color": "primary",
+        "iu": "a14",
+        "seg": 13
+      },
+      {
+        "text": "powerful",
+        "index": 114,
+        "color": "primary",
+        "iu": "a14",
+        "seg": 13
+      },
+      {
+        "text": "ever",
+        "index": 115,
+        "color": "primary",
+        "iu": "a14",
+        "seg": 13
+      },
+      {
+        "text": "built",
+        "index": 116,
+        "color": "primary",
+        "iu": "a14",
+        "seg": 13
+      },
+      {
+        "text": ".",
+        "index": 117,
+        "color": "primary",
+        "iu": "a14",
+        "seg": 13
+      },
+      {
+        "text": "It",
+        "index": 118,
+        "color": "primary",
+        "iu": "a15",
+        "seg": 14
+      },
+      {
+        "text": "consisted",
+        "index": 119,
+        "color": "primary",
+        "iu": "a15",
+        "seg": 14
+      },
+      {
+        "text": "of",
+        "index": 120,
+        "color": "primary",
+        "iu": "a15",
+        "seg": 14
+      },
+      {
+        "text": "three",
+        "index": 121,
+        "color": "primary",
+        "iu": "a15",
+        "seg": 14
+      },
+      {
+        "text": "sections",
+        "index": 122,
+        "color": "primary",
+        "iu": "a15",
+        "seg": 14
+      },
+      {
+        "text": ":",
+        "index": 123,
+        "color": "primary",
+        "iu": "a15",
+        "seg": 14
+      },
+      {
+        "text": "the",
+        "index": 124,
+        "color": "primary",
+        "iu": "a16",
+        "seg": 15
+      },
+      {
+        "text": "command",
+        "index": 125,
+        "color": "primary",
+        "iu": "a16",
+        "seg": 15
+      },
+      {
+        "text": "module",
+        "index": 126,
+        "color": "primary",
+        "iu": "a16",
+        "seg": 15
+      },
+      {
+        "text": "Columbia",
+        "index": 127,
+        "color": "primary",
+        "iu": "a16",
+        "seg": 15
+      },
+      {
+        "text": ",",
+        "index": 128,
+        "color": "primary",
+        "iu": "a16",
+        "seg": 15
+      },
+      {
+        "text": "which",
+        "index": 129,
+        "color": "primary",
+        "iu": "a17",
+        "seg": 16
+      },
+      {
+        "text": "served",
+        "index": 130,
+        "color": "primary",
+        "iu": "a17",
+        "seg": 16
+      },
+      {
+        "text": "as",
+        "index": 131,
+        "color": "primary",
+        "iu": "a18",
+        "seg": 17
+      },
+      {
+        "text": "the",
+        "index": 132,
+        "color": "primary",
+        "iu": "a18",
+        "seg": 17
+      },
+      {
+        "text": "crew",
+        "index": 133,
+        "color": "primary",
+        "iu": "a18",
+        "seg": 17
+      },
+      {
+        "text": "'s",
+        "index": 134,
+        "color": "primary",
+        "iu": "a18",
+        "seg": 17
+      },
+      {
+        "text": "home",
+        "index": 135,
+        "color": "primary",
+        "iu": "a18",
+        "seg": 17
+      },
+      {
+        "text": "and",
+        "index": 136,
+        "color": "primary",
+        "iu": "a18",
+        "seg": 17
+      },
+      {
+        "text": "re",
+        "index": 137,
+        "color": "primary",
+        "iu": "a18",
+        "seg": 17
+      },
+      {
+        "text": "-",
+        "index": 138,
+        "color": "primary",
+        "iu": "a18",
+        "seg": 17
+      },
+      {
+        "text": "entry",
+        "index": 139,
+        "color": "primary",
+        "iu": "a18",
+        "seg": 17
+      },
+      {
+        "text": "vehicle",
+        "index": 140,
+        "color": "primary",
+        "iu": "a18",
+        "seg": 17
+      },
+      {
+        "text": ";",
+        "index": 141,
+        "color": "primary",
+        "iu": "a18",
+        "seg": 17
+      },
+      {
+        "text": "the",
+        "index": 142,
+        "color": "primary",
+        "iu": "a15",
+        "seg": 18
+      },
+      {
+        "text": "service",
+        "index": 143,
+        "color": "primary",
+        "iu": "a15",
+        "seg": 18
+      },
+      {
+        "text": "module",
+        "index": 144,
+        "color": "primary",
+        "iu": "a15",
+        "seg": 18
+      },
+      {
+        "text": "providing",
+        "index": 145,
+        "color": "primary",
+        "iu": "a19",
+        "seg": 19
+      },
+      {
+        "text": "oxygen",
+        "index": 146,
+        "color": "primary",
+        "iu": "a19",
+        "seg": 19
+      },
+      {
+        "text": ",",
+        "index": 147,
+        "color": "primary",
+        "iu": "a19",
+        "seg": 19
+      },
+      {
+        "text": "power",
+        "index": 148,
+        "color": "primary",
+        "iu": "a19",
+        "seg": 19
+      },
+      {
+        "text": ",",
+        "index": 149,
+        "color": "primary",
+        "iu": "a19",
+        "seg": 19
+      },
+      {
+        "text": "and",
+        "index": 150,
+        "color": "primary",
+        "iu": "a19",
+        "seg": 19
+      },
+      {
+        "text": "propulsion",
+        "index": 151,
+        "color": "primary",
+        "iu": "a19",
+        "seg": 19
+      },
+      {
+        "text": ";",
+        "index": 152,
+        "color": "primary",
+        "iu": "a19",
+        "seg": 19
+      },
+      {
+        "text": "and",
+        "index": 153,
+        "color": "primary",
+        "iu": "a15",
+        "seg": 20
+      },
+      {
+        "text": "the",
+        "index": 154,
+        "color": "primary",
+        "iu": "a15",
+        "seg": 20
+      },
+      {
+        "text": "lunar",
+        "index": 155,
+        "color": "primary",
+        "iu": "a15",
+        "seg": 20
+      },
+      {
+        "text": "module",
+        "index": 156,
+        "color": "primary",
+        "iu": "a15",
+        "seg": 20
+      },
+      {
+        "text": "Eagle",
+        "index": 157,
+        "color": "primary",
+        "iu": "a20",
+        "seg": 21
+      },
+      {
+        "text": ",",
+        "index": 158,
+        "color": "primary",
+        "iu": "a20",
+        "seg": 21
+      },
+      {
+        "text": "designed",
+        "index": 159,
+        "color": "primary",
+        "iu": "a21",
+        "seg": 22
+      },
+      {
+        "text": "specifically",
+        "index": 160,
+        "color": "primary",
+        "iu": "a21",
+        "seg": 22
+      },
+      {
+        "text": "for",
+        "index": 161,
+        "color": "primary",
+        "iu": "a22",
+        "seg": 23
+      },
+      {
+        "text": "landing",
+        "index": 162,
+        "color": "primary",
+        "iu": "a22",
+        "seg": 23
+      },
+      {
+        "text": "on",
+        "index": 163,
+        "color": "primary",
+        "iu": "a22",
+        "seg": 23
+      },
+      {
+        "text": "and",
+        "index": 164,
+        "color": "primary",
+        "iu": "a22",
+        "seg": 23
+      },
+      {
+        "text": "taking",
+        "index": 165,
+        "color": "primary",
+        "iu": "a22",
+        "seg": 23
+      },
+      {
+        "text": "off",
+        "index": 166,
+        "color": "primary",
+        "iu": "a22",
+        "seg": 23
+      },
+      {
+        "text": "from",
+        "index": 167,
+        "color": "primary",
+        "iu": "a22",
+        "seg": 23
+      },
+      {
+        "text": "the",
+        "index": 168,
+        "color": "primary",
+        "iu": "a22",
+        "seg": 23
+      },
+      {
+        "text": "Moon",
+        "index": 169,
+        "color": "primary",
+        "iu": "a22",
+        "seg": 23
+      },
+      {
+        "text": "'s",
+        "index": 170,
+        "color": "primary",
+        "iu": "a22",
+        "seg": 23
+      },
+      {
+        "text": "surface",
+        "index": 171,
+        "color": "primary",
+        "iu": "a22",
+        "seg": 23
+      },
+      {
+        "text": ".",
+        "index": 172,
+        "color": "primary",
+        "iu": "a22",
+        "seg": 23
+      },
+      {
+        "text": "The",
+        "index": 173,
+        "color": "primary",
+        "iu": "a23",
+        "seg": 24
+      },
+      {
+        "text": "journey",
+        "index": 174,
+        "color": "primary",
+        "iu": "a23",
+        "seg": 24
+      },
+      {
+        "text": "took",
+        "index": 175,
+        "color": "primary",
+        "iu": "a23",
+        "seg": 24
+      },
+      {
+        "text": "about",
+        "index": 176,
+        "color": "primary",
+        "iu": "a23",
+        "seg": 24
+      },
+      {
+        "text": "three",
+        "index": 177,
+        "color": "primary",
+        "iu": "a23",
+        "seg": 24
+      },
+      {
+        "text": "days",
+        "index": 178,
+        "color": "primary",
+        "iu": "a23",
+        "seg": 24
+      },
+      {
+        "text": "to",
+        "index": 179,
+        "color": "primary",
+        "iu": "a24",
+        "seg": 25
+      },
+      {
+        "text": "reach",
+        "index": 180,
+        "color": "primary",
+        "iu": "a24",
+        "seg": 25
+      },
+      {
+        "text": "the",
+        "index": 181,
+        "color": "primary",
+        "iu": "a24",
+        "seg": 25
+      },
+      {
+        "text": "Moon",
+        "index": 182,
+        "color": "primary",
+        "iu": "a24",
+        "seg": 25
+      },
+      {
+        "text": "'s",
+        "index": 183,
+        "color": "primary",
+        "iu": "a24",
+        "seg": 25
+      },
+      {
+        "text": "orbit",
+        "index": 184,
+        "color": "primary",
+        "iu": "a24",
+        "seg": 25
+      },
+      {
+        "text": ".",
+        "index": 185,
+        "color": "primary",
+        "iu": "a24",
+        "seg": 25
+      },
+      {
+        "text": "There",
+        "index": 186,
+        "color": "primary",
+        "iu": "a25",
+        "seg": 26
+      },
+      {
+        "text": ",",
+        "index": 187,
+        "color": "primary",
+        "iu": "a25",
+        "seg": 26
+      },
+      {
+        "text": "Armstrong",
+        "index": 188,
+        "color": "primary",
+        "iu": "a25",
+        "seg": 26
+      },
+      {
+        "text": "and",
+        "index": 189,
+        "color": "primary",
+        "iu": "a25",
+        "seg": 26
+      },
+      {
+        "text": "Aldrin",
+        "index": 190,
+        "color": "primary",
+        "iu": "a25",
+        "seg": 26
+      },
+      {
+        "text": "separated",
+        "index": 191,
+        "color": "primary",
+        "iu": "a25",
+        "seg": 26
+      },
+      {
+        "text": "Eagle",
+        "index": 192,
+        "color": "primary",
+        "iu": "a25",
+        "seg": 26
+      },
+      {
+        "text": "from",
+        "index": 193,
+        "color": "primary",
+        "iu": "a25",
+        "seg": 26
+      },
+      {
+        "text": "Columbia",
+        "index": 194,
+        "color": "primary",
+        "iu": "a25",
+        "seg": 26
+      },
+      {
+        "text": "and",
+        "index": 195,
+        "color": "primary",
+        "iu": "a25",
+        "seg": 26
+      },
+      {
+        "text": "descended",
+        "index": 196,
+        "color": "primary",
+        "iu": "a25",
+        "seg": 26
+      },
+      {
+        "text": "to",
+        "index": 197,
+        "color": "primary",
+        "iu": "a26",
+        "seg": 27
+      },
+      {
+        "text": "the",
+        "index": 198,
+        "color": "primary",
+        "iu": "a26",
+        "seg": 27
+      },
+      {
+        "text": "lunar",
+        "index": 199,
+        "color": "primary",
+        "iu": "a26",
+        "seg": 27
+      },
+      {
+        "text": "surface",
+        "index": 200,
+        "color": "primary",
+        "iu": "a26",
+        "seg": 27
+      },
+      {
+        "text": "in",
+        "index": 201,
+        "color": "primary",
+        "iu": "a26",
+        "seg": 27
+      },
+      {
+        "text": "the",
+        "index": 202,
+        "color": "primary",
+        "iu": "a26",
+        "seg": 27
+      },
+      {
+        "text": "Sea",
+        "index": 203,
+        "color": "primary",
+        "iu": "a26",
+        "seg": 27
+      },
+      {
+        "text": "of",
+        "index": 204,
+        "color": "primary",
+        "iu": "a26",
+        "seg": 27
+      },
+      {
+        "text": "Tranquility",
+        "index": 205,
+        "color": "primary",
+        "iu": "a26",
+        "seg": 27
+      },
+      {
+        "text": "region",
+        "index": 206,
+        "color": "primary",
+        "iu": "a26",
+        "seg": 27
+      },
+      {
+        "text": ",",
+        "index": 207,
+        "color": "primary",
+        "iu": "a26",
+        "seg": 27
+      },
+      {
+        "text": "selected",
+        "index": 208,
+        "color": "primary",
+        "iu": "a27",
+        "seg": 28
+      },
+      {
+        "text": "for",
+        "index": 209,
+        "color": "primary",
+        "iu": "a28",
+        "seg": 29
+      },
+      {
+        "text": "its",
+        "index": 210,
+        "color": "primary",
+        "iu": "a28",
+        "seg": 29
+      },
+      {
+        "text": "relatively",
+        "index": 211,
+        "color": "primary",
+        "iu": "a28",
+        "seg": 29
+      },
+      {
+        "text": "flat",
+        "index": 212,
+        "color": "primary",
+        "iu": "a28",
+        "seg": 29
+      },
+      {
+        "text": "terrain",
+        "index": 213,
+        "color": "primary",
+        "iu": "a28",
+        "seg": 29
+      },
+      {
+        "text": ".",
+        "index": 214,
+        "color": "primary",
+        "iu": "a28",
+        "seg": 29
+      },
+      {
+        "text": "Collins",
+        "index": 215,
+        "color": "primary",
+        "iu": "a29",
+        "seg": 30
+      },
+      {
+        "text": "remained",
+        "index": 216,
+        "color": "primary",
+        "iu": "a29",
+        "seg": 30
+      },
+      {
+        "text": "in",
+        "index": 217,
+        "color": "primary",
+        "iu": "a29",
+        "seg": 30
+      },
+      {
+        "text": "orbit",
+        "index": 218,
+        "color": "primary",
+        "iu": "a29",
+        "seg": 30
+      },
+      {
+        "text": "alone",
+        "index": 219,
+        "color": "primary",
+        "iu": "a29",
+        "seg": 30
+      },
+      {
+        "text": ".",
+        "index": 220,
+        "color": "primary",
+        "iu": "a29",
+        "seg": 30
+      },
+      {
+        "text": "Eagle",
+        "index": 221,
+        "color": "primary",
+        "iu": "a30",
+        "seg": 31
+      },
+      {
+        "text": "touched",
+        "index": 222,
+        "color": "primary",
+        "iu": "a30",
+        "seg": 31
+      },
+      {
+        "text": "down",
+        "index": 223,
+        "color": "primary",
+        "iu": "a30",
+        "seg": 31
+      },
+      {
+        "text": "on",
+        "index": 224,
+        "color": "primary",
+        "iu": "a30",
+        "seg": 31
+      },
+      {
+        "text": "July",
+        "index": 225,
+        "color": "primary",
+        "iu": "a30",
+        "seg": 31
+      },
+      {
+        "text": "20",
+        "index": 226,
+        "color": "primary",
+        "iu": "a30",
+        "seg": 31
+      },
+      {
+        "text": "with",
+        "index": 227,
+        "color": "primary",
+        "iu": "a31",
+        "seg": 32
+      },
+      {
+        "text": "just",
+        "index": 228,
+        "color": "primary",
+        "iu": "a31",
+        "seg": 32
+      },
+      {
+        "text": "seconds",
+        "index": 229,
+        "color": "primary",
+        "iu": "a31",
+        "seg": 32
+      },
+      {
+        "text": "of",
+        "index": 230,
+        "color": "primary",
+        "iu": "a31",
+        "seg": 32
+      },
+      {
+        "text": "fuel",
+        "index": 231,
+        "color": "primary",
+        "iu": "a31",
+        "seg": 32
+      },
+      {
+        "text": "left",
+        "index": 232,
+        "color": "primary",
+        "iu": "a32",
+        "seg": 33
+      },
+      {
+        "text": ".",
+        "index": 233,
+        "color": "primary",
+        "iu": "a32",
+        "seg": 33
+      },
+      {
+        "text": "Armstrong",
+        "index": 234,
+        "color": "primary",
+        "iu": "a33",
+        "seg": 34
+      },
+      {
+        "text": "'s",
+        "index": 235,
+        "color": "primary",
+        "iu": "a33",
+        "seg": 34
+      },
+      {
+        "text": "first",
+        "index": 236,
+        "color": "primary",
+        "iu": "a33",
+        "seg": 34
+      },
+      {
+        "text": "steps",
+        "index": 237,
+        "color": "primary",
+        "iu": "a33",
+        "seg": 34
+      },
+      {
+        "text": "outside",
+        "index": 238,
+        "color": "primary",
+        "iu": "a33",
+        "seg": 34
+      },
+      {
+        "text": "came",
+        "index": 239,
+        "color": "primary",
+        "iu": "a33",
+        "seg": 34
+      },
+      {
+        "text": "about",
+        "index": 240,
+        "color": "primary",
+        "iu": "a33",
+        "seg": 34
+      },
+      {
+        "text": "six",
+        "index": 241,
+        "color": "primary",
+        "iu": "a33",
+        "seg": 34
+      },
+      {
+        "text": "hours",
+        "index": 242,
+        "color": "primary",
+        "iu": "a33",
+        "seg": 34
+      },
+      {
+        "text": "later",
+        "index": 243,
+        "color": "primary",
+        "iu": "a33",
+        "seg": 34
+      },
+      {
+        "text": ".",
+        "index": 244,
+        "color": "primary",
+        "iu": "a33",
+        "seg": 34
+      },
+      {
+        "text": "He",
+        "index": 245,
+        "color": "primary",
+        "iu": "a34",
+        "seg": 35
+      },
+      {
+        "text": "famously",
+        "index": 246,
+        "color": "primary",
+        "iu": "a34",
+        "seg": 35
+      },
+      {
+        "text": "declared",
+        "index": 247,
+        "color": "primary",
+        "iu": "a34",
+        "seg": 35
+      },
+      {
+        "text": ",",
+        "index": 248,
+        "color": "primary",
+        "iu": "a34",
+        "seg": 35
+      },
+      {
+        "text": "\"",
+        "index": 249,
+        "color": "primary",
+        "iu": "a34",
+        "seg": 35
+      },
+      {
+        "text": "That",
+        "index": 250,
+        "color": "primary",
+        "iu": "a35",
+        "seg": 36
+      },
+      {
+        "text": "'s",
+        "index": 251,
+        "color": "primary",
+        "iu": "a35",
+        "seg": 36
+      },
+      {
+        "text": "one",
+        "index": 252,
+        "color": "primary",
+        "iu": "a35",
+        "seg": 36
+      },
+      {
+        "text": "small",
+        "index": 253,
+        "color": "primary",
+        "iu": "a35",
+        "seg": 36
+      },
+      {
+        "text": "step",
+        "index": 254,
+        "color": "primary",
+        "iu": "a35",
+        "seg": 36
+      },
+      {
+        "text": "for",
+        "index": 255,
+        "color": "primary",
+        "iu": "a35",
+        "seg": 36
+      },
+      {
+        "text": "man",
+        "index": 256,
+        "color": "primary",
+        "iu": "a35",
+        "seg": 36
+      },
+      {
+        "text": ",",
+        "index": 257,
+        "color": "primary",
+        "iu": "a35",
+        "seg": 36
+      },
+      {
+        "text": "one",
+        "index": 258,
+        "color": "primary",
+        "iu": "a36",
+        "seg": 37
+      },
+      {
+        "text": "giant",
+        "index": 259,
+        "color": "primary",
+        "iu": "a36",
+        "seg": 37
+      },
+      {
+        "text": "leap",
+        "index": 260,
+        "color": "primary",
+        "iu": "a36",
+        "seg": 37
+      },
+      {
+        "text": "for",
+        "index": 261,
+        "color": "primary",
+        "iu": "a36",
+        "seg": 37
+      },
+      {
+        "text": "mankind",
+        "index": 262,
+        "color": "primary",
+        "iu": "a36",
+        "seg": 37
+      },
+      {
+        "text": ".",
+        "index": 263,
+        "color": "primary",
+        "iu": "a36",
+        "seg": 37
+      },
+      {
+        "text": "\"",
+        "index": 264,
+        "color": "primary",
+        "iu": "a34",
+        "seg": 38
+      },
+      {
+        "text": "Aldrin",
+        "index": 265,
+        "color": "primary",
+        "iu": "a37",
+        "seg": 39
+      },
+      {
+        "text": "followed",
+        "index": 266,
+        "color": "primary",
+        "iu": "a37",
+        "seg": 39
+      },
+      {
+        "text": "shortly",
+        "index": 267,
+        "color": "primary",
+        "iu": "a37",
+        "seg": 39
+      },
+      {
+        "text": "after",
+        "index": 268,
+        "color": "primary",
+        "iu": "a37",
+        "seg": 39
+      },
+      {
+        "text": ",",
+        "index": 269,
+        "color": "primary",
+        "iu": "a37",
+        "seg": 39
+      },
+      {
+        "text": "and",
+        "index": 270,
+        "color": "primary",
+        "iu": "a38",
+        "seg": 40
+      },
+      {
+        "text": "together",
+        "index": 271,
+        "color": "primary",
+        "iu": "a38",
+        "seg": 40
+      },
+      {
+        "text": "they",
+        "index": 272,
+        "color": "primary",
+        "iu": "a38",
+        "seg": 40
+      },
+      {
+        "text": "spent",
+        "index": 273,
+        "color": "primary",
+        "iu": "a38",
+        "seg": 40
+      },
+      {
+        "text": "roughly",
+        "index": 274,
+        "color": "primary",
+        "iu": "a38",
+        "seg": 40
+      },
+      {
+        "text": "two",
+        "index": 275,
+        "color": "primary",
+        "iu": "a38",
+        "seg": 40
+      },
+      {
+        "text": "and",
+        "index": 276,
+        "color": "primary",
+        "iu": "a38",
+        "seg": 40
+      },
+      {
+        "text": "a",
+        "index": 277,
+        "color": "primary",
+        "iu": "a38",
+        "seg": 40
+      },
+      {
+        "text": "half",
+        "index": 278,
+        "color": "primary",
+        "iu": "a38",
+        "seg": 40
+      },
+      {
+        "text": "hours",
+        "index": 279,
+        "color": "primary",
+        "iu": "a38",
+        "seg": 40
+      },
+      {
+        "text": "exploring",
+        "index": 280,
+        "color": "primary",
+        "iu": "a38",
+        "seg": 40
+      },
+      {
+        "text": ".",
+        "index": 281,
+        "color": "primary",
+        "iu": "a38",
+        "seg": 40
+      },
+      {
+        "text": "During",
+        "index": 282,
+        "color": "primary",
+        "iu": "a39",
+        "seg": 41
+      },
+      {
+        "text": "their",
+        "index": 283,
+        "color": "primary",
+        "iu": "a39",
+        "seg": 41
+      },
+      {
+        "text": "moonwalk",
+        "index": 284,
+        "color": "primary",
+        "iu": "a39",
+        "seg": 41
+      },
+      {
+        "text": ",",
+        "index": 285,
+        "color": "primary",
+        "iu": "a39",
+        "seg": 41
+      },
+      {
+        "text": "they",
+        "index": 286,
+        "color": "primary",
+        "iu": "a40",
+        "seg": 42
+      },
+      {
+        "text": "deployed",
+        "index": 287,
+        "color": "primary",
+        "iu": "a40",
+        "seg": 42
+      },
+      {
+        "text": "scientific",
+        "index": 288,
+        "color": "primary",
+        "iu": "a40",
+        "seg": 42
+      },
+      {
+        "text": "instruments",
+        "index": 289,
+        "color": "primary",
+        "iu": "a40",
+        "seg": 42
+      },
+      {
+        "text": "like",
+        "index": 290,
+        "color": "primary",
+        "iu": "a41",
+        "seg": 43
+      },
+      {
+        "text": "a",
+        "index": 291,
+        "color": "primary",
+        "iu": "a41",
+        "seg": 43
+      },
+      {
+        "text": "seismometer",
+        "index": 292,
+        "color": "primary",
+        "iu": "a41",
+        "seg": 43
+      },
+      {
+        "text": "and",
+        "index": 293,
+        "color": "primary",
+        "iu": "a41",
+        "seg": 43
+      },
+      {
+        "text": "solar",
+        "index": 294,
+        "color": "primary",
+        "iu": "a41",
+        "seg": 43
+      },
+      {
+        "text": "wind",
+        "index": 295,
+        "color": "primary",
+        "iu": "a41",
+        "seg": 43
+      },
+      {
+        "text": "collector",
+        "index": 296,
+        "color": "primary",
+        "iu": "a41",
+        "seg": 43
+      },
+      {
+        "text": ",",
+        "index": 297,
+        "color": "primary",
+        "iu": "a41",
+        "seg": 43
+      },
+      {
+        "text": "collected",
+        "index": 298,
+        "color": "primary",
+        "iu": "a40",
+        "seg": 44
+      },
+      {
+        "text": "47",
+        "index": 299,
+        "color": "primary",
+        "iu": "a40",
+        "seg": 44
+      },
+      {
+        "text": "pounds",
+        "index": 300,
+        "color": "primary",
+        "iu": "a40",
+        "seg": 44
+      },
+      {
+        "text": "(",
+        "index": 301,
+        "color": "primary",
+        "iu": "a42",
+        "seg": 45
+      },
+      {
+        "text": "21",
+        "index": 302,
+        "color": "primary",
+        "iu": "a42",
+        "seg": 45
+      },
+      {
+        "text": "kilograms",
+        "index": 303,
+        "color": "primary",
+        "iu": "a42",
+        "seg": 45
+      },
+      {
+        "text": ")",
+        "index": 304,
+        "color": "primary",
+        "iu": "a42",
+        "seg": 45
+      },
+      {
+        "text": "of",
+        "index": 305,
+        "color": "primary",
+        "iu": "a42",
+        "seg": 45
+      },
+      {
+        "text": "lunar",
+        "index": 306,
+        "color": "primary",
+        "iu": "a42",
+        "seg": 45
+      },
+      {
+        "text": "soil",
+        "index": 307,
+        "color": "primary",
+        "iu": "a42",
+        "seg": 45
+      },
+      {
+        "text": "and",
+        "index": 308,
+        "color": "primary",
+        "iu": "a42",
+        "seg": 45
+      },
+      {
+        "text": "rocks",
+        "index": 309,
+        "color": "primary",
+        "iu": "a42",
+        "seg": 45
+      },
+      {
+        "text": ",",
+        "index": 310,
+        "color": "primary",
+        "iu": "a42",
+        "seg": 45
+      },
+      {
+        "text": "and",
+        "index": 311,
+        "color": "primary",
+        "iu": "a40",
+        "seg": 46
+      },
+      {
+        "text": "planted",
+        "index": 312,
+        "color": "primary",
+        "iu": "a40",
+        "seg": 46
+      },
+      {
+        "text": "the",
+        "index": 313,
+        "color": "primary",
+        "iu": "a40",
+        "seg": 46
+      },
+      {
+        "text": "American",
+        "index": 314,
+        "color": "primary",
+        "iu": "a40",
+        "seg": 46
+      },
+      {
+        "text": "flag",
+        "index": 315,
+        "color": "primary",
+        "iu": "a40",
+        "seg": 46
+      },
+      {
+        "text": ".",
+        "index": 316,
+        "color": "primary",
+        "iu": "a40",
+        "seg": 46
+      },
+      {
+        "text": "They",
+        "index": 317,
+        "color": "primary",
+        "iu": "a43",
+        "seg": 47
+      },
+      {
+        "text": "also",
+        "index": 318,
+        "color": "primary",
+        "iu": "a43",
+        "seg": 47
+      },
+      {
+        "text": "spoke",
+        "index": 319,
+        "color": "primary",
+        "iu": "a43",
+        "seg": 47
+      },
+      {
+        "text": "by",
+        "index": 320,
+        "color": "primary",
+        "iu": "a43",
+        "seg": 47
+      },
+      {
+        "text": "radio",
+        "index": 321,
+        "color": "primary",
+        "iu": "a43",
+        "seg": 47
+      },
+      {
+        "text": "with",
+        "index": 322,
+        "color": "primary",
+        "iu": "a44",
+        "seg": 48
+      },
+      {
+        "text": "President",
+        "index": 323,
+        "color": "primary",
+        "iu": "a44",
+        "seg": 48
+      },
+      {
+        "text": "Richard",
+        "index": 324,
+        "color": "primary",
+        "iu": "a44",
+        "seg": 48
+      },
+      {
+        "text": "Nixon",
+        "index": 325,
+        "color": "primary",
+        "iu": "a44",
+        "seg": 48
+      },
+      {
+        "text": ",",
+        "index": 326,
+        "color": "primary",
+        "iu": "a44",
+        "seg": 48
+      },
+      {
+        "text": "who",
+        "index": 327,
+        "color": "primary",
+        "iu": "a45",
+        "seg": 49
+      },
+      {
+        "text": "called",
+        "index": 328,
+        "color": "primary",
+        "iu": "a45",
+        "seg": 49
+      },
+      {
+        "text": "it",
+        "index": 329,
+        "color": "primary",
+        "iu": "a45",
+        "seg": 49
+      },
+      {
+        "text": "\"",
+        "index": 330,
+        "color": "primary",
+        "iu": "a45",
+        "seg": 49
+      },
+      {
+        "text": "the",
+        "index": 331,
+        "color": "primary",
+        "iu": "a45",
+        "seg": 49
+      },
+      {
+        "text": "most",
+        "index": 332,
+        "color": "primary",
+        "iu": "a45",
+        "seg": 49
+      },
+      {
+        "text": "historic",
+        "index": 333,
+        "color": "primary",
+        "iu": "a45",
+        "seg": 49
+      },
+      {
+        "text": "phone",
+        "index": 334,
+        "color": "primary",
+        "iu": "a45",
+        "seg": 49
+      },
+      {
+        "text": "call",
+        "index": 335,
+        "color": "primary",
+        "iu": "a45",
+        "seg": 49
+      },
+      {
+        "text": "ever",
+        "index": 336,
+        "color": "primary",
+        "iu": "a46",
+        "seg": 50
+      },
+      {
+        "text": "made",
+        "index": 337,
+        "color": "primary",
+        "iu": "a46",
+        "seg": 50
+      },
+      {
+        "text": "from",
+        "index": 338,
+        "color": "primary",
+        "iu": "a46",
+        "seg": 50
+      },
+      {
+        "text": "the",
+        "index": 339,
+        "color": "primary",
+        "iu": "a46",
+        "seg": 50
+      },
+      {
+        "text": "White",
+        "index": 340,
+        "color": "primary",
+        "iu": "a46",
+        "seg": 50
+      },
+      {
+        "text": "House",
+        "index": 341,
+        "color": "primary",
+        "iu": "a46",
+        "seg": 50
+      },
+      {
+        "text": ".",
+        "index": 342,
+        "color": "primary",
+        "iu": "a46",
+        "seg": 50
+      },
+      {
+        "text": "\"",
+        "index": 343,
+        "color": "primary",
+        "iu": "a43",
+        "seg": 51
+      },
+      {
+        "text": "The",
+        "index": 344,
+        "color": "primary",
+        "iu": "a47",
+        "seg": 52
+      },
+      {
+        "text": "astronauts",
+        "index": 345,
+        "color": "primary",
+        "iu": "a47",
+        "seg": 52
+      },
+      {
+        "text": "described",
+        "index": 346,
+        "color": "primary",
+        "iu": "a47",
+        "seg": 52
+      },
+      {
+        "text": "the",
+        "index": 347,
+        "color": "primary",
+        "iu": "a47",
+        "seg": 52
+      },
+      {
+        "text": "Moon",
+        "index": 348,
+        "color": "primary",
+        "iu": "a47",
+        "seg": 52
+      },
+      {
+        "text": "'s",
+        "index": 349,
+        "color": "primary",
+        "iu": "a47",
+        "seg": 52
+      },
+      {
+        "text": "surface",
+        "index": 350,
+        "color": "primary",
+        "iu": "a47",
+        "seg": 52
+      },
+      {
+        "text": "as",
+        "index": 351,
+        "color": "primary",
+        "iu": "a47",
+        "seg": 52
+      },
+      {
+        "text": "fine",
+        "index": 352,
+        "color": "primary",
+        "iu": "a47",
+        "seg": 52
+      },
+      {
+        "text": ",",
+        "index": 353,
+        "color": "primary",
+        "iu": "a47",
+        "seg": 52
+      },
+      {
+        "text": "powdery",
+        "index": 354,
+        "color": "primary",
+        "iu": "a48",
+        "seg": 53
+      },
+      {
+        "text": "gray",
+        "index": 355,
+        "color": "primary",
+        "iu": "a48",
+        "seg": 53
+      },
+      {
+        "text": "dust",
+        "index": 356,
+        "color": "primary",
+        "iu": "a48",
+        "seg": 53
+      },
+      {
+        "text": "that",
+        "index": 357,
+        "color": "primary",
+        "iu": "a48",
+        "seg": 53
+      },
+      {
+        "text": "clung",
+        "index": 358,
+        "color": "primary",
+        "iu": "a48",
+        "seg": 53
+      },
+      {
+        "text": "to",
+        "index": 359,
+        "color": "primary",
+        "iu": "a48",
+        "seg": 53
+      },
+      {
+        "text": "their",
+        "index": 360,
+        "color": "primary",
+        "iu": "a48",
+        "seg": 53
+      },
+      {
+        "text": "suits",
+        "index": 361,
+        "color": "primary",
+        "iu": "a48",
+        "seg": 53
+      },
+      {
+        "text": ".",
+        "index": 362,
+        "color": "primary",
+        "iu": "a48",
+        "seg": 53
+      },
+      {
+        "text": "After",
+        "index": 363,
+        "color": "primary",
+        "iu": "a49",
+        "seg": 54
+      },
+      {
+        "text": "over",
+        "index": 364,
+        "color": "primary",
+        "iu": "a49",
+        "seg": 54
+      },
+      {
+        "text": "21",
+        "index": 365,
+        "color": "primary",
+        "iu": "a49",
+        "seg": 54
+      },
+      {
+        "text": "hours",
+        "index": 366,
+        "color": "primary",
+        "iu": "a49",
+        "seg": 54
+      },
+      {
+        "text": "on",
+        "index": 367,
+        "color": "primary",
+        "iu": "a49",
+        "seg": 54
+      },
+      {
+        "text": "the",
+        "index": 368,
+        "color": "primary",
+        "iu": "a49",
+        "seg": 54
+      },
+      {
+        "text": "surface",
+        "index": 369,
+        "color": "primary",
+        "iu": "a49",
+        "seg": 54
+      },
+      {
+        "text": ",",
+        "index": 370,
+        "color": "primary",
+        "iu": "a49",
+        "seg": 54
+      },
+      {
+        "text": "Eagle",
+        "index": 371,
+        "color": "primary",
+        "iu": "a50",
+        "seg": 55
+      },
+      {
+        "text": "lifted",
+        "index": 372,
+        "color": "primary",
+        "iu": "a50",
+        "seg": 55
+      },
+      {
+        "text": "off",
+        "index": 373,
+        "color": "primary",
+        "iu": "a50",
+        "seg": 55
+      },
+      {
+        "text": "and",
+        "index": 374,
+        "color": "primary",
+        "iu": "a50",
+        "seg": 55
+      },
+      {
+        "text": "docked",
+        "index": 375,
+        "color": "primary",
+        "iu": "a50",
+        "seg": 55
+      },
+      {
+        "text": "with",
+        "index": 376,
+        "color": "primary",
+        "iu": "a50",
+        "seg": 55
+      },
+      {
+        "text": "Columbia",
+        "index": 377,
+        "color": "primary",
+        "iu": "a50",
+        "seg": 55
+      },
+      {
+        "text": ".",
+        "index": 378,
+        "color": "primary",
+        "iu": "a50",
+        "seg": 55
+      },
+      {
+        "text": "The",
+        "index": 379,
+        "color": "primary",
+        "iu": "a51",
+        "seg": 56
+      },
+      {
+        "text": "crew",
+        "index": 380,
+        "color": "primary",
+        "iu": "a51",
+        "seg": 56
+      },
+      {
+        "text": "then",
+        "index": 381,
+        "color": "primary",
+        "iu": "a51",
+        "seg": 56
+      },
+      {
+        "text": "headed",
+        "index": 382,
+        "color": "primary",
+        "iu": "a51",
+        "seg": 56
+      },
+      {
+        "text": "back",
+        "index": 383,
+        "color": "primary",
+        "iu": "a51",
+        "seg": 56
+      },
+      {
+        "text": "to",
+        "index": 384,
+        "color": "primary",
+        "iu": "a51",
+        "seg": 56
+      },
+      {
+        "text": "Earth",
+        "index": 385,
+        "color": "primary",
+        "iu": "a51",
+        "seg": 56
+      },
+      {
+        "text": ",",
+        "index": 386,
+        "color": "primary",
+        "iu": "a51",
+        "seg": 56
+      },
+      {
+        "text": "splashing",
+        "index": 387,
+        "color": "primary",
+        "iu": "a52",
+        "seg": 57
+      },
+      {
+        "text": "down",
+        "index": 388,
+        "color": "primary",
+        "iu": "a52",
+        "seg": 57
+      },
+      {
+        "text": "safely",
+        "index": 389,
+        "color": "primary",
+        "iu": "a52",
+        "seg": 57
+      },
+      {
+        "text": "in",
+        "index": 390,
+        "color": "primary",
+        "iu": "a52",
+        "seg": 57
+      },
+      {
+        "text": "the",
+        "index": 391,
+        "color": "primary",
+        "iu": "a52",
+        "seg": 57
+      },
+      {
+        "text": "Pacific",
+        "index": 392,
+        "color": "primary",
+        "iu": "a52",
+        "seg": 57
+      },
+      {
+        "text": "Ocean",
+        "index": 393,
+        "color": "primary",
+        "iu": "a52",
+        "seg": 57
+      },
+      {
+        "text": "on",
+        "index": 394,
+        "color": "primary",
+        "iu": "a52",
+        "seg": 57
+      },
+      {
+        "text": "July",
+        "index": 395,
+        "color": "primary",
+        "iu": "a52",
+        "seg": 57
+      },
+      {
+        "text": "24",
+        "index": 396,
+        "color": "primary",
+        "iu": "a52",
+        "seg": 57
+      },
+      {
+        "text": ".",
+        "index": 397,
+        "color": "primary",
+        "iu": "a52",
+        "seg": 57
+      },
+      {
+        "text": "Watched",
+        "index": 398,
+        "color": "primary",
+        "iu": "a53",
+        "seg": 58
+      },
+      {
+        "text": "by",
+        "index": 399,
+        "color": "primary",
+        "iu": "a53",
+        "seg": 58
+      },
+      {
+        "text": "an",
+        "index": 400,
+        "color": "primary",
+        "iu": "a53",
+        "seg": 58
+      },
+      {
+        "text": "estimated",
+        "index": 401,
+        "color": "primary",
+        "iu": "a53",
+        "seg": 58
+      },
+      {
+        "text": "650",
+        "index": 402,
+        "color": "primary",
+        "iu": "a53",
+        "seg": 58
+      },
+      {
+        "text": "million",
+        "index": 403,
+        "color": "primary",
+        "iu": "a53",
+        "seg": 58
+      },
+      {
+        "text": "people",
+        "index": 404,
+        "color": "primary",
+        "iu": "a53",
+        "seg": 58
+      },
+      {
+        "text": "(",
+        "index": 405,
+        "color": "primary",
+        "iu": "a54",
+        "seg": 59
+      },
+      {
+        "text": "about",
+        "index": 406,
+        "color": "primary",
+        "iu": "a54",
+        "seg": 59
+      },
+      {
+        "text": "one",
+        "index": 407,
+        "color": "primary",
+        "iu": "a54",
+        "seg": 59
+      },
+      {
+        "text": "-",
+        "index": 408,
+        "color": "primary",
+        "iu": "a54",
+        "seg": 59
+      },
+      {
+        "text": "fifth",
+        "index": 409,
+        "color": "primary",
+        "iu": "a54",
+        "seg": 59
+      },
+      {
+        "text": "of",
+        "index": 410,
+        "color": "primary",
+        "iu": "a54",
+        "seg": 59
+      },
+      {
+        "text": "the",
+        "index": 411,
+        "color": "primary",
+        "iu": "a54",
+        "seg": 59
+      },
+      {
+        "text": "world",
+        "index": 412,
+        "color": "primary",
+        "iu": "a54",
+        "seg": 59
+      },
+      {
+        "text": "'s",
+        "index": 413,
+        "color": "primary",
+        "iu": "a54",
+        "seg": 59
+      },
+      {
+        "text": "population",
+        "index": 414,
+        "color": "primary",
+        "iu": "a54",
+        "seg": 59
+      },
+      {
+        "text": ")",
+        "index": 415,
+        "color": "primary",
+        "iu": "a54",
+        "seg": 59
+      },
+      {
+        "text": ",",
+        "index": 416,
+        "color": "primary",
+        "iu": "a54",
+        "seg": 59
+      },
+      {
+        "text": "the",
+        "index": 417,
+        "color": "primary",
+        "iu": "a55",
+        "seg": 60
+      },
+      {
+        "text": "mission",
+        "index": 418,
+        "color": "primary",
+        "iu": "a55",
+        "seg": 60
+      },
+      {
+        "text": "symbolized",
+        "index": 419,
+        "color": "primary",
+        "iu": "a55",
+        "seg": 60
+      },
+      {
+        "text": "human",
+        "index": 420,
+        "color": "primary",
+        "iu": "a55",
+        "seg": 60
+      },
+      {
+        "text": "achievement",
+        "index": 421,
+        "color": "primary",
+        "iu": "a55",
+        "seg": 60
+      },
+      {
+        "text": "and",
+        "index": 422,
+        "color": "primary",
+        "iu": "a55",
+        "seg": 60
+      },
+      {
+        "text": "inspired",
+        "index": 423,
+        "color": "primary",
+        "iu": "a55",
+        "seg": 60
+      },
+      {
+        "text": "generations",
+        "index": 424,
+        "color": "primary",
+        "iu": "a55",
+        "seg": 60
+      },
+      {
+        "text": ".",
+        "index": 425,
+        "color": "primary",
+        "iu": "a55",
+        "seg": 60
+      },
+      {
+        "text": "Apollo",
+        "index": 426,
+        "color": "primary",
+        "iu": "a56",
+        "seg": 61
+      },
+      {
+        "text": "11",
+        "index": 427,
+        "color": "primary",
+        "iu": "a56",
+        "seg": 61
+      },
+      {
+        "text": "'s",
+        "index": 428,
+        "color": "primary",
+        "iu": "a56",
+        "seg": 61
+      },
+      {
+        "text": "success",
+        "index": 429,
+        "color": "primary",
+        "iu": "a56",
+        "seg": 61
+      },
+      {
+        "text": "paved",
+        "index": 430,
+        "color": "primary",
+        "iu": "a56",
+        "seg": 61
+      },
+      {
+        "text": "the",
+        "index": 431,
+        "color": "primary",
+        "iu": "a56",
+        "seg": 61
+      },
+      {
+        "text": "way",
+        "index": 432,
+        "color": "primary",
+        "iu": "a56",
+        "seg": 61
+      },
+      {
+        "text": "for",
+        "index": 433,
+        "color": "primary",
+        "iu": "a56",
+        "seg": 61
+      },
+      {
+        "text": "five",
+        "index": 434,
+        "color": "primary",
+        "iu": "a56",
+        "seg": 61
+      },
+      {
+        "text": "more",
+        "index": 435,
+        "color": "primary",
+        "iu": "a56",
+        "seg": 61
+      },
+      {
+        "text": "Moon",
+        "index": 436,
+        "color": "primary",
+        "iu": "a56",
+        "seg": 61
+      },
+      {
+        "text": "landings",
+        "index": 437,
+        "color": "primary",
+        "iu": "a56",
+        "seg": 61
+      },
+      {
+        "text": ".",
+        "index": 438,
+        "color": "primary",
+        "iu": "a56",
+        "seg": 61
+      }
+    ],
+    "max_seg_count": 62,
+    "manual_iu_count": 0,
+    "max_connected_idx": 1,
+    "max_disc_idx": 1,
+    "doc_name": "apollo11.txt",
+    "doc_type": "source",
+    "_id": {
+      "$oid": "69f8635ae603be355a3cc37e"
+    },
+    "user_id": {
+      "$oid": "69d78309d14b34c44d702154"
+    },
+    "project_id": {
+      "$oid": "69f8635ae603be355a3cc37c"
+    },
+    "history_id": {
+      "$oid": "69f8635ae603be355a3cc37d"
+    },
+    "deleted": false,
+    "version": 0
+  },
+  "_id": {
+    "$oid": "69f8635ae603be355a3cc37c"
+  },
+  "user_id": {
+    "$oid": "69d78309d14b34c44d702154"
+  },
+  "deleted": false,
+  "summaryDocs": [
+    {
+      "ius": {
+        "a1": {
+          "label": "a1",
+          "childSegs": {
+            "0": 0
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a2": {
+          "label": "a2",
+          "childSegs": {
+            "1": 1
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a3": {
+          "label": "a3",
+          "childSegs": {
+            "2": 2
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a4": {
+          "label": "a4",
+          "childSegs": {
+            "3": 3
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a5": {
+          "label": "a5",
+          "childSegs": {
+            "4": 4
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a6": {
+          "label": "a6",
+          "childSegs": {
+            "5": 5
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a7": {
+          "label": "a7",
+          "childSegs": {
+            "6": 6
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a8": {
+          "label": "a8",
+          "childSegs": {
+            "7": 7
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a9": {
+          "label": "a9",
+          "childSegs": {
+            "8": 8
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a10": {
+          "label": "a10",
+          "childSegs": {
+            "9": 9
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a11": {
+          "label": "a11",
+          "childSegs": {
+            "10": 10
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a12": {
+          "label": "a12",
+          "childSegs": {
+            "11": 11
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a13": {
+          "label": "a13",
+          "childSegs": {
+            "12": 12
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        }
+      },
+      "segs": [
+        {
+          "words": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "iu": "a1",
+          "type": "default",
+          "index": 0
+        },
+        {
+          "words": [
+            7,
+            8
+          ],
+          "iu": "a2",
+          "type": "default",
+          "index": 1
+        },
+        {
+          "words": [
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "iu": "a3",
+          "type": "default",
+          "index": 2
+        },
+        {
+          "words": [
+            18,
+            19,
+            20
+          ],
+          "iu": "a4",
+          "type": "default",
+          "index": 3
+        },
+        {
+          "words": [
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29,
+            30,
+            31
+          ],
+          "iu": "a5",
+          "type": "default",
+          "index": 4
+        },
+        {
+          "words": [
+            32,
+            33,
+            34,
+            35
+          ],
+          "iu": "a6",
+          "type": "default",
+          "index": 5
+        },
+        {
+          "words": [
+            36,
+            37,
+            38,
+            39,
+            40
+          ],
+          "iu": "a7",
+          "type": "default",
+          "index": 6
+        },
+        {
+          "words": [
+            41,
+            42,
+            43,
+            44,
+            45,
+            46
+          ],
+          "iu": "a8",
+          "type": "default",
+          "index": 7
+        },
+        {
+          "words": [
+            47,
+            48,
+            49,
+            50,
+            51,
+            52
+          ],
+          "iu": "a9",
+          "type": "default",
+          "index": 8
+        },
+        {
+          "words": [
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62
+          ],
+          "iu": "a10",
+          "type": "default",
+          "index": 9
+        },
+        {
+          "words": [
+            63,
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71,
+            72
+          ],
+          "iu": "a11",
+          "type": "default",
+          "index": 10
+        },
+        {
+          "words": [
+            73,
+            74,
+            75,
+            76,
+            77
+          ],
+          "iu": "a12",
+          "type": "default",
+          "index": 11
+        },
+        {
+          "words": [
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86
+          ],
+          "iu": "a13",
+          "type": "default",
+          "index": 12
+        }
+      ],
+      "sents": [
+        "Apollo 11 was the first space mission that succeeded in landing humans on the Moon in 1969.",
+        "The crew consisted of Neil Armstrong, Michael Collins, and Buzz Aldrin.",
+        "They launched from Florida using Saturn V rocket.",
+        "Armstrong and Aldrin landed Eagle module on the Sea of Tranquility.",
+        "Armstrong took the first step and said famous words.",
+        "They collected Moon rocks and planted the U.S. flag.",
+        "After returning to Earth, the mission inspired many people around the world."
+      ],
+      "words": [
+        {
+          "text": "Apollo",
+          "index": 0,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "11",
+          "index": 1,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "was",
+          "index": 2,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "the",
+          "index": 3,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "first",
+          "index": 4,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "space",
+          "index": 5,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "mission",
+          "index": 6,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "that",
+          "index": 7,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "succeeded",
+          "index": 8,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "in",
+          "index": 9,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "landing",
+          "index": 10,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "humans",
+          "index": 11,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "on",
+          "index": 12,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "the",
+          "index": 13,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "Moon",
+          "index": 14,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "in",
+          "index": 15,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "1969",
+          "index": 16,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": ".",
+          "index": 17,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "The",
+          "index": 18,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 3
+        },
+        {
+          "text": "crew",
+          "index": 19,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 3
+        },
+        {
+          "text": "consisted",
+          "index": 20,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 3
+        },
+        {
+          "text": "of",
+          "index": 21,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 4
+        },
+        {
+          "text": "Neil",
+          "index": 22,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 4
+        },
+        {
+          "text": "Armstrong",
+          "index": 23,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 4
+        },
+        {
+          "text": ",",
+          "index": 24,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 4
+        },
+        {
+          "text": "Michael",
+          "index": 25,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 4
+        },
+        {
+          "text": "Collins",
+          "index": 26,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 4
+        },
+        {
+          "text": ",",
+          "index": 27,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 4
+        },
+        {
+          "text": "and",
+          "index": 28,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 4
+        },
+        {
+          "text": "Buzz",
+          "index": 29,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 4
+        },
+        {
+          "text": "Aldrin",
+          "index": 30,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 4
+        },
+        {
+          "text": ".",
+          "index": 31,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 4
+        },
+        {
+          "text": "They",
+          "index": 32,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 5
+        },
+        {
+          "text": "launched",
+          "index": 33,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 5
+        },
+        {
+          "text": "from",
+          "index": 34,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 5
+        },
+        {
+          "text": "Florida",
+          "index": 35,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 5
+        },
+        {
+          "text": "using",
+          "index": 36,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 6
+        },
+        {
+          "text": "Saturn",
+          "index": 37,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 6
+        },
+        {
+          "text": "V",
+          "index": 38,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 6
+        },
+        {
+          "text": "rocket",
+          "index": 39,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 6
+        },
+        {
+          "text": ".",
+          "index": 40,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 6
+        },
+        {
+          "text": "Armstrong",
+          "index": 41,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 7
+        },
+        {
+          "text": "and",
+          "index": 42,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 7
+        },
+        {
+          "text": "Aldrin",
+          "index": 43,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 7
+        },
+        {
+          "text": "landed",
+          "index": 44,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 7
+        },
+        {
+          "text": "Eagle",
+          "index": 45,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 7
+        },
+        {
+          "text": "module",
+          "index": 46,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 7
+        },
+        {
+          "text": "on",
+          "index": 47,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 8
+        },
+        {
+          "text": "the",
+          "index": 48,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 8
+        },
+        {
+          "text": "Sea",
+          "index": 49,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 8
+        },
+        {
+          "text": "of",
+          "index": 50,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 8
+        },
+        {
+          "text": "Tranquility",
+          "index": 51,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 8
+        },
+        {
+          "text": ".",
+          "index": 52,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 8
+        },
+        {
+          "text": "Armstrong",
+          "index": 53,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 9
+        },
+        {
+          "text": "took",
+          "index": 54,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 9
+        },
+        {
+          "text": "the",
+          "index": 55,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 9
+        },
+        {
+          "text": "first",
+          "index": 56,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 9
+        },
+        {
+          "text": "step",
+          "index": 57,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 9
+        },
+        {
+          "text": "and",
+          "index": 58,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 9
+        },
+        {
+          "text": "said",
+          "index": 59,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 9
+        },
+        {
+          "text": "famous",
+          "index": 60,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 9
+        },
+        {
+          "text": "words",
+          "index": 61,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 9
+        },
+        {
+          "text": ".",
+          "index": 62,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 9
+        },
+        {
+          "text": "They",
+          "index": 63,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 10
+        },
+        {
+          "text": "collected",
+          "index": 64,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 10
+        },
+        {
+          "text": "Moon",
+          "index": 65,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 10
+        },
+        {
+          "text": "rocks",
+          "index": 66,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 10
+        },
+        {
+          "text": "and",
+          "index": 67,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 10
+        },
+        {
+          "text": "planted",
+          "index": 68,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 10
+        },
+        {
+          "text": "the",
+          "index": 69,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 10
+        },
+        {
+          "text": "U.S.",
+          "index": 70,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 10
+        },
+        {
+          "text": "flag",
+          "index": 71,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 10
+        },
+        {
+          "text": ".",
+          "index": 72,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 10
+        },
+        {
+          "text": "After",
+          "index": 73,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 11
+        },
+        {
+          "text": "returning",
+          "index": 74,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 11
+        },
+        {
+          "text": "to",
+          "index": 75,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 11
+        },
+        {
+          "text": "Earth",
+          "index": 76,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 11
+        },
+        {
+          "text": ",",
+          "index": 77,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 11
+        },
+        {
+          "text": "the",
+          "index": 78,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 12
+        },
+        {
+          "text": "mission",
+          "index": 79,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 12
+        },
+        {
+          "text": "inspired",
+          "index": 80,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 12
+        },
+        {
+          "text": "many",
+          "index": 81,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 12
+        },
+        {
+          "text": "people",
+          "index": 82,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 12
+        },
+        {
+          "text": "around",
+          "index": 83,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 12
+        },
+        {
+          "text": "the",
+          "index": 84,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 12
+        },
+        {
+          "text": "world",
+          "index": 85,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 12
+        },
+        {
+          "text": ".",
+          "index": 86,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 12
+        }
+      ],
+      "max_seg_count": 13,
+      "manual_iu_count": 0,
+      "max_connected_idx": 1,
+      "max_disc_idx": 1,
+      "doc_name": "1.txt",
+      "doc_type": "summary",
+      "_id": {
+        "$oid": "69f8635ae603be355a3cc380"
+      },
+      "user_id": {
+        "$oid": "69d78309d14b34c44d702154"
+      },
+      "project_id": {
+        "$oid": "69f8635ae603be355a3cc37c"
+      },
+      "history_id": {
+        "$oid": "69f8635ae603be355a3cc37f"
+      },
+      "deleted": false,
+      "version": 0
+    },
+    {
+      "ius": {
+        "a1": {
+          "label": "a1",
+          "childSegs": {
+            "0": 0
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a2": {
+          "label": "a2",
+          "childSegs": {
+            "1": 1
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a3": {
+          "label": "a3",
+          "childSegs": {
+            "2": 2,
+            "4": 4
+          },
+          "disc": true,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a4": {
+          "label": "a4",
+          "childSegs": {
+            "3": 3
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a5": {
+          "label": "a5",
+          "childSegs": {
+            "5": 5
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a6": {
+          "label": "a6",
+          "childSegs": {
+            "6": 6
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a7": {
+          "label": "a7",
+          "childSegs": {
+            "7": 7
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a8": {
+          "label": "a8",
+          "childSegs": {
+            "8": 8
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a9": {
+          "label": "a9",
+          "childSegs": {
+            "9": 9
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a10": {
+          "label": "a10",
+          "childSegs": {
+            "10": 10
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a11": {
+          "label": "a11",
+          "childSegs": {
+            "11": 11
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        }
+      },
+      "segs": [
+        {
+          "words": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "iu": "a1",
+          "type": "default",
+          "index": 0
+        },
+        {
+          "words": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15
+          ],
+          "iu": "a2",
+          "type": "default",
+          "index": 1
+        },
+        {
+          "words": [
+            16,
+            17,
+            18,
+            19
+          ],
+          "iu": "a3",
+          "type": "default",
+          "index": 2
+        },
+        {
+          "words": [
+            20,
+            21,
+            22
+          ],
+          "iu": "a4",
+          "type": "default",
+          "index": 3
+        },
+        {
+          "words": [
+            23,
+            24,
+            25,
+            26,
+            27,
+            28,
+            29
+          ],
+          "iu": "a3",
+          "type": "default",
+          "index": 4
+        },
+        {
+          "words": [
+            30,
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37,
+            38,
+            39,
+            40
+          ],
+          "iu": "a5",
+          "type": "default",
+          "index": 5
+        },
+        {
+          "words": [
+            41,
+            42,
+            43,
+            44
+          ],
+          "iu": "a6",
+          "type": "default",
+          "index": 6
+        },
+        {
+          "words": [
+            45,
+            46,
+            47,
+            48,
+            49,
+            50,
+            51
+          ],
+          "iu": "a7",
+          "type": "default",
+          "index": 7
+        },
+        {
+          "words": [
+            52,
+            53,
+            54,
+            55,
+            56,
+            57
+          ],
+          "iu": "a8",
+          "type": "default",
+          "index": 8
+        },
+        {
+          "words": [
+            58,
+            59,
+            60,
+            61,
+            62,
+            63
+          ],
+          "iu": "a9",
+          "type": "default",
+          "index": 9
+        },
+        {
+          "words": [
+            64,
+            65,
+            66,
+            67,
+            68,
+            69,
+            70,
+            71
+          ],
+          "iu": "a10",
+          "type": "default",
+          "index": 10
+        },
+        {
+          "words": [
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86
+          ],
+          "iu": "a11",
+          "type": "default",
+          "index": 11
+        }
+      ],
+      "sents": [
+        "NASA 's Apollo 11 mission achieved the first Moon landing on July 20, 1969.",
+        "Astronauts Neil Armstrong, Buzz Aldrin, and Michael Collins were on board.",
+        "Armstrong became the first person to walk on the Moon, followed by Aldrin.",
+        "They spent about 21 hours there, conducting experiments and collecting samples.",
+        "Collins orbited alone in Columbia.",
+        "The crew safely returned on July 24.",
+        "This event was watched by 650 million people and marked a great human achievement."
+      ],
+      "words": [
+        {
+          "text": "NASA",
+          "index": 0,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "'s",
+          "index": 1,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "Apollo",
+          "index": 2,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "11",
+          "index": 3,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "mission",
+          "index": 4,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "achieved",
+          "index": 5,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "the",
+          "index": 6,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "first",
+          "index": 7,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "Moon",
+          "index": 8,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "landing",
+          "index": 9,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "on",
+          "index": 10,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "July",
+          "index": 11,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "20",
+          "index": 12,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": ",",
+          "index": 13,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "1969",
+          "index": 14,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": ".",
+          "index": 15,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "Astronauts",
+          "index": 16,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "Neil",
+          "index": 17,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "Armstrong",
+          "index": 18,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": ",",
+          "index": 19,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "Buzz",
+          "index": 20,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 3
+        },
+        {
+          "text": "Aldrin",
+          "index": 21,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 3
+        },
+        {
+          "text": ",",
+          "index": 22,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 3
+        },
+        {
+          "text": "and",
+          "index": 23,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "Michael",
+          "index": 24,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "Collins",
+          "index": 25,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "were",
+          "index": 26,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "on",
+          "index": 27,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "board",
+          "index": 28,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": ".",
+          "index": 29,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "Armstrong",
+          "index": 30,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "became",
+          "index": 31,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "the",
+          "index": 32,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "first",
+          "index": 33,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "person",
+          "index": 34,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "to",
+          "index": 35,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "walk",
+          "index": 36,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "on",
+          "index": 37,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "the",
+          "index": 38,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "Moon",
+          "index": 39,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": ",",
+          "index": 40,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "followed",
+          "index": 41,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "by",
+          "index": 42,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "Aldrin",
+          "index": 43,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": ".",
+          "index": 44,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "They",
+          "index": 45,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "spent",
+          "index": 46,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "about",
+          "index": 47,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "21",
+          "index": 48,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "hours",
+          "index": 49,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "there",
+          "index": 50,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": ",",
+          "index": 51,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "conducting",
+          "index": 52,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "experiments",
+          "index": 53,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "and",
+          "index": 54,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "collecting",
+          "index": 55,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "samples",
+          "index": 56,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": ".",
+          "index": 57,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "Collins",
+          "index": 58,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "orbited",
+          "index": 59,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "alone",
+          "index": 60,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "in",
+          "index": 61,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "Columbia",
+          "index": 62,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": ".",
+          "index": 63,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "The",
+          "index": 64,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "crew",
+          "index": 65,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "safely",
+          "index": 66,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "returned",
+          "index": 67,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "on",
+          "index": 68,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "July",
+          "index": 69,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "24",
+          "index": 70,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": ".",
+          "index": 71,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "This",
+          "index": 72,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "event",
+          "index": 73,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "was",
+          "index": 74,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "watched",
+          "index": 75,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "by",
+          "index": 76,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "650",
+          "index": 77,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "million",
+          "index": 78,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "people",
+          "index": 79,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "and",
+          "index": 80,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "marked",
+          "index": 81,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "a",
+          "index": 82,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "great",
+          "index": 83,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "human",
+          "index": 84,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "achievement",
+          "index": 85,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": ".",
+          "index": 86,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        }
+      ],
+      "max_seg_count": 12,
+      "manual_iu_count": 0,
+      "max_connected_idx": 1,
+      "max_disc_idx": 1,
+      "doc_name": "2.txt",
+      "doc_type": "summary",
+      "_id": {
+        "$oid": "69f8635ae603be355a3cc382"
+      },
+      "user_id": {
+        "$oid": "69d78309d14b34c44d702154"
+      },
+      "project_id": {
+        "$oid": "69f8635ae603be355a3cc37c"
+      },
+      "history_id": {
+        "$oid": "69f8635ae603be355a3cc381"
+      },
+      "deleted": false,
+      "version": 0
+    },
+    {
+      "ius": {
+        "a1": {
+          "label": "a1",
+          "childSegs": {
+            "0": 0
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a2": {
+          "label": "a2",
+          "childSegs": {
+            "1": 1
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a3": {
+          "label": "a3",
+          "childSegs": {
+            "2": 2,
+            "4": 4
+          },
+          "disc": true,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a4": {
+          "label": "a4",
+          "childSegs": {
+            "3": 3
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a5": {
+          "label": "a5",
+          "childSegs": {
+            "5": 5
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a6": {
+          "label": "a6",
+          "childSegs": {
+            "6": 6
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a7": {
+          "label": "a7",
+          "childSegs": {
+            "7": 7
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a8": {
+          "label": "a8",
+          "childSegs": {
+            "8": 8
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a9": {
+          "label": "a9",
+          "childSegs": {
+            "9": 9
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a10": {
+          "label": "a10",
+          "childSegs": {
+            "10": 10
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a11": {
+          "label": "a11",
+          "childSegs": {
+            "11": 11
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a12": {
+          "label": "a12",
+          "childSegs": {
+            "12": 12
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        }
+      },
+      "segs": [
+        {
+          "words": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "iu": "a1",
+          "type": "default",
+          "index": 0
+        },
+        {
+          "words": [
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            17
+          ],
+          "iu": "a2",
+          "type": "default",
+          "index": 1
+        },
+        {
+          "words": [
+            18,
+            19,
+            20,
+            21
+          ],
+          "iu": "a3",
+          "type": "default",
+          "index": 2
+        },
+        {
+          "words": [
+            22,
+            23,
+            24,
+            25
+          ],
+          "iu": "a4",
+          "type": "default",
+          "index": 3
+        },
+        {
+          "words": [
+            26,
+            27,
+            28,
+            29,
+            30,
+            31,
+            32
+          ],
+          "iu": "a3",
+          "type": "default",
+          "index": 4
+        },
+        {
+          "words": [
+            33,
+            34
+          ],
+          "iu": "a5",
+          "type": "default",
+          "index": 5
+        },
+        {
+          "words": [
+            35,
+            36,
+            37,
+            38,
+            39
+          ],
+          "iu": "a6",
+          "type": "default",
+          "index": 6
+        },
+        {
+          "words": [
+            40,
+            41,
+            42,
+            43,
+            44,
+            45
+          ],
+          "iu": "a7",
+          "type": "default",
+          "index": 7
+        },
+        {
+          "words": [
+            46,
+            47,
+            48,
+            49
+          ],
+          "iu": "a8",
+          "type": "default",
+          "index": 8
+        },
+        {
+          "words": [
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61,
+            62,
+            63,
+            64,
+            65,
+            66
+          ],
+          "iu": "a9",
+          "type": "default",
+          "index": 9
+        },
+        {
+          "words": [
+            67,
+            68,
+            69
+          ],
+          "iu": "a10",
+          "type": "default",
+          "index": 10
+        },
+        {
+          "words": [
+            70,
+            71,
+            72,
+            73,
+            74,
+            75,
+            76,
+            77,
+            78
+          ],
+          "iu": "a11",
+          "type": "default",
+          "index": 11
+        },
+        {
+          "words": [
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88,
+            89
+          ],
+          "iu": "a12",
+          "type": "default",
+          "index": 12
+        }
+      ],
+      "sents": [
+        "The Apollo 11 mission landed the first humans on the Moon as part of NASA 's program.",
+        "Commander Neil Armstrong, pilot Michael Collins, and Buzz Aldrin flew the spacecraft.",
+        "Eagle landed in the Sea of Tranquility while Collins stayed in orbit.",
+        "During their moonwalk, they set up instruments, gathered 47 pounds of rocks, and spoke with President Nixon.",
+        "After liftoff, they rejoined and splashed down in the Pacific.",
+        "The success fulfilled Kennedy 's goal and inspired the world."
+      ],
+      "words": [
+        {
+          "text": "The",
+          "index": 0,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "Apollo",
+          "index": 1,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "11",
+          "index": 2,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "mission",
+          "index": 3,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "landed",
+          "index": 4,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "the",
+          "index": 5,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "first",
+          "index": 6,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "humans",
+          "index": 7,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "on",
+          "index": 8,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "the",
+          "index": 9,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "Moon",
+          "index": 10,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "as",
+          "index": 11,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "part",
+          "index": 12,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "of",
+          "index": 13,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "NASA",
+          "index": 14,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "'s",
+          "index": 15,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "program",
+          "index": 16,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": ".",
+          "index": 17,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "Commander",
+          "index": 18,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "Neil",
+          "index": 19,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "Armstrong",
+          "index": 20,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": ",",
+          "index": 21,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "pilot",
+          "index": 22,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 3
+        },
+        {
+          "text": "Michael",
+          "index": 23,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 3
+        },
+        {
+          "text": "Collins",
+          "index": 24,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 3
+        },
+        {
+          "text": ",",
+          "index": 25,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 3
+        },
+        {
+          "text": "and",
+          "index": 26,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "Buzz",
+          "index": 27,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "Aldrin",
+          "index": 28,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "flew",
+          "index": 29,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "the",
+          "index": 30,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "spacecraft",
+          "index": 31,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": ".",
+          "index": 32,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "Eagle",
+          "index": 33,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "landed",
+          "index": 34,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "in",
+          "index": 35,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "the",
+          "index": 36,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "Sea",
+          "index": 37,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "of",
+          "index": 38,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "Tranquility",
+          "index": 39,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "while",
+          "index": 40,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "Collins",
+          "index": 41,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "stayed",
+          "index": 42,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "in",
+          "index": 43,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "orbit",
+          "index": 44,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": ".",
+          "index": 45,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "During",
+          "index": 46,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "their",
+          "index": 47,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "moonwalk",
+          "index": 48,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": ",",
+          "index": 49,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "they",
+          "index": 50,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "set",
+          "index": 51,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "up",
+          "index": 52,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "instruments",
+          "index": 53,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": ",",
+          "index": 54,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "gathered",
+          "index": 55,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "47",
+          "index": 56,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "pounds",
+          "index": 57,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "of",
+          "index": 58,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "rocks",
+          "index": 59,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": ",",
+          "index": 60,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "and",
+          "index": 61,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "spoke",
+          "index": 62,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "with",
+          "index": 63,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "President",
+          "index": 64,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "Nixon",
+          "index": 65,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": ".",
+          "index": 66,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "After",
+          "index": 67,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "liftoff",
+          "index": 68,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": ",",
+          "index": 69,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "they",
+          "index": 70,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "rejoined",
+          "index": 71,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "and",
+          "index": 72,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "splashed",
+          "index": 73,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "down",
+          "index": 74,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "in",
+          "index": 75,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "the",
+          "index": 76,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "Pacific",
+          "index": 77,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": ".",
+          "index": 78,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "The",
+          "index": 79,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "success",
+          "index": 80,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "fulfilled",
+          "index": 81,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "Kennedy",
+          "index": 82,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "'s",
+          "index": 83,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "goal",
+          "index": 84,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "and",
+          "index": 85,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "inspired",
+          "index": 86,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "the",
+          "index": 87,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "world",
+          "index": 88,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": ".",
+          "index": 89,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        }
+      ],
+      "max_seg_count": 13,
+      "manual_iu_count": 0,
+      "max_connected_idx": 1,
+      "max_disc_idx": 1,
+      "doc_name": "3.txt",
+      "doc_type": "summary",
+      "_id": {
+        "$oid": "69f8635ae603be355a3cc384"
+      },
+      "user_id": {
+        "$oid": "69d78309d14b34c44d702154"
+      },
+      "project_id": {
+        "$oid": "69f8635ae603be355a3cc37c"
+      },
+      "history_id": {
+        "$oid": "69f8635ae603be355a3cc383"
+      },
+      "deleted": false,
+      "version": 0
+    },
+    {
+      "ius": {
+        "a1": {
+          "label": "a1",
+          "childSegs": {
+            "0": 0,
+            "2": 2
+          },
+          "disc": true,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a2": {
+          "label": "a2",
+          "childSegs": {
+            "1": 1
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a3": {
+          "label": "a3",
+          "childSegs": {
+            "3": 3
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a4": {
+          "label": "a4",
+          "childSegs": {
+            "4": 4
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a5": {
+          "label": "a5",
+          "childSegs": {
+            "5": 5
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a6": {
+          "label": "a6",
+          "childSegs": {
+            "6": 6
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a7": {
+          "label": "a7",
+          "childSegs": {
+            "7": 7
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a8": {
+          "label": "a8",
+          "childSegs": {
+            "8": 8
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a9": {
+          "label": "a9",
+          "childSegs": {
+            "9": 9
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a10": {
+          "label": "a10",
+          "childSegs": {
+            "10": 10
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a11": {
+          "label": "a11",
+          "childSegs": {
+            "11": 11
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a12": {
+          "label": "a12",
+          "childSegs": {
+            "12": 12
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        }
+      },
+      "segs": [
+        {
+          "words": [
+            0,
+            1,
+            2
+          ],
+          "iu": "a1",
+          "type": "default",
+          "index": 0
+        },
+        {
+          "words": [
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "iu": "a2",
+          "type": "default",
+          "index": 1
+        },
+        {
+          "words": [
+            8,
+            9
+          ],
+          "iu": "a1",
+          "type": "default",
+          "index": 2
+        },
+        {
+          "words": [
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "iu": "a3",
+          "type": "default",
+          "index": 3
+        },
+        {
+          "words": [
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26
+          ],
+          "iu": "a4",
+          "type": "default",
+          "index": 4
+        },
+        {
+          "words": [
+            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
+            34,
+            35
+          ],
+          "iu": "a5",
+          "type": "default",
+          "index": 5
+        },
+        {
+          "words": [
+            36,
+            37,
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45,
+            46,
+            47
+          ],
+          "iu": "a6",
+          "type": "default",
+          "index": 6
+        },
+        {
+          "words": [
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54,
+            55,
+            56
+          ],
+          "iu": "a7",
+          "type": "default",
+          "index": 7
+        },
+        {
+          "words": [
+            57,
+            58,
+            59,
+            60,
+            61,
+            62
+          ],
+          "iu": "a8",
+          "type": "default",
+          "index": 8
+        },
+        {
+          "words": [
+            63,
+            64,
+            65
+          ],
+          "iu": "a9",
+          "type": "default",
+          "index": 9
+        },
+        {
+          "words": [
+            66,
+            67,
+            68,
+            69,
+            70,
+            71
+          ],
+          "iu": "a10",
+          "type": "default",
+          "index": 10
+        },
+        {
+          "words": [
+            72,
+            73,
+            74,
+            75
+          ],
+          "iu": "a11",
+          "type": "default",
+          "index": 11
+        },
+        {
+          "words": [
+            76,
+            77,
+            78,
+            79,
+            80,
+            81,
+            82,
+            83,
+            84,
+            85,
+            86
+          ],
+          "iu": "a12",
+          "type": "default",
+          "index": 12
+        }
+      ],
+      "sents": [
+        "Apollo 11, launched in July 1969, made history by landing men on the Moon.",
+        "The astronauts were Armstrong, Collins, and Aldrin.",
+        "The Saturn V carried Columbia and Eagle modules.",
+        "Armstrong 's first steps were televised worldwide with his iconic quote.",
+        "They deployed scientific tools and collected lunar soil.",
+        "Nixon congratulated them via radio.",
+        "The mission ended with a safe ocean landing.",
+        "Watched by millions, it symbolized progress and opened the way for more explorations."
+      ],
+      "words": [
+        {
+          "text": "Apollo",
+          "index": 0,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "11",
+          "index": 1,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": ",",
+          "index": 2,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "launched",
+          "index": 3,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "in",
+          "index": 4,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "July",
+          "index": 5,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "1969",
+          "index": 6,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": ",",
+          "index": 7,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "made",
+          "index": 8,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 2
+        },
+        {
+          "text": "history",
+          "index": 9,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 2
+        },
+        {
+          "text": "by",
+          "index": 10,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 3
+        },
+        {
+          "text": "landing",
+          "index": 11,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 3
+        },
+        {
+          "text": "men",
+          "index": 12,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 3
+        },
+        {
+          "text": "on",
+          "index": 13,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 3
+        },
+        {
+          "text": "the",
+          "index": 14,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 3
+        },
+        {
+          "text": "Moon",
+          "index": 15,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 3
+        },
+        {
+          "text": ".",
+          "index": 16,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 3
+        },
+        {
+          "text": "The",
+          "index": 17,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 4
+        },
+        {
+          "text": "astronauts",
+          "index": 18,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 4
+        },
+        {
+          "text": "were",
+          "index": 19,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 4
+        },
+        {
+          "text": "Armstrong",
+          "index": 20,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 4
+        },
+        {
+          "text": ",",
+          "index": 21,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 4
+        },
+        {
+          "text": "Collins",
+          "index": 22,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 4
+        },
+        {
+          "text": ",",
+          "index": 23,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 4
+        },
+        {
+          "text": "and",
+          "index": 24,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 4
+        },
+        {
+          "text": "Aldrin",
+          "index": 25,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 4
+        },
+        {
+          "text": ".",
+          "index": 26,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 4
+        },
+        {
+          "text": "The",
+          "index": 27,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "Saturn",
+          "index": 28,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "V",
+          "index": 29,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "carried",
+          "index": 30,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "Columbia",
+          "index": 31,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "and",
+          "index": 32,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "Eagle",
+          "index": 33,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "modules",
+          "index": 34,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": ".",
+          "index": 35,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "Armstrong",
+          "index": 36,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "'s",
+          "index": 37,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "first",
+          "index": 38,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "steps",
+          "index": 39,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "were",
+          "index": 40,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "televised",
+          "index": 41,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "worldwide",
+          "index": 42,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "with",
+          "index": 43,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "his",
+          "index": 44,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "iconic",
+          "index": 45,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "quote",
+          "index": 46,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": ".",
+          "index": 47,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "They",
+          "index": 48,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "deployed",
+          "index": 49,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "scientific",
+          "index": 50,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "tools",
+          "index": 51,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "and",
+          "index": 52,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "collected",
+          "index": 53,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "lunar",
+          "index": 54,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "soil",
+          "index": 55,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": ".",
+          "index": 56,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "Nixon",
+          "index": 57,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "congratulated",
+          "index": 58,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "them",
+          "index": 59,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "via",
+          "index": 60,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "radio",
+          "index": 61,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": ".",
+          "index": 62,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "The",
+          "index": 63,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "mission",
+          "index": 64,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "ended",
+          "index": 65,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "with",
+          "index": 66,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "a",
+          "index": 67,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "safe",
+          "index": 68,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "ocean",
+          "index": 69,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "landing",
+          "index": 70,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": ".",
+          "index": 71,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "Watched",
+          "index": 72,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "by",
+          "index": 73,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "millions",
+          "index": 74,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": ",",
+          "index": 75,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "it",
+          "index": 76,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "symbolized",
+          "index": 77,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "progress",
+          "index": 78,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "and",
+          "index": 79,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "opened",
+          "index": 80,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "the",
+          "index": 81,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "way",
+          "index": 82,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "for",
+          "index": 83,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "more",
+          "index": 84,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "explorations",
+          "index": 85,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": ".",
+          "index": 86,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        }
+      ],
+      "max_seg_count": 13,
+      "manual_iu_count": 0,
+      "max_connected_idx": 1,
+      "max_disc_idx": 1,
+      "doc_name": "4.txt",
+      "doc_type": "summary",
+      "_id": {
+        "$oid": "69f8635ae603be355a3cc386"
+      },
+      "user_id": {
+        "$oid": "69d78309d14b34c44d702154"
+      },
+      "project_id": {
+        "$oid": "69f8635ae603be355a3cc37c"
+      },
+      "history_id": {
+        "$oid": "69f8635ae603be355a3cc385"
+      },
+      "deleted": false,
+      "version": 0
+    },
+    {
+      "ius": {
+        "a1": {
+          "label": "a1",
+          "childSegs": {
+            "0": 0
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a2": {
+          "label": "a2",
+          "childSegs": {
+            "1": 1
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a3": {
+          "label": "a3",
+          "childSegs": {
+            "2": 2,
+            "4": 4
+          },
+          "disc": true,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a4": {
+          "label": "a4",
+          "childSegs": {
+            "3": 3
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a5": {
+          "label": "a5",
+          "childSegs": {
+            "5": 5
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a6": {
+          "label": "a6",
+          "childSegs": {
+            "6": 6
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a7": {
+          "label": "a7",
+          "childSegs": {
+            "7": 7
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a8": {
+          "label": "a8",
+          "childSegs": {
+            "8": 8
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a9": {
+          "label": "a9",
+          "childSegs": {
+            "9": 9
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a10": {
+          "label": "a10",
+          "childSegs": {
+            "10": 10
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a11": {
+          "label": "a11",
+          "childSegs": {
+            "11": 11
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a12": {
+          "label": "a12",
+          "childSegs": {
+            "12": 12
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a13": {
+          "label": "a13",
+          "childSegs": {
+            "13": 13,
+            "15": 15
+          },
+          "disc": true,
+          "linkedIus": [],
+          "suggested": false
+        },
+        "a14": {
+          "label": "a14",
+          "childSegs": {
+            "14": 14
+          },
+          "disc": null,
+          "linkedIus": [],
+          "suggested": false
+        }
+      },
+      "segs": [
+        {
+          "words": [
+            0,
+            1,
+            2
+          ],
+          "iu": "a1",
+          "type": "default",
+          "index": 0
+        },
+        {
+          "words": [
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "iu": "a2",
+          "type": "default",
+          "index": 1
+        },
+        {
+          "words": [
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "iu": "a3",
+          "type": "default",
+          "index": 2
+        },
+        {
+          "words": [
+            17,
+            18,
+            19
+          ],
+          "iu": "a4",
+          "type": "default",
+          "index": 3
+        },
+        {
+          "words": [
+            20,
+            21,
+            22,
+            23,
+            24,
+            25
+          ],
+          "iu": "a3",
+          "type": "default",
+          "index": 4
+        },
+        {
+          "words": [
+            26,
+            27,
+            28,
+            29,
+            30
+          ],
+          "iu": "a5",
+          "type": "default",
+          "index": 5
+        },
+        {
+          "words": [
+            31,
+            32,
+            33,
+            34,
+            35,
+            36,
+            37
+          ],
+          "iu": "a6",
+          "type": "default",
+          "index": 6
+        },
+        {
+          "words": [
+            38,
+            39,
+            40,
+            41,
+            42,
+            43,
+            44,
+            45
+          ],
+          "iu": "a7",
+          "type": "default",
+          "index": 7
+        },
+        {
+          "words": [
+            46,
+            47
+          ],
+          "iu": "a8",
+          "type": "default",
+          "index": 8
+        },
+        {
+          "words": [
+            48,
+            49,
+            50,
+            51,
+            52,
+            53,
+            54
+          ],
+          "iu": "a9",
+          "type": "default",
+          "index": 9
+        },
+        {
+          "words": [
+            55,
+            56,
+            57,
+            58,
+            59,
+            60,
+            61
+          ],
+          "iu": "a10",
+          "type": "default",
+          "index": 10
+        },
+        {
+          "words": [
+            62,
+            63,
+            64,
+            65,
+            66
+          ],
+          "iu": "a11",
+          "type": "default",
+          "index": 11
+        },
+        {
+          "words": [
+            67,
+            68,
+            69,
+            70,
+            71
+          ],
+          "iu": "a12",
+          "type": "default",
+          "index": 12
+        },
+        {
+          "words": [
+            72,
+            73,
+            74
+          ],
+          "iu": "a13",
+          "type": "default",
+          "index": 13
+        },
+        {
+          "words": [
+            75,
+            76,
+            77,
+            78,
+            79,
+            80
+          ],
+          "iu": "a14",
+          "type": "default",
+          "index": 14
+        },
+        {
+          "words": [
+            81,
+            82,
+            83,
+            84,
+            85,
+            86,
+            87,
+            88
+          ],
+          "iu": "a13",
+          "type": "default",
+          "index": 15
+        }
+      ],
+      "sents": [
+        "In 1969, Apollo 11 accomplished the first manned Moon landing.",
+        "Crew members Neil Armstrong, Buzz Aldrin, and Michael Collins traveled three days to reach lunar orbit.",
+        "Armstrong and Aldrin descended in Eagle, where Armstrong made the historic first step.",
+        "They explored for two and a half hours, planting a flag and taking samples.",
+        "After docking with Columbia, the team returned safely.",
+        "This event, seen by 650 million viewers, proved human capability and advanced space exploration."
+      ],
+      "words": [
+        {
+          "text": "In",
+          "index": 0,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "1969",
+          "index": 1,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": ",",
+          "index": 2,
+          "color": "primary",
+          "iu": "a1",
+          "seg": 0
+        },
+        {
+          "text": "Apollo",
+          "index": 3,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "11",
+          "index": 4,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "accomplished",
+          "index": 5,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "the",
+          "index": 6,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "first",
+          "index": 7,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "manned",
+          "index": 8,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "Moon",
+          "index": 9,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "landing",
+          "index": 10,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": ".",
+          "index": 11,
+          "color": "primary",
+          "iu": "a2",
+          "seg": 1
+        },
+        {
+          "text": "Crew",
+          "index": 12,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "members",
+          "index": 13,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "Neil",
+          "index": 14,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "Armstrong",
+          "index": 15,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": ",",
+          "index": 16,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 2
+        },
+        {
+          "text": "Buzz",
+          "index": 17,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 3
+        },
+        {
+          "text": "Aldrin",
+          "index": 18,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 3
+        },
+        {
+          "text": ",",
+          "index": 19,
+          "color": "primary",
+          "iu": "a4",
+          "seg": 3
+        },
+        {
+          "text": "and",
+          "index": 20,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "Michael",
+          "index": 21,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "Collins",
+          "index": 22,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "traveled",
+          "index": 23,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "three",
+          "index": 24,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "days",
+          "index": 25,
+          "color": "primary",
+          "iu": "a3",
+          "seg": 4
+        },
+        {
+          "text": "to",
+          "index": 26,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "reach",
+          "index": 27,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "lunar",
+          "index": 28,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "orbit",
+          "index": 29,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": ".",
+          "index": 30,
+          "color": "primary",
+          "iu": "a5",
+          "seg": 5
+        },
+        {
+          "text": "Armstrong",
+          "index": 31,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "and",
+          "index": 32,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "Aldrin",
+          "index": 33,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "descended",
+          "index": 34,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "in",
+          "index": 35,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "Eagle",
+          "index": 36,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": ",",
+          "index": 37,
+          "color": "primary",
+          "iu": "a6",
+          "seg": 6
+        },
+        {
+          "text": "where",
+          "index": 38,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "Armstrong",
+          "index": 39,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "made",
+          "index": 40,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "the",
+          "index": 41,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "historic",
+          "index": 42,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "first",
+          "index": 43,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "step",
+          "index": 44,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": ".",
+          "index": 45,
+          "color": "primary",
+          "iu": "a7",
+          "seg": 7
+        },
+        {
+          "text": "They",
+          "index": 46,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "explored",
+          "index": 47,
+          "color": "primary",
+          "iu": "a8",
+          "seg": 8
+        },
+        {
+          "text": "for",
+          "index": 48,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "two",
+          "index": 49,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "and",
+          "index": 50,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "a",
+          "index": 51,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "half",
+          "index": 52,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "hours",
+          "index": 53,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": ",",
+          "index": 54,
+          "color": "primary",
+          "iu": "a9",
+          "seg": 9
+        },
+        {
+          "text": "planting",
+          "index": 55,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "a",
+          "index": 56,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "flag",
+          "index": 57,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "and",
+          "index": 58,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "taking",
+          "index": 59,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "samples",
+          "index": 60,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": ".",
+          "index": 61,
+          "color": "primary",
+          "iu": "a10",
+          "seg": 10
+        },
+        {
+          "text": "After",
+          "index": 62,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "docking",
+          "index": 63,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "with",
+          "index": 64,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "Columbia",
+          "index": 65,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": ",",
+          "index": 66,
+          "color": "primary",
+          "iu": "a11",
+          "seg": 11
+        },
+        {
+          "text": "the",
+          "index": 67,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "team",
+          "index": 68,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "returned",
+          "index": 69,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "safely",
+          "index": 70,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": ".",
+          "index": 71,
+          "color": "primary",
+          "iu": "a12",
+          "seg": 12
+        },
+        {
+          "text": "This",
+          "index": 72,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 13
+        },
+        {
+          "text": "event",
+          "index": 73,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 13
+        },
+        {
+          "text": ",",
+          "index": 74,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 13
+        },
+        {
+          "text": "seen",
+          "index": 75,
+          "color": "primary",
+          "iu": "a14",
+          "seg": 14
+        },
+        {
+          "text": "by",
+          "index": 76,
+          "color": "primary",
+          "iu": "a14",
+          "seg": 14
+        },
+        {
+          "text": "650",
+          "index": 77,
+          "color": "primary",
+          "iu": "a14",
+          "seg": 14
+        },
+        {
+          "text": "million",
+          "index": 78,
+          "color": "primary",
+          "iu": "a14",
+          "seg": 14
+        },
+        {
+          "text": "viewers",
+          "index": 79,
+          "color": "primary",
+          "iu": "a14",
+          "seg": 14
+        },
+        {
+          "text": ",",
+          "index": 80,
+          "color": "primary",
+          "iu": "a14",
+          "seg": 14
+        },
+        {
+          "text": "proved",
+          "index": 81,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 15
+        },
+        {
+          "text": "human",
+          "index": 82,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 15
+        },
+        {
+          "text": "capability",
+          "index": 83,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 15
+        },
+        {
+          "text": "and",
+          "index": 84,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 15
+        },
+        {
+          "text": "advanced",
+          "index": 85,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 15
+        },
+        {
+          "text": "space",
+          "index": 86,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 15
+        },
+        {
+          "text": "exploration",
+          "index": 87,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 15
+        },
+        {
+          "text": ".",
+          "index": 88,
+          "color": "primary",
+          "iu": "a13",
+          "seg": 15
+        }
+      ],
+      "max_seg_count": 16,
+      "manual_iu_count": 0,
+      "max_connected_idx": 1,
+      "max_disc_idx": 1,
+      "doc_name": "5.txt",
+      "doc_type": "summary",
+      "_id": {
+        "$oid": "69f8635ae603be355a3cc388"
+      },
+      "user_id": {
+        "$oid": "69d78309d14b34c44d702112"
+      },
+      "project_id": {
+        "$oid": "69f8635ae603be355a3cc37c"
+      },
+      "history_id": {
+        "$oid": "69f8635ae603be355a3cc387"
+      },
+      "deleted": false,
+      "version": 0
+    }
+  ]
+}

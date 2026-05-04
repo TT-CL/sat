@@ -122,7 +122,7 @@ export class StorageService {
   }
 
   clearProjects() {
-    this.projects_support = null;
+    this.projects_support = [];
     this.projects.next(null);
     this.session.clear('projects_support');
   }
