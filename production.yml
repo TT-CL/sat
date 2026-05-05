@@ -52,6 +52,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.computation.rule=Host(`${DOMAIN_NAME}`) && PathPrefix(`/api/`)"
+      - "traefik.http.services.sat.loadbalancer.server.port=80"
       - "traefik.http.middlewares.computation-strip.stripprefix.prefixes=/api"
       - "traefik.http.middlewares.computation-strip.stripprefix.forceslash=false"
       - "traefik.http.routers.computation.middlewares=computation-strip@docker"
