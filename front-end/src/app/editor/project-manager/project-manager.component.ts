@@ -14,7 +14,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog'
-import { forkJoin } from 'rxjs';
+import { finalize, forkJoin } from 'rxjs';
 import { NLPService } from '../../nlp.service';
 import { OverlayService, ProgressRef } from '../../overlay.service';
 import { UploadOverlayComponent } from '../../utils/upload-overlay/upload-overlay.component';
@@ -131,10 +131,19 @@ export class ProjectManagerComponent implements OnInit {
 
   //save the source file
   onChangeSourceInput(): void {
+    this.showOverlay();
     const file = this.sourceInput.nativeElement.files?.[0];
-    if (!file) return; //drop the function without raising errors
+    if (!file){
+      this.hideOverlay();
+      return; //drop the function without raising errors
+    } 
     this.sourceFormFieldClass = "";
-    this.nlp.parseRawIUCollection(file, "source").subscribe({
+    this.nlp.parseRawIUCollection(file, "source").pipe(
+      finalize(() => {
+        //Always run this at the end
+        this.hideOverlay();
+      })
+    ).subscribe({
       next: doc => {
         if (this.cur_proj) {
           const cur_src = this.cur_proj.sourceDoc;
@@ -172,14 +181,25 @@ export class ProjectManagerComponent implements OnInit {
 
   //save the summary file
   onChangeSummaryInput(): void {
+    this.showOverlay();
     const fileList = this.summaryInput.nativeElement.files;
     const summaryFiles: File[] = fileList ? Array.from(fileList) : [];
+
+    if (summaryFiles.length === 0){
+      this.hideOverlay();
+      return; //drop the function without raising errors
+    }
 
     const requests = summaryFiles.map(file =>
       this.nlp.parseRawIUCollection(file, 'summary')
     );
 
-    forkJoin(requests).subscribe({
+    forkJoin(requests).pipe(
+      finalize(() => {
+        //Always run this at the end
+        this.hideOverlay();
+      })
+    ).subscribe({
       next: (docs) => {
         docs.forEach(doc => {
           this.summaryFiles.add(doc);
@@ -286,10 +306,14 @@ export class ProjectManagerComponent implements OnInit {
       this.sourceFile,
       this.summaryAddQueue,
       this.summaryRemovalQueue
+    ).pipe(
+      finalize(() => {
+        //Always run this at the end
+        this.hideOverlay();
+      })
     ).subscribe({
       complete: () => {
         this.ngOnInit();
-        this.hideOverlay();
       },
       error: err => console.error("Error while updating the project: " + err)
     })

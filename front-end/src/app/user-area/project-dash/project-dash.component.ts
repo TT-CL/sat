@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';;
 import { HttpClient } from '@angular/common/http';
 import { ProjectItemComponent } from '../../utils/project-item/project-item.component';
 import { UploadOverlayComponent } from '../../utils/upload-overlay/upload-overlay.component';
+import { finalize } from 'rxjs';
 
 
 @Component({
@@ -58,6 +59,7 @@ export class ProjectDashComponent implements OnInit {
     //console.log(file);
     //files[0].type == "application/json"
     if (file.name.endsWith(".iuproj")) {
+      this.showOverlay();
       const fileReader = new FileReader();
       fileReader.readAsText(file, "UTF-8");
       fileReader.onload = () => {
@@ -68,11 +70,11 @@ export class ProjectDashComponent implements OnInit {
         proj.reconsolidate(anon_proj);
         // add project to session
         console.log(proj);
-        this.showOverlay();
         this.restoreBackup(proj);
       }
       fileReader.onerror = (error) => {
         console.log(error);
+        this.hideOverlay();
       }
     } else {
       console.log("Incorrect file type.")
@@ -80,10 +82,14 @@ export class ProjectDashComponent implements OnInit {
   }
 
   restoreBackup(proj: Project): void {
-    this.storage.addProject(proj).subscribe({
+    this.storage.addProject(proj).pipe(
+      finalize(() => {
+        //Always run this at the end
+        this.hideOverlay();
+      })
+    ).subscribe({
       next: () => {
         console.log("Project restored successfully");
-        this.hideOverlay();
       },
       error: err => {
         console.log("Error restoring Project:", err);
@@ -95,7 +101,13 @@ export class ProjectDashComponent implements OnInit {
   }
 
   sampleProject(): void {
-    this.http.get('/assets/apollo.json').subscribe(data => {
+    this.showOverlay();
+    this.http.get('/assets/apollo.json').pipe(
+          finalize(() => {
+            //Always run this at the end
+            this.hideOverlay();
+          })
+        ).subscribe(data => {
       let proj = new Project();
       proj.reconsolidate(data);
       this.restoreBackup(proj)

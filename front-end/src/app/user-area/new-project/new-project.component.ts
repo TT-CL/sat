@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NgForm, ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
 
-import { forkJoin, Observable, of } from 'rxjs';
+import { finalize, forkJoin, Observable, of } from 'rxjs';
 
 import { OverlayService, ProgressRef } from '../../overlay.service';
 
@@ -95,10 +95,16 @@ export class NewProjectComponent {
 
   //save the source file
   onChangeSourceInput(): void {
+    this.showOverlay();
     const file = this.sourceInput.nativeElement.files?.[0];
     this.sourceFormFieldClass = "";
     if (file) {
-      this.nlp.parseRawIUCollection(file, "source").subscribe({
+      this.nlp.parseRawIUCollection(file, "source").pipe(
+        finalize(() => {
+          //Always run this at the end
+          this.hideOverlay();
+        })
+      ).subscribe({
         next: doc => {
           this.parsedSource = doc;
           //set the value of the form to the name of the file
@@ -106,6 +112,8 @@ export class NewProjectComponent {
         },
         error: err => console.error("Error parsing new source document. Error:" + err)
       })
+    } else {
+      this.hideOverlay();
     }
     //Deselect the source field
     this.sourceForm.nativeElement.blur();
@@ -123,14 +131,24 @@ export class NewProjectComponent {
 
   //save the summary file
   onChangeSummaryInput(): void {
+    this.showOverlay();
     const fileList = this.summaryInput.nativeElement.files;
     const summaryFiles: File[] = fileList ? Array.from(fileList) : [];
+    if (summaryFiles.length === 0) {
+      this.hideOverlay();
+      return;
+    }
 
     const requests = summaryFiles.map(file =>
       this.nlp.parseRawIUCollection(file, 'summary')
     );
 
-    forkJoin(requests).subscribe({
+    forkJoin(requests).pipe(
+      finalize(() => {
+        //Always run this at the end
+        this.hideOverlay();
+      })
+    ).subscribe({
       next: (docs) => {
         docs.forEach(doc => {
           this.parsedSummaries.add(doc);
@@ -188,10 +206,14 @@ export class NewProjectComponent {
       proj.summaryDocs = Array.from(this.parsedSummaries);
     }
 
-    this.storage.addProject(proj).subscribe({
+    this.storage.addProject(proj).pipe(
+      finalize(() => {
+        //Always run this at the end
+        this.hideOverlay();
+      })
+    ).subscribe({
       next: () => {
         console.log("Project created successfully");
-        this.hideOverlay();
         this.redirectOut();
       },
       error: err => {
