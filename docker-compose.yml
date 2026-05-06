@@ -37,7 +37,7 @@ services:
       - backend
 
   db:
-    image: "mongo:4"
+    image: "mongo:8"
     restart: always
     env_file:
       - ./db/root_user.env
