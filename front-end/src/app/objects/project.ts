@@ -9,8 +9,8 @@ export class Project {
   sourceDoc: IUCollection | null = null;
   summaryDocs: IUCollection[] | null = null;
   //DB values
-  _id : any | null = null;
-  user_id : any | null = null;
+  _id: any | null = null;
+  user_id: any | null = null;
   deleted: boolean | null = null;
 
   constructor() {
@@ -59,7 +59,7 @@ export class Project {
   purgeProjectLinks() {
     // THIS FUNCTION PURGES ALL MANUAL LINKS
     // BE CAREFUL!
-    if (this.summaryDocs){ //check if the project has summaries first
+    if (this.summaryDocs) { //check if the project has summaries first
       this.summaryDocs.forEach(summary => {
         for (let iu_idx in summary.ius) {
           let iu = summary.ius[iu_idx];
@@ -67,5 +67,37 @@ export class Project {
         }
       })
     }
+  }
+
+  addSummary(summary: IUCollection | IUCollection[] | Set<IUCollection>): void {
+    if (this.summaryDocs === null) {
+      throw new Error("Attempting to add summary when summary list not initialized.")
+    }
+    // create an array with the summaries to add
+    const summariesToAdd =
+      summary instanceof Set
+        ? Array.from(summary)
+        : Array.isArray(summary)
+          ? summary
+          : [summary];
+    // add the summaries
+    this.summaryDocs.push(...summariesToAdd);
+  }
+
+  removeSummary(summary: IUCollection | IUCollection[] | Set<IUCollection>): void {
+    if (this.summaryDocs === null) {
+      throw new Error("Attempting to remove summary when summary list not initialized.")
+    }
+    // create an array with the summaries to remove
+    const summariesToRemove =
+      summary instanceof Set
+        ? Array.from(summary)
+        : Array.isArray(summary)
+          ? summary
+          : [summary];
+
+    // remove the summaries
+    const idsToRemove = new Set(summariesToRemove.map(s => s._id));
+    this.summaryDocs = this.summaryDocs.filter(s => !idsToRemove.has(s._id));
   }
 }

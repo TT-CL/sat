@@ -394,6 +394,19 @@ export class StorageService {
     if (this.offlineMode_support || !sync) {
       // if we are in offline mode or sync is disabled skip DB calls
       console.log("offline save")
+
+      if (replacementSource) {
+        if (replacementSource != proj.sourceDoc) {
+          proj.sourceDoc = replacementSource;
+        }
+      }
+      if (summaryAddQueue){
+        proj.addSummary(summaryAddQueue);
+      }
+
+      if (summaryRemovalQueue){
+        proj.removeSummary(summaryRemovalQueue)
+      }
       this.__updateCurProject(proj);
       return of(void 0);
     }
@@ -418,10 +431,7 @@ export class StorageService {
           tap((new_summary: IUCollection) => {
             //console.log("new_summary")
             //console.log(new_summary);
-            if (!proj.summaryDocs) {
-              proj.summaryDocs = [];
-            }
-            proj.summaryDocs.push(new_summary);
+            proj.addSummary(new_summary);
           })
         )
       );
@@ -429,9 +439,7 @@ export class StorageService {
       const removed_summaries_queue$ = Array.from(summaryRemovalQueue ?? []).map(
         summary => this.deleteSummary(summary).pipe(
           tap(() => {
-            if (proj.summaryDocs) {
-              proj.summaryDocs = proj.summaryDocs.filter(s => s._id !== summary._id)
-            }
+            proj.removeSummary(summary);
           }))
       );
 
