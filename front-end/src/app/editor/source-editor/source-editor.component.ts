@@ -1,4 +1,4 @@
-import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncapsulation, ElementRef, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncapsulation, ElementRef, AfterViewInit, AfterViewChecked, Input } from '@angular/core';
 
 import { IdeaUnit, IUCollection, Project, Segment } from '../../objects/objects.module';
 
@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NLPService } from '../../nlp.service';
 import { SegEditQueue } from '../../objects/seg-edit-queue';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-source-editor',
@@ -50,6 +51,9 @@ export class SourceEditorComponent implements AfterViewInit {
   segEditQueue: SegEditQueue = new SegEditQueue();
 
   @ViewChild("preEditor") preEditor!: ElementRef<HTMLPreElement>;
+
+  @Input() showOverlay!: () => void;
+  @Input() hideOverlay!: () => void;
 
   constructor(
     private storage: StorageService,
@@ -198,12 +202,15 @@ export class SourceEditorComponent implements AfterViewInit {
   private storeEdits() {
     // null guards
     if (this.newDoc === null) {
+      this.hideOverlay();
       throw new Error("newDoc is null!")
     }
     if (this.doc === null) {
+      this.hideOverlay();
       throw new Error("doc is null!")
     }
     if (this.proj === null) {
+      this.hideOverlay();
       throw new Error("proj is null!")
     }
     //compute
@@ -223,7 +230,12 @@ export class SourceEditorComponent implements AfterViewInit {
     this.proj.sourceDoc = this.newDoc
     this.proj.purgeProjectLinks();
     this.storage.clearAllSimilarities();
-    this.storage.updateCurProject(this.proj, true).subscribe({
+    this.storage.updateCurProject(this.proj, true).pipe(
+      finalize(() => {
+        //Always run this at the end
+        this.hideOverlay();
+      })
+    ).subscribe({
       error: err => console.error('Silent project update failed:', err),
       complete: () => {
         this.doc = this.cloneIuCollection(this.newDoc);
@@ -233,6 +245,7 @@ export class SourceEditorComponent implements AfterViewInit {
   }
 
   saveEdits() {
+    this.showOverlay();
     if (this.editedFlag && !this.discEdited) {
       this.nlp.retrieveTokenizedSegs(this.doc, this.newSegments).subscribe({
         next: (new_doc: IUCollection) => {

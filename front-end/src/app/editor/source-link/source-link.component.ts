@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { IdeaUnit, IUCollection, Segment } from '../../objects/objects.module';
 
@@ -7,35 +7,35 @@ import { MatChipsModule } from '@angular/material/chips';
 import { CommonModule } from '@angular/common';
 
 @Component({
-    selector: 'app-source-link',
-    templateUrl: './source-link.component.html',
-    styleUrls: ['./source-link.component.sass'],
-    standalone: true,
-    imports: [
-      CommonModule,
-      MatChipsModule
-    ]
+  selector: 'app-source-link',
+  templateUrl: './source-link.component.html',
+  styleUrls: ['./source-link.component.sass'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatChipsModule
+  ]
 })
 export class SourceLinkComponent implements OnInit {
 
   constructor(private storage: StorageService) {
-      storage.getWorkSource().subscribe((source)=>{
-        this.doc = source;
-        //console.log(source);
-        //console.log("retrieving source");
-      });
+    storage.getWorkSource().subscribe((source) => {
+      this.doc = source;
+      //console.log(source);
+      //console.log("retrieving source");
+    });
 
-      storage.getWorkSummary().subscribe((summary)=>{
-        this.summaryDoc = summary;
-      });
+    storage.getWorkSummary().subscribe((summary) => {
+      this.summaryDoc = summary;
+    });
 
-      storage.getClickedSummaryIU().subscribe((iu)=>{
-        this.selected_summary_iu = iu;
-      });
+    storage.getClickedSummaryIU().subscribe((iu) => {
+      this.selected_summary_iu = iu;
+    });
 
-      storage.getSimilarities().subscribe((sims)=>{
-        this.simsStack = sims;
-      });
+    storage.getSimilarities().subscribe((sims) => {
+      this.simsStack = sims;
+    });
   }
 
   ngOnInit(): void {
@@ -46,39 +46,42 @@ export class SourceLinkComponent implements OnInit {
 
   selected_iu: IdeaUnit | null = null;
   selected_summary_iu: IdeaUnit | null = null;
-  simsStack: Record <string, any> | null = null;
+  simsStack: Record<string, any> | null = null;
 
-  
-  public get sims() : Record <string, any> | null {
-    if (this.simsStack && this.summaryDoc && this.summaryDoc.doc_name && this.simsStack[this.summaryDoc.doc_name]){
+  @Input() showOverlay!: () => void;
+  @Input() hideOverlay!: () => void;
+
+
+  public get sims(): Record<string, any> | null {
+    if (this.simsStack && this.summaryDoc && this.summaryDoc.doc_name && this.simsStack[this.summaryDoc.doc_name]) {
       return this.simsStack[this.summaryDoc.doc_name];
-    }else{
+    } else {
       return null;
     }
   }
-  
 
-  linkClick(seg: Segment) : void {
-    if (this.doc === null){
+
+  linkClick(seg: Segment): void {
+    if (this.doc === null) {
       throw new Error("Memory continuity error, doc is null");
     }
-    if (this.summaryDoc === null){
+    if (this.summaryDoc === null) {
       throw new Error("Memory continuity error, doc is null");
     }
-    if (seg.iu === null){
+    if (seg.iu === null) {
       throw new Error("index error, seg.iu is null" + seg);
     }
-    if (this.selected_summary_iu=== null){
+    if (this.selected_summary_iu === null) {
       throw new Error("logic error, selected_summary_iu is null");
     }
-    if (this.selected_summary_iu.label === null){
+    if (this.selected_summary_iu.label === null) {
       throw new Error("index error, selected_summary_iu.label is null" + this.selected_summary_iu);
     }
 
     const cur_doc_name = this.summaryDoc.doc_name // storing to avoid dereferencing errors in async call
     //console.log("click");
     //if I have an input link
-    if (this.selected_summary_iu){
+    if (this.selected_summary_iu) {
       this.selected_iu = this.doc.ius[seg.iu];
       // I do not want to update the source, as it can have multiple summaries
       //this.selected_iu.toggleIuLink(this.selected_summary_iu);
@@ -91,7 +94,7 @@ export class SourceLinkComponent implements OnInit {
     }
   }
 
-  topNSims(iu: IdeaUnit, n: number){
+  topNSims(iu: IdeaUnit, n: number) {
     /**
     let temp_ius = Array(Object.keys(this.summaryDoc.ius))[0]
     let card_iu = temp_ius.length
@@ -144,11 +147,12 @@ export class SourceLinkComponent implements OnInit {
     */
 
     //return the second column of the first n records
-    if (this.sims === null || iu.label === null){
+    if (this.sims === null || iu.label === null) {
       return []
     }
     return this.sims[iu.label].slice(0, n).map(
-      (value:any,index:any)=>{
-        return value[1]});
+      (value: any, index: any) => {
+        return value[1]
+      });
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { IUCollection } from '../../objects/objects.module';
 
@@ -33,4 +33,7 @@ export class SummaryIuComponent implements OnInit {
   support_array = [];
   summary_idx: number | null = null;
   doc: IUCollection | null = null;
+
+  @Input() showOverlay!: () => void;
+  @Input() hideOverlay!: () => void;
 }

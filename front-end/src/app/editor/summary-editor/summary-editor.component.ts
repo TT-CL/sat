@@ -1,4 +1,4 @@
-import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncapsulation, ElementRef, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncapsulation, ElementRef, AfterViewInit, AfterViewChecked, Input } from '@angular/core';
 
 import { IdeaUnit, IUCollection, Project, Segment } from '../../objects/objects.module';
 
@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NLPService } from '../../nlp.service';
 import { SegEditQueue } from '../../objects/seg-edit-queue';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-summary-editor',
@@ -49,6 +50,9 @@ export class SummaryEditorComponent implements AfterViewInit {
   segEditQueue: SegEditQueue = new SegEditQueue();
 
   @ViewChild("preEditor") preEditor!: ElementRef<HTMLPreElement>;
+
+  @Input() showOverlay!: () => void;
+  @Input() hideOverlay!: () => void;
 
   constructor(
     private storage: StorageService,
@@ -194,12 +198,15 @@ export class SummaryEditorComponent implements AfterViewInit {
   private storeEdits() {
     // null guards
     if (this.newDoc === null) {
+      this.hideOverlay();
       throw new Error("newDoc is null!")
     }
     if (this.doc === null) {
+      this.hideOverlay();
       throw new Error("doc is null!")
     }
-    if (this.doc.doc_name === null){
+    if (this.doc.doc_name === null) {
+      this.hideOverlay();
       throw new Error("doc name is null!" + this.doc)
     }
     //compute
@@ -216,7 +223,12 @@ export class SummaryEditorComponent implements AfterViewInit {
     this.storage.clearSimilarities(this.doc.doc_name);
     //console.log(this.newDoc)
     const cur_doc_name = this.newDoc.doc_name
-    this.storage.updateWorkSummary(this.newDoc, true).subscribe({
+    this.storage.updateWorkSummary(this.newDoc, true).pipe(
+      finalize(() => {
+        //Always run this at the end
+        this.hideOverlay();
+      })
+    ).subscribe({
       complete: () => {
         this.doc = this.cloneIuCollection(this.newDoc)
         this.editedFlag = false;
@@ -226,6 +238,7 @@ export class SummaryEditorComponent implements AfterViewInit {
   }
 
   saveEdits() {
+    this.showOverlay();
     if (this.editedFlag && !this.discEdited) {
       this.nlp.retrieveTokenizedSegs(this.doc, this.newSegments).subscribe({
         next: (new_doc: IUCollection) => {

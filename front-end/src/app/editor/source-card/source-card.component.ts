@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentRef, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 import { IUCollection } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
 
-import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
+import { CdkPortalOutletAttachedRef, ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
 
 import {BehaviorSubject, Observable} from 'rxjs';
 
@@ -16,6 +16,8 @@ import { SourceLinkComponent } from '../source-link/source-link.component';
 import { SourceEditorComponent } from '../source-editor/source-editor.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { OverlayService, ProgressRef } from '../../overlay.service';
+import { UploadOverlayComponent } from '../../utils/upload-overlay/upload-overlay.component';
 
 
 @Component({
@@ -34,6 +36,7 @@ export class SourceCardComponent implements OnInit {
   constructor(
     private storage: StorageService,
     private route: ActivatedRoute,
+    private overlayService: OverlayService,
     private router: Router,
   ) {
       storage.getWorkSource().subscribe((source)=>{
@@ -64,6 +67,23 @@ export class SourceCardComponent implements OnInit {
 
     //forcibly trigger route update on init
     this.view.next(this.route.snapshot.params["view"]);
+  }
+
+    // overlay controls
+  @ViewChild("overlayOrigin") overlayOrigin!: ElementRef;
+  overlayRef: ProgressRef | null = null;
+  showOverlay() {
+    this.overlayRef = this.overlayService.showOverlay(this.overlayOrigin, UploadOverlayComponent);
+  }
+  hideOverlay() {
+    this.overlayService.detach(this.overlayRef);
+  }
+
+  onPortalAttached(ref: CdkPortalOutletAttachedRef): void {
+    const componentRef = ref as ComponentRef<any>;
+
+    componentRef.setInput('showOverlay', () => this.showOverlay());
+    componentRef.setInput('hideOverlay', () => this.hideOverlay());
   }
 
   handleViewChange(view: string){

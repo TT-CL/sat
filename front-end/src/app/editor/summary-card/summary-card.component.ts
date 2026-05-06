@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, OnInit } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, OnInit, ComponentRef, ElementRef } from '@angular/core';
 import { HttpResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 
 import { IUCollection } from '../../objects/objects.module';
@@ -6,7 +6,7 @@ import { StorageService } from '../../storage.service';
 
 import { MatSelect, MatSelectModule } from '@angular/material/select';
 
-import { ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
+import { CdkPortalOutletAttachedRef, ComponentPortal, Portal, PortalModule } from '@angular/cdk/portal';
 
 import { BehaviorSubject } from 'rxjs';
 
@@ -20,6 +20,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { OverlayService, ProgressRef } from '../../overlay.service';
+import { UploadOverlayComponent } from '../../utils/upload-overlay/upload-overlay.component';
 
 
 @Component({
@@ -41,6 +43,7 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
     private storage: StorageService,
     private route: ActivatedRoute,
     private router: Router,
+    private overlayService: OverlayService
   ) {
     storage.getWorkSummary().subscribe((summary: IUCollection | null) => {
       if (summary !== null) {
@@ -102,6 +105,23 @@ export class SummaryCardComponent implements AfterViewInit, OnInit {
 
     //forcibly trigger route update on init
     this.view.next(this.route.snapshot.params["view"]);
+  }
+
+  @ViewChild("overlayOrigin") overlayOrigin!: ElementRef;
+  overlayRef: ProgressRef | null = null;
+
+  showOverlay() {
+    this.overlayRef = this.overlayService.showOverlay(this.overlayOrigin, UploadOverlayComponent);
+  }
+
+  hideOverlay() {
+    this.overlayService.detach(this.overlayRef);
+  }
+    onPortalAttached(ref: CdkPortalOutletAttachedRef): void {
+    const componentRef = ref as ComponentRef<any>;
+
+    componentRef.setInput('showOverlay', () => this.showOverlay());
+    componentRef.setInput('hideOverlay', () => this.hideOverlay());
   }
 
   handleViewChange(view: string) {

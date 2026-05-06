@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { IdeaUnit, Segment, IUCollection } from '../../objects/objects.module';
 
@@ -44,6 +44,9 @@ export class SummaryLinkComponent implements OnInit {
 
   selected_iu: IdeaUnit | null = null;
   selected_source_iu: IdeaUnit | null = null;
+
+  @Input() showOverlay!: () => void;
+  @Input() hideOverlay!: () => void;
 
   linkClick(seg: Segment): void {
     if (this.doc === null) {

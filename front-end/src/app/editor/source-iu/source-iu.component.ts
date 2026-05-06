@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { IUCollection } from '../../objects/objects.module';
 
@@ -27,6 +27,9 @@ export class SourceIuComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  @Input() showOverlay!: () => void;
+  @Input() hideOverlay!: () => void;
+  
   doc: IUCollection | null = null;
 
 }
