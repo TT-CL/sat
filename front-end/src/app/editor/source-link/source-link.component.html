@@ -8,7 +8,7 @@
         <mat-chip class="iu-mat-chip" color="lime-bubble" (click)="linkClick(seg)" selected>
           {{ seg.getText(doc, true) }}
         </mat-chip>
-      } @else if (selected_summary_iu && sims && topNSims(selected_summary_iu, 1).includes(seg.iu)) {
+      } @else if (selected_summary_iu && sims && topNSims(selected_summary_iu, 3).includes(seg.iu)) {
         <mat-chip class="iu-mat-chip" color="suggested-link" (click)="linkClick(seg)" selected>
           {{ seg.getText(doc, true) }}
         </mat-chip>
