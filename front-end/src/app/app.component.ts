@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { timer } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
-import { ApplicationInsights } from '@microsoft/applicationinsights-web';
-import { environment } from '../environments/environment';
 import { TelemetryService } from './telemetry.service';
 import { ActivatedRouteSnapshot, ResolveEnd, Router } from '@angular/router';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -56,7 +54,7 @@ export class AppComponent {
     repeater.subscribe(time => this.retrieveAuthToken(time));
   }
 
-  retrieveAuthToken(time) {
+  retrieveAuthToken(time: any) {
     //console.log(`${time*this.LOG_IN_INTERVAL+1} mins`);
     //console.log("retrieve auth token");
     this.auth.retrieveUserAuthToken();

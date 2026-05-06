@@ -8,7 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
-import { StorageService } from 'src/app/storage.service';
+import { StorageService } from '../../storage.service';
 
 @Component({
     selector: 'app-login-page',

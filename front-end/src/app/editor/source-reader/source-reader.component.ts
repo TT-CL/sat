@@ -23,5 +23,5 @@ export class SourceReaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  doc: IUCollection = null;
+  doc!: IUCollection | null;
 }

@@ -1,42 +1,42 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Project } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
-    selector: 'app-project-item',
-    templateUrl: './project-item.component.html',
-    styleUrls: ['./project-item.component.sass'],
-    standalone: true,
-    imports: [
+  selector: 'app-project-item',
+  templateUrl: './project-item.component.html',
+  styleUrls: ['./project-item.component.sass'],
+  standalone: true,
+  imports: [
     MatButtonModule,
     MatIconModule
-]
+  ]
 })
 export class ProjectItemComponent implements OnInit {
 
   constructor(
     private router: Router,
-    public storage : StorageService,
+    public storage: StorageService,
   ) { }
 
-  @Input() project : Project;
-  @Input() index : number;
+  @Input() project !: Project;
+  @Input() index !: number;
 
-  numSummaries : number = 0;
-  lastEdit : string;
+  numSummaries: number = 0;
+  lastEdit !: string;
 
-  editProject(){
+  editProject() {
     this.storage.setCurProjIndex(this.index);
     this.router.navigate(['/editor/']);
   }
 
   ngOnInit(): void {
-    if(this.project.summaryDocs){
+    if (this.project.summaryDocs) {
       this.numSummaries = this.project.summaryDocs.length;
     }
     this.lastEdit = this.project.last_edit.toUTCString();

@@ -15,61 +15,61 @@ import { HttpEvent, HttpEventType, HttpResponse } from '@angular/common/http';
 export class StorageService {
 
   offlineMode_support = false;
-  offlineMode : BehaviorSubject<boolean>;
+  offlineMode: BehaviorSubject<boolean>;
 
-  sourceDoc : IUCollection;
-  summaryDoc : IUCollection;
+  sourceDoc?: IUCollection;
+  summaryDoc?: IUCollection;
 
-  cur_project_idx : number = null;
-  cur_project_support : Project = null;
-  cur_project : BehaviorSubject<Project>;
+  cur_project_idx: number | null = null;
+  cur_project_support: Project | null = null;
+  cur_project: BehaviorSubject<Project | null>;
 
-  work_summary_idx : number = null;
-  work_summary_support : IUCollection = null;
-  work_summary : BehaviorSubject<IUCollection>;
-  work_source_support : IUCollection = null;
-  work_source : BehaviorSubject<IUCollection>;
-  work_similarities_support = {};
-  work_similarities: BehaviorSubject<Object>;
+  work_summary_idx: number | null = null;
+  work_summary_support: IUCollection | null = null;
+  work_summary: BehaviorSubject<IUCollection | null>;
+  work_source_support: IUCollection | null = null;
+  work_source: BehaviorSubject<IUCollection | null>;
+  work_similarities_support: Record<string, any> = {};
+  work_similarities: BehaviorSubject<Object | null>;
 
-  clicked_source_iu_support : IdeaUnit = null;
-  clicked_source_iu : BehaviorSubject<IdeaUnit>;
-  clicked_summary_iu_support : IdeaUnit = null;
-  clicked_summary_iu : BehaviorSubject<IdeaUnit>;
+  clicked_source_iu_support: IdeaUnit | null = null;
+  clicked_source_iu: BehaviorSubject<IdeaUnit | null>;
+  clicked_summary_iu_support: IdeaUnit | null = null;
+  clicked_summary_iu: BehaviorSubject<IdeaUnit | null>;
 
-  projects_support : Project[] = [];
-  projects : BehaviorSubject<Project []>;
+  projects_support: Project[] = [];
+  projects: BehaviorSubject<Project[]>;
 
   constructor(
     private session: SessionStorageService,
     private backend: BackEndService,
-    private auth: AuthService){
+    private auth: AuthService) {
     console.log("Loading projects from session...");
     let anonymous_objects = this.session.retrieve('projects_support');
-    
+
     // initialize the Subject for the observers
-    this.projects = new BehaviorSubject<Project[]>(null);
-    this.cur_project = new BehaviorSubject<Project>(null);
-    this.work_source = new BehaviorSubject<IUCollection>(null);
-    this.work_summary = new BehaviorSubject<IUCollection>(null);
-    this.clicked_source_iu = new BehaviorSubject<IdeaUnit>(null);
-    this.clicked_summary_iu = new BehaviorSubject<IdeaUnit>(null);
+    this.projects = new BehaviorSubject<Project[]>([]);
+    this.cur_project = new BehaviorSubject<Project | null>(null);
+    this.work_source = new BehaviorSubject<IUCollection | null>(null);
+    this.work_summary = new BehaviorSubject<IUCollection | null>(null);
+    this.clicked_source_iu = new BehaviorSubject<IdeaUnit | null>(null);
+    this.clicked_summary_iu = new BehaviorSubject<IdeaUnit | null>(null);
     this.offlineMode = new BehaviorSubject(false);
-    this.work_similarities = new BehaviorSubject<Object>(null);
-    auth.loggedInPromise().then(logged =>{
-      if (logged){
+    this.work_similarities = new BehaviorSubject<Object | null>(null);
+    auth.loggedInPromise().then(logged => {
+      if (logged) {
         this.exitOfflineMode();
         // retrieve projects from db
         this.downloadProjects();
-        
-      }else{
+
+      } else {
         this.enterOfflineMode();
         this.initSubjects(anonymous_objects);
       }
     })
   }
 
-  downloadProjects(): void{
+  downloadProjects(): void {
     this.backend.getProjects().subscribe({
       next: event => {
         if (event.type === HttpEventType.DownloadProgress && event.total) {
@@ -91,7 +91,7 @@ export class StorageService {
     });
   }
 
-  initSubjects(anonymous_objects){
+  initSubjects(anonymous_objects: any) {
     //load the projects as a Typescript Project
     if (anonymous_objects) {
       for (let obj of anonymous_objects) {
@@ -123,19 +123,19 @@ export class StorageService {
 
   clearProjects() {
     this.projects_support = [];
-    this.projects.next(null);
+    this.projects.next([]);
     this.session.clear('projects_support');
   }
 
-  setSource(source: IUCollection){
+  setSource(source: IUCollection) {
     this.sourceDoc = source;
   }
 
-  setSummary(summary: IUCollection){
+  setSummary(summary: IUCollection) {
     this.summaryDoc = summary;
   }
-  
-  __addProject(project: Project){
+
+  __addProject(project: Project) {
     //update session
     this.projects_support.push(project);
     this.saveProjects();
@@ -143,8 +143,8 @@ export class StorageService {
     this.projects.next(this.projects_support);
   }
 
-  addProject(project: Project): Observable<void>{
-    if( this.offlineMode_support){
+  addProject(project: Project): Observable<void> {
+    if (this.offlineMode_support) {
       console.log("offline")
       this.__addProject(project)
       return of(void 0);
@@ -154,18 +154,18 @@ export class StorageService {
     return this.backend.createProject(project).pipe(
       tap(event => {
         if (event.type === HttpEventType.UploadProgress && event.total) {
-        const percentDone = Math.round(100 * event.loaded / event.total);
-        //console.log('${fName} is ${percentDone}% loaded.');
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          //console.log('${fName} is ${percentDone}% loaded.');
         }
       }),
-      tap( event =>{
+      tap(event => {
         if (event.type === HttpEventType.Response) {
-        console.log(project.name + " added successfully to the database");
-        //create new project structure to obtain db only objects (id, date, etc..)
-        let db_proj = new Project();
-        db_proj.reconsolidate(event.body);
-        //add the db project to the current sesstion
-        this.__addProject(db_proj)
+          console.log(project.name + " added successfully to the database");
+          //create new project structure to obtain db only objects (id, date, etc..)
+          let db_proj = new Project();
+          db_proj.reconsolidate(event.body);
+          //add the db project to the current sesstion
+          this.__addProject(db_proj)
         }
       }),
       map(() => void 0),
@@ -176,15 +176,15 @@ export class StorageService {
     );
   }
 
-  __removeProject(project: Project){
+  __removeProject(project: Project) {
     //update session
     this.projects_support = this.projects_support.filter(p => p._id !== project._id);
     this.saveProjects();
     this.projects.next(this.projects_support);
   }
 
-  removeProject(project: Project): Observable<void>{
-    if( this.offlineMode_support){
+  removeProject(project: Project): Observable<void> {
+    if (this.offlineMode_support) {
       this.__removeProject(project)
       return of(void 0);
     }
@@ -193,14 +193,14 @@ export class StorageService {
     return this.backend.deleteProject(project).pipe(
       tap(event => {
         if (event.type === HttpEventType.UploadProgress && event.total) {
-        const percentDone = Math.round(100 * event.loaded / event.total);
-        //console.log('${fName} is ${percentDone}% loaded.');
+          const percentDone = Math.round(100 * event.loaded / event.total);
+          //console.log('${fName} is ${percentDone}% loaded.');
         }
       }),
-      tap( event =>{
+      tap(event => {
         if (event.type === HttpEventType.Response) {
-        console.log(project.name + " deleted successfully from the database");
-        this.__removeProject(project)
+          console.log(project.name + " deleted successfully from the database");
+          this.__removeProject(project)
         }
       }),
       map(() => void 0),
@@ -211,19 +211,19 @@ export class StorageService {
     );
   }
 
-  getProjects(): Observable<Project []> {
+  getProjects(): Observable<Project[]> {
     return this.projects.asObservable();
   }
 
   /// CURRENT PROJECT SAVE AREA ///
 
-  setCurProjIndex(idx: number){
+  setCurProjIndex(idx: number) {
     this.cur_project_idx = idx;
     this.initCurProject(idx);
   }
 
 
-  initCurProject(idx: number){
+  initCurProject(idx: number) {
     this.cur_project_support = this.projects_support[idx];
     this.cur_project.next(this.cur_project_support);
 
@@ -231,43 +231,47 @@ export class StorageService {
     this.work_source_support = this.cur_project_support.sourceDoc;
     this.work_source.next(this.work_source_support);
     // init work summary
-    if (this.cur_project_support.hasSummaries()){
+    if (this.cur_project_support.hasSummaries()) {
       this.setWorkSummaryIdx(0);
     }
   }
 
-  clearCurProject(){
+  clearCurProject() {
     this.cur_project_support = null;
     this.cur_project_idx = null;
     this.cur_project.next(this.cur_project_support);
   }
 
-  __updateCurProject(proj: Project){
+  __updateCurProject(proj: Project) {
     //update current project
     this.cur_project_support = proj;
     this.cur_project.next(this.cur_project_support);
 
     // update full projects in memory
-    this.projects_support[this.cur_project_idx] = proj;
-    this.projects.next(this.projects_support);
+    if (this.cur_project_idx === null) {
+      console.error("this.cur_project_idx is null");
+    }else {
+      this.projects_support[this.cur_project_idx] = proj;
+      this.projects.next(this.projects_support);
+    }
     // update work source
     this.work_source_support = this.cur_project_support.sourceDoc;
     this.work_source.next(this.work_source_support);
     // update work summary
-    if(this.cur_project_support.summaryDocs){
-      if(this.work_summary_idx &&
-         this.work_summary_idx < this.cur_project_support.summaryDocs.length){
+    if (this.cur_project_support.summaryDocs) {
+      if (this.work_summary_idx !== null &&
+        this.work_summary_idx < this.cur_project_support.summaryDocs.length) {
         //if the summary index still refers to some work_summary after the update
         //refresh the work structure in case the indexes shifted around
         this.setWorkSummaryIdx(this.work_summary_idx);
-      }else if (this.cur_project_support.summaryDocs.length > 0){
+      } else if (this.cur_project_support.summaryDocs.length > 0) {
         //default 1: if I now have some summaries, set the work index to 0
         this.setWorkSummaryIdx(0);
-      }else{
+      } else {
         // I have emptied the summary queue, remove the work summaries
         this.clearWorkSummary();
       }
-    }else{
+    } else {
       // I do not have a summary queue, ensure no work summary is set
       this.clearWorkSummary();
     }
@@ -291,16 +295,16 @@ export class StorageService {
     );
   }
 
-  updateSource(source:IUCollection): Observable<IUCollection> {
+  updateSource(source: IUCollection): Observable<IUCollection> {
     // Updates the source on the db then returns the new document to be later stored in session
-    if(this.offlineMode_support){
+    if (this.offlineMode_support) {
       let doc = new IUCollection()
       doc.reconsolidate(source)
       return of(doc)
     }
     return this.__updateDBSource(source, false).pipe(
       filter((event): event is HttpResponse<any> => event.type === HttpEventType.Response),
-      map((event: HttpResponse<any> ) => {
+      map((event: HttpResponse<any>) => {
         //console.log("update_db_source")
         //console.log(event.body)
         let doc = new IUCollection()
@@ -311,9 +315,9 @@ export class StorageService {
     );
   }
 
-  createSummary(summary:IUCollection, project_id:string, silent: boolean): Observable<IUCollection> {
+  createSummary(summary: IUCollection, project_id: string, silent: boolean): Observable<IUCollection> {
     // Creates the summary on the db then returns the new document to be later stored in session
-    if(this.offlineMode_support){
+    if (this.offlineMode_support) {
       let doc = new IUCollection()
       doc.reconsolidate(summary)
       doc.project_id = project_id
@@ -332,8 +336,8 @@ export class StorageService {
     );
   }
 
-  deleteSummary(summary:IUCollection): Observable<any> {
-    if(this.offlineMode_support){
+  deleteSummary(summary: IUCollection): Observable<any> {
+    if (this.offlineMode_support) {
       return of(void 0)
     }
     return this.backend.deleteSummary(summary)
@@ -341,7 +345,7 @@ export class StorageService {
 
 
 
-  __updateDBSummary(summary: IUCollection, silent: boolean): Observable <any>{
+  __updateDBSummary(summary: IUCollection, silent: boolean): Observable<any> {
     return this.backend.updateSummary(summary, silent).pipe(
       tap(event => {
         if (event.type === HttpEventType.UploadProgress && event.total) {
@@ -358,22 +362,22 @@ export class StorageService {
   }
 
   updateProject(project: Project, silent: boolean): Observable<void> {
-    if( this.offlineMode_support){
+    if (this.offlineMode_support) {
       return of(void 0);
     }
     return this.backend.updateProject(project).pipe(
-        tap(event => {
-          if (event.type === HttpEventType.UploadProgress && event.total) {
-            const percentDone = Math.round((100 * event.loaded) / event.total);
-            if (!silent) {
-              console.log(`Project update is ${percentDone}% complete.`);
-            }
-          } else if (event.type === HttpEventType.Response) {
-            if (!silent) {
-              console.log('project updated successfully.');
-            }
+      tap(event => {
+        if (event.type === HttpEventType.UploadProgress && event.total) {
+          const percentDone = Math.round((100 * event.loaded) / event.total);
+          if (!silent) {
+            console.log(`Project update is ${percentDone}% complete.`);
           }
-        }),
+        } else if (event.type === HttpEventType.Response) {
+          if (!silent) {
+            console.log('project updated successfully.');
+          }
+        }
+      }),
       map(() => void 0));
 
   }
@@ -383,10 +387,10 @@ export class StorageService {
     proj: Project,
     sync: boolean = false,
     fromManager: boolean = false,
-    replacementSource: IUCollection = null,
-    summaryAddQueue: Set<IUCollection> = null,
-    summaryRemovalQueue: Set<IUCollection> = null
-  ): Observable<void>{
+    replacementSource?: IUCollection,
+    summaryAddQueue?: Set<IUCollection>,
+    summaryRemovalQueue?: Set<IUCollection>
+  ): Observable<void> {
     if (this.offlineMode_support || !sync) {
       // if we are in offline mode or sync is disabled skip DB calls
       console.log("offline save")
@@ -398,22 +402,25 @@ export class StorageService {
     let source_request$ = null;
     let summary_requests$: Observable<unknown>[] = [];
 
-    if (fromManager){
+    if (fromManager) {
       //I'm modifying the project from the project manager.
       //get the new source only if it differs from the one in storage
-      if (replacementSource){
-        if (replacementSource != proj.sourceDoc){
+      if (replacementSource) {
+        if (replacementSource != proj.sourceDoc) {
           source_request$ = this.updateSource(replacementSource).pipe(
-            tap( (new_source: IUCollection) => proj.sourceDoc = new_source)
+            tap((new_source: IUCollection) => proj.sourceDoc = new_source)
           )
         }
       }
       //Do not update existing summaries, just add or remove them based on the queues
       const add_summaries_queue$ = Array.from(summaryAddQueue ?? []).map(
         summary => this.createSummary(summary, proj._id, false).pipe(
-          tap( (new_summary : IUCollection) => {
+          tap((new_summary: IUCollection) => {
             //console.log("new_summary")
             //console.log(new_summary);
+            if (!proj.summaryDocs) {
+              proj.summaryDocs = [];
+            }
             proj.summaryDocs.push(new_summary);
           })
         )
@@ -421,20 +428,28 @@ export class StorageService {
 
       const removed_summaries_queue$ = Array.from(summaryRemovalQueue ?? []).map(
         summary => this.deleteSummary(summary).pipe(
-        tap ( () => proj.summaryDocs = proj.summaryDocs.filter(s => s._id !== summary._id)))
+          tap(() => {
+            if (proj.summaryDocs) {
+              proj.summaryDocs = proj.summaryDocs.filter(s => s._id !== summary._id)
+            }
+          }))
       );
 
-      summary_requests$ = [ ...add_summaries_queue$, ... removed_summaries_queue$]
+      summary_requests$ = [...add_summaries_queue$, ...removed_summaries_queue$]
 
     } else {
       //I'm updating the project either silently or through the document editors
-      source_request$ = this.updateSource(proj.sourceDoc).pipe(
-            tap( (new_source: IUCollection) => proj.sourceDoc = new_source)
-          )
+      if (proj.sourceDoc) {
+        source_request$ = this.updateSource(proj.sourceDoc).pipe(
+          tap((new_source: IUCollection) => proj.sourceDoc = new_source)
+        )
+      }
       //We are not adding/removing summaries, so we should update existing ones instead
-      summary_requests$ = [ 
-        ...proj.summaryDocs.map(summary => this.__updateDBSummary(summary, true))
-      ]
+      if (proj.summaryDocs) {
+        summary_requests$ = [
+          ...proj.summaryDocs.map(summary => this.__updateDBSummary(summary, true))
+        ]
+      }
     }
 
     const requests: Observable<unknown>[] = [
@@ -444,46 +459,72 @@ export class StorageService {
 
     return forkJoin(requests).pipe(
       switchMap(() => this.updateProject(proj, true)),
-      tap (() => this.__updateCurProject(proj)),
+      tap(() => this.__updateCurProject(proj)),
       map(() => void 0),
       catchError(err => {
         console.error('Error syncing project files:', err);
         return throwError(() => err);
       })
-      );
+    );
   }
 
-  getCurProject(): Observable <Project>{
+  getCurProject(): Observable<Project | null> {
     return this.cur_project.asObservable();
   }
 
   /// CURRENT WORD DOCUMENTS SAVE AREA ///
 
-  setWorkSummaryIdx(idx: number){
+  setWorkSummaryIdx(idx: number) {
     this.clearClickedSummaryIU();
 
 
     //set the new work_summary
     this.work_summary_idx = idx;
-    this.work_summary_support = this.cur_project_support.summaryDocs[idx];
+    if (this.cur_project_support === null) {
+      console.error("this.cur_project_support is null");
+    } else {
+      if (this.cur_project_support.summaryDocs === null) {
+        console.error("this.cur_project_support.summaryDocs is null");
+      } else {
+        this.work_summary_support = this.cur_project_support.summaryDocs[idx];
+      }
+    }
     this.work_summary.next(this.work_summary_support);
   }
 
-  __updateWorkSummary (summary: IUCollection){
+  __updateWorkSummary(summary: IUCollection) {
     this.work_summary_support = summary;
     this.work_summary.next(this.work_summary_support);
-    this.cur_project_support.summaryDocs[this.work_summary_idx] = summary;
-    this.cur_project.next(this.cur_project_support);
 
-    // update full projects in memory
-    this.projects_support[this.cur_project_idx] = this.cur_project_support;
+    if (this.cur_project_support === null) {
+      console.error("this.cur_project_support is null");
+    } else {
+
+      if (this.work_summary_idx === null) {
+        console.error("this.work_summary_idx is null");
+      } else {
+        if (this.cur_project_support.summaryDocs === null) {
+          console.error("this.cur_project_support.summaryDocs is null");
+        } else {
+          this.cur_project_support.summaryDocs[this.work_summary_idx] = summary;
+          this.cur_project.next(this.cur_project_support);
+        }
+      }
+      // update full projects in memory
+      if (this.cur_project_idx === null) {
+        console.error("this.cur_project_idx is null");
+      } else {
+
+        this.projects_support[this.cur_project_idx] = this.cur_project_support;
+      }
+    }
     this.projects.next(this.projects_support);
 
     this.saveProjects();
   }
 
-  updateWorkSummary(summary : IUCollection, sync: boolean = false): Observable<void>{
-    if (this.offlineMode_support || !sync){
+  updateWorkSummary(summary: IUCollection, sync: boolean = false): Observable<void> {
+    if (this.offlineMode_support || !sync) {
       this.__updateWorkSummary(summary);
       return of(void 0)
     }
@@ -492,7 +533,10 @@ export class StorageService {
         if (event.type === HttpEventType.Response) {
           this.__updateWorkSummary(summary);
         }
-      }));    
+      }),
+      filter(event => event.type === HttpEventType.Response),
+      map(() => void 0)
+    );
   }
 
   /**
@@ -512,118 +556,103 @@ export class StorageService {
 
    */
 
-  clearWorkSummary(){
+  clearWorkSummary() {
     this.work_summary_idx = null;
     this.work_summary_support = null;
     this.work_summary.next(this.work_summary_support);
   }
 
-  clearWorkSource(){
+  clearWorkSource() {
     this.work_source_support = null;
     this.work_source.next(this.work_source_support);
   }
 
-  getWorkSummary(): Observable <IUCollection>{
+  getWorkSummary(): Observable<IUCollection | null> {
     return this.work_summary.asObservable();
   }
 
-  getWorkSource(): Observable <IUCollection>{
+  getWorkSource(): Observable<IUCollection | null> {
     return this.work_source.asObservable();
   }
 
   /// CURRENT CLICKED IU SAVE AREA ///
 
-  switchClickedSourceIU(iu: IdeaUnit){
+  switchClickedSourceIU(iu: IdeaUnit | null) {
     this.clicked_source_iu_support = iu;
     this.clicked_source_iu.next(iu);
   }
 
-  switchClickedSummaryIU(iu: IdeaUnit){
+  switchClickedSummaryIU(iu: IdeaUnit | null) {
     this.clicked_summary_iu_support = iu;
     this.clicked_summary_iu.next(iu);
   }
 
-  clearClickedSourceIU(){
+  clearClickedSourceIU() {
     this.switchClickedSourceIU(null);
   }
 
-  clearClickedSummaryIU(){
+  clearClickedSummaryIU() {
     this.switchClickedSummaryIU(null);
   }
-  /**
-   * Redundant?
 
-  updateClickedSourceIU(iu: IdeaUnit){
-    this.switchClickedSourceIU(iu);
-    this.work_source_support.ius[iu.label]=iu;
-    this.updateWorkSource(this.work_source_support);
-  }
-
-  updateClickedSummaryIU(iu: IdeaUnit){
-    this.switchClickedSummaryIU(iu);
-    this.work_summary_support.ius[iu.label]=iu;
-    this.updateWorkSummary(this.work_summary_support);
-  }
-  */
-
-  getClickedSourceIU(): Observable<IdeaUnit>{
+  getClickedSourceIU(): Observable<IdeaUnit | null> {
     return this.clicked_source_iu.asObservable();
   }
 
-  getClickedSummaryIU(): Observable<IdeaUnit>{
+  getClickedSummaryIU(): Observable<IdeaUnit | null> {
     return this.clicked_summary_iu.asObservable();
   }
 
   /// SIMS ///
 
-  updateSuggestions():void{
+  updateSuggestions(): void {
     console.log("Updating IU recommendations");
     if (this.offlineMode_support) {
       // Do not provide similarity services in offline mode
-      const emptySims = { "sims" : null}
-      this.__addReceivedSimilarity( emptySims )
-    } else{
-    this.backend.getSimPredictions(this.work_source_support, this.work_summary_support).subscribe({
-      next: event => {
-        if (event.type === HttpEventType.DownloadProgress && event.total) {
-          const percentDone = Math.round(100 * event.loaded / event.total);
-          console.log(`Upload is ${percentDone}% loaded.`);
+      const emptySims = { "sims": null }
+      this.__addReceivedSimilarity(emptySims)
+    } else {
+      this.backend.getSimPredictions(this.work_source_support, this.work_summary_support).subscribe({
+        next: event => {
+          if (event.type === HttpEventType.DownloadProgress && event.total) {
+            const percentDone = Math.round(100 * event.loaded / event.total);
+            console.log(`Upload is ${percentDone}% loaded.`);
+          }
+          if (event.type === HttpEventType.Response) {
+            const response = event as HttpResponse<any>;
+            this.__addReceivedSimilarity(response.body);
+            console.log(response.body)
+            console.log("Similarities are ready!");
+          }
+        },
+        error: err => {
+          console.error("Similarities Error:", err);
         }
-        if (event.type === HttpEventType.Response) {
-          const response = event as HttpResponse<any>;
-          this.__addReceivedSimilarity(response.body);
-          console.log(response.body)
-          console.log("Similarities are ready!");
-        }
-      },
-      error: err => {
-        console.error("Similarities Error:", err);
-      }
-    });
+      });
     }
   }
 
-  __addReceivedSimilarity(simsDoc: Object): void{
+  __addReceivedSimilarity(simsDoc: Record<string, any>): void {
     this.work_similarities_support[simsDoc["doc_name"]] = simsDoc["sims"];
     this.work_similarities.next(this.work_similarities_support);
   }
 
-  getSimilarities(): Observable<Object>{
+  getSimilarities(): Observable<Object | null> {
     return this.work_similarities.asObservable();
   }
 
-  clearSimilarities(doc_name: string):void{
+  clearSimilarities(doc_name: string): void {
     delete this.work_similarities_support[doc_name];
     this.work_similarities.next(this.work_summary_support);
   }
 
-  clearAllSimilarities():void{
+  clearAllSimilarities(): void {
     this.work_similarities_support = {};
     this.work_similarities.next(this.work_similarities_support);
   }
 
   // Offline Mode
-  getOfflineMode(): Observable<boolean>{
+  getOfflineMode(): Observable<boolean> {
     return this.offlineMode.asObservable();
   }
 

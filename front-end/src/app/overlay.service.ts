@@ -11,7 +11,7 @@ export class OverlayService {
 
   constructor(private dynamicOverlay: DynamicOverlay) { }
 
-  public showOverlay(elRef: ElementRef, overlayComponent: any ) {
+  public showOverlay(elRef: ElementRef, overlayComponent: any ) : ProgressRef | null {
     if (elRef) {
       const result: ProgressRef = { subscription: null, overlayRef: null };
       result.subscription = timer(500)
@@ -30,14 +30,19 @@ export class OverlayService {
     }
   }
 
-  detach(result: ProgressRef) {
-    if (result) {
-      result.subscription.unsubscribe();
-      if (result.overlayRef) {
+  detach(result: ProgressRef | null) {
+    if (result !== null) {
+      if (result.subscription !== null){
+        result.subscription.unsubscribe();  
+      }
+      if (result.overlayRef !== null) {
         result.overlayRef.detach();
       }
     }
   }
 }
 
-export declare type ProgressRef = { subscription: Subscription, overlayRef: OverlayRef };
+export type ProgressRef = {
+  subscription: Subscription | null,
+  overlayRef: OverlayRef | null
+};

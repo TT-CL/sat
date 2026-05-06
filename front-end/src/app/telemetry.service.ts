@@ -26,7 +26,7 @@ export class TelemetryService {
   public logPageView(
     name: string,
     properties?: { [key: string]: string }) {
-    if (environment.telemetry == true){
+    if (environment.telemetry == true && this.AppInsights){
       this.AppInsights.trackPageView({
         name: name,
         properties: this.AddGlobalProperties(properties),
@@ -35,7 +35,7 @@ export class TelemetryService {
   }
 
   public logEvent(name: string, properties?: { [key: string]: string }){
-    if (environment.telemetry == true){
+    if (environment.telemetry == true && this.AppInsights){
       this.AppInsights.trackEvent({
         name:name,
         properties: this.AddGlobalProperties(properties),
@@ -44,7 +44,7 @@ export class TelemetryService {
   }
 
   public logError(error: Error, properties?: { [key: string]: string }){
-    if (environment.telemetry == true){
+    if (environment.telemetry == true && this.AppInsights){
       this.AppInsights.trackException({
         exception: error,
         properties: this.AddGlobalProperties(properties),
@@ -52,7 +52,7 @@ export class TelemetryService {
     }
   }
 
-  private AddGlobalProperties(properties?: { [key: string]: string }):{ [key: string]: string } {
+  private AddGlobalProperties(properties?: { [key: string]: string }):{ [key: string]: string } | undefined{
     // uncomment this when adding props
     /**
     if (!properties) {

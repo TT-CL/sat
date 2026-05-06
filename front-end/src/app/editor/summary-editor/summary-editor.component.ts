@@ -3,7 +3,6 @@ import { Component, ContentChildren, OnInit, ViewChild, ViewChildren, ViewEncaps
 import { IdeaUnit, IUCollection, Project, Segment } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
-import { NLPService } from 'src/app/nlp.service';
 
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
@@ -14,34 +13,35 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SegEditQueue } from 'src/app/objects/seg-edit-queue';
+import { NLPService } from '../../nlp.service';
+import { SegEditQueue } from '../../objects/seg-edit-queue';
 
 @Component({
-    selector: 'app-summary-editor',
-    templateUrl: './summary-editor.component.html',
-    styleUrls: ['./summary-editor.component.sass'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [
-      CommonModule,
-      MatTabsModule,
-      MatChipsModule,
-      MatButtonModule,
-      MatIconModule,
-      MatDividerModule,
-      MatTooltipModule,
-      ReactiveFormsModule
-    ]
+  selector: 'app-summary-editor',
+  templateUrl: './summary-editor.component.html',
+  styleUrls: ['./summary-editor.component.sass'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTabsModule,
+    MatChipsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    MatTooltipModule,
+    ReactiveFormsModule
+  ]
 })
 export class SummaryEditorComponent implements AfterViewInit {
   // data structs
-  doc: IUCollection = null;
-  newDoc: IUCollection;
+  doc: IUCollection | null = null;
+  newDoc: IUCollection | null = null;
 
   editedFlag: boolean = false;
   // alter segments
   retrievedSegsFlag: boolean = false;
-  newSegments: Array<string>;
+  newSegments: Array<string> = [];
 
   //connect segments
   discEdited = false;
@@ -55,10 +55,12 @@ export class SummaryEditorComponent implements AfterViewInit {
     private nlp: NLPService,
   ) {
     storage.getWorkSummary().subscribe((summary) => {
-      this.doc = summary;
-      this.newDoc = this.cloneIuCollection(summary);
-      //console.log("retrieved summary");
-      //console.log(this.newDoc)
+      if (summary !== null) {
+        this.doc = summary;
+        this.newDoc = this.cloneIuCollection(summary);
+        //console.log("retrieved summary");
+        //console.log(this.newDoc)
+      }
     });
   }
 
@@ -66,7 +68,7 @@ export class SummaryEditorComponent implements AfterViewInit {
     this.resetEditor();
   }
 
-  stripSpanStyles(node) {
+  stripSpanStyles(node: any) {
     if (node['tagName'] == "SPAN") {
       // remove styles
       node['removeAttribute']("style");
@@ -77,31 +79,38 @@ export class SummaryEditorComponent implements AfterViewInit {
     }
   }
 
-  cloneIuCollection(doc: IUCollection): IUCollection {
+  cloneIuCollection(doc: IUCollection | null): IUCollection {
+    if (doc === null) {
+      throw new Error("Trying to clone null")
+    }
     const clone = new IUCollection();
     clone.reconsolidate(JSON.parse(JSON.stringify(doc)));
     return clone
   }
 
-  parseEditedSegments(): Array<string> {
-    let res = [];
-    if (this.preEditor.nativeElement) {
-      const children = Array.from(this.preEditor.nativeElement.childNodes)
-      for (let child of children) {
-          if (child.nodeType === Node.ELEMENT_NODE && child.nodeName === 'DIV') {
-              let temp = child['innerText'].trim();
-              if (temp && temp != "") {
-                  res.push(temp);
-              }
-          }
+  parseEditedSegments(): string[] {
+    const res: string[] = [];
+
+    const editor = this.preEditor.nativeElement;
+    if (!editor) return res;
+
+    const children = Array.from(editor.childNodes);
+
+    for (const child of children) {
+      if (child instanceof HTMLDivElement) {
+        const temp = child.innerText.trim();
+        if (temp) {
+          res.push(temp);
+        }
       }
     }
+
     console.log("parsed segments")
     console.log(res)
     return res;
   }
 
-  preInput(evt) {
+  preInput(evt: any) {
     //set the edited flag to true
     const target = evt.target as HTMLElement;
     if (this.preEditor.nativeElement) {
@@ -121,20 +130,25 @@ export class SummaryEditorComponent implements AfterViewInit {
     this.discEdited = false;
     this.segEditQueue.resetQueue();
     this.selectedIUs.clear();
-    // reset disc bubbles
-    this.newDoc = this.cloneIuCollection(this.doc)
+    if (this.doc !== null) {
+      // reset disc bubbles
+      this.newDoc = this.cloneIuCollection(this.doc)
+    }
     // reset pre editor
-    const html = this.doc.getPreHtml();
+    const html = this.doc?.getPreHtml();
     //console.log(html)
-    this.preEditor.nativeElement.innerHTML = html;
+    this.preEditor.nativeElement.innerHTML = html || "";
     this.newSegments = this.parseEditedSegments();
   }
-  
-  tabChanged($event) {
+
+  tabChanged($event: any) {
     this.resetEditor()
   }
 
   segClick(seg: Segment): void {
+    if (seg.iu === null) {
+      throw new Error("seg.iu is null!" + seg)
+    }
     if (this.selectedIUs.has(seg.iu)) {
       this.selectedIUs.delete(seg.iu)
     } else {
@@ -148,6 +162,9 @@ export class SummaryEditorComponent implements AfterViewInit {
   }
 
   connectSegs() {
+    if (this.newDoc === null) {
+      throw new Error("newDoc is null!")
+    }
     this.editedFlag = true;
     this.discEdited = true;
 
@@ -160,6 +177,9 @@ export class SummaryEditorComponent implements AfterViewInit {
   }
 
   disconnectSegs() {
+    if (this.newDoc === null) {
+      throw new Error("newDoc is null!")
+    }
     this.editedFlag = true;
     this.discEdited = true;
 
@@ -171,7 +191,17 @@ export class SummaryEditorComponent implements AfterViewInit {
     this.clearSelectedSegs();
   }
 
-  private storeEdits(){
+  private storeEdits() {
+    // null guards
+    if (this.newDoc === null) {
+      throw new Error("newDoc is null!")
+    }
+    if (this.doc === null) {
+      throw new Error("doc is null!")
+    }
+    if (this.doc.doc_name === null){
+      throw new Error("doc name is null!" + this.doc)
+    }
     //compute
     this.newDoc.continuityCheck();
     // keep old sents;
@@ -185,12 +215,13 @@ export class SummaryEditorComponent implements AfterViewInit {
 
     this.storage.clearSimilarities(this.doc.doc_name);
     //console.log(this.newDoc)
+    const cur_doc_name = this.newDoc.doc_name
     this.storage.updateWorkSummary(this.newDoc, true).subscribe({
       complete: () => {
         this.doc = this.cloneIuCollection(this.newDoc)
         this.editedFlag = false;
       },
-      error: err => console.error(`Error updating summary "${this.newDoc.doc_name}":`, err),
+      error: err => console.error(`Error updating summary "${cur_doc_name}":`, err),
     });
   }
 
@@ -205,7 +236,7 @@ export class SummaryEditorComponent implements AfterViewInit {
       });
     } else {
       this.storeEdits();
-   
+
     }
   }
 }

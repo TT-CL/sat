@@ -27,6 +27,6 @@ export class SourceIuComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  doc: IUCollection = null;
+  doc: IUCollection | null = null;
 
 }

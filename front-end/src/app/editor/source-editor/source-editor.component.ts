@@ -13,36 +13,36 @@ import { MatTab, MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SegEditQueue } from 'src/app/objects/seg-edit-queue';
-import { NLPService } from 'src/app/nlp.service';
+import { NLPService } from '../../nlp.service';
+import { SegEditQueue } from '../../objects/seg-edit-queue';
 
 @Component({
-    selector: 'app-source-editor',
-    templateUrl: './source-editor.component.html',
-    styleUrls: ['./source-editor.component.sass'],
-    encapsulation: ViewEncapsulation.None,
-    standalone: true,
-    imports: [
-      CommonModule,
-      MatTabsModule,
-      MatDividerModule,
-      MatChipsModule,
-      MatButtonModule,
-      MatIconModule,
-      ReactiveFormsModule
-    ]
+  selector: 'app-source-editor',
+  templateUrl: './source-editor.component.html',
+  styleUrls: ['./source-editor.component.sass'],
+  encapsulation: ViewEncapsulation.None,
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatTabsModule,
+    MatDividerModule,
+    MatChipsModule,
+    MatButtonModule,
+    MatIconModule,
+    ReactiveFormsModule
+  ]
 })
 export class SourceEditorComponent implements AfterViewInit {
 
   // data structs
-  doc: IUCollection = null;
-  newDoc: IUCollection;
-  proj : Project;
+  doc: IUCollection | null = null;
+  newDoc: IUCollection | null = null;
+  proj: Project | null = null;
 
   editedFlag: boolean = false;
   // alter segments
   retrievedSegsFlag: boolean = false;
-  newSegments: Array<string>;
+  newSegments: Array<string> = [];
 
   //connect segments
   discEdited = false;
@@ -55,10 +55,14 @@ export class SourceEditorComponent implements AfterViewInit {
     private storage: StorageService,
     private nlp: NLPService
   ) {
-    storage.getCurProject().subscribe((proj)=>{
-      this.proj = proj
-      this.doc = this.cloneIuCollection(proj.sourceDoc)
-      this.newDoc = this.cloneIuCollection(proj.sourceDoc)
+    storage.getCurProject().subscribe((proj) => {
+      if (proj !== null) {
+        this.proj = proj
+        if (proj.sourceDoc) {
+          this.doc = this.cloneIuCollection(proj.sourceDoc);
+          this.newDoc = this.cloneIuCollection(proj.sourceDoc)
+        }
+      }
       //console.log("retrieved source document");
       //console.log(this.newDoc)
     })
@@ -68,7 +72,7 @@ export class SourceEditorComponent implements AfterViewInit {
     this.resetEditor();
   }
 
-  stripSpanStyles(node) {
+  stripSpanStyles(node: any) {
     if (node['tagName'] == "SPAN") {
       // remove styles
       node['removeAttribute']("style");
@@ -79,31 +83,38 @@ export class SourceEditorComponent implements AfterViewInit {
     }
   }
 
-  cloneIuCollection(doc: IUCollection): IUCollection {
+  cloneIuCollection(doc: IUCollection | null): IUCollection {
+    if (doc === null) {
+      throw new Error("Trying to clone null")
+    }
     const clone = new IUCollection();
     clone.reconsolidate(JSON.parse(JSON.stringify(doc)));
     return clone
   }
 
-  parseEditedSegments(): Array<string> {
-    let res = [];
-    if (this.preEditor.nativeElement) {
-      const children = Array.from(this.preEditor.nativeElement.childNodes)
-      for (let child of children) {
-          if (child.nodeType === Node.ELEMENT_NODE && child.nodeName === 'DIV') {
-              let temp = child['innerText'].trim();
-              if (temp && temp != "") {
-                  res.push(temp);
-              }
-          }
+  parseEditedSegments(): string[] {
+    const res: string[] = [];
+
+    const editor = this.preEditor.nativeElement;
+    if (!editor) return res;
+
+    const children = Array.from(editor.childNodes);
+
+    for (const child of children) {
+      if (child instanceof HTMLDivElement) {
+        const temp = child.innerText.trim();
+        if (temp) {
+          res.push(temp);
+        }
       }
     }
+
     console.log("parsed segments")
     console.log(res)
     return res;
   }
 
-  preInput(evt){
+  preInput(evt: any) {
     //set the edited flag to true
     const target = evt.target as HTMLElement;
     if (this.preEditor.nativeElement) {
@@ -118,38 +129,46 @@ export class SourceEditorComponent implements AfterViewInit {
     }
   }
 
-  resetEditor(){
+  resetEditor() {
     this.editedFlag = false;
     this.discEdited = false;
     this.segEditQueue.resetQueue();
     this.selectedIUs.clear();
-    // reset disc bubbles
-    this.newDoc = this.cloneIuCollection(this.doc)
+    if (this.doc !== null) {
+      // reset disc bubbles
+      this.newDoc = this.cloneIuCollection(this.doc)
+    }
     // reset pre editor
-    const html = this.doc.getPreHtml();
+    const html = this.doc?.getPreHtml();
     //console.log(html)
-    this.preEditor.nativeElement.innerHTML = html;
+    this.preEditor.nativeElement.innerHTML = html || "";
     this.newSegments = this.parseEditedSegments();
   }
 
-  tabChanged($event) {
+  tabChanged($event: any) {
     this.resetEditor()
   }
 
-  segClick(seg: Segment):void{
-    if(this.selectedIUs.has(seg.iu)){
+  segClick(seg: Segment): void {
+    if (seg.iu === null) {
+      throw new Error("seg.iu is null!" + seg)
+    }
+    if (this.selectedIUs.has(seg.iu)) {
       this.selectedIUs.delete(seg.iu)
-    }else{
+    } else {
       this.selectedIUs.add(seg.iu);
     }
   }
 
-  clearSelectedSegs(){
+  clearSelectedSegs() {
     //this.discEdited = false;
     this.selectedIUs.clear();
   }
 
-  connectSegs(){
+  connectSegs() {
+    if (this.newDoc === null) {
+      throw new Error("newDoc is null!")
+    }
     this.editedFlag = true;
     this.discEdited = true;
 
@@ -162,6 +181,9 @@ export class SourceEditorComponent implements AfterViewInit {
   }
 
   disconnectSegs() {
+    if (this.newDoc === null) {
+      throw new Error("newDoc is null!")
+    }
     this.editedFlag = true;
     this.discEdited = true;
 
@@ -173,7 +195,17 @@ export class SourceEditorComponent implements AfterViewInit {
     this.clearSelectedSegs();
   }
 
-  private storeEdits(){
+  private storeEdits() {
+    // null guards
+    if (this.newDoc === null) {
+      throw new Error("newDoc is null!")
+    }
+    if (this.doc === null) {
+      throw new Error("doc is null!")
+    }
+    if (this.proj === null) {
+      throw new Error("proj is null!")
+    }
     //compute
     this.newDoc.continuityCheck();
     // keep old sents;
@@ -193,15 +225,14 @@ export class SourceEditorComponent implements AfterViewInit {
     this.storage.clearAllSimilarities();
     this.storage.updateCurProject(this.proj, true).subscribe({
       error: err => console.error('Silent project update failed:', err),
-      complete: () =>{
+      complete: () => {
         this.doc = this.cloneIuCollection(this.newDoc);
         this.editedFlag = false;
       }
     });
   }
-  
-  saveEdits(){
 
+  saveEdits() {
     if (this.editedFlag && !this.discEdited) {
       this.nlp.retrieveTokenizedSegs(this.doc, this.newSegments).subscribe({
         next: (new_doc: IUCollection) => {
@@ -212,7 +243,6 @@ export class SourceEditorComponent implements AfterViewInit {
       });
     } else {
       this.storeEdits();
-   
     }
   }
 }

@@ -56,7 +56,7 @@ export class EditorDashboardComponent implements OnInit{
       });
 
     //initialize the view subject to allow observer behaviour
-    this.view = new BehaviorSubject<string>(null);
+    this.view = new BehaviorSubject<string>("");
     
     // listen to view changes
     router.events.subscribe((event) => {
@@ -116,19 +116,19 @@ export class EditorDashboardComponent implements OnInit{
   }
 
 
-  project_index : number = null;
-  project : Project;
+  project_index?: number | null;
+  project?: Project | null;
   hasSummaries: boolean = false;
 
   mode: Modes = Modes.Both;
 
-  summaryOutlet: Portal<any>;
-  sourceOutlet: Portal<any>;
+  summaryOutlet?: Portal<any> | null;
+  sourceOutlet?: Portal<any> | null;
 
-  summaryCardPortal : ComponentPortal<SummaryCardComponent>;
-  sourceCardPortal : ComponentPortal<SourceCardComponent>;
-  projectManagerPortal : ComponentPortal<ProjectManagerComponent>;
-  projectDownloaderPortal : ComponentPortal<ProjectDownloaderComponent>;
+  summaryCardPortal? : ComponentPortal<SummaryCardComponent>;
+  sourceCardPortal? : ComponentPortal<SourceCardComponent>;
+  projectManagerPortal? : ComponentPortal<ProjectManagerComponent>;
+  projectDownloaderPortal? : ComponentPortal<ProjectDownloaderComponent>;
 
   view: BehaviorSubject<string>;
 }

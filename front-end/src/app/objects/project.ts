@@ -2,19 +2,20 @@ import { IUCollection } from './iu-collection';
 
 
 export class Project {
-  name: string;
-  description: string;
+  name: string | null = null;
+  description: string | null = null;
   creation_time: Date;
   last_edit: Date;
-  sourceDoc: IUCollection;
-  summaryDocs: IUCollection[];
+  sourceDoc: IUCollection | null = null;
+  summaryDocs: IUCollection[] | null = null;
   //DB values
-  _id;
-  user_id;
-  deleted : boolean;
+  _id : any | null = null;
+  user_id : any | null = null;
+  deleted: boolean | null = null;
 
   constructor() {
-    this.last_edit = new Date();
+    this.creation_time = new Date();
+    this.last_edit = this.creation_time;
   }
 
   hasSummaries(): boolean {
@@ -33,7 +34,7 @@ export class Project {
     //casting anonymous object as a Project
     let anon = anonymous_oject as Project
     //converting strings to dates
-    this.creation_time = new Date(anon.creation_time);
+    this.creation_time = anon.creation_time ? new Date(anon.creation_time) : this.creation_time;
     this.last_edit = new Date(anon.last_edit);
     //assign static values
     this.name = anon.name;

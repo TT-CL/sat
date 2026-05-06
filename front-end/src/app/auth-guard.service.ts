@@ -10,7 +10,7 @@ import { StorageService } from './storage.service';
 })
 export class AuthGuardService {
 
-  offlineMode : boolean
+  offlineMode! : boolean
   constructor(
     private auth: AuthService,
     private router: Router,

@@ -4,12 +4,12 @@ import { Segment } from './segment';
 
 
 export class IdeaUnit {
-  label : string;           //IU label
-  disc : boolean;           //discontinuous flag
+  label : string | null;           //IU label
+  disc : boolean | null;           //discontinuous flag
   childSegs : {[key: string]: number}; //set of child segment indexes
 
   //reference to document container
-  linkedIus : string[];
+  linkedIus : Array<string | null>;
   suggested : boolean;
   //color : string;
 

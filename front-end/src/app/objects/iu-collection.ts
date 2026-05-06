@@ -8,20 +8,20 @@ const punctuation: string = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
 
 
 export class IUCollection {
-  doc_name: string;
-  doc_type: string;
+  doc_name: string | null;
+  doc_type: string | null;
   words: Word[];
   ius: { [key: string]: IdeaUnit };
   segs: { [key: number]: Segment };
   sents: string[];
 
   //db values
-  _id
-  user_id
-  project_id
-  history_id
-  deleted: boolean
-  version: number
+  _id? : any
+  user_id? : any
+  project_id? : any
+  history_id? : any
+  deleted?: boolean
+  version?: number
 
   max_seg_count: number;
   manual_iu_count: number;
@@ -31,7 +31,17 @@ export class IUCollection {
   max_disc_idx: number;
 
   constructor() {
-    this.cleanup();
+    this.doc_name = null;
+    this.doc_type= null;
+    this.ius = {};
+    this.segs = [];
+    this.sents = [];
+    this.words = [];
+    this.max_seg_count = 0;
+    this.manual_iu_count = 0;
+    this.max_connected_idx = 1;
+    this.max_disc_idx = 1;
+    // this.cleanup() // copy pasting to avoid typescript compiler harassment
   }
 
   private cleanup() {
@@ -46,10 +56,10 @@ export class IUCollection {
   }
 
   empty(): boolean {
-    return this.words.length == 0;
+    return this.words.length === 0;
   }
 
-  readDocument(file: object) {
+  readDocument(file: Record<string, any>) {
     this.cleanup();
     this.doc_name = file["doc_name"];
     this.doc_type = file["doc_type"];
@@ -65,7 +75,7 @@ export class IUCollection {
 
         //automatically generated discontinuous IUs are prefixed with the letter "a"
         let prefix = "a";
-        if (read_word["iu_label"] == "MAN"){
+        if (read_word["iu_label"] === "MAN"){
           //manually generated IUs are prefixed with the letter "m" 
           prefix = "m"
         }
@@ -210,16 +220,19 @@ export class IUCollection {
     this.max_connected_idx = this.findManConnectedMaxIdx() + 1
   }
 
-  prepareWorksheet(source: IUCollection = null){
+  prepareWorksheet(source: IUCollection | null = null){
     let doc = this;
     let res = [];
-    if(doc.doc_type == "summary"){
+    if(doc.doc_type === "summary"){
       res.push(["idx","Idea Unit","Link idxs", "Linked Iu"]);
     }else{
       res.push(["idx", "Idea Unit"]);
     }
     for(let seg_idx in this.segs){
       let seg = this.segs[seg_idx];
+      if (seg.iu == null) {
+        throw new Error(`Segment ${seg_idx} has no iu`);
+      }
       const iu = doc.ius[seg.iu]
       let row = [];
       row.push(seg.iu)
@@ -227,11 +240,13 @@ export class IUCollection {
 
       console.log(doc.doc_type);
       //if I am printing a summary I want to print the links as well
-      if(doc.doc_type == "summary" && source != null){
+      if(doc.doc_type === "summary" && source != null){
         row.push()    //separator
         row.push(iu.linkedIus.join(', ')) //concat iu indexes
         for (let linked_label of iu.linkedIus){
-          row.push(source.ius[linked_label].getText(source))
+          if (linked_label){
+            row.push(source.ius[linked_label].getText(source))
+          }
         }
       }
       res.push(row);
@@ -245,11 +260,11 @@ export class IUCollection {
       let keys = Object.keys(this.segs);
       let prev_seg;
       let cur_seg;
-      let seg_idx = 1;
-      let array_len = keys.length;
+      let seg_idx: number = 1;
+      let array_len: number = keys.length;
       while (seg_idx < array_len) {
-        let prev_seg = this.segs[keys[seg_idx -1]];
-        let cur_seg = this.segs[keys[seg_idx]];
+        let prev_seg = this.segs[Number(keys[seg_idx -1])];
+        let cur_seg = this.segs[Number(keys[seg_idx])];
         if(prev_seg.iu == cur_seg.iu){
           //move the words inside the previous segment
           cur_seg.words.map(w =>{
@@ -257,16 +272,18 @@ export class IUCollection {
             prev_seg.words.push(JSON.parse(JSON.stringify(w)))
           });
           //remove the segment reference from the IU
-          let iu = this.ius[cur_seg.iu];
-          delete iu.childSegs[seg_idx];
-          //adjust discontinuous flag
-          if (iu.childSegs.length > 1){
-            iu.disc = true;
-          }else{
-            iu.disc = false;
+          if (cur_seg.iu){
+            let iu = this.ius[cur_seg.iu];
+            delete iu.childSegs[seg_idx];
+            //adjust discontinuous flag
+            if (iu.childSegs.length > 1){
+              iu.disc = true;
+            }else{
+              iu.disc = false;
+            }
           }
           //remove the current element
-          delete this.segs[keys[seg_idx]];
+          delete this.segs[Number(keys[seg_idx])];
           // reduce the array_len
           keys = Object.keys(this.segs)
           array_len = keys.length;
@@ -292,10 +309,12 @@ export class IUCollection {
     let newIu = new IdeaUnit(iuLabel, true);
     for (let idx in this.segs) {
       let seg = this.segs[idx];
-      if (selectedIUs.has(seg.iu)) {
-        delete this.ius[seg.iu];
-        seg.iu = iuLabel;
-        newIu.childSegs[seg.index] = seg.index;
+      if (seg.iu){
+        if (selectedIUs.has(seg.iu)) {
+          delete this.ius[seg.iu];
+          seg.iu = iuLabel;
+          newIu.childSegs[seg.index] = seg.index;
+        }
       }
     };
     this.ius[iuLabel] = newIu;

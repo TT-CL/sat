@@ -43,7 +43,7 @@ export class DashToolbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  linkable: boolean;
+  linkable?: boolean;
 
   manage_project_color = "accent";
   text_view_color = "primary";

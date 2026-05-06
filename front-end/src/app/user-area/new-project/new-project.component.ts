@@ -1,15 +1,13 @@
-import { Component, ViewChild, ElementRef} from '@angular/core';
-import { ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { NgForm, ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
 
-import { forkJoin, Observable, of} from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 
-import { OverlayService } from '../../overlay.service';
-import { UploadOverlayComponent } from 'src/app/utils/upload-overlay/upload-overlay.component';
+import { OverlayService, ProgressRef } from '../../overlay.service';
 
 import { IUCollection, Project } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
-import { NLPService } from 'src/app/nlp.service';
 
 import { HttpResponse, HttpEvent, HttpEventType, HttpClient } from '@angular/common/http';
 
@@ -22,27 +20,29 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
-import { SummaryMinicardComponent } from 'src/app/utils/summary-minicard/summary-minicard.component';
-import { GrayFlexContainerComponent } from 'src/app/utils/gray-flex-container/gray-flex-container.component';
+import { SummaryMinicardComponent } from '../../utils/summary-minicard/summary-minicard.component';
+import { GrayFlexContainerComponent } from '../../utils/gray-flex-container/gray-flex-container.component';
+import { NLPService } from '../../nlp.service';
+import { UploadOverlayComponent } from '../../utils/upload-overlay/upload-overlay.component';
 
 @Component({
-    selector: 'app-new-project',
-    templateUrl: './new-project.component.html',
-    styleUrls: ['./new-project.component.sass'],
-    standalone: true,
-    imports: [
-      CommonModule,
-      ReactiveFormsModule,
-      RouterModule,
-      MatCardModule,
-      MatFormFieldModule,
-      MatInputModule,
-      MatButtonModule,
-      MatIconModule,
-      MatDividerModule,
-      SummaryMinicardComponent,
-      GrayFlexContainerComponent
-    ]
+  selector: 'app-new-project',
+  templateUrl: './new-project.component.html',
+  styleUrls: ['./new-project.component.sass'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatDividerModule,
+    SummaryMinicardComponent,
+    GrayFlexContainerComponent
+  ]
 })
 export class NewProjectComponent {
 
@@ -63,51 +63,51 @@ export class NewProjectComponent {
 
 
   sourceFile: File | null = null;
-  sourceFormValue : string = "";
-  sourceFormFieldClass : string = "";
+  sourceFormValue: string = "";
+  sourceFormFieldClass: string = "";
 
   summaryFiles = new Set<File>();
 
   parsedSource: IUCollection | null = null;
-  parsedSummaries= new Set<IUCollection>();
+  parsedSummaries = new Set<IUCollection>();
 
-  docNumber: number;
-  progress: number;
+  docNumber!: number;
+  progress!: number;
 
   //catch the file input elements
   @ViewChild('sourceInput')
-  sourceInput;
+  sourceInput!: ElementRef<HTMLInputElement>;
 
   @ViewChild('summaryInput')
-  summaryInput;
+  summaryInput!: ElementRef<HTMLInputElement>;
 
   @ViewChild('sourceForm')
-  sourceForm;
+  sourceForm!: ElementRef<HTMLFormElement>;
 
   //show file selection window
   onClickSourceForm(): void {
     this.sourceInput.nativeElement.click();
   }
 
-  onSourcePickerCancel():void{
+  onSourcePickerCancel(): void {
     this.sourceForm.nativeElement.blur();
   }
 
   //save the source file
   onChangeSourceInput(): void {
-    const files: { [key: string]: File } = this.sourceInput.nativeElement.files;
+    const file = this.sourceInput.nativeElement.files?.[0];
     this.sourceFormFieldClass = "";
-    if (files[0]){
-      this.nlp.parseRawIUCollection(files[0], "source").subscribe({
+    if (file) {
+      this.nlp.parseRawIUCollection(file, "source").subscribe({
         next: doc => {
           this.parsedSource = doc;
           //set the value of the form to the name of the file
-          this.sourceFormValue = files[0].name;
+          this.sourceFormValue = file.name;
         },
         error: err => console.error("Error parsing new source document. Error:" + err)
       })
     }
-    //Deselect the source fiele field
+    //Deselect the source field
     this.sourceForm.nativeElement.blur();
   }
 
@@ -132,7 +132,7 @@ export class NewProjectComponent {
 
     forkJoin(requests).subscribe({
       next: (docs) => {
-        docs.forEach(doc =>{
+        docs.forEach(doc => {
           this.parsedSummaries.add(doc);
         });
       },
@@ -143,35 +143,35 @@ export class NewProjectComponent {
   }
 
   //function to remove a summary from the list
-  removeSummary(summary: IUCollection): void{
+  removeSummary(summary: IUCollection): void {
     this.parsedSummaries.delete(summary);
   }
 
   // overlay controls
-  @ViewChild("overlayOrigin") overlayOrigin: ElementRef;
-  overlayRef = null;
+  @ViewChild("overlayOrigin") overlayOrigin!: ElementRef;
+  overlayRef: ProgressRef | null = null;
 
-  showOverlay(){
+  showOverlay() {
     this.overlayRef = this.overlayService.showOverlay(this.overlayOrigin, UploadOverlayComponent);
   }
-  hideOverlay(){
+  hideOverlay() {
     this.overlayService.detach(this.overlayRef);
   }
 
   fileRead(): void {
     //Upload of local file is complete
-    
+
   }
 
   redirectOut() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   redirectUnauthorized() {
     this.router.navigate(['/unauthorized']);
   }
 
-  onSubmit(): void{
+  onSubmit(): void {
     this.showOverlay();
     // create project
     let title = this.projectForm.value.title
@@ -196,12 +196,12 @@ export class NewProjectComponent {
       },
       error: err => {
         console.log("Error creating Project:", err);
-        if(err.status == 401){
+        if (err.status === 401) {
           this.redirectUnauthorized()
         }
       }
     });
   }
 
-  
+
 }

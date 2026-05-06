@@ -202,12 +202,15 @@ createOfflineTokenizedSegs(
   return data;
 }
 
-  retrieveTokenizedSegs(doc: IUCollection, newSegments: string[]):Observable<IUCollection> {
+  retrieveTokenizedSegs(doc: IUCollection | null, newSegments: string[]):Observable<IUCollection> {
+    if (doc === null){
+      throw new Error("Trying to retrieve tokenized segments for null doc")
+    }
     if (this.storage.offlineMode_support) {
       try {
         const jsonData = this.createOfflineTokenizedSegs(
-          doc.doc_name,
-          doc.doc_type,
+          doc.doc_name || "document",
+          doc.doc_type || "summary",
           newSegments
         );
 
@@ -222,7 +225,7 @@ createOfflineTokenizedSegs(
     }
     //console.log(this.newSegments);
     return this.backend.getTokenizedSegs(
-      doc.doc_name, doc.doc_type, newSegments
+      doc.doc_name || "document", doc.doc_type || "summary", newSegments
     ).pipe(
       tap(event => {
         if (event.type === HttpEventType.UploadProgress && event.total) {

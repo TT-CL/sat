@@ -41,7 +41,7 @@ export class SourceCardComponent implements OnInit {
       });
 
       //initialize the view subject to allow observer behaviour
-      this.view = new BehaviorSubject<string>(null);
+      this.view = new BehaviorSubject<string>("");
 
       //this is called each time we change the url
       router.events.subscribe((event) =>{
@@ -66,7 +66,7 @@ export class SourceCardComponent implements OnInit {
     this.view.next(this.route.snapshot.params["view"]);
   }
 
-  handleViewChange(view){
+  handleViewChange(view: string){
     //console.log("observed view: "+view);
     switch (view) {
       case "reader": {
@@ -92,7 +92,7 @@ export class SourceCardComponent implements OnInit {
     }
   }
 
-  portalOutlet: Portal<any>;
+  portalOutlet?: Portal<any>;
 
   view : BehaviorSubject<string>;
   sourceReaderPortal : ComponentPortal<SourceReaderComponent>;
@@ -100,5 +100,5 @@ export class SourceCardComponent implements OnInit {
   sourceLinkPortal : ComponentPortal<SourceLinkComponent>;
   sourceEditorPortal : ComponentPortal<SourceEditorComponent>;
 
-  doc: IUCollection = null;
+  doc: IUCollection | null = null;
 }

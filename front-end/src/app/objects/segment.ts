@@ -7,8 +7,8 @@ const punctuation: string = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
 
 export class Segment {
   words: number[];      //array of child word indexes
-  iu: string;      //the parent iu
-  index: number;
+  iu: string | null;      //the parent iu
+  index!: number;
 
   type: string;
   constructor(type: string = "default") {

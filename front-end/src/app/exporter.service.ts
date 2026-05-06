@@ -17,7 +17,7 @@ export class ExporterService {
     private sanitizer: DomSanitizer,
   ) {
     this.auth.getName().subscribe(name => {
-      this.userFullName = name;
+      this.userFullName = name ?? this.userFullName;
     });
   }
 
@@ -52,9 +52,9 @@ export class ExporterService {
   }
 
   async generateProjectSpreadsheet(proj: Project): Promise<void> {
-    if (!proj) {
-    console.error('generateProjectSpreadsheet: proj is null');
-    return;
+    if (proj === null) {
+      console.error('generateProjectSpreadsheet: proj is null');
+      return;
     }
 
     console.log('Project:', proj);
@@ -66,21 +66,24 @@ export class ExporterService {
     wb.subject = proj.description || '';
     wb.title = proj.name || 'SAT project';
 
-    proj.summaryDocs.forEach(summary => {
+    if (proj.summaryDocs !== null) {
+      proj.summaryDocs.forEach(summary => {
 
-    console.log('Generating summary worksheet:', summary.doc_name);
+        console.log('Generating summary worksheet:', summary.doc_name);
+        this.addWorksheetFromAoA(
+          wb,
+          summary.doc_name || "",
+          summary.prepareWorksheet(proj.sourceDoc)
+        );
+      });
+    }
+    if (proj.sourceDoc !== null) {
       this.addWorksheetFromAoA(
         wb,
-        summary.doc_name,
-        summary.prepareWorksheet(proj.sourceDoc)
+        proj.sourceDoc.doc_name || "",
+        proj.sourceDoc.prepareWorksheet()
       );
-    });
-
-    this.addWorksheetFromAoA(
-      wb,
-      proj.sourceDoc.doc_name,
-      proj.sourceDoc.prepareWorksheet()
-    );
+    }
     console.log(wb)
     await this.saveWorkbook(wb, `${proj.name}.xlsx`);
   }
@@ -91,12 +94,12 @@ export class ExporterService {
     wb.creator = this.userFullName;
     wb.created = new Date();
     wb.modified = new Date();
-    wb.subject = doc.doc_type;
-    wb.title = doc.doc_name;
+    wb.subject = doc.doc_type? doc.doc_type: "";
+    wb.title = doc.doc_name || "IU Document";
 
     this.addWorksheetFromAoA(
       wb,
-      doc.doc_name,
+      doc.doc_name ? doc.doc_name : "",
       doc.prepareWorksheet()
     );
 

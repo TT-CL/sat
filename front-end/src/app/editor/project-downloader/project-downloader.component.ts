@@ -9,8 +9,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 
 import { MatButtonModule } from '@angular/material/button';
-import { GrayFlexContainerComponent } from 'src/app/utils/gray-flex-container/gray-flex-container.component';
-import { DocCardComponent } from 'src/app/utils/doc-card/doc-card.component';
+import { GrayFlexContainerComponent } from '../../utils/gray-flex-container/gray-flex-container.component';
+import { DocCardComponent } from '../../utils/doc-card/doc-card.component';
 
 @Component({
     selector: 'app-project-downloader',
@@ -40,7 +40,7 @@ export class ProjectDownloaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  curProj: Project;
+  curProj!: Project | null;
   
   downloadDoc(doc: IUCollection){
     this.exporter.generatedDocSpreadsheet(doc);
@@ -48,6 +48,9 @@ export class ProjectDownloaderComponent implements OnInit {
   }
 
   downloadProject() {
+    if (this.curProj === null){
+      throw new Error("Error initializing download. Missing project object")
+    }
     this.exporter.generateProjectSpreadsheet(this.curProj);
   }
 }

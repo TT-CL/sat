@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from '../../auth.service';
 
 @Component({
     selector: 'app-catch-login',
@@ -24,7 +24,7 @@ export class CatchLoginComponent implements OnInit {
     auth.retrieveUserAuthToken()
   }
 
-  timer : ReturnType<typeof setTimeout>;
+  timer! : ReturnType<typeof setTimeout>;
   ngOnInit(): void {
     this.timer = setTimeout(()=>{this.redirectToProjects()}, 3000);
   }

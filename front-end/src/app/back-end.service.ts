@@ -122,7 +122,7 @@ export class BackEndService {
     return this.http.request(req);
   }
 
-  createSummary(summary: IUCollection, project_id, silent_mode: boolean): Observable<HttpEvent<any>> {
+  createSummary(summary: IUCollection, project_id: string, silent_mode: boolean): Observable<HttpEvent<any>> {
     let url = "/api/v1/user/summary/create";
 
     let formData = new FormData();

@@ -5,12 +5,12 @@ import { Observable } from 'rxjs';
 
 
 import { filter } from 'rxjs/operators';
-import { StorageService } from 'src/app/storage.service';
 
 
 import { AuthService } from '../../auth.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
+import { StorageService } from '../../storage.service';
 
 @Component({
     selector: 'app-nav-auth-widget',

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { IdeaUnit, IUCollection } from '../../objects/objects.module';
+import { IdeaUnit, IUCollection, Segment } from '../../objects/objects.module';
 
 import { StorageService } from '../../storage.service';
 import { MatChipsModule } from '@angular/material/chips';
@@ -41,16 +41,16 @@ export class SourceLinkComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  doc: IUCollection = null;
-  summaryDoc: IUCollection = null;
+  doc: IUCollection | null = null;
+  summaryDoc: IUCollection | null = null;
 
-  selected_iu: IdeaUnit = null;
-  selected_summary_iu: IdeaUnit = null;
-  simsStack: Object = null;
+  selected_iu: IdeaUnit | null = null;
+  selected_summary_iu: IdeaUnit | null = null;
+  simsStack: Record <string, any> | null = null;
 
   
-  public get sims() : Object {
-    if (this.simsStack && this.simsStack[this.summaryDoc.doc_name]){
+  public get sims() : Record <string, any> | null {
+    if (this.simsStack && this.summaryDoc && this.summaryDoc.doc_name && this.simsStack[this.summaryDoc.doc_name]){
       return this.simsStack[this.summaryDoc.doc_name];
     }else{
       return null;
@@ -58,7 +58,24 @@ export class SourceLinkComponent implements OnInit {
   }
   
 
-  linkClick(seg) : void {
+  linkClick(seg: Segment) : void {
+    if (this.doc === null){
+      throw new Error("Memory continuity error, doc is null");
+    }
+    if (this.summaryDoc === null){
+      throw new Error("Memory continuity error, doc is null");
+    }
+    if (seg.iu === null){
+      throw new Error("index error, seg.iu is null" + seg);
+    }
+    if (this.selected_summary_iu=== null){
+      throw new Error("logic error, selected_summary_iu is null");
+    }
+    if (this.selected_summary_iu.label === null){
+      throw new Error("index error, selected_summary_iu.label is null" + this.selected_summary_iu);
+    }
+
+    const cur_doc_name = this.summaryDoc.doc_name // storing to avoid dereferencing errors in async call
     //console.log("click");
     //if I have an input link
     if (this.selected_summary_iu){
@@ -69,7 +86,7 @@ export class SourceLinkComponent implements OnInit {
       this.summaryDoc.ius[this.selected_summary_iu.label] = this.selected_summary_iu;
       this.storage.switchClickedSourceIU(this.selected_iu);
       this.storage.updateWorkSummary(this.summaryDoc, true).subscribe({
-        error: err => console.error(`Error updating summary "${this.summaryDoc.doc_name}":`, err),
+        error: err => console.error(`Error updating summary "${cur_doc_name}":`, err),
       });
     }
   }
@@ -127,8 +144,11 @@ export class SourceLinkComponent implements OnInit {
     */
 
     //return the second column of the first n records
+    if (this.sims === null || iu.label === null){
+      return []
+    }
     return this.sims[iu.label].slice(0, n).map(
-      (value,index)=>{
+      (value:any,index:any)=>{
         return value[1]});
   }
 }
