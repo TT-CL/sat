@@ -1,67 +1,43 @@
-import { Component } from '@angular/core';
-import { timer } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
-import { AuthService } from './auth.service';
-import { TelemetryService } from './telemetry.service';
+import { Component, OnDestroy } from '@angular/core';
+import { filter, Subscription } from 'rxjs';
 import { ActivatedRouteSnapshot, ResolveEnd, Router } from '@angular/router';
 import { NavigationComponent } from './navigation/navigation.component';
-
+import { TelemetryService } from './telemetry.service';
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.sass'],
-    standalone: true,
-    imports: [
-    NavigationComponent
-]
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.sass'],
+  standalone: true,
+  imports: [NavigationComponent]
 })
-
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   title = 'SAT';
-  LOG_IN_INTERVAL: number = 5 //interval in minutes
+
+  private routerSubscription?: Subscription;
 
   constructor(
-    private auth: AuthService,
     private telemetry: TelemetryService,
-    private router: Router) {
-    // TELEMETRY
-  
-
-    // log route changes
-    const routerSubscription = this.router.events
-      .pipe(filter(event => event instanceof ResolveEnd))
+    private router: Router
+  ) {
+    this.routerSubscription = this.router.events
+      .pipe(filter((event): event is ResolveEnd => event instanceof ResolveEnd))
       .subscribe((event: ResolveEnd) => {
         const activatedComponent = this.getActivatedComponent(event.state.root);
+
         if (activatedComponent) {
-          telemetry.logPageView(`${activatedComponent.name} ${this.getRouteTemplate(event.state.root)}`);
+          this.telemetry.logPageView(
+            `${activatedComponent.name} ${this.getRouteTemplate(event.state.root)}`
+          );
         }
       });
-
-    // autologin
-    let ms_interval = this.LOG_IN_INTERVAL * 60 * 1000; //interval in ms
-
-    const stopwatch1 = timer(0)   //at the start
-    const stopwatch2 = timer(500);  //after half a second, just in case
-    const repeater = timer(ms_interval, ms_interval);
-
-    // Fire the function twice at first to ensure usability
-    // Afterwards, refresh the token every LOG_IN_INTERVAL minutes
-    stopwatch1.subscribe(() => {
-      this.auth.retrieveUserAuthTokenAndRediect()
-    });
-    stopwatch2.subscribe(() => this.auth.retrieveUserAuthToken());
-    repeater.subscribe(time => this.retrieveAuthToken(time));
   }
 
-  retrieveAuthToken(time: any) {
-    //console.log(`${time*this.LOG_IN_INTERVAL+1} mins`);
-    //console.log("retrieve auth token");
-    this.auth.retrieveUserAuthToken();
+  ngOnDestroy(): void {
+    this.routerSubscription?.unsubscribe();
   }
 
   private getActivatedComponent(snapshot: ActivatedRouteSnapshot): any {
-
     if (snapshot.firstChild) {
       return this.getActivatedComponent(snapshot.firstChild);
     }
@@ -71,12 +47,14 @@ export class AppComponent {
 
   private getRouteTemplate(snapshot: ActivatedRouteSnapshot): string {
     let path = '';
-    if (snapshot.routeConfig) {
+
+    if (snapshot.routeConfig?.path) {
       path += snapshot.routeConfig.path;
     }
 
     if (snapshot.firstChild) {
-      return path + this.getRouteTemplate(snapshot.firstChild);
+      const childPath = this.getRouteTemplate(snapshot.firstChild);
+      return childPath ? `${path}/${childPath}` : path;
     }
 
     return path;

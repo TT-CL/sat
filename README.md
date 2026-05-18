@@ -37,6 +37,21 @@ Angular doesn't rely on `.env` files, instead you will have to populate an `envi
 - `front-end/src/environments/environment.ts`
 - `front-end/src/environments/environment.prod.ts` for production
 
+#### Firebase Authentication setup
+To correctly authenticate users via OAuth and store progress on the database you need to setup a Firebase project.
+Navigate to the [Firebase Console](https://console.firebase.google.com) and create a new project.
+
+Navigate to `Security > Authentication` and add one or more OAuth providers. Since Firebase is a Google product, Google sign-in is the most straightforward option. However, if you wish to use google authentication we recommend setting up a new google account for firebase to keep your email private. Follow Firebase's [documentation](https://firebase.google.com/docs/auth/web/start?authuser=1) for instructions on how to add other providers (Github, Facebook, etc...).
+
+
+##### Angular frontend setup
+To link the frontend to firebase, navigate to `Settings > General` in firebase console and create a new app.
+You can then copy the `const firebaseConfig` object to `front-end/src/environments/environment.ts` and `front-end/src/environments/environment.prod.ts`. Ensure that the object is correctly exported via the `export` keyword.
+
+##### FastAPI backend setup
+To link the backend to firebase, navigate to `Settings > Service accounts` in firebase console and generate a new private key.
+A `.json` file will be downloaded. Place it in `computation/service_account.json` to give access to the FastAPI instance.
+
 #### HTTPS Certificate variables (Production only)
 When cloning the repo to a deployement server, you will have to set up a domain name and an email for certbot. Editing this env file is not required when running the project locally.
 - `./.env`

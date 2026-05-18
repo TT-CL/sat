@@ -20,12 +20,16 @@ from pprint import pprint
 import os
 import time
 
-from authlib.integrations.starlette_client import OAuth, OAuthError
-#from starlette.config import Config
+from fastapi import Depends, HTTPException
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+import firebase_admin
+from firebase_admin import auth as firebase_auth, credentials
+from firebase_admin.auth import ExpiredIdTokenError, RevokedIdTokenError, InvalidIdTokenError
 
 import spacy
 
 from pymongo import MongoClient
+from pymongo.errors import DuplicateKeyError
 import bson.json_util as bson
 import json
 import urllib.parse
@@ -39,21 +43,6 @@ MODEL_URI = MODEL_URI if MODEL_URI else f'{(os.path.dirname(os.path.realpath(__f
 SECRET_KEY = os.environ.get("SECRET_KEY")
 # if no environment variable is specified, then use random-string-12345
 SECRET_KEY = SECRET_KEY if SECRET_KEY else 'random-string-12345'
-
-GOOGLE_OAUTH_CLIENT_ID = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
-GOOGLE_OAUTH_CLIENT_SECRET = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
-
-oauth = OAuth()
-oauth.register(
-    name='google',
-    client_id= GOOGLE_OAUTH_CLIENT_ID,
-    client_secret= GOOGLE_OAUTH_CLIENT_SECRET,
-    server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
-    client_kwargs={
-        'scope': 'openid email profile'
-    }
-)
-
 
 # Retrieve DB environment variables
 DB_NAME = os.environ.get("DB_NAME")
@@ -75,6 +64,8 @@ sources_col = db['sources']
 sources_hist_col = db['sources_hist']
 summaries_col = db['summaries']
 summaries_hist_col = db['summaries_hist']
+
+users_col.create_index([("firebase_uid", 1)], unique=True)
 
 nlp = spacy.load("en_core_web_sm")
 
@@ -123,7 +114,6 @@ async def startup_event():
     await flag  # Wait for the model to be loaded in memory
 '''
 
-
 @app.on_event("shutdown")
 async def shutdown_event():
     # tell the wv server to flush the RAM
@@ -137,6 +127,84 @@ async def shutdown_event():
 @app.exception_handler(StarletteHTTPException)
 async def custom_http_exception_handler(request, exc):
     return RedirectResponse("/404")
+
+
+### AUTH ###
+
+# Read the optional Firebase service account JSON path from the environment.
+FIREBASE_SERVICE_ACCOUNT = f'{(os.path.dirname(os.path.realpath(__file__)))}/service_account.json'
+
+
+bearer_scheme = HTTPBearer(auto_error=False)
+
+if not firebase_admin._apps:
+    if FIREBASE_SERVICE_ACCOUNT:
+        firebase_admin.initialize_app(credentials.Certificate(FIREBASE_SERVICE_ACCOUNT))
+    else:
+        firebase_admin.initialize_app()
+
+# Verify the Firebase token sent by Angular and return the decoded claims.
+def get_current_firebase_claims(
+    credentials_obj: HTTPAuthorizationCredentials = Depends(bearer_scheme),
+):
+    # Reject the request immediately when the Authorization header is missing or when the scheme is not Bearer.
+    if credentials_obj is None or credentials_obj.scheme.lower() != "bearer":
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Missing bearer token",
+        )
+    try:
+        #Return the decoded claims
+        return firebase_auth.verify_id_token(credentials_obj.credentials)
+    except ExpiredIdTokenError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Expired Firebase token")
+    except RevokedIdTokenError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Revoked Firebase token")
+    except InvalidIdTokenError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid Firebase token")
+    except Exception:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not verify Firebase token")
+
+# Find the Mongo user that belongs to the verified Firebase user, or create it on first login.
+def get_or_create_user_from_firebase(claims: dict):
+  print(claims)
+  firebase_uid = claims["uid"]
+
+  db_user = users_col.find_one({"firebase_uid": firebase_uid})
+  if db_user is not None:
+      return users_col.find_one({"_id": db_user["_id"]})
+
+  new_user = {
+      "firebase_uid": firebase_uid,
+      "email": claims.get("email"),
+      "name": claims.get("name"),
+      "picture": claims.get("picture"),
+      "created_at": int(time.time()),
+  }
+
+  try:
+      inserted_id = users_col.insert_one(new_user).inserted_id
+      return users_col.find_one({"_id": inserted_id})
+  except DuplicateKeyError:
+      return users_col.find_one({"firebase_uid": firebase_uid})
+
+def get_current_db_user(claims: dict = Depends(get_current_firebase_claims)):
+    return get_or_create_user_from_firebase(claims)
+
+
+def auth_check(document, current_user: dict):
+  if (document is None):
+    #If the document I'm trying to edit does not exist return an error
+    raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="The resource you are trying to modify does not exist",
+        )
+  if str(document["user_id"]) != str(current_user['_id']):
+    #Raise an exception if the IDs don't match
+    raise HTTPException(
+          status_code=status.HTTP_401_UNAUTHORIZED,
+          detail="Unauthorized"
+      )
 
 
 @app.post("/v1/raw")
@@ -250,18 +318,9 @@ def new_summary(summary, proj_id, user_id):
 
 
 @app.get("/v1/user/project/list", status_code=status.HTTP_200_OK)
-async def get_project_list(
-        request: Request,
-        response: Response):
-    if not is_user_valid(request):
-        # Guard against unauthenticated
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
-
-    user = get_user_from_session(request)
-
+async def get_project_list(current_user: dict = Depends(get_current_db_user)):
     projects = projects_col.find({
-        "user_id": {"$eq": user['_id']}
+        "user_id": {"$eq": current_user['_id']}
     })
 
     projects_obj = []
@@ -274,15 +333,8 @@ async def get_project_list(
 
 @app.post("/v1/user/project/create", status_code=status.HTTP_201_CREATED)
 async def create_proj(
-        request: Request,
-        response: Response,
+        current_user: dict = Depends(get_current_db_user),
         project: str = Form(...)):
-    if not is_user_valid(request):
-        # Guard against unauthenticated
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
-
-    user = get_user_from_session(request)
     project_obj = bson.loads(project)
     # defaults for optional parameters
     description = None
@@ -290,7 +342,7 @@ async def create_proj(
         description = project_obj['description']
     new_proj = {
         # DB values
-        'user_id': user['_id'],
+        'user_id': current_user['_id'],
         'deleted': False,
         # JS values
         'name': project_obj['name'],
@@ -302,7 +354,7 @@ async def create_proj(
 
     new_source = project_obj['sourceDoc']
     # DB values
-    new_source['user_id'] = user['_id']
+    new_source['user_id'] = current_user['_id']
     new_source['project_id'] = db_proj_id
     new_source['deleted'] = False
     new_source['version'] = 0
@@ -312,7 +364,7 @@ async def create_proj(
 
     new_source_hist = {
         # DB values
-        'user_id': user['_id'],
+        'user_id': current_user['_id'],
         'project_id': db_proj_id,
         'history': [new_source]
     }
@@ -329,7 +381,7 @@ async def create_proj(
     db_summaries_ids = []
     for summary in new_summaries:
         db_summaries_ids.append(
-            new_summary(summary, db_proj_id, user['_id']))
+            new_summary(summary, db_proj_id, current_user['_id']))
 
     projects_col.update_one(
         {
@@ -348,29 +400,11 @@ async def create_proj(
 
 @app.post("/v1/user/project/update", status_code=status.HTTP_200_OK)
 async def update_proj(
-        request: Request,
-        response: Response,
+        current_user: dict = Depends(get_current_db_user),
         project: str = Form(...)):
-    if not is_user_valid(request):
-        # Guard against unauthenticated
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
-
-    user = get_user_from_session(request)
     project_obj = bson.loads(project)
     db_proj = projects_col.find_one(project_obj['_id'])
-    # these 3 ids MUST coincide
-    db_proj_id = db_proj['user_id']
-    user_id = user['_id']
-    ram_id = project_obj['user_id']
-    #print(f'ram_id{ram_id}')
-    #print(f'db_proj_id{db_proj_id}')
-    #print(f'user_id: {user_id}')
-    if ram_id != db_proj_id or ram_id != user_id:
-        # Guard against unauthorized acces to db objets that are not
-        # the user's property
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
+    auth_check(db_proj, current_user)
 
     # Proceed with the update
     projects_col.update_one(
@@ -391,29 +425,11 @@ async def update_proj(
 
 @app.post("/v1/user/project/delete", status_code=status.HTTP_200_OK)
 async def delete_proj(
-        request: Request,
-        response: Response,
+        current_user: dict = Depends(get_current_db_user),
         project: str = Form(...)):
-    if not is_user_valid(request):
-        # Guard against unauthenticated
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
-
-    user = get_user_from_session(request)
     project_obj = bson.loads(project)
     db_proj = projects_col.find_one(project_obj['_id'])
-    # these 3 ids MUST coincide
-    db_proj_id = db_proj['user_id']
-    user_id = user['_id']
-    ram_id = project_obj['user_id']
-    #print(f'ram_id{ram_id}')
-    #print(f'db_proj_id{db_proj_id}')
-    #print(f'user_id: {user_id}')
-    if ram_id != db_proj_id or ram_id != user_id:
-        # Guard against unauthorized acces to db objets that are not
-        # the user's property
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
+    auth_check(db_proj, current_user)
 
     # Proceed with the deletion
     projects_col.update_one(
@@ -433,28 +449,13 @@ async def delete_proj(
 
 @app.post("/v1/user/source/update", status_code=status.HTTP_200_OK)
 async def update_source(
-        request: Request,
-        response: Response,
+        current_user: dict = Depends(get_current_db_user),
         source: str = Form(...),
         silent_mode: str = Form(...)):
-    if not is_user_valid(request):
-        # Guard against unauthenticated
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
-
     silent = json.loads(silent_mode)
-    user = get_user_from_session(request)
     source_obj = bson.loads(source)
     db_source = sources_col.find_one(source_obj['_id'])
-    # these 3 ids MUST coincide
-    db_source_id = db_source['user_id']
-    user_id = user['_id']
-    ram_id = source_obj['user_id']
-    if ram_id != db_source_id or ram_id != user_id:
-        # Guard against unauthorized acces to db objets that are not
-        # the user's property
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
+    auth_check(db_source, current_user)
 
     # Update source
     sources_col.update_one(
@@ -500,32 +501,18 @@ async def update_source(
 
 @app.post("/v1/user/summary/create", status_code=status.HTTP_201_CREATED)
 async def create_summary(
-        request: Request,
-        response: Response,
+        current_user: dict = Depends(get_current_db_user),
         project_id: str = Form(...),
         summary: str = Form(...),
         silent_mode: str = Form(...)):
-    if not is_user_valid(request):
-        # Guard against unauthenticated
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
-
     silent = json.loads(silent_mode)
-    user = get_user_from_session(request)
     summary_obj = bson.loads(summary)
     project_id_obj = bson.loads(project_id)
     db_proj = projects_col.find_one(project_id_obj)
-    # these 2 ids MUST coincide
-    db_proj_id = db_proj['user_id']
-    user_id = user['_id']
-    if db_proj_id != user_id:
-        # Guard against unauthorized acces to db objets that are not
-        # the user's property
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
+    auth_check(db_proj, current_user)
 
     # Create summary
-    db_summary_id = new_summary(summary_obj, db_proj['_id'], user_id)
+    db_summary_id = new_summary(summary_obj, db_proj['_id'], current_user['_id'])
 
     projects_col.update_one(
         {
@@ -547,29 +534,14 @@ async def create_summary(
 
 @app.post("/v1/user/summary/update", status_code=status.HTTP_200_OK)
 async def update_summary(
-        request: Request,
-        response: Response,
+        current_user: dict = Depends(get_current_db_user),
         summary: str = Form(...),
         silent_mode: str = Form(...)):
-    if not is_user_valid(request):
-        # Guard against unauthenticated
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
 
     silent = json.loads(silent_mode)
-    user = get_user_from_session(request)
     summary_obj = bson.loads(summary)
     db_summary = summaries_col.find_one(summary_obj['_id'])
-    # these 3 ids MUST coincide
-    db_sum_id = db_summary['user_id']
-    user_id = user['_id']
-    ram_id = summary_obj['user_id']
-    if ram_id != db_sum_id or ram_id != user_id:
-        # Guard against unauthorized acces to db objets that are not
-        # the user's property
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
-
+    auth_check(db_summary, current_user)
     # Update source
     summaries_col.update_one(
         {
@@ -614,25 +586,12 @@ async def update_summary(
 
 @app.post("/v1/user/summary/delete", status_code=status.HTTP_200_OK)
 async def delete_summary(
-        request: Request,
-        response: Response,
+        current_user: dict = Depends(get_current_db_user),
         summary_id: str = Form(...)):
-    if not is_user_valid(request):
-        # Guard against unauthenticated
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
-
-    user = get_user_from_session(request)
     ram_sum_id = bson.loads(summary_id)
     db_summary = summaries_col.find_one(ram_sum_id)
-    # these 2 ids MUST coincide
-    db_sum_id = db_summary['user_id']
-    user_id = user['_id']
-    if db_sum_id != user_id:
-        # Guard against unauthorized acces to db objets that are not
-        # the user's property
-        response.status_code = status.HTTP_401_UNAUTHORIZED
-        return False
+    auth_check(db_summary, current_user)
+      
 
     # Update summary
     summaries_col.update_one(
@@ -662,145 +621,3 @@ async def delete_summary(
         }
     )
     return True
-
-
-### AUTH ###
-
-
-@app.get("/login/google")
-async def login_via_google(request: Request):
-    redirect_uri = request.url_for('auth_via_google')
-    return await oauth.google.authorize_redirect(request, redirect_uri)
-
-
-@app.get("/auth/google")
-async def auth_via_google(request: Request):
-    try:
-        token = await oauth.google.authorize_access_token(request)
-    except OAuthError as error:
-        return HTMLResponse(f'<h1>{error.error}</h1>')
-    user = token.get("userinfo")
-    if not user and "id_token" in token:
-        user = await oauth.google.parse_id_token(request, token)
-
-    if not user:
-        return HTMLResponse(f"<h1>OAuth failed</h1><pre>{token}</pre>", status_code=400)
-    # TODO: validate JWT
-    query = users_col.find_one({
-        # each user has a dictionary of tokens, where the issuer is the key
-        # and the token is the value
-        # TODO: implement a search if I have another user with the same email
-        # prompt user to join accounts with the same email
-        "google.sub": user["sub"]
-        })
-    db_user = None
-    if (query is None):
-        # insert the user in the DB
-        new_user = {
-            'google': user,
-        }
-        db_user_id = users_col.insert_one(new_user).inserted_id
-        # after an insert query the original object is updated with the id
-        db_user = new_user
-    else:
-        db_user = query
-
-    # set the current issuer as google
-    db_user["cur_iss"] = "google"
-
-    request.session['user'] = dict(convert_from_bson(db_user))
-    return RedirectResponse(url='/logged-in')
-
-
-def get_user_from_session(request):
-    user = request.session['user']
-    return convert_to_bson(user)
-
-
-def get_token_from_session(request):
-    user = get_user_from_session(request)
-    return user[user["cur_iss"]]
-
-
-def is_about_to_expire(token):
-    iat = int(token['iat'])  # issued time
-    exp = int(token['exp'])  # expiry time
-    # Refresh a token if at least 75% of its lifetime has elapsed
-    expiry_treshold = int(iat + ((exp - iat) * 0.75))
-    now = int(time.time())   # Current Unix Time in int
-    return now > expiry_treshold
-
-
-def is_user_valid(request: Request):
-    res = False
-    #print("request")
-    #print(request.session)
-    if 'user' in request.session:
-        user = get_user_from_session(request)
-        #print(f'Session user: {user}')
-
-        # I only keep only one token connection, so I need to know which ISS
-        # the user is using for Auth at this moment.
-        # This will be useful when I have users with multiple login ISS
-        cur_iss = user["cur_iss"]
-        token = user[cur_iss]
-
-        # check wheter I have this user in the DB
-        # if not, the session data was tampered
-        db_user = users_col.find_one(user["_id"])
-        db_token = db_user[cur_iss]
-
-        #print(f'DB user: {db_user}')
-        
-
-        # first check the keys
-        session_set = set(token.keys())
-        db_set = set(db_token.keys())
-        #print(f'session_set: {session_set}')
-        #print(f'db_set: {db_set}')
-        res = (len(db_set.symmetric_difference(session_set)) == 0)
-        #print(res)
-
-        # avoid this check if we already have a different set of keys
-        if res is True:
-            # check the values
-            for key, value in db_token.items():
-                res = res and value == token[key]
-
-        # TODO: JWT validation here
-        #print(res)
-
-        if res is True:
-            # if I get here, then the session token is valid
-            if (is_about_to_expire(token)):
-                # refresh token if it is about to expire
-                pass
-
-    if res is False:
-        # the user tampered with the session
-        # break the session
-        request.session.pop('user', None)
-
-    return res
-
-
-@app.get("/auth/identity")
-async def logged_in(request: Request):
-    res = False
-    valid = is_user_valid(request)
-    if valid is True:
-        token = get_token_from_session(request)
-        # prepare the decrypted printable data
-        res = {
-            'given_name': token['given_name'],
-            'picture': token['picture'],
-            'name': token['name'],
-            'email': token['email'],
-        }
-    return res
-
-
-@app.get('/auth/logout')
-async def logout(request: Request):
-    request.session.pop('user', None)
-    return RedirectResponse(url='/')

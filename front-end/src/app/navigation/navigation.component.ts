@@ -3,7 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { RouterModule } from '@angular/router';
-import { NavAuthWidgetComponent } from '../user-area/nav-auth-widget/nav-auth-widget.component'; 
+import { NavAuthWidgetComponent } from '../user-area/nav-auth-widget/nav-auth-widget.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
@@ -16,11 +16,11 @@ import { CommonModule } from '@angular/common';
 import { MatChipsModule } from '@angular/material/chips';
 
 @Component({
-    selector: 'app-navigation',
-    templateUrl: './navigation.component.html',
-    styleUrls: ['./navigation.component.sass'],
-    standalone: true,
-    imports: [
+  selector: 'app-navigation',
+  templateUrl: './navigation.component.html',
+  styleUrls: ['./navigation.component.sass'],
+  standalone: true,
+  imports: [
     RouterModule,
     CommonModule,
     MatSidenavModule,
@@ -29,9 +29,9 @@ import { MatChipsModule } from '@angular/material/chips';
     MatIconModule,
     NavAuthWidgetComponent,
     MatChipsModule
-]
+  ]
 })
-export class NavigationComponent{
+export class NavigationComponent {
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -39,8 +39,9 @@ export class NavigationComponent{
       shareReplay()
     );
 
-  loggedIn$ : Observable<boolean>;
-  offlineMode$ : Observable<boolean>;
+  loggedIn$: Observable<boolean>;
+  offlineMode$: Observable<boolean>;
+  homeLink$: Observable<string[]>;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -49,9 +50,9 @@ export class NavigationComponent{
   ) {
     this.loggedIn$ = this.auth.isIdentityCached();
     this.offlineMode$ = this.storage.getOfflineMode();
+    this.homeLink$ = this.storage.getOfflineMode().pipe(
+      map(offline => !offline ? ['/projects'] : ['/'])
+    );
   }
 
-  homeLink$: Observable<string[]> = this.storage.getOfflineMode().pipe(
-  map(offline => offline ? ['/projects'] : ['/'])
-);
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IdeaUnit, IUCollection, Project } from './objects/objects.module';
 
-import { BehaviorSubject, throwError, of, Observable, forkJoin, switchMap } from 'rxjs';
+import { BehaviorSubject, throwError, of, Observable, forkJoin, switchMap, take } from 'rxjs';
 import { catchError, tap, filter, map } from 'rxjs';
 
 import { SessionStorageService } from 'ngx-webstorage';
@@ -40,6 +40,7 @@ export class StorageService {
   projects_support: Project[] = [];
   projects: BehaviorSubject<Project[]>;
 
+
   constructor(
     private session: SessionStorageService,
     private backend: BackEndService,
@@ -56,17 +57,21 @@ export class StorageService {
     this.clicked_summary_iu = new BehaviorSubject<IdeaUnit | null>(null);
     this.offlineMode = new BehaviorSubject(false);
     this.work_similarities = new BehaviorSubject<Object | null>(null);
-    auth.loggedInPromise().then(logged => {
-      if (logged) {
+    // Wait for Firebase to finish restoring the session, then decide
+    auth.isAuthReady().pipe(
+      filter(ready => ready),
+      take(1),
+      switchMap(() => auth.isIdentityCached())
+    ).subscribe(loggedIn => {
+      if (loggedIn) {
+        console.log("Logged in, downloading projects.");
         this.exitOfflineMode();
-        // retrieve projects from db
         this.downloadProjects();
-
       } else {
         this.enterOfflineMode();
         this.initSubjects(anonymous_objects);
       }
-    })
+    });
   }
 
   downloadProjects(): void {

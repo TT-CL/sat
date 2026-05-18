@@ -17,6 +17,7 @@
 /front-end/src/environments/environment.prod.ts
 /db/root_user.env
 /db/api_user.env
+service_account.json
 
 # database
 /db/storage/

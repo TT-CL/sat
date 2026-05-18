@@ -5,12 +5,6 @@ import { catchError, retry } from 'rxjs/operators';
 import { HttpClient, HttpEvent, HttpEventType, HttpHeaders, HttpParams, HttpRequest, HttpResponse } from '@angular/common/http';
 import { IUCollection, Project } from './objects/objects.module';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type':  'application/json'
-  })
-};
-
 @Injectable({
   providedIn: 'root'
 })
